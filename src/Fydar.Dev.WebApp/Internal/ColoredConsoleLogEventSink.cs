@@ -38,10 +38,7 @@ internal class ColoredConsoleLogEventSink : ILogEventSink
 	public void Emit(
 		LogEvent logEvent)
 	{
-		if (logEvent == null)
-		{
-			throw new ArgumentNullException(nameof(logEvent));
-		}
+		ArgumentNullException.ThrowIfNull(logEvent);
 
 		var output = Console.Out;
 

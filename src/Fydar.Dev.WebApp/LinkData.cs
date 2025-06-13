@@ -6,7 +6,7 @@ namespace Fydar.Dev.WebApp;
 
 public class LinkData : IReadOnlyList<ILinkDataElement>
 {
-	private readonly List<ILinkDataElement> elements = new();
+	private readonly List<ILinkDataElement> elements = [];
 
 	public ILinkDataElement this[int index] => elements[index];
 
@@ -84,7 +84,7 @@ public interface ILinkDataElement
 
 public class LinkDataBreadcrumbList : ILinkDataElement, IReadOnlyList<LinkDataBreadcrumbListItem>
 {
-	private readonly List<LinkDataBreadcrumbListItem> elements = new();
+	private readonly List<LinkDataBreadcrumbListItem> elements = [];
 
 	public LinkDataBreadcrumbListItem this[int index] => elements[index];
 
