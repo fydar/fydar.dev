@@ -573,7 +573,7 @@ footer {
         header .topbar:has(aside),
         main:has(aside),
         footer:has(aside) {
-            grid-template-columns: auto [aside] 320px [container] 610px auto;
+            grid-template-columns: auto [aside] 288px 32px [container] 610px auto;
         }
 
             header .topbar:has(aside) ::deep .container.container-wide,
@@ -587,7 +587,7 @@ footer {
 @media screen and (min-width: 1200px) {
 
     ::deep section.section-feature {
-        grid-template-columns: auto [aside] 390px [container] 720px auto;
+        grid-template-columns: auto [aside] 348px 42px [container] 720px auto;
     }
 
     header .topbar,
@@ -599,7 +599,7 @@ footer {
         header .topbar:has(aside),
         main:has(aside),
         footer:has(aside) {
-            grid-template-columns: auto [aside] 390px [container] 720px auto;
+            grid-template-columns: auto [aside] 348px 42px [container] 720px auto;
         }
 }
 
@@ -607,7 +607,7 @@ footer {
 @media screen and (min-width: 1400px) {
 
     ::deep section.section-feature {
-        grid-template-columns: auto [aside] 450px [container] 870px auto;
+        grid-template-columns: auto [aside] 408px 42px [container] 870px auto;
     }
 
     header .topbar,
@@ -619,7 +619,7 @@ footer {
         header .topbar:has(aside),
         main:has(aside),
         footer:has(aside) {
-            grid-template-columns: auto [aside] 450px [container] 870px auto;
+            grid-template-columns: auto [aside] 408px 42px [container] 870px auto;
         }
 }
 
