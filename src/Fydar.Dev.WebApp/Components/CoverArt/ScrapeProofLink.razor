@@ -1,6 +1,6 @@
 @using System.Text
 
-<a href="" id="decodethis" @attributes="AdditionalAttributes">
+<a class="antiscrape" href="" id="decodethis" @attributes="AdditionalAttributes">
     @ChildContent
 </a>
 
@@ -33,6 +33,7 @@
 </script>
 
 @code {
+    [Parameter] public RenderFragment? ChildContent { get; set; }
     [Parameter] public string LinkText { get; set; } = string.Empty;
     [Parameter] public string LinkDestination { get; set; } = string.Empty;
     [Parameter] public string LinkTarget { get; set; } = "_blank";
@@ -65,9 +66,4 @@
         }
         return encodedText.ToString();
     }
-}
-
-@code {
-    [Parameter]
-    public RenderFragment? ChildContent { get; set; }
 }

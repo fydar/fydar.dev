@@ -1,18 +1,18 @@
-a {
+a.antiscrape {
     display: inline-block;
     position: relative;
     margin: 2px 0;
     border-radius: 16px;
 }
 
-    a:not(.revealed) {
+    a.antiscrape:not(.revealed) {
         padding-left: 8px;
         padding-right: 10px;
         text-decoration: none;
         color: rgb(216, 216, 216);
     }
 
-        a:not(.revealed):before {
+        a.antiscrape:not(.revealed):before {
             content: "";
             position: absolute;
             top: 0;
@@ -27,6 +27,6 @@ a {
             z-index: -1;
         }
 
-    a.revealed {
+    a.antiscrape.revealed {
         background-color: transparent;
     }
