@@ -127,97 +127,14 @@
             <Content>
                 <CoverGrid>
 
-                    <Cover href="/portfolio/phasmophobia">
-                        <Background>
-                            <div class="blur" style="background: radial-gradient(160% 125% at 75% 60%, rgb(29, 28, 29) 2%, rgb(9, 8, 10) 100%)">
-                            </div>
-                            <picture>
-                                <img loading="lazy" width="400" height="600" class="flicker" src="@Assets["media/phasmophobia/coverart-background.webp"]" alt="Cover art for the game 'Phasmophobia'." />
-                            </picture>
-                            <div class="grain"></div>
-                        </Background>
-                        <Overlay>
-                            <SvgSprite class="logo logo-eitr" Link="/icons.svg?v=1#icon-phasmophobia" Alt="Logo for the game 'Phasmophobia'" />
-                        </Overlay>
-                    </Cover>
-
-                    <Cover href="/portfolio/uno">
-                        <Background>
-                            <div class="blur" style="background: radial-gradient(160% 125% at 75% 60%, rgba(250,202,21,1) 2%, rgba(253,165,13,1) 12%, rgba(255,118,7,1) 26%, rgba(250,70,0,1) 36%, rgba(241,36,1,1) 43%, rgba(141,5,0,1) 77%, rgba(101,2,0,1) 100%)">
-                            </div>
-                            <video onloadeddata="this.classList.add('loaded');" style="mix-blend-mode: screen;" autoplay muted loop>
-                                <source src="@Assets["media/uno/library.30fps.h265.mp4"]" type='video/mp4; codecs="hev1.1.2.L93.90"; profiles="isom,iso2,mp41"'>
-                                <source src="@Assets["media/uno/library.30fps.h264.mp4"]" type='video/mp4; codecs="avc1.4d401f"; profiles="isom,iso2,avc1,mp41"'>
-                            </video>
-                        </Background>
-                        <Overlay>
-                            <SvgSprite class="logo logo-ubisoft-uno" Link="/icons.svg?v=1#icon-ubisoft-uno" Alt="Logo for the game 'UNO™'" />
-                        </Overlay>
-                    </Cover>
-
-                    <Cover href="/portfolio/southfield">
-                        <Background>
-                            <div class="blur" style="background: radial-gradient(200% 53% at 55% 60%, rgb(136 162 247) 2%, rgb(76 96 238) 100%)">
-                            </div>
-                            <picture>
-                                <img loading="lazy" width="400" height="600" src="@Assets["media/southfield/coverart-background.webp"]" alt="Cover art for the game 'Southfield'." />
-                            </picture>
-                        </Background>
-                        <Overlay>
-                            <SvgSprite class="logo logo-southfield" Link="/icons.svg?v=1#titlecard-southfield" Alt="Logo for the game 'Southfield'" />
-                        </Overlay>
-                    </Cover>
-
-                    <Cover href="/portfolio/outrage">
-                        <Background>
-                            <div class="blur" style="background: radial-gradient(200% 53% at 55% 60%, rgb(235 152 243) 2%, rgb(231 193 245) 50%, rgb(201 214 249) 100%)">
-                            </div>
-                            <picture>
-                                <img loading="lazy" width="400" height="600" src="@Assets["media/outrage/coverart.webp"]" alt="Cover art for the game 'OutRage: Fight Fest'." />
-                            </picture>
-                        </Background>
-                    </Cover>
-
-                    <Cover href="/portfolio/starcitizen">
-                        <Background>
-                            <div class="blur" style="background: radial-gradient(300% 156% at 55% 60%, rgb(131 144 156) 2%, rgb(52 69 95) 30%, rgb(65 73 83) 80%)">
-                            </div>
-                            <picture>
-                                <img loading="lazy" width="400" height="600" src="@Assets["media/starcitizen/coverart.webp"]" alt="Cover art for the game 'Star Citizen'." />
-                            </picture>
-                        </Background>
-                    </Cover>
-
-                    <Cover href="/portfolio/starcitizen">
-                        <Background>
-                            <div class="blur" style="background: linear-gradient(rgb(153 148 139) 0%, rgb(63 57 50) 100%)">
-                            </div>
-                            <picture>
-                                <img loading="lazy" width="400" height="600" src="@Assets["media/squadron42/coverart.webp"]" alt="Cover art for the game 'Squadron 42'." />
-                            </picture>
-                        </Background>
-                    </Cover>
-
-                    <Cover href="/portfolio/legostarwarsbattles">
-                        <Background>
-                            <div class="blur" style="background: radial-gradient(180% 60% at 50% 52%, #0d1f57, #040510)">
-                            </div>
-                            <picture>
-                                <img loading="lazy" width="400" height="600" src="@Assets["media/legostarwarsbattles/coverart.webp"]" alt="Cover art for the game 'LEGO® Star Wars™ Battles'." />
-                            </picture>
-                        </Background>
-                    </Cover>
-
-                    <Cover href="/portfolio/eitr">
-                        <Background>
-                            <div class="blur" style="background: radial-gradient(130% 66% at 55% 40%, rgb(137 117 120) 0%, rgb(77 62 71) 60%, rgb(49 36 56) 100%)">
-                            </div>
-                            <img loading="lazy" width="400" height="600" src="@Assets["media/eitr/coverart-background.png"]" alt="Cover art for the game 'EITR'." style="image-rendering: pixelated;" />
-                        </Background>
-                        <Overlay>
-                            <img loading="lazy" class="logo logo-eitr" src="@Assets["media/eitr/titlecard.png"]" alt="Logo for the game 'EITR'." style="image-rendering: pixelated;" />
-                        </Overlay>
-                    </Cover>
+                    <Cover_Phasmophobia />
+                    <Cover_UNO />
+                    <Cover_Southfield />
+                    <Cover_Outrage />
+                    <Cover_StarCitizen />
+                    <Cover_Squadron42 />
+                    <Cover_LegoStarWarsBattles />
+                    <Cover_Eitr />
 
                 </CoverGrid>
             </Content>

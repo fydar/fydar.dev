@@ -54,33 +54,8 @@
             <Content>
                 <CoverGrid>
 
-                    <Cover href="/portfolio/phasmophobia">
-                        <Background>
-                            <div class="blur" style="background: radial-gradient(160% 125% at 75% 60%, rgb(29, 28, 29) 2%, rgb(9, 8, 10) 100%)">
-                            </div>
-                            <picture>
-                                <img loading="lazy" width="400" height="600" class="flicker" src="@Assets["media/phasmophobia/coverart-background.webp"]" alt="Cover art for the game 'Phasmophobia'." />
-                            </picture>
-                            <div class="grain"></div>
-                        </Background>
-                        <Overlay>
-                            <SvgSprite class="logo logo-eitr" Link="/icons.svg?v=1#icon-phasmophobia" Alt="Logo for the game 'Phasmophobia'" />
-                        </Overlay>
-                    </Cover>
-
-                    <Cover href="/portfolio/uno">
-                        <Background>
-                            <div class="blur" style="background: radial-gradient(160% 125% at 75% 60%, rgba(250,202,21,1) 2%, rgba(253,165,13,1) 12%, rgba(255,118,7,1) 26%, rgba(250,70,0,1) 36%, rgba(241,36,1,1) 43%, rgba(141,5,0,1) 77%, rgba(101,2,0,1) 100%)">
-                            </div>
-                            <video onloadeddata="this.classList.add('loaded');" style="mix-blend-mode: screen;" autoplay muted loop>
-                                <source src="@Assets["media/uno/library.30fps.h265.mp4"]" type='video/mp4; codecs="hev1.1.2.L93.90"; profiles="isom,iso2,mp41"'>
-                                <source src="@Assets["media/uno/library.30fps.h264.mp4"]" type='video/mp4; codecs="avc1.4d401f"; profiles="isom,iso2,avc1,mp41"'>
-                            </video>
-                        </Background>
-                        <Overlay>
-                            <SvgSprite class="logo logo-ubisoft-uno" Link="/icons.svg?v=1#icon-ubisoft-uno" Alt="Logo for the game 'UNO™'" />
-                        </Overlay>
-                    </Cover>
+                    <Cover_Phasmophobia />
+                    <Cover_UNO />
 
                 </CoverGrid>
 

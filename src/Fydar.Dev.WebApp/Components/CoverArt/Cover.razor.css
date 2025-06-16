@@ -1,6 +1,4 @@
-
-
-/* Cards */
+/* Cover */
 .cover {
     display: block;
     position: relative;
@@ -75,30 +73,6 @@
                 object-fit: contain;
             }
 
-                .cover .cover-background .cover-overlay ::deep .logo.logo-southfield {
-                    padding: 0% 2% 107% 2%;
-                    filter: drop-shadow(0px 1px 2px #0002);
-                }
-
-                .cover .cover-background .cover-overlay ::deep .logo.logo-starcitizen {
-                    padding: 0 0 60% 0;
-                    filter: drop-shadow(0px 1px 2px #0006);
-                }
-
-                .cover .cover-background .cover-overlay ::deep .logo.logo-squadron42 {
-                    padding: 0 16% 0 16%;
-                    filter: drop-shadow(0px 1px 2px #0006);
-                }
-
-                .cover .cover-background .cover-overlay ::deep .logo.logo-eitr {
-                    padding: 0% 3% 107% 3%;
-                    filter: drop-shadow(0px 1px 4px black);
-                }
-
-                .cover .cover-background .cover-overlay ::deep .logo.logo-ubisoft-uno {
-                    padding: 0% 0% 0% 0%;
-                }
-
         /* Shine */
         .cover .cover-background::after {
             display: block;
@@ -117,10 +91,14 @@
             pointer-events: none;
         }
 
-    .cover:hover .cover-background::after {
-        transform: translateY(0%);
-        opacity: 0.4;
+    .cover:hover .cover-background {
+        transform: rotateX(7deg) translateY(-6px);
     }
+
+        .cover:hover .cover-background::after {
+            transform: translateY(0%);
+            opacity: 0.4;
+        }
 
     /* Shadow */
     .cover::before {
@@ -138,11 +116,6 @@
         transform: skewX(.001deg);
         transition: transform 0.65s cubic-bezier(0.18, 0.9, 0.58, 1), opacity 0.65s cubic-bezier(0.18, 0.9, 0.58, 1);
         pointer-events: none;
-    }
-
-
-    .cover:hover .cover-background {
-        transform: rotateX(7deg) translateY(-6px);
     }
 
     .cover:hover::before {
