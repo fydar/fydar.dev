@@ -31,7 +31,7 @@
     <PackageReference Include="Amazon.Lambda.RuntimeSupport" Version="1.13.1" />
     <PackageReference Include="Amazon.Lambda.Serialization.SystemTextJson" Version="2.4.4" />
     <PackageReference Include="Amazon.Lambda.SimpleEmailEvents" Version="3.1.0" />
-    <PackageReference Include="AWSSDK.SimpleEmail" Version="4.0.0.4" />
+    <PackageReference Include="AWSSDK.SimpleEmail" Version="4.0.0.8" />
   </ItemGroup>
   
 </Project>
