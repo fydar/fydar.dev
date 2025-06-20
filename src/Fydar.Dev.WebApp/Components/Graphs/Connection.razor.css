@@ -1,11 +1,11 @@
-
-svg {
+/* Graph Connections */
+svg.graph-connection {
     position: absolute;
     overflow: visible;
     pointer-events: none;
 }
 
-    svg .collider {
+    svg.graph-connection .collider {
         stroke: transparent;
         stroke-width: 10;
         stroke-linejoin: round;
@@ -14,16 +14,16 @@ svg {
         pointer-events: stroke;
     }
 
-    svg .connector {
+    svg.graph-connection .connector {
         stroke: #1d62ff;
         stroke-width: 4;
         stroke-linejoin: round;
         fill: none;
     }
 
-    svg:has(*:hover) .connector {
+    svg.graph-connection:has(*:hover) .connector {
         stroke: cyan;
     }
 
-    svg path {
+    svg.graph-connection path {
     }

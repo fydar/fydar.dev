@@ -1,5 +1,5 @@
-
-div.node {
+/* Graph Nodes */
+div.graph-node {
     --node-border-radius: 6px;
     min-width: 80px;
     background: #242636;
@@ -15,11 +15,11 @@ div.node {
     transition: transform 0.0175s linear;
 }
 
-    div.node ::deep *:last-child {
+    div.graph-node ::deep *:last-child {
         --recommended-padding-bottom: calc(10px - 2px);
     }
 
-    div.node ::deep div.node-section-header {
+    div.graph-node ::deep div.graph-node-section-header {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -30,18 +30,18 @@ div.node {
         font-size: 12px;
     }
 
-        div.node ::deep div.node-section-header + * {
+        div.graph-node ::deep div.graph-node-section-header + * {
             --recommended-padding-top: 5px;
         }
 
-    div.node ::deep div.node-section-sockets {
+    div.graph-node ::deep div.graph-node-section-sockets {
         box-sizing: border-box;
         display: flex;
         flex-direction: row;
     }
 
-        div.node ::deep div.node-section-sockets div.node-inputs,
-        div.node ::deep div.node-section-sockets div.node-outputs {
+        div.graph-node ::deep div.graph-node-section-sockets div.graph-node-inputs,
+        div.graph-node ::deep div.graph-node-section-sockets div.graph-node-outputs {
             flex-grow: 1;
             display: grid;
             grid-auto-rows: 20px;
@@ -50,14 +50,14 @@ div.node {
             padding-bottom: var(--recommended-padding-bottom);
         }
 
-            div.node ::deep div.node-section-sockets div.node-inputs div.node-input,
-            div.node ::deep div.node-section-sockets div.node-outputs div.node-output {
+            div.graph-node ::deep div.graph-node-section-sockets div.graph-node-inputs div.graph-node-input,
+            div.graph-node ::deep div.graph-node-section-sockets div.graph-node-outputs div.graph-node-output {
                 display: contents;
                 cursor: pointer;
             }
 
-                div.node ::deep div.node-section-sockets div.node-inputs div.node-input::before,
-                div.node ::deep div.node-section-sockets div.node-outputs div.node-output::before {
+                div.graph-node ::deep div.graph-node-section-sockets div.graph-node-inputs div.graph-node-input::before,
+                div.graph-node ::deep div.graph-node-section-sockets div.graph-node-outputs div.graph-node-output::before {
                     content: "";
                     grid-column: 1 / span 2;
                     grid-row: var(--row);
@@ -65,15 +65,15 @@ div.node {
                     height: calc(100% - 4px);
                 }
 
-                div.node ::deep div.node-section-sockets div.node-inputs div.node-input:hover,
-                div.node ::deep div.node-section-sockets div.node-outputs div.node-output:hover {
+                div.graph-node ::deep div.graph-node-section-sockets div.graph-node-inputs div.graph-node-input:hover,
+                div.graph-node ::deep div.graph-node-section-sockets div.graph-node-outputs div.graph-node-output:hover {
                     color: #aaa;
                 }
 
-                    div.node ::deep div.node-section-sockets div.node-inputs div.node-input:hover div.node-input-socket:hover:before,
-                    div.node ::deep div.node-section-sockets div.node-outputs div.node-output:hover div.node-output-socket:hover:before,
-                    div.node ::deep div.node-section-sockets div.node-inputs div.node-input.connected div.node-input-socket:before,
-                    div.node ::deep div.node-section-sockets div.node-outputs div.node-output.connected div.node-output-socket:before {
+                    div.graph-node ::deep div.graph-node-section-sockets div.graph-node-inputs div.graph-node-input:hover div.graph-node-input-socket:hover:before,
+                    div.graph-node ::deep div.graph-node-section-sockets div.graph-node-outputs div.graph-node-output:hover div.graph-node-output-socket:hover:before,
+                    div.graph-node ::deep div.graph-node-section-sockets div.graph-node-inputs div.graph-node-input.connected div.graph-node-input-socket:before,
+                    div.graph-node ::deep div.graph-node-section-sockets div.graph-node-outputs div.graph-node-output.connected div.graph-node-output-socket:before {
                         content: '';
                         position: absolute;
                         background-color: #1c62ff;
@@ -84,8 +84,8 @@ div.node {
                     }
 
 
-                div.node ::deep div.node-section-sockets div.node-inputs div.node-input div.node-input-socket,
-                div.node ::deep div.node-section-sockets div.node-outputs div.node-output div.node-output-socket {
+                div.graph-node ::deep div.graph-node-section-sockets div.graph-node-inputs div.graph-node-input div.graph-node-input-socket,
+                div.graph-node ::deep div.graph-node-section-sockets div.graph-node-outputs div.graph-node-output div.graph-node-output-socket {
                     background-color: #1c62ff;
                     border-radius: 4px;
                     font-size: 10px;
@@ -103,82 +103,82 @@ div.node {
                 }
 
 
-                    div.node ::deep div.node-section-sockets div.node-inputs div.node-input div.node-input-socket:hover,
-                    div.node ::deep div.node-section-sockets div.node-outputs div.node-output div.node-output-socket:hover {
+                    div.graph-node ::deep div.graph-node-section-sockets div.graph-node-inputs div.graph-node-input div.graph-node-input-socket:hover,
+                    div.graph-node ::deep div.graph-node-section-sockets div.graph-node-outputs div.graph-node-output div.graph-node-output-socket:hover {
                         background-color: #e65949;
                         color: #ffffff;
                         content: "x"
                     }
 
-                div.node ::deep div.node-section-sockets div.node-inputs div.node-input div.node-input-label,
-                div.node ::deep div.node-section-sockets div.node-outputs div.node-output div.node-output-label {
+                div.graph-node ::deep div.graph-node-section-sockets div.graph-node-inputs div.graph-node-input div.graph-node-input-label,
+                div.graph-node ::deep div.graph-node-section-sockets div.graph-node-outputs div.graph-node-output div.graph-node-output-label {
                     flex-grow: 1;
                     grid-row: var(--row);
                 }
 
 
-        div.node ::deep div.node-section-sockets div.node-inputs {
+        div.graph-node ::deep div.graph-node-section-sockets div.graph-node-inputs {
             justify-items: left;
             grid-template-columns: auto 1fr;
         }
 
-            div.node ::deep div.node-section-sockets div.node-inputs div.node-input::before {
+            div.graph-node ::deep div.graph-node-section-sockets div.graph-node-inputs div.graph-node-input::before {
                 margin-left: 10px;
                 margin-right: 4px;
             }
 
-            div.node ::deep div.node-section-sockets div.node-inputs div.node-input:hover div.node-input-socket:hover:before,
-            div.node ::deep div.node-section-sockets div.node-inputs div.node-input.connected div.node-input-socket:before {
+            div.graph-node ::deep div.graph-node-section-sockets div.graph-node-inputs div.graph-node-input:hover div.graph-node-input-socket:hover:before,
+            div.graph-node ::deep div.graph-node-section-sockets div.graph-node-inputs div.graph-node-input.connected div.graph-node-input-socket:before {
                 left: 0;
                 transform: translateX(-4px);
             }
 
-            div.node ::deep div.node-section-sockets div.node-inputs div.node-input.connected div.node-input-socket:hover:before {
+            div.graph-node ::deep div.graph-node-section-sockets div.graph-node-inputs div.graph-node-input.connected div.graph-node-input-socket:hover:before {
                 transform: translateX(-7.95px);
             }
 
-            div.node ::deep div.node-section-sockets div.node-inputs div.node-input div.node-input-socket {
+            div.graph-node ::deep div.graph-node-section-sockets div.graph-node-inputs div.graph-node-input div.graph-node-input-socket {
                 grid-column: 1;
             }
 
-            div.node ::deep div.node-section-sockets div.node-inputs div.node-input div.node-input-label {
+            div.graph-node ::deep div.graph-node-section-sockets div.graph-node-inputs div.graph-node-input div.graph-node-input-label {
                 grid-column: 2;
             }
 
-        div.node ::deep div.node-section-sockets div.node-outputs {
+        div.graph-node ::deep div.graph-node-section-sockets div.graph-node-outputs {
             justify-items: right;
             background-color: #1d1f2b;
             grid-template-columns: 1fr auto;
         }
 
-            div.node ::deep div.node-section-sockets div.node-outputs div.node-output::before {
+            div.graph-node ::deep div.graph-node-section-sockets div.graph-node-outputs div.graph-node-output::before {
                 margin-left: 4px;
                 margin-right: 10px;
             }
 
-            div.node ::deep div.node-section-sockets div.node-outputs div.node-output:hover div.node-output-socket:hover:before,
-            div.node ::deep div.node-section-sockets div.node-outputs div.node-output.connected div.node-output-socket:before {
+            div.graph-node ::deep div.graph-node-section-sockets div.graph-node-outputs div.graph-node-output:hover div.graph-node-output-socket:hover:before,
+            div.graph-node ::deep div.graph-node-section-sockets div.graph-node-outputs div.graph-node-output.connected div.graph-node-output-socket:before {
                 right: 0;
                 transform: translateX(4px);
             }
 
-            div.node ::deep div.node-section-sockets div.node-outputs div.node-output.connected div.node-output-socket:hover:before {
+            div.graph-node ::deep div.graph-node-section-sockets div.graph-node-outputs div.graph-node-output.connected div.graph-node-output-socket:hover:before {
                 transform: translateX(7.95px);
             }
 
-            div.node ::deep div.node-section-sockets div.node-outputs div.node-output div.node-output-socket {
+            div.graph-node ::deep div.graph-node-section-sockets div.graph-node-outputs div.graph-node-output div.graph-node-output-socket {
                 grid-column: 2;
             }
 
-            div.node ::deep div.node-section-sockets div.node-outputs div.node-output div.node-output-label {
+            div.graph-node ::deep div.graph-node-section-sockets div.graph-node-outputs div.graph-node-output div.graph-node-output-label {
                 grid-column: 1;
             }
 
-        div.node ::deep div.node-section-sockets:last-child div.node-outputs {
+        div.graph-node ::deep div.graph-node-section-sockets:last-child div.graph-node-outputs {
             border-bottom-right-radius: var(--node-border-radius);
         }
 
-    div.node ::deep div.node-section-properties {
+    div.graph-node ::deep div.graph-node-section-properties {
         padding-top: calc(var(--recommended-padding-top, 0px) + (var(--recommended-padding-bottom) / 2));
         padding-bottom: calc(var(--recommended-padding-bottom) / 2);
         min-height: 20px;

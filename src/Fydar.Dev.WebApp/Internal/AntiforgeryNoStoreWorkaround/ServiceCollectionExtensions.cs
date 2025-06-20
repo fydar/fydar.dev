@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Antiforgery;
 
 namespace Fydar.Dev.WebApp.Internal.AntiforgeryNoStoreWorkaround;
 
-public static class ServiceCollectionExtensions
+internal static class ServiceCollectionExtensions
 {
 	/// <summary>
 	/// <para>Should be added <b>after</b> <c>AddAntiforgery</c>.</para>

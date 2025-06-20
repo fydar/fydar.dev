@@ -2,9 +2,6 @@ header {
     margin: 0;
     padding: 0;
     border: 0;
-}
-
-header {
     position: sticky;
     top: 0px;
     left: 0px;

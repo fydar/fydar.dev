@@ -1,22 +1,23 @@
-.grid {
+/* PageSpeed Insights */
+.pagespeed-grid {
     display: grid;
     justify-items: center;
     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr) minmax(140px, 1fr));
 }
 
-    .grid .cell {
+    .pagespeed-grid .pagespeed-cell {
         min-width: 0;
         align-items: center;
         display: flex;
         flex-direction: column;
     }
 
-        .grid .cell .dial {
+        .pagespeed-grid .pagespeed-cell .pagespeed-dial {
             aspect-ratio: 1 / 1;
             width: 120px;
         }
 
-        .grid .cell .label {
+        .pagespeed-grid .pagespeed-cell .pagespeed-label {
             font-size: 1.125rem;
             letter-spacing: 1px;
             text-align: center;

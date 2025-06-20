@@ -1,12 +1,8 @@
-
+/* Graphs */
 .graph {
     aspect-ratio: 16 / 9;
     background: #171923;
     border-radius: 8px;
-    /*
-    background: #151516;
-    border: 2px solid #222222;
-    */
     overflow: hidden;
     position: relative;
     color: #daddeb;
