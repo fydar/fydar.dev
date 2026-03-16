@@ -322,7 +322,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const shouldShow = altCondition && ctrlCondition && shiftCondition;
 
-    document.querySelectorAll('a + .access-hint').forEach(hint => {
+    document.querySelectorAll('.access-hint').forEach(hint => {
         if (shouldShow) {
             hint.classList.toggle('show', true);
             hint.classList.toggle('no-transition', true);
@@ -336,7 +336,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const shouldShow = altCondition && ctrlCondition && shiftCondition;
 
-        document.querySelectorAll('a + .access-hint').forEach(hint => {
+        document.querySelectorAll('.access-hint').forEach(hint => {
             hint.classList.toggle('show', shouldShow);
             hint.classList.toggle('no-transition', false);
         });

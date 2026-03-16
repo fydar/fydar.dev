@@ -30,24 +30,24 @@ else
 }
 
 <SectionContent SectionName="layoutheadcontent">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
-	<meta name="CCBot" content="nofollow" />
-	<meta name="robots" content="noai, noimageai" />
-	<meta name="tdm-reservation" content="1" />
-	<meta name="darkreader-lock" />
-	<base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+    <meta name="CCBot" content="nofollow" />
+    <meta name="robots" content="noai, noimageai" />
+    <meta name="tdm-reservation" content="1" />
+    <meta name="darkreader-lock" />
+    <base href="/" />
 
-	<!-- Preloaded resources for page -->
-	<link rel="preload" href="@Assets["inter/inter.css"]" as="style" />
+    <!-- Preloaded resources for page -->
+    <link rel="preload" href="@Assets["inter/inter.css"]" as="style" />
     <link rel="preload" href="inter/InterVariable.woff2" as="font" type="font/woff2" crossorigin />
-	<link rel="preload" href="@Assets["Fydar.Dev.WebApp.styles.css"]" as="style" />
+    <link rel="preload" href="@Assets["Fydar.Dev.WebApp.styles.css"]" as="style" />
     <link rel="preload" href="@Assets["site.js"]" as="script" />
     <link rel="preload" href="@Assets["/_framework/blazor.web.js"]" as="script" fetchpriority="high" />
 
-	<link rel="stylesheet" href="@Assets["inter/inter.css"]" />
-	<link rel="stylesheet" href="@Assets["Fydar.Dev.WebApp.styles.css"]" />
+    <link rel="stylesheet" href="@Assets["inter/inter.css"]" />
+    <link rel="stylesheet" href="@Assets["Fydar.Dev.WebApp.styles.css"]" />
 
-	<link rel="icon" href="@Assets["favicon.svg"]" type="image/svg+xml" />
+    <link rel="icon" href="@Assets["favicon.svg"]" type="image/svg+xml" />
 </SectionContent>
 
 <SectionContent SectionName="layoutbodyscript">
@@ -64,7 +64,7 @@ else
 </SectionContent>
 
 <SectionContent SectionName="layoutbodystyle">
-	<style>
+    <style>
         /* "Inter" font with fallbacks. */
         :root {
             font-family: "Inter (Web)", "Inter", "Inter (Fallback: Apple)", "Inter (Fallback: Roboto)", "Inter (Fallback: Arial)", sans-serif;
@@ -101,135 +101,177 @@ else
             descent-override: 20.92%;
         }
 
-		html,
-		body {
-			padding: 0;
-			border: 0;
-			margin: 0;
-		}
+        html,
+        body {
+            padding: 0;
+            border: 0;
+            margin: 0;
+        }
 
-		body {
-			min-height: 100vh;
-			min-height: 100svh;
-			display: inline-block;
-			min-width: 100%;
-			color: var(--color-text-primary);
-			font-weight: 300;
-			line-height: 1.75;
-		}
+        body {
+            min-height: 100vh;
+            min-height: 100svh;
+            display: inline-block;
+            min-width: 100%;
+            color: var(--color-text-primary);
+            font-weight: 300;
+            line-height: 1.75;
+        }
 
-			body:has(main > section.fullscreen:first-child) > header {
-				position: fixed;
-			}
+            body:has(main > section.fullscreen:first-child) > header {
+                position: fixed;
+            }
 
-		@@media (pointer: coarse) {
-			body {
-				--dynamic-pagescrollbar-width: 0px;
-			}
-		}
+        @@media (pointer: coarse) {
+            body {
+                --dynamic-pagescrollbar-width: 0px;
+            }
+        }
 
-		:root {
-			font-size: 14px;
-			line-height: 0;
-			color-scheme: dark;
-			background: #161618;
-			scroll-behavior: smooth;
-			--color-text-primary: #d8d8d8;
-			--palette-primary-color: #e2b384;
-			--palette-primary-hue: 30deg;
-			--palette-primary-background1-color: #e2b38425;
-			--dynamic-pagescrollbar-width: 16px;
-			scroll-padding-top: 49px;
-			--dynamic-pageheader-height: 49px;
-		}
+        :root {
+            font-size: 14px;
+            line-height: 0;
+            color-scheme: dark;
+            background: #161618;
+            scroll-behavior: smooth;
+            --color-text-primary: #d8d8d8;
+            --palette-primary-color: #e2b384;
+            --palette-primary-hue: 30deg;
+            --palette-primary-background1-color: #e2b38425;
+            --dynamic-pagescrollbar-width: 16px;
+            scroll-padding-top: 49px;
+            --dynamic-pageheader-height: 49px;
+        }
 
-			:root::-webkit-scrollbar {
-				width: var(--dynamic-pagescrollbar-width);
-				height: var(--dynamic-pagescrollbar-width);
-			}
+            :root::-webkit-scrollbar {
+                width: var(--dynamic-pagescrollbar-width);
+                height: var(--dynamic-pagescrollbar-width);
+            }
 
-			:root::-webkit-scrollbar-corner,
-			:root::-webkit-scrollbar-track {
-				background: #161618;
-			}
+            :root::-webkit-scrollbar-corner,
+            :root::-webkit-scrollbar-track {
+                background: #161618;
+            }
 
-			:root::-webkit-scrollbar-thumb {
-				background: #3f4345;
-			}
+            :root::-webkit-scrollbar-thumb {
+                background: #3f4345;
+            }
 
-				:root::-webkit-scrollbar-thumb:hover {
-					background: #7b7b7b;
-				}
+                :root::-webkit-scrollbar-thumb:hover {
+                    background: #7b7b7b;
+                }
 
-				:root::-webkit-scrollbar-corner,
-				:root::-webkit-scrollbar-track:vertical,
-				:root::-webkit-scrollbar-thumb:vertical {
-					border-left: 1px solid #2e2e32;
-				}
+                :root::-webkit-scrollbar-corner,
+                :root::-webkit-scrollbar-track:vertical,
+                :root::-webkit-scrollbar-thumb:vertical {
+                    border-left: 1px solid #2e2e32;
+                }
 
-				:root::-webkit-scrollbar-corner,
-				:root::-webkit-scrollbar-track:horizontal,
-				:root::-webkit-scrollbar-thumb:horizontal {
-					border-top: 1px solid #2e2e32;
-				}
+                :root::-webkit-scrollbar-corner,
+                :root::-webkit-scrollbar-track:horizontal,
+                :root::-webkit-scrollbar-thumb:horizontal {
+                    border-top: 1px solid #2e2e32;
+                }
 
-		@@media screen and (min-width: 576px) {
-			:root {
-				font-size: 15px;
-			}
-		}
-		
-		@@media screen and (min-width: 768px) {
-			:root {
-				font-size: 16px;
-			}
-		}
+        @@media screen and (min-width: 576px) {
+            :root {
+                font-size: 15px;
+            }
+        }
 
-		/* Estimate the point at which the scrollbar will wrap to multiple lines */
-		@@media screen and (max-width: 381px) {
-			:root {
-				scroll-padding-top: 91px;
-				--dynamic-pageheader-height: 91px;
-			}
-		}
-	</style>
+        @@media screen and (min-width: 768px) {
+            :root {
+                font-size: 16px;
+            }
+        }
+
+        /* Estimate the point at which the scrollbar will wrap to multiple lines */
+        @@media screen and (max-width: 381px) {
+            :root {
+                scroll-padding-top: 91px;
+                --dynamic-pageheader-height: 91px;
+            }
+        }
+
+        @@view-transition {
+            navigation: auto;
+        }
+
+        :root {
+            view-transition-name: none;
+        }
+    </style>
 </SectionContent>
 
 <header data-nosnippet>
-	<nav class="container">
-		<menu class="sitenavigation" aria-label="Site navigation">
-			<li class="nav-home"><a href="/" aria-label="Home"><SvgSprite Link="/icons.svg?v=1#icon-fydar-round" Alt="Site Icon" /><span class="nav-home-label">Fydar</span></a></li>
-			<li class="nav-page"><NavLink href="/portfolio" accesskey="p" class="@(NavigationManager.ToBaseRelativePath(NavigationManager.Uri) == "" ? "active" : "")">Portfolio</NavLink><AccessKeyHint>P</AccessKeyHint></li>
-			<li class="nav-page"><NavLink href="/resume" accesskey="r">Resume</NavLink><AccessKeyHint>R</AccessKeyHint></li>
-			<li class="nav-page"><NavLink href="/contact" accesskey="c">Contact</NavLink><AccessKeyHint>C</AccessKeyHint></li>
-		</menu>
+    <nav class="container">
+        <menu class="sitenavigation" aria-label="Site navigation">
+            <li class="nav-home">
+                <a href="/" aria-label="Home">
+                    <SvgSprite Link="/icons.svg?v=1#icon-fydar-round" Alt="Site Icon" />
+                    <span class="nav-home-label">Fydar</span>
+                </a>
+            </li>
 
-		<menu class="externallinks" aria-label="External links">
-			<li><a href="https://github.com/Fydar" target="_blank" accesskey="g"><SvgSprite Link="/icons.svg?v=1#icon-github" Alt="GitHub" /></a><AccessKeyHint>G<SvgSprite Link="/icons.svg?v=1#icon-external-link" class="external-link-icon" /></AccessKeyHint></li>
-			<li class="palette-linkedin"><a href="https://www.linkedin.com/in/fydar" target="_blank" accesskey="l"><SvgSprite Link="/icons.svg?v=1#icon-linkedin" Alt="LinkedIn" /></a><AccessKeyHint>L<SvgSprite Link="/icons.svg?v=1#icon-external-link" class="external-link-icon" /></AccessKeyHint></li>
-		</menu>
-	</nav>
+            <li class="nav-page">
+                <NavLink href="/portfolio" accesskey="p" class="@(NavigationManager.ToBaseRelativePath(NavigationManager.Uri) == "" ? "active" : "")">Portfolio</NavLink>
+                <div class="active-indicator"></div>
+                <AccessKeyHint>P</AccessKeyHint>
+            </li>
+
+            <li class="nav-page">
+                <NavLink href="/resume" accesskey="r">Resume</NavLink>
+                <div class="active-indicator"></div>
+                <AccessKeyHint>R</AccessKeyHint>
+            </li>
+
+            <li class="nav-page">
+                <NavLink href="/contact" accesskey="c">Contact</NavLink>
+                <div class="active-indicator"></div>
+                <AccessKeyHint>C</AccessKeyHint>
+            </li>
+        </menu>
+
+        <menu class="externallinks" aria-label="External links">
+            <li>
+                <a href="https://github.com/Fydar" target="_blank" accesskey="g">
+                    <SvgSprite Link="/icons.svg?v=1#icon-github" Alt="GitHub" />
+                </a>
+                <AccessKeyHint>
+                    G<SvgSprite Link="/icons.svg?v=1#icon-external-link" class="external-link-icon" />
+                </AccessKeyHint>
+            </li>
+            <li class="palette-linkedin">
+                <a href="https://www.linkedin.com/in/fydar" target="_blank" accesskey="l">
+                    <SvgSprite Link="/icons.svg?v=1#icon-linkedin" Alt="LinkedIn" />
+                </a>
+                <AccessKeyHint>
+                    L<SvgSprite Link="/icons.svg?v=1#icon-external-link" class="external-link-icon" />
+                </AccessKeyHint>
+            </li>
+        </menu>
+    </nav>
 </header>
 
 <main>
-	@Body
+    @Body
 </main>
 
 <footer data-nosnippet>
-	<div class="container">
-		<menu class="externallinks" aria-label="More external links">
-			<li><a href="https://github.com/Fydar" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-github" Alt="GitHub" /></a></li>
-			<li class="palette-linkedin"><a href="https://www.linkedin.com/in/fydar" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-linkedin" Alt="LinkedIn" /></a></li>
-			<li class="palette-discord"><a href="https://discord.com/users/172972361954492416" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-discord" Alt="Discord" /></a></li>
-			<li class="palette-youtube"><a href="https://www.youtube.com/@@fydar" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-youtube" Alt="YouTube" /></a></li>
-			<li class="palette-twitch"><a href="https://www.twitch.tv/fydar" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-twitch" Alt="Twitch" /></a></li>
-			<li class="palette-twitter"><a href="https://twitter.com/Fydarus" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-twitter" Alt="Twitter" /></a></li>
-			<li class="palette-itchio"><a href="https://fydar.itch.io/" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-itchdotio" Alt="Itch.io" /></a></li>
-			<li><a href="https://assetstore.unity.com/publishers/13236" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-unity" Alt="Unity Asset Store" /></a></li>
-			<li class="palette-opencollective"><a href="https://opencollective.com/fydar" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-opencollective" Alt="OpenCollective" /></a></li>
-		</menu>
+    <div class="container">
+        <menu class="externallinks" aria-label="More external links">
+            <li><a href="https://github.com/Fydar" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-github" Alt="GitHub" /></a></li>
+            <li class="palette-linkedin"><a href="https://www.linkedin.com/in/fydar" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-linkedin" Alt="LinkedIn" /></a></li>
+            <li class="palette-discord"><a href="https://discord.com/users/172972361954492416" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-discord" Alt="Discord" /></a></li>
+            <li class="palette-youtube"><a href="https://www.youtube.com/@@fydar" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-youtube" Alt="YouTube" /></a></li>
+            <li class="palette-twitch"><a href="https://www.twitch.tv/fydar" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-twitch" Alt="Twitch" /></a></li>
+            <li class="palette-twitter"><a href="https://twitter.com/Fydarus" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-twitter" Alt="Twitter" /></a></li>
+            <li class="palette-itchio"><a href="https://fydar.itch.io/" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-itchdotio" Alt="Itch.io" /></a></li>
+            <li><a href="https://assetstore.unity.com/publishers/13236" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-unity" Alt="Unity Asset Store" /></a></li>
+            <li class="palette-opencollective"><a href="https://opencollective.com/fydar" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-opencollective" Alt="OpenCollective" /></a></li>
+        </menu>
 
-		<p class="notice">Website created by Fydar using ASP.NET Core with Blazor.</p>
-		<p class="copyright">Copyright © 2025 Fydar</p>
-	</div>
+        <p class="notice">Website created by Fydar using ASP.NET Core with Blazor.</p>
+        <p class="copyright">Copyright © 2025 Fydar</p>
+    </div>
 </footer>

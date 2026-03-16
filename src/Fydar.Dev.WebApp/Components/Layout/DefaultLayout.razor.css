@@ -53,7 +53,7 @@ header {
             color: #ffffffdd;
         }
 
-            header menu > li ::deep a {
+            header menu > li ::deep > a {
                 display: flex;
                 height: 100%;
                 min-width: 48px;
@@ -69,7 +69,7 @@ header {
                 filter: drop-shadow(0px 2px 4px black);
             }
 
-                header menu > li ::deep a:visited {
+                header menu > li ::deep > a:visited {
                     color: #ffffff;
                 }
 
@@ -99,50 +99,52 @@ header {
                     }
 
             header menu.sitenavigation > li.nav-page {
-                border-bottom: 1px solid #ffffff00;
+                position: relative;
             }
 
-                header menu.sitenavigation > li.nav-page ::deep a {
+                header menu.sitenavigation > li.nav-page ::deep > a {
                     padding: 0 0.5em;
                     color: #ffffff9b;
-                    transition: color 0.05s;
+                    transition: color 0.15s;
                 }
 
-                header menu.sitenavigation > li.nav-page:has(a:active) {
-                    border-bottom: 1px solid #ffffff55;
-                }
-
-                    header menu.sitenavigation > li.nav-page:has(a:active) ::deep a {
+                    header menu.sitenavigation > li.nav-page ::deep > a.active {
                         color: #ffffffdd;
                     }
 
-                header menu.sitenavigation > li.nav-page:has(a.active) {
-                    border-bottom: 1px solid #ffffffdd;
-                }
-
-                    header menu.sitenavigation > li.nav-page:has(a.active) ::deep a {
+                    header menu.sitenavigation > li.nav-page ::deep > a:hover,
+                    header menu.sitenavigation > li.nav-page ::deep > a:focus-visible {
                         color: #ffffffdd;
                     }
 
-                header menu.sitenavigation > li.nav-page:hover,
-                header menu.sitenavigation > li.nav-page:focus-visible {
-                    border-bottom: 1px solid #ffffff33;
-                }
+                        header menu.sitenavigation > li.nav-page ::deep > a:hover + .active-indicator,
+                        header menu.sitenavigation > li.nav-page ::deep > a:focus-visible + .active-indicator {
+                            background-color: #ffffff33;
+                        }
 
-                    header menu.sitenavigation > li.nav-page:hover ::deep a,
-                    header menu.sitenavigation > li.nav-page:focus-visible ::deep a {
-                        color: #ffffffdd;
+                    header menu.sitenavigation > li.nav-page ::deep > a.active + .active-indicator {
+                        background-color: #ffffffdd;
+                        view-transition-name: active-nav-underline;
                     }
+
+                header menu.sitenavigation > li.nav-page > .active-indicator {
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 1px;
+                    background-color: transparent;
+                    pointer-events: none;
+                }
 
         header menu.externallinks {
             margin-left: auto;
         }
 
-            header menu.externallinks > li a:hover ::deep svg,
-            header menu.externallinks > li a:focus-visible ::deep svg {
-                /*filter: drop-shadow(0px 2px 4px black) drop-shadow(0 0 6px #e2b384);*/
-            }
-
+::view-transition-group(active-nav-underline) {
+    animation-duration: 0.3s;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
 
 
 ::deep menu.externallinks {
