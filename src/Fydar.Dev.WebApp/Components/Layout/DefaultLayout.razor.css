@@ -74,6 +74,7 @@ header {
                 }
 
         header menu.sitenavigation {
+            flex-wrap: wrap;
         }
 
             header menu.sitenavigation > li.nav-home {
