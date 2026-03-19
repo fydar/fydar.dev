@@ -476,6 +476,14 @@ header:has(+ main > article:first-child > div.fullscreen:first-child) {
     margin: 0 2px 0 2px;
 }
 
+::deep .alt-caps {
+    font-feature-settings: "ss02" 1;
+}
+
+::deep h1 cite {
+    font-style: normal;
+}
+
 ::deep .media-wide {
 }
 
