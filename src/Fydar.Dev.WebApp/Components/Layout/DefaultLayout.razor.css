@@ -660,6 +660,11 @@ header:has(+ main > article:first-child > div.fullscreen:first-child) {
                         opacity: 1;
                     }
 
+                    ::deep div.fullscreen .fullscreen-footer .container .titlerow .pill:hover::before,
+                    ::deep div.fullscreen .fullscreen-footer .container .titlerow .pill:focus-visible::before {
+                        opacity: 1;
+                    }
+
             ::deep div.fullscreen .fullscreen-footer .container .titlecard {
                 position: absolute;
                 top: -286px;

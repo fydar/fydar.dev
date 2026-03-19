@@ -8,11 +8,12 @@
 {
     <meta name="description" content="@Model.Description.Default" />
 }
+<meta name="author" content="Fydar Avery" />
+
 @if (!string.IsNullOrWhiteSpace(Model.CanonicalUrl.Html))
 {
     <link rel="canonical" href="@Model.CanonicalUrl.Html" />
 }
-<meta name="author" content="Fydar" />
 
 <!-- OpenGraph Meta Tags -->
 @if (!string.IsNullOrWhiteSpace(Model.Title.Html))

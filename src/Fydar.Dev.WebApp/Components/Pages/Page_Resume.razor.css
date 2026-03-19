@@ -2,7 +2,7 @@ article.page-resume > div.container > header {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    margin-top: 4rem;
+    margin-top: 6rem;
     gap: 8px 24px;
 }
 

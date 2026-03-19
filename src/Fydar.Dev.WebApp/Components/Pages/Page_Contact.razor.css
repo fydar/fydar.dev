@@ -22,6 +22,7 @@ label {
     font-size: 0.9em;
     letter-spacing: 2px;
     margin: 0.6rem 0 0.5rem 0;
+    font-feature-settings: 'ss02';
 }
 
 p {
