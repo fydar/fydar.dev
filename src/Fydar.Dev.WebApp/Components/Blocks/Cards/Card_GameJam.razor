@@ -1,0 +1,63 @@
+<!--
+<Card class="@Palette">
+    @if (Href != null)
+    {
+        <a class="card__link" href="@Href" target="_blank">@Name</a>
+    }
+    <div class="container row">
+        <SvgSprite class="card__media" Link="@IconLink" Alt="@IconAlt" />
+        <div>
+            <header>@Name</header>
+            <dl>
+                @if (Duration != null)
+                {
+                    <div class="tagpair">
+                        <dt><SvgSprite Link="/icons.svg?v=1#icon-calendar" Alt="Duration" title="Duration" /></dt>
+                        <dd>@Duration</dd>
+                    </div>
+                }
+                @if (Theme != null)
+                {
+                    <div class="tagpair">
+                        <dt><SvgSprite Link="/icons.svg?v=1#tabler--brush" Alt="Theme" title="Theme" /></dt>
+                        <dd>@Theme</dd>
+                    </div>
+                }
+                @if (TeamSize != null)
+                {
+                    <div class="tagpair">
+                        <dt><SvgSprite Link="/icons.svg?v=1#icon-calendar" Alt="Team Size" title="Team Size" /></dt>
+                        <dd>@TeamSize</dd>
+                    </div>
+                }
+            </dl>
+        </div>
+    </div>
+</Card>
+-->
+
+@code {
+    [Parameter]
+    public string? Palette { get; set; }
+
+    [Parameter]
+    public string? Href { get; set; }
+
+    [Parameter]
+    public string? Name { get; set; }
+
+    [Parameter]
+    public string? IconLink { get; set; }
+
+    [Parameter]
+    public string? IconAlt { get; set; }
+
+    [Parameter]
+    public string? Duration { get; set; }
+
+    [Parameter]
+    public string? Theme { get; set; }
+
+    [Parameter]
+    public string? TeamSize { get; set; }
+}

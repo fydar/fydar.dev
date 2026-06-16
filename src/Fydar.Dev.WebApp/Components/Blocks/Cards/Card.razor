@@ -1,49 +1,65 @@
 @if (CardGrid != null)
 {
-	<li class="card">
-		@CardInterior()
-	</li>
+    <li @attributes="AdditionalAttributes" class="@CombinedClass">
+        @CardInterior()
+    </li>
 }
 else
 {
-	<div class="card">
-		@CardInterior()
-	</div>
+    <div @attributes="AdditionalAttributes" class="@CombinedClass">
+        @CardInterior()
+    </div>
 }
 
 @code {
-	[Parameter]
-	public RenderFragment? ChildContent { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object>? AdditionalAttributes { get; set; }
 
-	[CascadingParameter(Name = "CardGrid")]
-	public Block_CardGrid? CardGrid { get; set; }
+    private string CombinedClass
+    {
+        get
+        {
+            var baseClass = "card";
+            if (AdditionalAttributes != null && AdditionalAttributes.TryGetValue("class", out var customClass))
+            {
+                return $"{baseClass} {customClass}";
+            }
+            return baseClass;
+        }
+    }
 
-	protected override void OnParametersSet()
-	{
-		if (CardGrid != null)
-		{
-			CardGrid.Register(this);
-		}
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
 
-		base.OnParametersSet();
-	}
+    [CascadingParameter(Name = "CardGrid")]
+    public Block_CardGrid? CardGrid { get; set; }
 
-	private RenderFragment CardInterior()
-	{
-		return @<text>
-				<div class="card__glow">
-					<div class="card__glow-tl"></div>
-					<div class="card__glow-t"></div>
-					<div class="card__glow-tr"></div>
-					<div class="card__glow-ml"></div>
-					<div class="card__glow-mr"></div>
-					<div class="card__glow-bl"></div>
-					<div class="card__glow-b"></div>
-					<div class="card__glow-br"></div>
-				</div>
-				<div class="card__border"></div>
+    protected override void OnParametersSet()
+    {
+        if (CardGrid != null)
+        {
+            CardGrid.Register(this);
+        }
 
-			@ChildContent
-		</text>;
-	}
+        base.OnParametersSet();
+    }
+
+    private RenderFragment CardInterior()
+    {
+        return @<text>
+                <div class="card__glow">
+                    <div class="card__glow-tl"></div>
+                    <div class="card__glow-t"></div>
+                    <div class="card__glow-tr"></div>
+                    <div class="card__glow-ml"></div>
+                    <div class="card__glow-mr"></div>
+                    <div class="card__glow-bl"></div>
+                    <div class="card__glow-b"></div>
+                    <div class="card__glow-br"></div>
+                </div>
+                <div class="card__border"></div>
+
+            @ChildContent
+        </text>;
+    }
 }

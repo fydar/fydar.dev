@@ -38,6 +38,7 @@
             right: 1px;
             background: #161618;
             z-index: 3;
+            outline: 0;
             border-top-left-radius: calc(var(--border-top-left-radius) - 1px);
             border-top-right-radius: calc(var(--border-top-right-radius) - 1px);
             border-bottom-left-radius: calc(var(--border-bottom-left-radius) - 1px);
@@ -56,6 +57,7 @@
         color: white;
         text-decoration: none;
         position: relative;
+        outline: 0;
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -146,6 +148,7 @@
         align-items: center;
     }
 
+    .card ::deep header,
     .card ::deep h1,
     .card ::deep h2,
     .card ::deep h3,
@@ -200,6 +203,7 @@
         z-index: 5;
         aspect-ratio: 1.333333;
     }
+
     /* Card images */
     .card ::deep .card__image {
         display: block;
@@ -228,6 +232,19 @@
         border-bottom-left-radius: calc(var(--border-bottom-left-radius) - 2px);
         border-bottom-right-radius: calc(var(--border-bottom-right-radius) - 2px);
     }
+
+    /* Card medias */
+    .card ::deep .card__media {
+        display: block;
+        width: 6rem;
+        height: 6rem;
+        min-width: 6rem;
+        min-height: 6rem;
+        margin-right: 1.5rem;
+        pointer-events: none;
+        z-index: 5;
+    }
+
     /* Glow */
     .card > div.card__glow {
         --glow-distance: 40px;
