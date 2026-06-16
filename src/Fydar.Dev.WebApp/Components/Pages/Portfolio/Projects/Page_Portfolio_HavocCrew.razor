@@ -1,0 +1,122 @@
+@layout DefaultLayout
+@page "/portfolio/havoccrew"
+@{
+    var openGraphModel = new OpenGraphModel()
+    {
+        Title = "Havoc Crew - Fydar",
+        Description = "Co-op realtime multiplayer dungeon crawler for the mobile market.",
+        CanonicalUrl = "https://fydar.dev/portfolio/havoccrew",
+        Properties = [
+            new OpenGraphModelImage()
+            {
+                Url = "https://fydar.dev/media/havoccrew/social.webp",
+                Alt = "Promotional material for the game 'Havoc Crew'."
+            }
+        ]
+    };
+    var linkData = new LinkData()
+    {
+        new LinkDataBreadcrumbList()
+        {
+            new LinkDataBreadcrumbListItem()
+            {
+                Name = "Portfolio",
+                Item = "https://fydar.dev/portfolio"
+            },
+            new LinkDataBreadcrumbListItem()
+            {
+                Name = "Havoc Crew",
+                Item = "https://fydar.dev/portfolio/havoccrew"
+            }
+        }
+    };
+}
+
+<HeadContent>
+    <OpenGraphComponent Model="@openGraphModel" />
+    <LinkDataComponent Model="@linkData" />
+</HeadContent>
+
+<article class="page-systems">
+
+    <div class="fullscreen" data-nosnippet>
+        <div class="parallax-frame parallax-focalanchortop" style="--animation-time: 0.5;">
+            <picture class="parallax-layer" style="--parallax-multiplier: 0.5">
+                <img decoding="async" src="@Assets["media/havoccrew/background.webp"]" />
+            </picture>
+        </div>
+
+        <div class="fullscreen-footer">
+            <div class="container">
+                <picture>
+                    <img decoding="async" class="titlecard" src="@Assets["media/havoccrew/titlecard.webp"]" alt="Title card for the game 'Havoc Crew'." />
+                </picture>
+
+                <div class="titlerow">
+                    <div class="flexible-space"></div>
+                    <SteamPlayButton href="https://play.google.com/store/apps/details?id=com.fortisgames.teamraidrpg&hl=en_GB">Google Play</SteamPlayButton>
+                </div>
+            </div>
+        </div>
+
+        <div class="cascade-container">
+            <div class="cascade" style="background: linear-gradient(to right, #555d3700 0%, #555d3730 75%, #555d3714 100%), url('media/noise.svg');">
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <Block_ArticleHeader>
+            <h1 data-nosnippet><cite>Havoc Crew</cite> <span class="subtle">(2026)</span></h1>
+        </Block_ArticleHeader>
+
+        <Block_ArticleIntroduction>
+            <Sidebar>
+                <img decoding="async" class="article-featuredimage" src="@Assets["media/havoccrew/social.webp"]" alt="Promotional material for the game 'Havoc Crew'." />
+
+                <Block_PillCloud>
+                    <Pill_Unity />
+                    <Pill_CSharp />
+                    <Pill_Tools />
+                </Block_PillCloud>
+
+                <p>@openGraphModel.Description.Default</p>
+
+                <menu class="externallinks" aria-label="Project External links">
+                    <li><a href="https://play.google.com/store/apps/details?id=com.fortisgames.teamraidrpg&hl=en_GB" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-googleplay" Alt="Google Play" /></a></li>
+                </menu>
+
+                <ShareLink Url="@openGraphModel.CanonicalUrl.Html" />
+            </Sidebar>
+            <Container>
+
+            </Container>
+        </Block_ArticleIntroduction>
+
+        <Block_ArticleOutlined>
+            <Sidebar>
+                <aside>
+                    <Block_TableOfContents />
+                </aside>
+            </Sidebar>
+            <Content>
+
+                <OutlineSection Id="summary" LinkName="Summary">
+                    <Block_ArticleHeading>
+                        <hgroup>
+                            <p>Project</p>
+                            <h2>Summary</h2>
+                        </hgroup>
+                    </Block_ArticleHeading>
+
+                    <Block_Callout Type="construction">
+                        <Icon><SvgSprite Link="/icons.svg?v=1#fluent-emoji-high-contrast--construction" Alt="Check" /></Icon>
+                        <ChildContent>This section of my website is currently <b>under construction</b>.</ChildContent>
+                    </Block_Callout>
+
+                </OutlineSection>
+
+            </Content>
+        </Block_ArticleOutlined>
+    </div>
+</article>

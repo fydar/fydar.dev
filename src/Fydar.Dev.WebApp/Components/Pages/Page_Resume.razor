@@ -38,7 +38,7 @@
 @{
 	string explicitBaseUri = "https://fydar.dev";
 
-	if (NavigationManager.BaseUri == "https://fydar.dev/")
+	// if (NavigationManager.BaseUri == "https://fydar.dev/")
 	{
 		explicitBaseUri = "";
 	}
@@ -46,7 +46,7 @@
 
 <article class="page-resume">
 	<div class="container container--a4">
-		<header>
+        <header data-nosnippet>
 			<h1>Resume <span class="subtle">v5.1.2</span></h1>
 			<Card>
 				<a class="card__button" href="/media/resume.pdf" download="resume-fydaravery-v5.1.2.pdf">
@@ -75,7 +75,7 @@
 				<p data-nosnippet>Greetings,</p>
 				<div class="spacer"></div>
 
-				<p>I am a programmer with <b>8 years, 1 month</b> of experience working in the <b>Games Development</b> industry. I have worked on <a href="@explicitBaseUri/#titles" class="textual-link" target="_blank">8 commercial titles<SvgSprite Link="/icons.svg?v=1#icon-external-link" class="external-link-icon" /></a> and I have an extensive portfolio of other works.</p>
+				<p>I am a programmer with <b>9 years</b> of experience working in the <b>Games Development</b> industry. I have worked on <a href="@explicitBaseUri/#titles" class="textual-link" target="_blank">8 commercial titles<SvgSprite Link="/icons.svg?v=1#icon-external-link" class="external-link-icon" /></a> and I have an extensive portfolio of other works.</p>
 
 				<p class="link-tag-cloud" data-nosnippet>
 					<a class="link-tag" href="@explicitBaseUri/portfolio/eitr" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-game-controller-duotone" Alt="Game" />EITR<SvgSprite Link="/icons.svg?v=1#icon-external-link" class="external-link-icon" /></a>
@@ -122,7 +122,7 @@
 				<p>Sincerely,<br />Fydar Avery</p>
 
 				<SvgSprite class="signature-signed" width="200" height="100" Link="/icons.svg?v=1#icon-fydar-signature" Alt="Fydar's signature." />
-				<p><IPA String="new IPAString(IPACluster.PrimaryStress, IPACluster.F, IPACluster.Y, IPACluster.Syllabification, IPACluster.D, IPACluster.AR)" /></p>
+				<p class="page-coverletter-ipa"><a target="_blank" href="@explicitBaseUri/myname#pronunciation"><IPA String="new IPAString(IPACluster.PrimaryStress, IPACluster.F, IPACluster.Y, IPACluster.Syllabification, IPACluster.D, IPACluster.AR)" /></a></p>
 
 			</Page>
 
@@ -256,6 +256,69 @@
 				<h2 id="experience">Professional Experience</h2>
 
 				<div class="timeline">
+                    <a class="timeline-header" target="_blank" href="@explicitBaseUri/portfolio/havoccrew">
+						<div class="timeline-header-icon">
+							<picture>
+								<img decoding="async" src="@Assets["media/companies/fortisgames/logo.svg"]" alt="The logo for 'Fortis Games'." />
+							</picture>
+						</div>
+						<div class="timeline-header-content">
+							<div class="heading-row">
+								<h3>Fortis Games<SvgSprite Link="/icons.svg?v=1#icon-external-link" class="external-link-icon" /></h3>
+                                <h4>Havoc Crew</h4>
+							</div>
+							<div class="heading-row">
+								<ul class="textual-tags">
+									<Resume_Tag_Basis_FullTime />
+									<Resume_Tag_Size_AAA />
+									<Resume_Tag_Duration Text="9 months" />
+									<!--
+										<Resume_Tag_Location Address="London, United Kingdom" />
+										<Resume_Tag_Site_Remote />
+									-->
+								</ul>
+								<ul class="textual-tags">
+									<li class="textual-tag">
+										<SvgSprite Link="/icons.svg?v=1#icon-googleplay" Alt="Google Play" />
+									</li>
+									<Resume_Tag_Engine_Unity />
+								</ul>
+							</div>
+						</div>
+                        
+						<div class="timeline-header-media">
+							<picture>
+								<img decoding="async" src="@Assets["media/havoccrew/capsule_350x200.webp"]" alt="Landscape promotional material for the game 'Havoc Crew'." />
+							</picture>
+						</div>
+					</a>
+
+					<div class="timeline-body">
+						<div class="timeline-body-years">
+							<Resume_Year Year="2026" />
+						</div>
+						<div class="timeline-body-content">
+							<div class="callout palette-tools">
+								<SvgSprite Link="/icons.svg?v=1#tabler--tools" Alt="Tools Programming" />
+								<div class="heading-row">
+									<h4>Staff Tools Programmer</h4>
+									<ul class="textual-tags">
+										<Resume_Tag_Duration Text="Octoboer 2025 – Present" Short="2025 - 2026" />
+										<Resume_Tag_Span Text="9 mos" />
+									</ul>
+								</div>
+							</div>
+                            
+						<!--
+							<div class="capsule-tag-cloud">
+								<a class="capsule-tag palette-tools" href="@explicitBaseUri/portfolio/southfield#gradient-recolouring" target="_blank"><SvgSprite Link="/icons.svg?v=1#tabler--tools" Alt="Tools Programming" /><p>Data Authoring Tools</p><SvgSprite Link="/icons.svg?v=1#icon-external-link" class="external-link-icon" /></a>
+							</div>
+						-->
+						</div>
+					</div>
+				</div>
+                
+				<div class="timeline">
 					<a class="timeline-header" target="_blank" href="@explicitBaseUri/portfolio/phasmophobia">
 						<div class="timeline-header-icon">
 							<picture>
@@ -279,9 +342,9 @@
 								</ul>
 								<ul class="textual-tags">
 									<li class="textual-tag">
-										<SvgSprite Link="/icons.svg?v=1#icon-steam" />
-										<SvgSprite Link="/icons.svg?v=1#icon-playstation" />
-										<SvgSprite Link="/icons.svg?v=1#icon-xbox" />
+										<SvgSprite Link="/icons.svg?v=1#icon-steam" Alt="Steam" />
+										<SvgSprite Link="/icons.svg?v=1#icon-playstation" Alt="PlayStation" />
+										<SvgSprite Link="/icons.svg?v=1#icon-xbox" Alt="Xbox" />
 									</li>
 									<Resume_Tag_VR />
 									<Resume_Tag_Engine_Unity />
@@ -298,9 +361,10 @@
 					<div class="timeline-body">
 						<div class="timeline-body-years">
 							<Resume_Year Year="2025" />
+							<Resume_Year Year="2024" />
 						</div>
 						<div class="timeline-body-content">
-							<div class="callout palette-gameplay">
+                            <div class="callout palette-gameplay">
 								<SvgSprite Link="/icons.svg?v=1#tabler--pacman" Alt="Gameplay Programming" />
 								<div class="heading-row">
 									<h4>Senior Gameplay Programmer</h4>
@@ -378,7 +442,7 @@
 							<Resume_Year Year="2024" />
 						</div>
 						<div class="timeline-body-content">
-							<div class="callout palette-gameplay">
+                            <div class="callout palette-gameplay">
 								<SvgSprite Link="/icons.svg?v=1#tabler--pacman" Alt="Gameplay Programming" />
 								<div class="heading-row">
 									<h4>Senior Gameplay Programmer</h4>
@@ -441,7 +505,7 @@
 							<Resume_Year Year="2023" />
 						</div>
 						<div class="timeline-body-content">
-							<div class="callout palette-tools">
+                            <div class="callout palette-tools">
 								<SvgSprite Link="/icons.svg?v=1#tabler--tools" Alt="Tools Programming" />
 								<div class="heading-row">
 									<h4>Senior Tools Programmer</h4>
@@ -516,7 +580,7 @@
 						<div class="timeline-body-years">
 						</div>
 						<div class="timeline-body-content">
-							<div class="callout palette-gameplay">
+                            <div class="callout palette-gameplay">
 								<SvgSprite Link="/icons.svg?v=1#tabler--pacman" Alt="Gameplay Programming" />
 								<div class="heading-row">
 									<h4>Senior Gameplay Programmer</h4>
