@@ -520,8 +520,8 @@ article.page-resume ::deep div.page {
 
         article.page-resume ::deep div.page .callout > svg:first-child {
             position: absolute;
-            width: 19pt;
-            height: 19pt;
+            width: 18pt;
+            height: 18pt;
             left: 9pt;
             top: 50%;
             transform: translateY(-9.5pt);
