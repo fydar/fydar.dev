@@ -154,6 +154,10 @@ article.page-resume ::deep div.page {
             margin: 0;
         }
 
+        article.page-resume ::deep div.page .heading-row .textual-tag {
+            font-variant-numeric: tabular-nums;
+        }
+
     article.page-resume ::deep div.page a {
         text-decoration: none;
         color: #0055b6;
@@ -441,6 +445,7 @@ article.page-resume ::deep div.page {
                     flex-grow: 1;
                     font-size: 10pt;
                     letter-spacing: 1pt;
+                    font-variant-numeric: tabular-nums;
                 }
 
                     article.page-resume ::deep div.page .timeline .timeline-body .timeline-body-years::before,
