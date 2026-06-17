@@ -293,8 +293,9 @@ article.page-resume ::deep div.page {
                 font-size: 38pt;
                 text-transform: uppercase;
                 letter-spacing: 0.1em;
-                margin-bottom: 6pt;
+                margin-bottom: 12pt;
                 font-weight: 600;
+                text-align: center;
             }
 
         article.page-resume ::deep div.page.page-coverletter .page-coverletter-details {
