@@ -1,0 +1,127 @@
+@layout DefaultLayout
+@page "/portfolio/twilighttowers"
+@{
+    var openGraphModel = new OpenGraphModel()
+    {
+        Title = "Twilight Towers - Fydar",
+        Description = "Tower defence meets merge and puzzle games.",
+        CanonicalUrl = "https://fydar.dev/portfolio/twilighttowers",
+        Properties = [
+            new OpenGraphModelImage()
+            {
+                Url = "https://fydar.dev/media/twilighttowers/social.webp",
+                Alt = "Promotional material for the game 'Twilight Towers'."
+            }
+        ]
+    };
+    var linkData = new LinkData()
+    {
+        new LinkDataBreadcrumbList()
+        {
+            new LinkDataBreadcrumbListItem()
+            {
+                Name = "Portfolio",
+                Item = "https://fydar.dev/portfolio"
+            },
+            new LinkDataBreadcrumbListItem()
+            {
+                Name = "Twilight Towers",
+                Item = "https://fydar.dev/portfolio/twilighttowers"
+            }
+        }
+    };
+}
+
+<HeadContent>
+    <OpenGraphComponent Model="@openGraphModel" />
+    <LinkDataComponent Model="@linkData" />
+</HeadContent>
+
+<article class="page-systems">
+    
+    <div class="fullscreen" data-nosnippet>
+        <div class="parallax-frame parallax-focalanchortop" style="--animation-time: 0.5;">
+            <div class="parallax-layer" style="--parallax-multiplier: 0.5;">
+                <div class="blur" style="background: #96af4d">
+                </div>
+            </div>
+            
+            <video class="parallax-layer" style="--parallax-multiplier: 0.5" autoplay muted loop playsinline>
+                <source src="@Assets["media/twilighttowers/background@1080p.h265.mp4"]" type='video/mp4; codecs="hvc1.1.6.L120.90"'>
+                <source src="@Assets["media/twilighttowers/background@1080p.h264.mp4"]" type='video/mp4; codecs="avc1.640028"'>
+            </video>
+        </div>
+
+        <div class="fullscreen-footer">
+            <div class="container">
+                <picture>
+                    <img decoding="async" class="titlecard" src="@Assets["media/twilighttowers/titlecard.webp"]" alt="Title card for the game 'Twilight Towers'." />
+                </picture>
+
+                <div class="titlerow">
+                    <div class="flexible-space"></div>
+                    <SteamPlayButton href="https://www.fortisgames.com/en-us/games/twilighttowers">Official Website</SteamPlayButton>
+                </div>
+            </div>
+        </div>
+
+        <div class="cascade-container">
+            <div class="cascade" style="background: linear-gradient(to right, #555d3700 0%, #555d3730 75%, #555d3714 100%), url('media/noise.svg');">
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <Block_ArticleHeader>
+            <h1 data-nosnippet><cite>Twilight Towers</cite> <span class="subtle">(2026)</span></h1>
+        </Block_ArticleHeader>
+
+        <Block_ArticleIntroduction>
+            <Sidebar>
+                <img decoding="async" class="article-featuredimage" src="@Assets["media/twilighttowers/social.webp"]" alt="Promotional material for the game 'Twilight Towers'." />
+
+                <Block_PillCloud>
+                    <Pill_Unity />
+                    <Pill_CSharp />
+                </Block_PillCloud>
+
+                <p>@openGraphModel.Description.Default</p>
+
+                <menu class="externallinks" aria-label="Project External links">
+                    <li class="palette-youtube"><a href="https://youtu.be/3l2rxaeS3Ys" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-youtube" Alt="YouTube" /></a></li>
+                </menu>
+
+                <ShareLink Url="@openGraphModel.CanonicalUrl.Html" />
+            </Sidebar>
+            <Container>
+                <EmbedYouTube Url="https://www.youtube-nocookie.com/embed/3l2rxaeS3Ys?si=BXWpkYX5m6tP1PRx" />
+            </Container>
+        </Block_ArticleIntroduction>
+
+        <Block_ArticleOutlined>
+            <Sidebar>
+                <aside>
+                    <Block_TableOfContents />
+                </aside>
+            </Sidebar>
+            <Content>
+
+                <OutlineSection Id="summary" LinkName="Summary">
+                    <Block_ArticleHeading>
+                        <hgroup>
+                            <p>Project</p>
+                            <h2>Summary</h2>
+                        </hgroup>
+                    </Block_ArticleHeading>
+
+                    <Block_Callout Type="construction">
+                        <Icon><SvgSprite Link="/icons.svg?v=1#fluent-emoji-high-contrast--construction" Alt="Check" /></Icon>
+                        <ChildContent>This section of my website is currently <b>under construction</b>.</ChildContent>
+                    </Block_Callout>
+
+                </OutlineSection>
+
+            </Content>
+        </Block_ArticleOutlined>
+    </div>
+</article>
