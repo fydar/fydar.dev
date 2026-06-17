@@ -1,0 +1,113 @@
+@layout DefaultLayout
+@page "/portfolio/titles"
+@{
+    var openGraphModel = new OpenGraphModel()
+    {
+        Title = "Titles - Fydar",
+        Description = "Commercial game titles I have worked on professionally.",
+        CanonicalUrl = "https://fydar.dev/portfolio/titles",
+        Properties = [
+            new OpenGraphModelImage()
+            {
+                Url = "https://fydar.dev/media/header.webp",
+                Alt = "A portrait of Fydar in an anime art style."
+            }
+        ]
+    };
+    var linkData = new LinkData()
+    {
+        new LinkDataBreadcrumbList()
+        {
+            new LinkDataBreadcrumbListItem()
+            {
+                Name = "Portfolio",
+                Item = "https://fydar.dev/portfolio"
+            },
+            new LinkDataBreadcrumbListItem()
+            {
+                Name = "Titles",
+                Item = "https://fydar.dev/portfolio/titles"
+            }
+        }
+    };
+}
+
+<HeadContent>
+    <OpenGraphComponent Model="@openGraphModel" />
+    <LinkDataComponent Model="@linkData" />
+</HeadContent>
+
+<article class="page-titles">
+    <div class="container">
+        <Block_ArticleHeader>
+            <h1 data-nosnippet>Titles</h1>
+        </Block_ArticleHeader>
+
+        <Block_ArticleOutlined>
+            <Sidebar>
+                <aside>
+                    <Block_TableOfContents />
+                </aside>
+            </Sidebar>
+            <Content>
+                <OutlineSection Id="2026" LinkName="2026">
+                    <Block_ArticleHeading>
+                        <h2>2026 <span class="subtle">(2)</span></h2>
+                    </Block_ArticleHeading>
+                    <Block_CoverGrid>
+                        <Cover_TwilightTowers />
+                        <Cover_HavocCrew />
+                    </Block_CoverGrid>
+                </OutlineSection>
+
+                <OutlineSection Id="2025" LinkName="2025">
+                    <Block_ArticleHeading>
+                        <h2>2025 <span class="subtle">(1)</span></h2>
+                    </Block_ArticleHeading>
+                    <Block_CoverGrid>
+                        <Cover_Phasmophobia />
+                    </Block_CoverGrid>
+                </OutlineSection>
+
+                <OutlineSection Id="2024" LinkName="2024">
+                    <Block_ArticleHeading>
+                        <h2>2024 <span class="subtle">(2)</span></h2>
+                    </Block_ArticleHeading>
+                    <Block_CoverGrid>
+                        <Cover_UNO />
+                        <Cover_Southfield />
+                    </Block_CoverGrid>
+                </OutlineSection>
+
+                <OutlineSection Id="2022" LinkName="2022">
+                    <Block_ArticleHeading>
+                        <h2>2022 <span class="subtle">(3)</span></h2>
+                    </Block_ArticleHeading>
+                    <Block_CoverGrid>
+                        <Cover_Outrage />
+                        <Cover_StarCitizen />
+                        <Cover_Squadron42 />
+                    </Block_CoverGrid>
+                </OutlineSection>
+
+                <OutlineSection Id="2020" LinkName="2020">
+                    <Block_ArticleHeading>
+                        <h2>2020 <span class="subtle">(1)</span></h2>
+                    </Block_ArticleHeading>
+                    <Block_CoverGrid>
+                        <Cover_LegoStarWarsBattles />
+                    </Block_CoverGrid>
+                </OutlineSection>
+
+                <OutlineSection Id="2018" LinkName="2018">
+                    <Block_ArticleHeading>
+                        <h2>2018 <span class="subtle">(1)</span></h2>
+                    </Block_ArticleHeading>
+                    <Block_CoverGrid>
+                        <Cover_Eitr />
+                    </Block_CoverGrid>
+                </OutlineSection>
+            </Content>
+        </Block_ArticleOutlined>
+    </div>
+</article>
