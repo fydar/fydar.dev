@@ -1,42 +1,47 @@
 @using System.Text
 
-@inject Noncer noncer;
+@inject Noncer noncer
 
-<a class="antiscrape" href="" id="decodethis" @attributes="AdditionalAttributes">
+<a class="antiscrape" href="" id="@_uniqueId" @attributes="AdditionalAttributes">
     @ChildContent
 </a>
 
 <script nonce="@noncer.Nonce">
-    function decodeString(encodedText) {
-        var decodedText = '';
-        for (var i = 0; i < encodedText.length; i++) {
-            var charCode = encodedText.charCodeAt(i);
-            if (charCode >= 65 && charCode <= 90) {
-                decodedText += String.fromCharCode(((charCode - 65 - 3 + 26) % 26) + 65);
-            } else if (charCode >= 97 && charCode <= 122) {
-                decodedText += String.fromCharCode(((charCode - 97 - 3 + 26) % 26) + 97);
-            } else {
-                decodedText += encodedText.charAt(i);
-            }
+    (function() {
+        // Define the decode function globally ONLY once to save memory and avoid redeclaration errors
+        if (typeof window.decodeString !== 'function') {
+            window.decodeString = function(encodedText) {
+                var decodedText = '';
+                for (var i = 0; i < encodedText.length; i++) {
+                    var charCode = encodedText.charCodeAt(i);
+                    if (charCode >= 65 && charCode <= 90) {
+                        decodedText += String.fromCharCode(((charCode - 65 - 3 + 26) % 26) + 65);
+                    } else if (charCode >= 97 && charCode <= 122) {
+                        decodedText += String.fromCharCode(((charCode - 97 - 3 + 26) % 26) + 97);
+                    } else {
+                        decodedText += encodedText.charAt(i);
+                    }
+                }
+                return decodedText;
+            };
         }
-        return decodedText;
-    }
-    revealLink();
 
-    function revealLink() {
-        var element = document.getElementById("decodethis");
-        if (!element.classList.contains("revealed")) {
-            element.append(decodeString("@EncodeString(LinkText, false)"));
+        // Target this specific component's anchor tag using its unique ID
+        var element = document.getElementById("@_uniqueId");
 
-            element.href = decodeString("@EncodeString(LinkDestination, false)");
-
+        if (element && !element.classList.contains("revealed")) {
+            element.append(window.decodeString("@EncodeString(LinkText, false)"));
+            element.href = window.decodeString("@EncodeString(LinkDestination, false)");
             element.removeAttribute("style");
             element.classList.add("revealed");
         }
-    }
+    })();
 </script>
 
 @code {
+    // Generate a unique DOM ID for this specific instance of the component
+    private string _uniqueId = "link-" + Guid.NewGuid().ToString("N");
+
     [Parameter] public RenderFragment? ChildContent { get; set; }
     [Parameter] public string LinkText { get; set; } = string.Empty;
     [Parameter] public string LinkDestination { get; set; } = string.Empty;

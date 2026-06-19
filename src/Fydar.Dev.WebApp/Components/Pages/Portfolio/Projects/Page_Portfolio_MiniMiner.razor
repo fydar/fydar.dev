@@ -119,6 +119,8 @@
                         </hgroup>
                     </Block_ArticleHeading>
 
+                    <p>The first thing I built after settling on the project concept was a shader to emulate the palette and screen-door feel of a Game Boy display. I then created the pixel art tilesets in <b>Pyxel Edit</b>, starting with the character, terrain, and finally mining minigame tiles.</p>
+
                     <figure class="figure-image">
                         <picture>
                             <img decoding="async" src="@Assets["media/miniminer/miniminer-shader-part1.webp"]" alt="The UVs, grid generation, and texture sampler of the Mini Miner Game Boy shader." loading="lazy" />
@@ -199,10 +201,21 @@
 
                 </OutlineSection>
 
-                <Block_Callout Type="construction">
-                    <Icon><SvgSprite Link="/icons.svg?v=1#fluent-emoji-high-contrast--construction" Alt="Check" /></Icon>
-                    <ChildContent>This section of my website is currently <b>under construction</b>.</ChildContent>
-                </Block_Callout>
+                <OutlineSection Id="procedural-generation" LinkName="Procedural Generation">
+                    <Block_ArticleHeading>
+                        <hgroup>
+                            <p>Implementing</p>
+                            <h2>Procedural Generation</h2>
+                        </hgroup>
+                    </Block_ArticleHeading>
+
+                    <p>I particularly enjoyed building the procedural generation systems: first generating the cave maps, then scattering minable resources beneath the rock. Rather than using Unity's typical component-based IoC approach, I wrote the entire game from a single entry point. This was a deliberate constraint that kept the architecture lean for a one-week jam.</p>
+
+                    <Block_Callout Type="construction">
+                        <Icon><SvgSprite Link="/icons.svg?v=1#fluent-emoji-high-contrast--construction" Alt="Check" /></Icon>
+                        <ChildContent>This section of my website is currently <b>under construction</b>.</ChildContent>
+                    </Block_Callout>
+                </OutlineSection>
             </Content>
         </Block_ArticleOutlined>
     </div>

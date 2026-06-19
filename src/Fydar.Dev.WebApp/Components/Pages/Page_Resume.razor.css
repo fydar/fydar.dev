@@ -90,6 +90,7 @@ article.page-resume ::deep div.page {
         font-weight: 600;
         color: #393939;
         letter-spacing: 0.25pt;
+        margin-block-start: 2em;
     }
 
     article.page-resume ::deep div.page h4 {
@@ -101,8 +102,8 @@ article.page-resume ::deep div.page {
 
     article.page-resume ::deep div.page p {
         page-break-inside: avoid;
-        margin-top: 6pt;
-        margin-bottom: 6pt;
+        margin-block-start: 6pt;
+        margin-block-end: 6pt;
     }
 
     article.page-resume ::deep div.page h2:first-child {
@@ -110,11 +111,12 @@ article.page-resume ::deep div.page {
     }
 
     article.page-resume ::deep div.page .textual-tags {
-        color: var(--palette-primary-color);
         display: flex;
         flex-direction: row;
         padding: 0;
-        margin: 3pt 0 6pt 0;
+        margin-block-start: 6pt;
+        margin-block-end: 6pt;
+        align-items: center;
     }
 
     article.page-resume ::deep div.page .textual-tag {
@@ -129,8 +131,8 @@ article.page-resume ::deep div.page {
             content: "\00b7 ";
             font-weight: bold;
             white-space: pre;
-            padding-left: 4pt;
-            padding-right: 2pt;
+            padding-left: 5pt;
+            padding-right: 3pt;
         }
 
         article.page-resume ::deep div.page .textual-tag svg {
@@ -138,11 +140,15 @@ article.page-resume ::deep div.page {
             height: 1.07143em;
         }
 
+        article.page-resume ::deep div.page .textual-tag.textual-tag--unity svg {
+            width: 3.21429em;
+            height: 1.07143em;
+        }
+
     article.page-resume ::deep div.page .heading-row {
         display: flex;
         flex-direction: row;
         align-items: center;
-        justify-content: space-between;
         margin: 3pt 0 5pt 0;
     }
 
@@ -150,9 +156,17 @@ article.page-resume ::deep div.page {
             margin: 0;
         }
 
+        article.page-resume ::deep div.page .heading-row h3 + h4 {
+            margin-left: auto;
+        }
+
         article.page-resume ::deep div.page .heading-row .textual-tags {
             margin: 0;
         }
+
+            article.page-resume ::deep div.page .heading-row .textual-tags:last-child {
+                margin-left: auto;
+            }
 
         article.page-resume ::deep div.page .heading-row .textual-tag {
             font-variant-numeric: tabular-nums;
@@ -207,13 +221,14 @@ article.page-resume ::deep div.page {
         }
 
     article.page-resume ::deep div.page .link-tag-cloud {
-        padding-left: 16pt;
+        margin-block-start: 12pt;
+        margin-block-end: 14pt;
     }
 
     article.page-resume ::deep div.page .link-tag {
         background-color: #f6f8fa;
         border: solid 1pt rgb(209, 213, 218);
-        border-radius: 8pt;
+        border-radius: 4pt;
         padding: 1pt 6pt 1pt 4pt;
         margin: 4pt 4pt 0 0;
         gap: 4pt;
@@ -283,62 +298,65 @@ article.page-resume ::deep div.page {
             align-self: start;
         }
 
-    article.page-resume ::deep div.page.page-coverletter {
+
+    article.page-resume ::deep div.page .page-letterhead-header {
+        font-size: 38pt;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 2pt;
+        font-weight: 600;
+        text-align: center;
     }
 
-        article.page-resume ::deep div.page.page-coverletter .page-coverletter-header {
-        }
+    article.page-resume ::deep div.page .page-letterhead-subtitle {
+        text-align: center;
+        font-size: 11pt;
+        color: #595959;
+        letter-spacing: 0.15em;
+        margin-top: 0;
+        margin-bottom: 10pt;
+    }
 
-            article.page-resume ::deep div.page.page-coverletter .page-coverletter-header h2 {
-                font-size: 38pt;
-                text-transform: uppercase;
-                letter-spacing: 0.1em;
-                margin-bottom: 12pt;
-                font-weight: 600;
-                text-align: center;
-            }
+    article.page-resume ::deep div.page ul.page-letterhead-details {
+        border-bottom: 2pt solid #3f3f3f;
+        display: flex;
+        flex-direction: row;
+        gap: 4pt;
+        padding: 0;
+        font-size: 10pt;
+        justify-content: space-between;
+        margin-top: 0;
+        margin-bottom: 32pt;
+    }
 
-        article.page-resume ::deep div.page.page-coverletter .page-coverletter-details {
-            border-bottom: 2pt solid #3f3f3f;
+        article.page-resume ::deep div.page ul.page-letterhead-details > li {
             display: flex;
-            flex-direction: row;
-            gap: 4pt;
-            padding: 0;
-            font-size: 0.925em;
-            justify-content: space-between;
-            margin-top: 0;
-            margin-bottom: 32pt;
+            align-items: center;
+            margin: 0;
+            letter-spacing: 0.025em;
         }
 
-            article.page-resume ::deep div.page.page-coverletter .page-coverletter-details li {
+            article.page-resume ::deep div.page ul.page-letterhead-details > li p,
+            article.page-resume ::deep div.page ul.page-letterhead-details > li a {
+                margin: 0;
+                color: #3f3f3f;
                 display: flex;
                 align-items: center;
-                margin: 0;
-                font-size: 10pt;
-                letter-spacing: 0.025em;
+                padding-top: 4pt;
+                padding-bottom: 4pt;
+                padding-left: 4pt;
+                padding-right: 4pt;
             }
 
-                article.page-resume ::deep div.page.page-coverletter .page-coverletter-details li p,
-                article.page-resume ::deep div.page.page-coverletter .page-coverletter-details li a {
-                    margin: 0;
-                    color: #3f3f3f;
-                    display: flex;
-                    align-items: center;
-                    padding-top: 4pt;
-                    padding-bottom: 4pt;
-                    padding-left: 4pt;
-                    padding-right: 4pt;
-                }
+            article.page-resume ::deep div.page ul.page-letterhead-details > li svg:first-child {
+                height: 14pt;
+                width: 14pt;
+                margin-right: 3pt;
+            }
 
-                article.page-resume ::deep div.page.page-coverletter .page-coverletter-details li svg:first-child {
-                    height: 12pt;
-                    width: 12pt;
-                    margin-right: 4pt;
-                }
-
-                article.page-resume ::deep div.page.page-coverletter .page-coverletter-details li svg.external-link-icon {
-                    transform: translateY(-3pt);
-                }
+            article.page-resume ::deep div.page ul.page-letterhead-details > li svg.external-link-icon {
+                transform: translateY(-3pt);
+            }
 
     article.page-resume ::deep div.page .spacer {
         height: 14pt;
@@ -346,8 +364,8 @@ article.page-resume ::deep div.page {
 
 
     article.page-resume ::deep div.page .timeline {
-        margin-bottom: 30pt;
-        gap: 8pt;
+        margin-bottom: 28pt;
+        gap: 7pt;
         display: flex;
         flex-direction: column;
     }
@@ -416,7 +434,6 @@ article.page-resume ::deep div.page {
                     font-size: 13pt;
                     font-weight: 500;
                     line-height: 1;
-                    margin: 0;
                 }
 
                 article.page-resume ::deep div.page .timeline .timeline-header .timeline-header-content .heading-row {
@@ -497,22 +514,24 @@ article.page-resume ::deep div.page {
 
     article.page-resume ::deep div.page .callout {
         position: relative;
-        margin: 6pt 0 2pt 0;
-        padding: 3pt 10pt 5pt 32pt;
+        margin-block-start: 6pt;
+        margin-block-end: 2pt;
+        padding: 4pt 10pt 5pt 12pt;
         background: var(--palette-primary-background1-color);
+        color: var(--palette-primary-color);
         border-radius: 3pt;
         display: block;
     }
 
         article.page-resume ::deep div.page .callout > *:first-child {
-            margin-top: 0;
+            margin-block-start: 0;
         }
 
         article.page-resume ::deep div.page .callout > *:last-child {
-            margin-bottom: 0;
+            margin-block-end: 0;
         }
 
-        article.page-resume ::deep div.page .callout::after {
+        article.page-resume ::deep div.page .callout::before {
             content: '';
             position: absolute;
             width: 3pt;
@@ -535,15 +554,34 @@ article.page-resume ::deep div.page {
         }
 
             article.page-resume ::deep div.page .callout > svg:first-child + h4 {
-                margin-top: 0;
+                margin-block-start: 0;
             }
 
-        article.page-resume ::deep div.page .callout h4 {
-            margin-bottom: 1pt;
+        article.page-resume ::deep div.page .callout .heading-row {
+            line-height: 18pt;
         }
 
+            article.page-resume ::deep div.page .callout .heading-row > svg:first-child {
+                width: 18pt;
+                height: 18pt;
+                margin-right: 6pt;
+                color: var(--palette-primary-color);
+            }
+
+            article.page-resume ::deep div.page .callout .heading-row > * {
+                height: 18pt;
+            }
+
+            article.page-resume ::deep div.page .callout .heading-row .textual-tag {
+                margin-top: 3pt;
+            }
+
+            article.page-resume ::deep div.page .callout .heading-row > h4 {
+                align-self: center;
+            }
+
         article.page-resume ::deep div.page .callout + .callout {
-            margin-top: 0;
+            margin-block-start: 0;
         }
 
 
@@ -585,6 +623,120 @@ article.page-resume ::deep div.page {
             height: 5px;
         }
 
+    article.page-resume ::deep div.page .sender-info {
+        float: right;
+        list-style: none;
+        padding: 0;
+        margin-left: 24pt;
+        margin-bottom: 4pt;
+        margin-top: 0;
+        text-align: right;
+    }
+
+        article.page-resume ::deep div.page .sender-info > li {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin: 0;
+            letter-spacing: 0.025em;
+        }
+
+            article.page-resume ::deep div.page .sender-info > li > p,
+            article.page-resume ::deep div.page .sender-info > li > a {
+                margin: 0;
+                color: #3f3f3f;
+                display: flex;
+                align-items: center;
+                padding: 3pt;
+            }
+
+            article.page-resume ::deep div.page .sender-info > li svg:first-child {
+                height: 14pt;
+                width: 14pt;
+                margin-right: 5pt;
+            }
+
+        article.page-resume ::deep div.page .sender-info .sender-info__name {
+            font-size: 17pt;
+            font-weight: 600;
+            color: #393939;
+            padding-top: 0;
+            padding-bottom: 3pt;
+            margin: 0;
+        }
+
+        article.page-resume ::deep div.page .sender-info .letter-date {
+            margin-top: 8pt;
+            padding-top: 8pt;
+            border-top: 2pt solid #e0e0e0;
+            color: #555;
+        }
+
+    article.page-resume ::deep div.page .recipient-info {
+        font-style: normal;
+        line-height: 1.6;
+        margin-block-start: 64pt;
+        margin-block-end: 32pt;
+        padding-left: 10pt;
+        border-left: 2pt solid #e0e0e0;
+    }
+
+    article.page-resume ::deep div.page.page-coverletter > p:first-of-type {
+        clear: both;
+    }
+
+
+    article.page-resume ::deep div.page .letter-footer {
+        display: flex;
+    }
+
+        article.page-resume ::deep div.page .letter-footer .letter-footer-signature {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-right: 28pt;
+            border-right: 2pt solid #e0e0e0;
+            margin-right: 20pt;
+            justify-content: center;
+        }
+
+        article.page-resume ::deep div.page .letter-footer .letter-footer-signature .page-coverletter-ipa {
+            margin: 4pt 0 0 0;
+        }
+
+        article.page-resume ::deep div.page .letter-footer .name {
+            font-size: 17pt;
+        }
+
+        article.page-resume ::deep div.page .letter-footer .page-letter-footer-details {
+            padding: 0;
+        }
+
+            article.page-resume ::deep div.page .letter-footer .page-letter-footer-details > li {
+                display: flex;
+                align-items: center;
+                margin: 0;
+                letter-spacing: 0.025em;
+            }
+
+                article.page-resume ::deep div.page .letter-footer .page-letter-footer-details > li a {
+                    margin: 0;
+                    margin-left: -3pt;
+                    color: #3f3f3f;
+                    display: flex;
+                    align-items: center;
+                    padding: 3pt;
+                }
+
+                article.page-resume ::deep div.page .letter-footer .page-letter-footer-details > li svg:first-child {
+                    height: 14pt;
+                    width: 14pt;
+                    margin-right: 6pt;
+                }
+
+                article.page-resume ::deep div.page .letter-footer .page-letter-footer-details > li svg.external-link-icon {
+                    transform: translateY(-3pt);
+                }
 
 
 article.page-resume ::deep .palette-magenta {
@@ -658,8 +810,26 @@ article.page-resume ::deep .palette-technicalart {
     }
 
     article.page-resume > div.container > header,
+    article.page-resume footer.resume-addendum,
     article.page-resume ::deep .section-page-above,
     article.page-resume ::deep .section-page-below {
         display: none;
     }
 }
+
+article.page-resume > div.container > footer.resume-addendum {
+    margin-block-start: 2rem;
+    margin-block-end: 4rem;
+    color: #a3a3a3;
+}
+
+    article.page-resume > div.container > footer.resume-addendum > hr {
+        border: none;
+        border-top: 1px solid currentColor;
+        margin-block-end: 0.5em;
+    }
+
+    article.page-resume > div.container > footer.resume-addendum > p {
+        margin-block: 0;
+        font-size: 0.8em;
+    }

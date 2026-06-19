@@ -101,13 +101,39 @@
             </Sidebar>
             <Content>
 
-                <OutlineSection Id="cameras-and-hacking" LinkName="Cameras and Hacking">
+                <OutlineSection Id="character-controller" LinkName="Character Controller">
                     <Block_ArticleHeading>
                         <hgroup>
                             <p>Implementing the</p>
-                            <h2>Cameras and Hacking</h2>
+                            <h2>Character Controller</h2>
                         </hgroup>
                     </Block_ArticleHeading>
+
+                    <p>This was my first team game jam, held at the Unity office in Brighton. After forming a team, we decided to make a game where the player remotely pilots a drone through a space station's CCTV network to shut down a rogue AI. I implemented the drone's character controller, handling its movement and physical interactions within the station environment.</p>
+
+                </OutlineSection>
+
+                <OutlineSection Id="cameras" LinkName="Camera Controllers">
+                    <Block_ArticleHeading>
+                        <hgroup>
+                            <p>Implementing the</p>
+                            <h2>Camera Controllers</h2>
+                        </hgroup>
+                    </Block_ArticleHeading>
+
+                    <p>The central mechanic of hopping between CCTV feeds to track and control the drone required a flexible camera controller system capable of smooth transitions between multiple viewpoints, each with its own position, orientation, and field of view.</p>
+
+                </OutlineSection>
+
+                <OutlineSection Id="glitching-ui" LinkName="Glitching UI">
+                    <Block_ArticleHeading>
+                        <hgroup>
+                            <p>Implementing the</p>
+                            <h2>Glitching UI</h2>
+                        </hgroup>
+                    </Block_ArticleHeading>
+
+                    <p>To sell the feeling of navigating a corrupted station network, I built glitch effects for the UI, including screen tears, colour channel shifts, and frame corruption, all triggered as the rogue AI fights back against the player's intrusion between camera transitions.</p>
 
                     <Block_Callout Type="construction">
                         <Icon><SvgSprite Link="/icons.svg?v=1#fluent-emoji-high-contrast--construction" Alt="Check" /></Icon>
