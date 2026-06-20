@@ -1,13 +1,17 @@
-{
+﻿{
     "name": "Astral Elites",
     "short_name": "Astral Elites",
     "version": "0.1.2.8",
     "description": "The physics-based and fast-paced asteroids clone for the modern era.",
-    "categories": ["games"],
+    "categories": [
+        "games"
+    ],
     "id": "/play/astralelites",
     "start_url": "/play/astralelites",
     "display": "standalone",
-    "display_override": ["fullscreen" ],
+    "display_override": [
+        "fullscreen"
+    ],
     "orientation": "any",
     "background_color": "#161618",
     "theme_color": "#161618",
@@ -20,5 +24,6 @@
             "type": "image/svg+xml",
             "purpose": "any"
         }
-    ]
+    ],
+    "scope": "/play/astralelites"
 }

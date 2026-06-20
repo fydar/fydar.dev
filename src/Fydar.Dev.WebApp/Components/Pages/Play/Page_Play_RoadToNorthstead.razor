@@ -1,7 +1,6 @@
-﻿@layout GameLayout
+@layout GameLayout
 @page "/play/roadtonorthstead"
 
-@inject Noncer noncer;
 
 @{
     var openGraphModel = new OpenGraphModel()
@@ -40,7 +39,6 @@
     <LinkDataComponent Model="@linkData" />
     <meta name="theme-color" content="#161618">
     <link rel="shortcut icon" href="@Assets["/play/roadtonorthstead/favicon.ico"]">
-    <link rel="manifest" href="@Assets["/play/roadtonorthstead/manifest.webmanifest"]">
     <link rel="preload" href="@Assets["/play/roadtonorthstead/build/roadtonorthstead.loader.js"]" as="script" fetchpriority="high" />
 </HeadContent>
 
@@ -65,18 +63,7 @@
     </Placeholder>
 </EmbedUnity>
 
-<script nonce="@noncer.Nonce">
-    var serviceWorkerUrl = "@Assets["play/roadtonorthstead/ServiceWorker.js"]";
-    window.addEventListener("load", function () {
-        if ("serviceWorker" in navigator) {
-            let swUrl = serviceWorkerUrl;
-            if (window.trustedTypes && window.trustedTypes.createPolicy) {
-                const policy = window.trustedTypes.createPolicy("sw-policy", {
-                    createScriptURL: (url) => url
-                });
-                swUrl = policy.createScriptURL(serviceWorkerUrl);
-            }
-            navigator.serviceWorker.register(swUrl, { scope: window.location.pathname });
-        }
-    });
-</script>
+<PwaInstall AppId="roadtonorthstead"
+            Scope="/play/roadtonorthstead"
+            ServiceWorkerUrl="@Assets["play/roadtonorthstead/ServiceWorker.js"]"
+            ManifestUrl="@Assets["/play/roadtonorthstead/manifest.webmanifest"]" />

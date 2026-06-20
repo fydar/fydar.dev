@@ -1,7 +1,6 @@
-﻿@layout GameLayout
+@layout GameLayout
 @page "/play/bloodlust"
 
-@inject Noncer noncer;
 
 @{
     var openGraphModel = new OpenGraphModel()
@@ -40,7 +39,6 @@
     <LinkDataComponent Model="@linkData" />
     <meta name="theme-color" content="#161618">
     <link rel="shortcut icon" href="@Assets["/play/bloodlust/favicon.ico"]">
-    <link rel="manifest" href="@Assets["/play/bloodlust/manifest.webmanifest"]">
     <link rel="preload" href="@Assets["/play/bloodlust/build/bloodlust.loader.js"]" as="script" fetchpriority="high" />
 </HeadContent>
 
@@ -65,18 +63,7 @@
     </Placeholder>
 </EmbedUnity>
 
-<script nonce="@noncer.Nonce">
-    var serviceWorkerUrl = "@Assets["play/bloodlust/ServiceWorker.js"]";
-    window.addEventListener("load", function () {
-        if ("serviceWorker" in navigator) {
-            let swUrl = serviceWorkerUrl;
-            if (window.trustedTypes && window.trustedTypes.createPolicy) {
-                const policy = window.trustedTypes.createPolicy("sw-policy", {
-                    createScriptURL: (url) => url
-                });
-                swUrl = policy.createScriptURL(serviceWorkerUrl);
-            }
-            navigator.serviceWorker.register(swUrl, { scope: window.location.pathname });
-        }
-    });
-</script>
+<PwaInstall AppId="bloodlust"
+            Scope="/play/bloodlust"
+            ServiceWorkerUrl="@Assets["play/bloodlust/ServiceWorker.js"]"
+            ManifestUrl="@Assets["/play/bloodlust/manifest.webmanifest"]" />

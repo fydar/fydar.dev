@@ -1,16 +1,17 @@
-{
-    "name": "Lovers Defence",
-    "short_name": "Lovers Defence",
-    "start_url": "/play/loversdefence",
-    "display": "fullscreen",
-    "background_color": "#12171A",
-    "theme_color": "#000",
-    "description": "",
-    "icons": [
-        {
-            "src": "favicon.ico",
-            "sizes": "48x48 72x72 96x96 128x128 256x256 512x512",
-            "purpose": "any"
-        }
-    ]
+﻿{
+    "name":  "Lovers Defence",
+    "short_name":  "Lovers Defence",
+    "start_url":  "/play/loversdefence",
+    "display":  "fullscreen",
+    "background_color":  "#12171A",
+    "theme_color":  "#000",
+    "description":  "",
+    "icons":  [
+                  {
+                      "src":  "favicon.ico",
+                      "sizes":  "48x48 72x72 96x96 128x128 256x256 512x512",
+                      "purpose":  "any"
+                  }
+              ],
+    "scope":  "/play/loversdefence"
 }

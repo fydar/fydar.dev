@@ -1,0 +1,32 @@
+@inject Noncer noncer
+
+@if (!string.IsNullOrEmpty(ManifestUrl))
+{
+    <HeadContent>
+        <link rel="manifest" href="@ManifestUrl">
+    </HeadContent>
+}
+
+<script defer nonce="@noncer.Nonce">
+(function () {
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function () {
+            var swUrl = '@ServiceWorkerUrl';
+            if (window.trustedTypes && window.trustedTypes.createPolicy) {
+                var policy = window.trustedTypes.createPolicy('sw-@AppId', {
+                    createScriptURL: function (url) { return url; }
+                });
+                swUrl = policy.createScriptURL(swUrl);
+            }
+            navigator.serviceWorker.register(swUrl, { scope: '@Scope' });
+        });
+    }
+})();
+</script>
+
+@code {
+    [Parameter, EditorRequired] public string AppId { get; set; } = "";
+    [Parameter, EditorRequired] public string ServiceWorkerUrl { get; set; } = "";
+    [Parameter, EditorRequired] public string Scope { get; set; } = "";
+    [Parameter] public string? ManifestUrl { get; set; }
+}
