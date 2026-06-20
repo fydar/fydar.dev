@@ -6,7 +6,8 @@ WORKDIR /app
 
 ENV ASPNETCORE_HTTP_PORTS=8060
 EXPOSE 8060
-EXPOSE 8061
+EXPOSE 8061/tcp
+EXPOSE 8061/udp
 
 # Use the native build platform for faster compilation
 FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:10.0 AS build

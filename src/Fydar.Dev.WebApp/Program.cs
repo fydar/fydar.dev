@@ -167,7 +167,7 @@ public class Program
 				8061,
 				listen =>
 				{
-					listen.Protocols = HttpProtocols.Http1 | HttpProtocols.Http2;
+					listen.Protocols = HttpProtocols.Http1 | HttpProtocols.Http2 | HttpProtocols.Http3;
 
 					if (useDevelopmentCertificate)
 					{
