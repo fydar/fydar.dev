@@ -118,8 +118,6 @@ public class Program
 		builder.Services.AddRazorComponents()
 			.AddInteractiveWebAssemblyComponents();
 
-		builder.Services.AddLettuceEncrypt();
-
 		builder.Services.AddSingleton(new S3EmailReaderServiceConfiguration()
 		{
 			Bucket = "fydar.dev-inbound-email"
@@ -132,6 +130,17 @@ public class Program
 
 		builder.Services.AddAWSService<IAmazonSimpleEmailService>();
 		builder.Services.AddAWSService<IAmazonS3>();
+
+		string domainName = builder.Configuration.GetValue<string>("DOMAINNAME") ?? string.Empty;
+		bool hasAcceptedLettuceEncryptTerms = builder.Configuration.GetValue<bool>("ACCEPT_LETTUCE_ENCRYPT_TERMS");
+
+		bool useDevelopmentCertificate = string.IsNullOrEmpty(domainName) || !hasAcceptedLettuceEncryptTerms;
+
+		if (!useDevelopmentCertificate)
+		{
+			builder.Services.AddLettuceEncrypt(options =>
+				builder.Configuration.Bind("LettuceEncrypt", options));
+		}
 
 		if (builder.WebHost.GetSetting("Environment") != "Development")
 		{
@@ -146,40 +155,28 @@ public class Program
 			{
 				opts.RedirectStatusCode = (int)HttpStatusCode.PermanentRedirect;
 			});
-
-			string domainName = builder.Configuration.GetValue<string>("DOMAINNAME") ?? string.Empty;
-
-			if (!string.IsNullOrEmpty(domainName))
-			{
-				builder.Services.AddLettuceEncrypt(options =>
-				{
-					options.AcceptTermsOfService = true;
-					options.DomainNames = [domainName];
-					options.EmailAddress = "dev.anthonymarmont@gmail.com";
-				});
-				// 	.PersistDataToDirectory(new DirectoryInfo("lettuce"), null);
-			}
 		}
 
 		builder.WebHost.UseKestrel(kestrel =>
 		{
 			var appServices = kestrel.ApplicationServices;
 
-			kestrel.Listen(IPAddress.Any, 8060);
+			kestrel.ListenAnyIP(8060);
 
-			kestrel.Listen(
-				IPAddress.Any, 8061,
+			kestrel.ListenAnyIP(
+				8061,
 				listen =>
 				{
 					listen.Protocols = HttpProtocols.Http1 | HttpProtocols.Http2;
 
-					listen.UseHttps(adapter =>
+					if (useDevelopmentCertificate)
 					{
-						if (builder.WebHost.GetSetting("Environment") != "Development")
-						{
-							adapter.UseLettuceEncrypt(appServices);
-						}
-					});
+						listen.UseHttps();
+					}
+					else
+					{
+						listen.UseLettuceEncrypt(appServices);
+					}
 				});
 		});
 
@@ -222,8 +219,7 @@ public class Program
 		}
 		else
 		{
-			string domainName = builder.Configuration.GetValue<string>("DOMAINNAME") ?? string.Empty;
-			if (!string.IsNullOrEmpty(domainName))
+			if (!useDevelopmentCertificate)
 			{
 				app.UseHttpsRedirection();
 			}

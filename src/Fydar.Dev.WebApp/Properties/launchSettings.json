@@ -18,17 +18,9 @@
       },
       "dotnetRunMessages": true,
       "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}",
-      "applicationUrl": "https://localhost:8060;http://localhost:8061",
-      "launchUrl": "http://localhost:8061",
+      "applicationUrl": "http://localhost:8060;https://localhost:8061",
+      "launchUrl": "https://localhost:8061",
       "useSSL": true
-    },
-    "IIS Express": {
-      "commandName": "IISExpress",
-      "launchBrowser": true,
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}"
     },
     "Container (Dockerfile)": {
       "commandName": "Docker",
@@ -39,7 +31,15 @@
         "ASPNETCORE_HTTP_PORTS": "8060"
       },
       "publishAllPorts": true,
-      "useSSL": false
+      "useSSL": true
+    },
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}"
     }
   },
   "$schema": "http://json.schemastore.org/launchsettings.json",
