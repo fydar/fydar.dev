@@ -1,40 +1,29 @@
 @layout DefaultLayout
 @page "/portfolio/behaviour"
+
 @{
-    var openGraphModel = new OpenGraphModel()
-    {
-        Title = "Behaviour - Fydar",
-        Description = "A complete node-based behaviour system.",
-        CanonicalUrl = "https://fydar.dev/portfolio/behaviour",
-        Properties = [
-            new OpenGraphModelImage()
-            {
-                Url = "https://fydar.dev/media/header.webp",
-                Alt = "A portrait of Fydar in an anime art style."
-            }
-        ]
-    };
-    var linkData = new LinkData()
-    {
-        new LinkDataBreadcrumbList()
-        {
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Portfolio",
-                Item = "https://fydar.dev/portfolio"
-            },
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Behaviour",
-                Item = "https://fydar.dev/portfolio/behaviour"
-            }
-        }
-    };
+	var canonicalUrl = "https://fydar.dev/portfolio/behaviour";
+	void PageMetadata(IMetadataFactory factory)
+	{
+		factory.UseTitle("Behaviour - Fydar");
+		factory.UseDescription("A complete node-based behaviour system.");
+		factory.UseCanonicalUrl(canonicalUrl);
+		factory.UseImage(image =>
+		{
+			image.Url = "https://fydar.dev/media/header.webp";
+			image.Alt = "A portrait of Fydar in an anime art style.";
+		});
+	}
+	var breadcrumbs = new BreadcrumbList()
+	{
+		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+		new BreadcrumbListItem("Behaviour", "https://fydar.dev/portfolio/behaviour"),
+	};
 }
 
 <HeadContent>
-    <OpenGraphComponent Model="@openGraphModel" />
-    <LinkDataComponent Model="@linkData" />
+	<MetadataComponent Metadata="@PageMetadata" />
+	<BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadContent>
 
 <article class="page-behaviour">
@@ -50,13 +39,13 @@
                     <Pill_CSharp />
                 </Block_PillCloud>
 
-                <p>@openGraphModel.Description.Default</p>
+                <p>A complete node-based behaviour system.</p>
 
                 <menu class="externallinks" aria-label="Project External links">
                     <li><a href="https://github.com/fydar/RPGCore" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-github" Alt="GitHub" /></a></li>
                 </menu>
 
-                <ShareLink Url="@openGraphModel.CanonicalUrl.Html" />
+                <ShareLink Url="@canonicalUrl" />
             </Sidebar>
             <Container>
             </Container>

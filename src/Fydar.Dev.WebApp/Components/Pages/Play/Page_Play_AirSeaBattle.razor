@@ -1,45 +1,31 @@
 @layout GameLayout
 @page "/play/airseabattle"
 
-
 @{
-    var openGraphModel = new OpenGraphModel()
-    {
-        Title = "Play Air-Sea Battle - Fydar",
-        Description = "The Game Boy demake of the Nintendo DS Pokémon Diamond and Pearl underground mining minigame.",
-        CanonicalUrl = "https://fydar.dev/play/airseabattle",
-        Properties = [
-            new OpenGraphModelImage()
-            {
-                Url = "https://fydar.dev/media/airseabattle/social.webp",
-                Alt = "Promotional material for the game 'Air-Sea Battle'."
-            }
-        ]
-    };
-    var linkData = new LinkData()
-    {
-        new LinkDataBreadcrumbList()
-        {
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Play",
-                Item = "https://fydar.dev/play/"
-            },
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Air-Sea Battle",
-                Item = "https://fydar.dev/play/airseabattle"
-            }
-        }
-    };
+	void PageMetadata(IMetadataFactory factory)
+	{
+		factory.UseTitle("Play Air-Sea Battle - Fydar");
+		factory.UseDescription("The Game Boy demake of the Nintendo DS Pokémon Diamond and Pearl underground mining minigame.");
+		factory.UseCanonicalUrl("https://fydar.dev/play/airseabattle");
+		factory.UseImage(image =>
+		{
+			image.Url = "https://fydar.dev/media/airseabattle/social.webp";
+			image.Alt = "Promotional material for the game 'Air-Sea Battle'.";
+		});
+	}
+	var breadcrumbs = new BreadcrumbList()
+	{
+		new BreadcrumbListItem("Play", "https://fydar.dev/play/"),
+		new BreadcrumbListItem("Air-Sea Battle", "https://fydar.dev/play/airseabattle"),
+	};
 }
 
 <HeadContent>
-    <OpenGraphComponent Model="@openGraphModel" />
-    <LinkDataComponent Model="@linkData" />
-    <meta name="theme-color" content="#161618">
-    <link rel="shortcut icon" href="@Assets["/play/airseabattle/favicon.ico"]">
-    <link rel="preload" href="@Assets["/play/airseabattle/build/airseabattle.loader.js"]" as="script" fetchpriority="high" />
+	<MetadataComponent Metadata="@PageMetadata" />
+	<BreadcrumbListComponent Model="@breadcrumbs" />
+	<meta name="theme-color" content="#161618">
+	<link rel="shortcut icon" href="@Assets["/play/airseabattle/favicon.ico"]">
+	<link rel="preload" href="@Assets["/play/airseabattle/build/airseabattle.loader.js"]" as="script" fetchpriority="high" />
 </HeadContent>
 
 @{

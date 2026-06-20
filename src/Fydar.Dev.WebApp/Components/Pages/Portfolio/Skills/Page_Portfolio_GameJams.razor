@@ -1,41 +1,28 @@
 @layout DefaultLayout
 @page "/portfolio/gamejams"
-@using Microsoft.AspNetCore.OutputCaching
+
 @{
-    var openGraphModel = new OpenGraphModel()
-    {
-        Title = "Game Jams - Fydar",
-        Description = "I love game jams so much! Here is my portfolio of my latest game jams.",
-        CanonicalUrl = "https://fydar.dev/portfolio/gamejams",
-        Properties = [
-            new OpenGraphModelImage()
-            {
-                Url = "https://fydar.dev/media/header.webp",
-                Alt = "A portrait of Fydar in an anime art style."
-            }
-        ]
-    };
-    var linkData = new LinkData()
-    {
-        new LinkDataBreadcrumbList()
-        {
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Portfolio",
-                Item = "https://fydar.dev/portfolio"
-            },
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Game Jams",
-                Item = "https://fydar.dev/portfolio/gamejams"
-            }
-        }
-    };
+	void PageMetadata(IMetadataFactory factory)
+	{
+		factory.UseTitle("Game Jams - Fydar");
+		factory.UseDescription("I love game jams so much! Here is my portfolio of my latest game jams.");
+		factory.UseCanonicalUrl("https://fydar.dev/portfolio/gamejams");
+		factory.UseImage(image =>
+		{
+			image.Url = "https://fydar.dev/media/header.webp";
+			image.Alt = "A portrait of Fydar in an anime art style.";
+		});
+	}
+	var breadcrumbs = new BreadcrumbList()
+	{
+		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+		new BreadcrumbListItem("Game Jams", "https://fydar.dev/portfolio/gamejams"),
+	};
 }
 
 <HeadContent>
-    <OpenGraphComponent Model="@openGraphModel" />
-    <LinkDataComponent Model="@linkData" />
+	<MetadataComponent Metadata="@PageMetadata" />
+	<BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadContent>
 
 <article class="page-gamejams">

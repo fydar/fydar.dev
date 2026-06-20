@@ -1,40 +1,29 @@
 @layout DefaultLayout
 @page "/portfolio/astralswarm"
+
 @{
-    var openGraphModel = new OpenGraphModel()
-    {
-        Title = "Astral Swarm - Fydar",
-        Description = "Battle endless swarms of enemy space ships across the galaxy.",
-        CanonicalUrl = "https://fydar.dev/portfolio/astralswarm",
-        Properties = [
-            new OpenGraphModelImage()
-            {
-                Url = "https://fydar.dev/media/astralswarm/social.webp",
-                Alt = "Promotional material for the game 'Astral Swarm'."
-            }
-        ]
-    };
-    var linkData = new LinkData()
-    {
-        new LinkDataBreadcrumbList()
-        {
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Portfolio",
-                Item = "https://fydar.dev/portfolio"
-            },
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Astral Swarm",
-                Item = "https://fydar.dev/portfolio/astralswarm"
-            }
-        }
-    };
+	var canonicalUrl = "https://fydar.dev/portfolio/astralswarm";
+	void PageMetadata(IMetadataFactory factory)
+	{
+		factory.UseTitle("Astral Swarm - Fydar");
+		factory.UseDescription("Battle endless swarms of enemy space ships across the galaxy.");
+		factory.UseCanonicalUrl(canonicalUrl);
+		factory.UseImage(image =>
+		{
+			image.Url = "https://fydar.dev/media/astralswarm/social.webp";
+			image.Alt = "Promotional material for the game 'Astral Swarm'.";
+		});
+	}
+	var breadcrumbs = new BreadcrumbList()
+	{
+		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+		new BreadcrumbListItem("Astral Swarm", "https://fydar.dev/portfolio/astralswarm"),
+	};
 }
 
 <HeadContent>
-    <OpenGraphComponent Model="@openGraphModel" />
-    <LinkDataComponent Model="@linkData" />
+	<MetadataComponent Metadata="@PageMetadata" />
+	<BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadContent>
 
 <article class="page-astralswarm">
@@ -86,7 +75,7 @@
                 <menu class="externallinks" aria-label="Project External links">
                 </menu>
 
-                <ShareLink Url="@openGraphModel.CanonicalUrl.Html" />
+                <ShareLink Url="@canonicalUrl" />
             </Sidebar>
             <Container>
             </Container>

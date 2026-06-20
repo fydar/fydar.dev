@@ -1,40 +1,29 @@
 @layout DefaultLayout
 @page "/portfolio/eitr"
+
 @{
-    var openGraphModel = new OpenGraphModel()
-    {
-        Title = "EITR - Fydar",
-        Description = "A soulslike RPG built around exceptional combat and formidable challenges set within a mythological Norse world.",
-        CanonicalUrl = "https://fydar.dev/portfolio/eitr",
-        Properties = [
-            new OpenGraphModelImage()
-            {
-                Url = "https://fydar.dev/media/eitr/social.webp",
-                Alt = "Promotional material for the game 'EITR'."
-            }
-        ]
-    };
-    var linkData = new LinkData()
-    {
-        new LinkDataBreadcrumbList()
-        {
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Portfolio",
-                Item = "https://fydar.dev/portfolio"
-            },
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "EITR",
-                Item = "https://fydar.dev/portfolio/eitr"
-            }
-        }
-    };
+	var canonicalUrl = "https://fydar.dev/portfolio/eitr";
+	void PageMetadata(IMetadataFactory factory)
+	{
+		factory.UseTitle("EITR - Fydar");
+		factory.UseDescription("A soulslike RPG built around exceptional combat and formidable challenges set within a mythological Norse world.");
+		factory.UseCanonicalUrl(canonicalUrl);
+		factory.UseImage(image =>
+		{
+			image.Url = "https://fydar.dev/media/eitr/social.webp";
+			image.Alt = "Promotional material for the game 'EITR'.";
+		});
+	}
+	var breadcrumbs = new BreadcrumbList()
+	{
+		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+		new BreadcrumbListItem("EITR", "https://fydar.dev/portfolio/eitr"),
+	};
 }
 
 <HeadContent>
-    <OpenGraphComponent Model="@openGraphModel" />
-    <LinkDataComponent Model="@linkData" />
+	<MetadataComponent Metadata="@PageMetadata" />
+	<BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadContent>
 
 <article class="page-eitr">
@@ -86,7 +75,7 @@
                     <Pill_CSharp />
                 </Block_PillCloud>
 
-                <p>@openGraphModel.Description.Default</p>
+                <p>A soulslike RPG built around exceptional combat and formidable challenges set within a mythological Norse world.</p>
 
                 <menu class="externallinks" aria-label="Project External links">
                     <li><a href="https://eitrthegame.com/" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-globe" Alt="Website" /></a></li>
@@ -96,7 +85,7 @@
                     <li class="palette-youtube"><a href="https://youtu.be/z4EWdcoSpAo" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-youtube" Alt="YouTube" /></a></li>
                 </menu>
 
-                <ShareLink Url="@openGraphModel.CanonicalUrl.Html" />
+                <ShareLink Url="@canonicalUrl" />
             </Sidebar>
             <Container>
                 <EmbedYouTube Url="https://www.youtube-nocookie.com/embed/z4EWdcoSpAo?si=HMri-k_GT7woe8eT" />

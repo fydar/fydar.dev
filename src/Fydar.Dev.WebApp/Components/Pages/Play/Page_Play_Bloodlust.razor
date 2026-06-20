@@ -1,45 +1,31 @@
 @layout GameLayout
 @page "/play/bloodlust"
 
-
 @{
-    var openGraphModel = new OpenGraphModel()
-    {
-        Title = "Play Bloodlust - Fydar",
-        Description = "The morality of a recently turned vampire comes into question when his thirst for life must be quenched.",
-        CanonicalUrl = "https://fydar.dev/play/bloodlust",
-        Properties = [
-            new OpenGraphModelImage()
-            {
-                Url = "https://fydar.dev/media/bloodlust/social.webp",
-                Alt = "Promotional material for the game 'Bloodlust'."
-            }
-        ]
-    };
-    var linkData = new LinkData()
-    {
-        new LinkDataBreadcrumbList()
-        {
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Play",
-                Item = "https://fydar.dev/play/"
-            },
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Bloodlust",
-                Item = "https://fydar.dev/play/bloodlust"
-            }
-        }
-    };
+	void PageMetadata(IMetadataFactory factory)
+	{
+		factory.UseTitle("Play Bloodlust - Fydar");
+		factory.UseDescription("The morality of a recently turned vampire comes into question when his thirst for life must be quenched.");
+		factory.UseCanonicalUrl("https://fydar.dev/play/bloodlust");
+		factory.UseImage(image =>
+		{
+			image.Url = "https://fydar.dev/media/bloodlust/social.webp";
+			image.Alt = "Promotional material for the game 'Bloodlust'.";
+		});
+	}
+	var breadcrumbs = new BreadcrumbList()
+	{
+		new BreadcrumbListItem("Play", "https://fydar.dev/play/"),
+		new BreadcrumbListItem("Bloodlust", "https://fydar.dev/play/bloodlust"),
+	};
 }
 
 <HeadContent>
-    <OpenGraphComponent Model="@openGraphModel" />
-    <LinkDataComponent Model="@linkData" />
-    <meta name="theme-color" content="#161618">
-    <link rel="shortcut icon" href="@Assets["/play/bloodlust/favicon.ico"]">
-    <link rel="preload" href="@Assets["/play/bloodlust/build/bloodlust.loader.js"]" as="script" fetchpriority="high" />
+	<MetadataComponent Metadata="@PageMetadata" />
+	<BreadcrumbListComponent Model="@breadcrumbs" />
+	<meta name="theme-color" content="#161618">
+	<link rel="shortcut icon" href="@Assets["/play/bloodlust/favicon.ico"]">
+	<link rel="preload" href="@Assets["/play/bloodlust/build/bloodlust.loader.js"]" as="script" fetchpriority="high" />
 </HeadContent>
 
 @{

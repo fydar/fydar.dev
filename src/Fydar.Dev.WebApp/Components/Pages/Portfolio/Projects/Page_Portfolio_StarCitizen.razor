@@ -1,40 +1,29 @@
 @layout DefaultLayout
 @page "/portfolio/starcitizen"
+
 @{
-    var openGraphModel = new OpenGraphModel()
-    {
-        Title = "Star Citizen - Fydar",
-        Description = "A next-generation AAA massively multiplayer online sandbox of life-size planets, moons, cities, space stations, asteroid belts, and more.",
-        CanonicalUrl = "https://fydar.dev/portfolio/starcitizen",
-        Properties = [
-            new OpenGraphModelImage()
-            {
-                Url = "https://fydar.dev/media/starcitizen/social.webp",
-                Alt = "Promotional material for the game 'Star Citizen'."
-            }
-        ]
-    };
-    var linkData = new LinkData()
-    {
-        new LinkDataBreadcrumbList()
-        {
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Portfolio",
-                Item = "https://fydar.dev/portfolio"
-            },
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Star Citizen",
-                Item = "https://fydar.dev/portfolio/starcitizen"
-            }
-        }
-    };
+	var canonicalUrl = "https://fydar.dev/portfolio/starcitizen";
+	void PageMetadata(IMetadataFactory factory)
+	{
+		factory.UseTitle("Star Citizen - Fydar");
+		factory.UseDescription("A next-generation AAA massively multiplayer online sandbox of life-size planets, moons, cities, space stations, asteroid belts, and more.");
+		factory.UseCanonicalUrl(canonicalUrl);
+		factory.UseImage(image =>
+		{
+			image.Url = "https://fydar.dev/media/starcitizen/social.webp";
+			image.Alt = "Promotional material for the game 'Star Citizen'.";
+		});
+	}
+	var breadcrumbs = new BreadcrumbList()
+	{
+		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+		new BreadcrumbListItem("Star Citizen", "https://fydar.dev/portfolio/starcitizen"),
+	};
 }
 
 <HeadContent>
-    <OpenGraphComponent Model="@openGraphModel" />
-    <LinkDataComponent Model="@linkData" />
+	<MetadataComponent Metadata="@PageMetadata" />
+	<BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadContent>
 
 <article class="page-starcitizen">
@@ -90,14 +79,14 @@
                     <Pill_CPP />
                 </Block_PillCloud>
 
-                <p>@openGraphModel.Description.Default</p>
+                <p>A next-generation AAA massively multiplayer online sandbox of life-size planets, moons, cities, space stations, asteroid belts, and more.</p>
 
                 <menu class="externallinks" aria-label="Project External links">
                     <li><a href="https://robertsspaceindustries.com/star-citizen/play-now" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-globe" Alt="Website" /></a></li>
                     <li class="palette-youtube"><a href="https://youtu.be/52rTsrwZcGQ" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-youtube" Alt="YouTube" /></a></li>
                 </menu>
 
-                <ShareLink Url="@openGraphModel.CanonicalUrl.Html" />
+                <ShareLink Url="@canonicalUrl" />
             </Sidebar>
             <Container>
                 <EmbedYouTube Url="https://www.youtube-nocookie.com/embed/52rTsrwZcGQ?si=H2talNo7mQx9f5LP" />

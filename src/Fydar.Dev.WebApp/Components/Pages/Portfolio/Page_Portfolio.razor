@@ -9,35 +9,26 @@
 @inject NavigationManager NavigationManager
 
 @{
-	var openGraphModel = new OpenGraphModel()
+	void PageMetadata(IMetadataFactory factory)
 	{
-		Title = "Portfolio - Fydar",
-		Description = "Fydar is a game developer and engineer who thrives when pushing technical boundaries and creating memorable experiences.",
-		CanonicalUrl = "https://fydar.dev",
-		Properties = [
-			new OpenGraphModelImage()
-			{
-				Url = "https://fydar.dev/media/header.webp",
-				Alt = "A portrait of Fydar in an anime art style."
-			}
-		]
-	};
-	var linkData = new LinkData()
-	{
-		new LinkDataBreadcrumbList()
+		factory.UseTitle("Portfolio - Fydar");
+		factory.UseDescription("Fydar is a game developer and engineer who thrives when pushing technical boundaries and creating memorable experiences.");
+		factory.UseCanonicalUrl("https://fydar.dev");
+		factory.UseImage(image =>
 		{
-			new LinkDataBreadcrumbListItem()
-			{
-				Name = "Portfolio",
-				Item = "https://fydar.dev/"
-			}
-		}
+			image.Url = "https://fydar.dev/media/header.webp";
+			image.Alt = "A portrait of Fydar in an anime art style.";
+		});
+	}
+	var breadcrumbs = new BreadcrumbList()
+	{
+		new BreadcrumbListItem("Portfolio", "https://fydar.dev/"),
 	};
 }
 
 <HeadContent>
-	<OpenGraphComponent Model="@openGraphModel" />
-	<LinkDataComponent Model="@linkData" />
+	<MetadataComponent Metadata="@PageMetadata" />
+	<BreadcrumbListComponent Model="@breadcrumbs" />
 
 	<link rel="preload" href="@Assets["media/signature.svg"]" as="image" fetchpriority="high" />
 </HeadContent>

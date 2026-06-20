@@ -2,36 +2,28 @@
 @page "/contact"
 
 @inject IEnumerable<IContactSubmitSink> contactSubmitSinks;
+
 @{
-    var openGraphModel = new OpenGraphModel()
-    {
-        Title = "Contact - Fydar",
-        Description = "Feel free to reach out to me! I'm passionate about what I do and I love to talk about it.",
-        CanonicalUrl = "https://fydar.dev/contact",
-        Properties = [
-            new OpenGraphModelImage()
-            {
-                Url = "https://fydar.dev/media/header.webp",
-                Alt = "A portrait of Fydar in an anime art style."
-            }
-        ]
-    };
-    var linkData = new LinkData()
-    {
-        new LinkDataBreadcrumbList()
-        {
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Contact",
-                Item = "https://fydar.dev/contact/"
-            },
-        }
-    };
+	void PageMetadata(IMetadataFactory factory)
+	{
+		factory.UseTitle("Contact - Fydar");
+		factory.UseDescription("Feel free to reach out to me! I'm passionate about what I do and I love to talk about it.");
+		factory.UseCanonicalUrl("https://fydar.dev/contact");
+		factory.UseImage(image =>
+		{
+			image.Url = "https://fydar.dev/media/header.webp";
+			image.Alt = "A portrait of Fydar in an anime art style.";
+		});
+	}
+	var breadcrumbs = new BreadcrumbList()
+	{
+		new BreadcrumbListItem("Contact", "https://fydar.dev/contact/"),
+	};
 }
 
 <HeadContent>
-    <OpenGraphComponent Model="@openGraphModel" />
-    <LinkDataComponent Model="@linkData" />
+	<MetadataComponent Metadata="@PageMetadata" />
+	<BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadContent>
 
 <article class="page-contact">

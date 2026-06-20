@@ -1,35 +1,27 @@
 @layout DefaultLayout
 @page "/play"
+
 @{
-    var openGraphModel = new OpenGraphModel()
-    {
-        Title = "Play - Fydar",
-        Description = "Explore my library of playable games and experiences.",
-        CanonicalUrl = "https://fydar.dev/play",
-        Properties = [
-            new OpenGraphModelImage()
-            {
-                Url = "https://fydar.dev/media/header.webp",
-                Alt = "A portrait of Fydar in an anime art style."
-            }
-        ]
-    };
-    var linkData = new LinkData()
-    {
-        new LinkDataBreadcrumbList()
-        {
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Play",
-                Item = "https://fydar.dev/play/"
-            }
-        }
-    };
+	void PageMetadata(IMetadataFactory factory)
+	{
+		factory.UseTitle("Play - Fydar");
+		factory.UseDescription("Explore my library of playable games and experiences.");
+		factory.UseCanonicalUrl("https://fydar.dev/play");
+		factory.UseImage(image =>
+		{
+			image.Url = "https://fydar.dev/media/header.webp";
+			image.Alt = "A portrait of Fydar in an anime art style.";
+		});
+	}
+	var breadcrumbs = new BreadcrumbList()
+	{
+		new BreadcrumbListItem("Play", "https://fydar.dev/play/"),
+	};
 }
 
 <HeadContent>
-    <OpenGraphComponent Model="@openGraphModel" />
-    <LinkDataComponent Model="@linkData" />
+	<MetadataComponent Metadata="@PageMetadata" />
+	<BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadContent>
 
 <section class="container" style="max-width: 680px;place-self: center;">

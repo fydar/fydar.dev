@@ -1,40 +1,29 @@
 @layout DefaultLayout
 @page "/portfolio/lilypadleap"
+
 @{
-    var openGraphModel = new OpenGraphModel()
-    {
-        Title = "Lilypad Leap - Fydar",
-        Description = "A meditative and addictive game where you jump a frog across lily pads.",
-        CanonicalUrl = "https://fydar.dev/portfolio/lilypadleap",
-        Properties = [
-            new OpenGraphModelImage()
-            {
-                Url = "https://fydar.dev/media/lilypadleap/social.png",
-                Alt = "Promotional material for the game 'Lilypad Leap'."
-            }
-        ]
-    };
-    var linkData = new LinkData()
-    {
-        new LinkDataBreadcrumbList()
-        {
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Portfolio",
-                Item = "https://fydar.dev/portfolio"
-            },
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Lilypad Leap",
-                Item = "https://fydar.dev/portfolio/lilypadleap"
-            }
-        }
-    };
+	var canonicalUrl = "https://fydar.dev/portfolio/lilypadleap";
+	void PageMetadata(IMetadataFactory factory)
+	{
+		factory.UseTitle("Lilypad Leap - Fydar");
+		factory.UseDescription("A meditative and addictive game where you jump a frog across lily pads.");
+		factory.UseCanonicalUrl(canonicalUrl);
+		factory.UseImage(image =>
+		{
+			image.Url = "https://fydar.dev/media/lilypadleap/social.png";
+			image.Alt = "Promotional material for the game 'Lilypad Leap'.";
+		});
+	}
+	var breadcrumbs = new BreadcrumbList()
+	{
+		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+		new BreadcrumbListItem("Lilypad Leap", "https://fydar.dev/portfolio/lilypadleap"),
+	};
 }
 
 <HeadContent>
-    <OpenGraphComponent Model="@openGraphModel" />
-    <LinkDataComponent Model="@linkData" />
+	<MetadataComponent Metadata="@PageMetadata" />
+	<BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadContent>
 
 <article class="page-lilypadleap">
@@ -81,12 +70,12 @@
                     <Pill_CSharp />
                 </Block_PillCloud>
 
-                <p>@openGraphModel.Description.Default</p>
+                <p>A meditative and addictive game where you jump a frog across lily pads.</p>
 
                 <menu class="externallinks" aria-label="Project External links">
                 </menu>
 
-                <ShareLink Url="@openGraphModel.CanonicalUrl.Html" />
+                <ShareLink Url="@canonicalUrl" />
             </Sidebar>
             <Container>
             </Container>

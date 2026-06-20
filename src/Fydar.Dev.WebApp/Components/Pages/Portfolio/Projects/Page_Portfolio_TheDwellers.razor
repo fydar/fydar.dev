@@ -1,40 +1,29 @@
 @layout DefaultLayout
 @page "/portfolio/thedwellers"
+
 @{
-    var openGraphModel = new OpenGraphModel()
-    {
-        Title = "The Dwellers - Fydar",
-        Description = "A 3D dungeon crawler game demo with a full RPG item system, featuring a wide range of weapons and other equipment.",
-        CanonicalUrl = "https://fydar.dev/portfolio/thedwellers",
-        Properties = [
-            new OpenGraphModelImage()
-            {
-                Url = "https://fydar.dev/media/thedwellers/social.webp",
-                Alt = "Promotional material for the game 'The Dwellers'."
-            }
-        ]
-    };
-    var linkData = new LinkData()
-    {
-        new LinkDataBreadcrumbList()
-        {
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Portfolio",
-                Item = "https://fydar.dev/portfolio"
-            },
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "The Dwellers",
-                Item = "https://fydar.dev/portfolio/thedwellers"
-            }
-        }
-    };
+	var canonicalUrl = "https://fydar.dev/portfolio/thedwellers";
+	void PageMetadata(IMetadataFactory factory)
+	{
+		factory.UseTitle("The Dwellers - Fydar");
+		factory.UseDescription("A 3D dungeon crawler game demo with a full RPG item system, featuring a wide range of weapons and other equipment.");
+		factory.UseCanonicalUrl(canonicalUrl);
+		factory.UseImage(image =>
+		{
+			image.Url = "https://fydar.dev/media/thedwellers/social.webp";
+			image.Alt = "Promotional material for the game 'The Dwellers'.";
+		});
+	}
+	var breadcrumbs = new BreadcrumbList()
+	{
+		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+		new BreadcrumbListItem("The Dwellers", "https://fydar.dev/portfolio/thedwellers"),
+	};
 }
 
 <HeadContent>
-    <OpenGraphComponent Model="@openGraphModel" />
-    <LinkDataComponent Model="@linkData" />
+	<MetadataComponent Metadata="@PageMetadata" />
+	<BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadContent>
 
 <article class="page-systems">
@@ -82,13 +71,13 @@
                     <Pill_CSharp />
                 </Block_PillCloud>
 
-                <p>@openGraphModel.Description.Default</p>
+                <p>A 3D dungeon crawler game demo with a full RPG item system, featuring a wide range of weapons and other equipment.</p>
 
                 <menu class="externallinks" aria-label="Project External links">
                     <li class="palette-youtube"><a href="https://youtu.be/ksa6ccxi0Ug" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-youtube" Alt="YouTube" /></a></li>
                 </menu>
 
-                <ShareLink Url="@openGraphModel.CanonicalUrl.Html" />
+                <ShareLink Url="@canonicalUrl" />
             </Sidebar>
             <Container>
                 <EmbedYouTube Url="https://www.youtube-nocookie.com/embed/ksa6ccxi0Ug?si=hheiAYNLLLx_EhRv" />

@@ -1,45 +1,31 @@
 @layout GameLayout
 @page "/play/endlessplatform"
 
-
 @{
-    var openGraphModel = new OpenGraphModel()
-    {
-        Title = "Play Endless Platform - Fydar",
-        Description = "A fully procedurally generated spline-based terrain for a 2D platformer.",
-        CanonicalUrl = "https://fydar.dev/play/endlessplatform",
-        Properties = [
-            new OpenGraphModelImage()
-            {
-                Url = "https://fydar.dev/media/endlessplatform/social.webp",
-                Alt = "Promotional material for the game 'Endless Platform'."
-            }
-        ]
-    };
-    var linkData = new LinkData()
-    {
-        new LinkDataBreadcrumbList()
-        {
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Play",
-                Item = "https://fydar.dev/play/"
-            },
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Endless Platform",
-                Item = "https://fydar.dev/play/endlessplatform"
-            }
-        }
-    };
+	void PageMetadata(IMetadataFactory factory)
+	{
+		factory.UseTitle("Play Endless Platform - Fydar");
+		factory.UseDescription("A fully procedurally generated spline-based terrain for a 2D platformer.");
+		factory.UseCanonicalUrl("https://fydar.dev/play/endlessplatform");
+		factory.UseImage(image =>
+		{
+			image.Url = "https://fydar.dev/media/endlessplatform/social.webp";
+			image.Alt = "Promotional material for the game 'Endless Platform'.";
+		});
+	}
+	var breadcrumbs = new BreadcrumbList()
+	{
+		new BreadcrumbListItem("Play", "https://fydar.dev/play/"),
+		new BreadcrumbListItem("Endless Platform", "https://fydar.dev/play/endlessplatform"),
+	};
 }
 
 <HeadContent>
-    <OpenGraphComponent Model="@openGraphModel" />
-    <LinkDataComponent Model="@linkData" />
-    <meta name="theme-color" content="#161618">
-    <link rel="shortcut icon" href="@Assets["/play/endlessplatform/favicon.ico"]">
-    <link rel="preload" href="@Assets["/play/endlessplatform/build/endlessplatform.loader.js"]" as="script" fetchpriority="high" />
+	<MetadataComponent Metadata="@PageMetadata" />
+	<BreadcrumbListComponent Model="@breadcrumbs" />
+	<meta name="theme-color" content="#161618">
+	<link rel="shortcut icon" href="@Assets["/play/endlessplatform/favicon.ico"]">
+	<link rel="preload" href="@Assets["/play/endlessplatform/build/endlessplatform.loader.js"]" as="script" fetchpriority="high" />
 </HeadContent>
 
 @{

@@ -2,43 +2,30 @@
 @page "/play/astralelites"
 
 @{
-    var openGraphModel = new OpenGraphModel()
-    {
-        Title = "Play Astral Elites - Fydar",
-        Description = "The physics-based and fast-paced asteroids clone for the modern era.",
-        CanonicalUrl = "https://fydar.dev/play/astralelites",
-        Properties = [
-            new OpenGraphModelImage()
-            {
-                Url = "https://fydar.dev/media/astralelites/social.webp",
-                Alt = "Promotional material for the game 'Astral Elites'."
-            }
-        ]
-    };
-    var linkData = new LinkData()
-    {
-        new LinkDataBreadcrumbList()
-        {
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Play",
-                Item = "https://fydar.dev/play/"
-            },
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Astral Elites",
-                Item = "https://fydar.dev/play/astralelites"
-            }
-        }
-    };
+	void PageMetadata(IMetadataFactory factory)
+	{
+		factory.UseTitle("Play Astral Elites - Fydar");
+		factory.UseDescription("The physics-based and fast-paced asteroids clone for the modern era.");
+		factory.UseCanonicalUrl("https://fydar.dev/play/astralelites");
+		factory.UseImage(image =>
+		{
+			image.Url = "https://fydar.dev/media/astralelites/social.webp";
+			image.Alt = "Promotional material for the game 'Astral Elites'.";
+		});
+	}
+	var breadcrumbs = new BreadcrumbList()
+	{
+		new BreadcrumbListItem("Play", "https://fydar.dev/play/"),
+		new BreadcrumbListItem("Astral Elites", "https://fydar.dev/play/astralelites"),
+	};
 }
 
 <HeadContent>
-    <OpenGraphComponent Model="@openGraphModel" />
-    <LinkDataComponent Model="@linkData" />
-    <meta name="theme-color" content="#161618">
-    <link rel="shortcut icon" href="@Assets["/play/astralelites/favicon.svg"]">
-    <link rel="preload" href="@Assets["/play/astralelites/build/0.1.2.8.loader.js"]" as="script" fetchpriority="high" />
+	<MetadataComponent Metadata="@PageMetadata" />
+	<BreadcrumbListComponent Model="@breadcrumbs" />
+	<meta name="theme-color" content="#161618">
+	<link rel="shortcut icon" href="@Assets["/play/astralelites/favicon.svg"]">
+	<link rel="preload" href="@Assets["/play/astralelites/build/0.1.2.8.loader.js"]" as="script" fetchpriority="high" />
 </HeadContent>
 
 <EmbedUnity__AstralElites IsBackground="@Background" />

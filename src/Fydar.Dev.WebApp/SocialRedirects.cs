@@ -11,10 +11,10 @@ internal static class SocialRedirects
 		app.MapSocialRedirect("/github", new()
 		{
 			Destination = "https://github.com/Fydar",
-			Model = new()
+			Metadata = factory =>
 			{
-				Title = "Fydar on GitHub",
-				Description = "Explore my open-source projects, code repositories, and contributions to the .NET ecosystem."
+				factory.UseTitle("Fydar on GitHub");
+				factory.UseDescription("Explore my open-source projects, code repositories, and contributions to the .NET ecosystem.");
 			}
 		});
 
@@ -22,10 +22,10 @@ internal static class SocialRedirects
 		app.MapSocialRedirect("/linkedin", new()
 		{
 			Destination = "https://www.linkedin.com/in/fydar/",
-			Model = new()
+			Metadata = factory =>
 			{
-				Title = "Connect with Fydar on LinkedIn",
-				Description = "Professional profile, project history, and technical insights.",
+				factory.UseTitle("Connect with Fydar on LinkedIn");
+				factory.UseDescription("Professional profile, project history, and technical insights.");
 			}
 		});
 
@@ -33,10 +33,10 @@ internal static class SocialRedirects
 		app.MapSocialRedirect("/youtube", new()
 		{
 			Destination = "https://youtube.com/@fydar",
-			Model = new()
+			Metadata = factory =>
 			{
-				Title = "Fydar on YouTube",
-				Description = "Technical tutorials, project demos, and deep dives into modern software engineering."
+				factory.UseTitle("Fydar on YouTube");
+				factory.UseDescription("Technical tutorials, project demos, and deep dives into modern software engineering.");
 			}
 		});
 
@@ -44,10 +44,10 @@ internal static class SocialRedirects
 		app.MapSocialRedirect("/discord", new()
 		{
 			Destination = "https://discord.com/users/172972361954492416",
-			Model = new()
+			Metadata = factory =>
 			{
-				Title = "Connect with Fydar on Discord",
-				Description = "Let's connect."
+				factory.UseTitle("Connect with Fydar on Discord");
+				factory.UseDescription("Let's connect.");
 			}
 		});
 
@@ -55,10 +55,10 @@ internal static class SocialRedirects
 		app.MapSocialRedirect("/gravatar", new()
 		{
 			Destination = "https://gravatar.com/fydardev",
-			Model = new()
+			Metadata = factory =>
 			{
-				Title = "Fydar's Global Profile",
-				Description = "The centralized identity and avatar used across the web."
+				factory.UseTitle("Fydar's Global Profile");
+				factory.UseDescription("The centralized identity and avatar used across the web.");
 			}
 		});
 
@@ -66,10 +66,10 @@ internal static class SocialRedirects
 		app.MapSocialRedirect("/reddit", new()
 		{
 			Destination = "https://www.reddit.com/user/Fydarus/",
-			Model = new()
+			Metadata = factory =>
 			{
-				Title = "Fydar on Reddit",
-				Description = "Engaging in communities focused on software engineering and indie development."
+				factory.UseTitle("Fydar on Reddit");
+				factory.UseDescription("Engaging in communities focused on software engineering and indie development.");
 			}
 		});
 
@@ -77,10 +77,10 @@ internal static class SocialRedirects
 		app.MapSocialRedirect("/instagram", new()
 		{
 			Destination = "https://www.instagram.com/fydar.dev/",
-			Model = new()
+			Metadata = factory =>
 			{
-				Title = "Fydar on Instagram",
-				Description = "Personal Instagram."
+				factory.UseTitle("Fydar on Instagram");
+				factory.UseDescription("Personal Instagram.");
 			}
 		});
 
@@ -88,10 +88,10 @@ internal static class SocialRedirects
 		app.MapSocialRedirect("/threads", new()
 		{
 			Destination = "https://www.threads.com/@fydar.dev",
-			Model = new()
+			Metadata = factory =>
 			{
-				Title = "Fydar on Threads",
-				Description = "Text-based updates and community engagement from the Meta ecosystem."
+				factory.UseTitle("Fydar on Threads");
+				factory.UseDescription("Text-based updates and community engagement from the Meta ecosystem.");
 			}
 		});
 
@@ -99,10 +99,10 @@ internal static class SocialRedirects
 		app.MapSocialRedirect("/bluesky", new()
 		{
 			Destination = "https://bsky.app/profile/fydar.bsky.social",
-			Model = new()
+			Metadata = factory =>
 			{
-				Title = "Fydar on BlueSky",
-				Description = "Decentralized social media updates on tech, code, and life."
+				factory.UseTitle("Fydar on BlueSky");
+				factory.UseDescription("Decentralized social media updates on tech, code, and life.");
 			}
 		});
 
@@ -110,10 +110,10 @@ internal static class SocialRedirects
 		app.MapSocialRedirect("/twitter", new()
 		{
 			Destination = "https://twitter.com/Fydarus",
-			Model = new()
+			Metadata = factory =>
 			{
-				Title = "Fydar on Twitter",
-				Description = "Technical insights, .NET updates, and software development thoughts in 280 characters or less."
+				factory.UseTitle("Fydar on Twitter");
+				factory.UseDescription("Technical insights, .NET updates, and software development thoughts in 280 characters or less.");
 			}
 		});
 
@@ -121,10 +121,10 @@ internal static class SocialRedirects
 		app.MapSocialRedirect("/spotify", new()
 		{
 			Destination = "https://open.spotify.com/user/fydar",
-			Model = new()
+			Metadata = factory =>
 			{
-				Title = "Fydar's Playlists",
-				Description = "Curation of music for focused deep-work and development sessions."
+				factory.UseTitle("Fydar's Playlists");
+				factory.UseDescription("Curation of music for focused deep-work and development sessions.");
 			}
 		});
 
@@ -132,10 +132,10 @@ internal static class SocialRedirects
 		app.MapSocialRedirect("/steam", new()
 		{
 			Destination = "https://steamcommunity.com/id/Fydar/",
-			Model = new()
+			Metadata = factory =>
 			{
-				Title = "Fydar on Steam",
-				Description = "Reviewing games, tracking achievements, and connecting to play."
+				factory.UseTitle("Fydar on Steam");
+				factory.UseDescription("Reviewing games, tracking achievements, and connecting to play.");
 			}
 		});
 
@@ -143,10 +143,10 @@ internal static class SocialRedirects
 		app.MapSocialRedirect("/curseforge", new()
 		{
 			Destination = "https://www.curseforge.com/members/fydar",
-			Model = new()
+			Metadata = factory =>
 			{
-				Title = "Fydar's Mods on CurseForge",
-				Description = "Downloadable extensions and modifications for popular gaming titles."
+				factory.UseTitle("Fydar's Mods on CurseForge");
+				factory.UseDescription("Downloadable extensions and modifications for popular gaming titles.");
 			}
 		});
 
@@ -154,10 +154,10 @@ internal static class SocialRedirects
 		app.MapSocialRedirect("/modrinth", new()
 		{
 			Destination = "https://modrinth.com/user/fydar",
-			Model = new()
+			Metadata = factory =>
 			{
-				Title = "Fydar on Modrinth",
-				Description = "A collection of open-source and high-performance game modifications."
+				factory.UseTitle("Fydar on Modrinth");
+				factory.UseDescription("A collection of open-source and high-performance game modifications.");
 			}
 		});
 
@@ -165,10 +165,10 @@ internal static class SocialRedirects
 		app.MapSocialRedirect("/tiktok", new()
 		{
 			Destination = "https://tiktok.com/@fydar",
-			Model = new()
+			Metadata = factory =>
 			{
-				Title = "Fydar on TikTok",
-				Description = "Short-form dev logs and rapid-fire technical tips."
+				factory.UseTitle("Fydar on TikTok");
+				factory.UseDescription("Short-form dev logs and rapid-fire technical tips.");
 			}
 		});
 
@@ -176,10 +176,10 @@ internal static class SocialRedirects
 		app.MapSocialRedirect("/docker", new()
 		{
 			Destination = "https://hub.docker.com/u/fydar",
-			Model = new()
+			Metadata = factory =>
 			{
-				Title = "Fydar's Docker Hub",
-				Description = "Containerized applications and optimized images for .NET deployments."
+				factory.UseTitle("Fydar's Docker Hub");
+				factory.UseDescription("Containerized applications and optimized images for .NET deployments.");
 			}
 		});
 
@@ -187,10 +187,10 @@ internal static class SocialRedirects
 		app.MapSocialRedirect("/notion", new()
 		{
 			Destination = "https://notion.so/fydar",
-			Model = new()
+			Metadata = factory =>
 			{
-				Title = "Fydar's Knowledge Base",
-				Description = "Public documentation, roadmaps, and project management workspaces."
+				factory.UseTitle("Fydar's Knowledge Base");
+				factory.UseDescription("Public documentation, roadmaps, and project management workspaces.");
 			}
 		});
 
@@ -198,10 +198,10 @@ internal static class SocialRedirects
 		app.MapSocialRedirect("/twitch", new()
 		{
 			Destination = "https://twitch.tv/fydar",
-			Model = new()
+			Metadata = factory =>
 			{
-				Title = "Fydar Live on Twitch",
-				Description = "Join my live coding sessions to see real-time software builds and C# development."
+				factory.UseTitle("Fydar Live on Twitch");
+				factory.UseDescription("Join my live coding sessions to see real-time software builds and C# development.");
 			}
 		});
 
@@ -209,10 +209,10 @@ internal static class SocialRedirects
 		app.MapSocialRedirect("/itch", new()
 		{
 			Destination = "https://fydar.itch.io",
-			Model = new()
+			Metadata = factory =>
 			{
-				Title = "Fydar's Games & Tools",
-				Description = "Browse my indie game projects, experimental software, and digital tools on Itch.io."
+				factory.UseTitle("Fydar's Games & Tools");
+				factory.UseDescription("Browse my indie game projects, experimental software, and digital tools on Itch.io.");
 			}
 		});
 
@@ -220,10 +220,10 @@ internal static class SocialRedirects
 		app.MapSocialRedirect("/unity", new()
 		{
 			Destination = "https://assetstore.unity.com/publishers/13236",
-			Model = new()
+			Metadata = factory =>
 			{
-				Title = "Fydar's Unity Assets",
-				Description = "High-quality scripts and tools designed to accelerate your game development workflow."
+				factory.UseTitle("Fydar's Unity Assets");
+				factory.UseDescription("High-quality scripts and tools designed to accelerate your game development workflow.");
 			}
 		});
 
@@ -231,10 +231,10 @@ internal static class SocialRedirects
 		app.MapSocialRedirect("/sketchfab", new()
 		{
 			Destination = "https://sketchfab.com/fydar",
-			Model = new()
+			Metadata = factory =>
 			{
-				Title = "Fydar's 3D Gallery",
-				Description = "Interactive 3D models, assets, and environmental art for game development."
+				factory.UseTitle("Fydar's 3D Gallery");
+				factory.UseDescription("Interactive 3D models, assets, and environmental art for game development.");
 			}
 		});
 
@@ -242,10 +242,10 @@ internal static class SocialRedirects
 		app.MapSocialRedirect("/artstation", new()
 		{
 			Destination = "https://www.artstation.com/fydar",
-			Model = new()
+			Metadata = factory =>
 			{
-				Title = "Fydar's Portfolio on ArtStation",
-				Description = "Visual design, digital art, and creative direction projects."
+				factory.UseTitle("Fydar's Portfolio on ArtStation");
+				factory.UseDescription("Visual design, digital art, and creative direction projects.");
 			}
 		});
 
@@ -253,10 +253,10 @@ internal static class SocialRedirects
 		app.MapSocialRedirect("/opencollective", new()
 		{
 			Destination = "https://opencollective.com/fydar",
-			Model = new()
+			Metadata = factory =>
 			{
-				Title = "Fydar on OpenCollective",
-				Description = "Helping to sustain open-source development and community-driven software projects."
+				factory.UseTitle("Fydar on OpenCollective");
+				factory.UseDescription("Helping to sustain open-source development and community-driven software projects.");
 			}
 		});
 
@@ -264,10 +264,10 @@ internal static class SocialRedirects
 		app.MapSocialRedirect("/stackoverflow", new()
 		{
 			Destination = "https://stackoverflow.com/users/9726948/fydar",
-			Model = new()
+			Metadata = factory =>
 			{
-				Title = "Fydar's StackOverflow Profile",
-				Description = "Review my technical contributions, answers, and reputation within the StackOverflow community."
+				factory.UseTitle("Fydar's StackOverflow Profile");
+				factory.UseDescription("Review my technical contributions, answers, and reputation within the StackOverflow community.");
 			}
 		});
 
@@ -275,10 +275,10 @@ internal static class SocialRedirects
 		app.MapSocialRedirect("/gitlab", new()
 		{
 			Destination = "https://gitlab.com/fydar",
-			Model = new()
+			Metadata = factory =>
 			{
-				Title = "Fydar on GitLab",
-				Description = "DevOps, CI/CD pipelines, and private repository management."
+				factory.UseTitle("Fydar on GitLab");
+				factory.UseDescription("DevOps, CI/CD pipelines, and private repository management.");
 			}
 		});
 
@@ -286,10 +286,10 @@ internal static class SocialRedirects
 		app.MapSocialRedirect("/trello", new()
 		{
 			Destination = "https://trello.com/fydar",
-			Model = new()
+			Metadata = factory =>
 			{
-				Title = "Fydar's Project Boards on Trello",
-				Description = "Transparent task tracking and development workflow management."
+				factory.UseTitle("Fydar's Project Boards on Trello");
+				factory.UseDescription("Transparent task tracking and development workflow management.");
 			}
 		});
 
@@ -297,10 +297,10 @@ internal static class SocialRedirects
 		app.MapSocialRedirect("/xbox", new()
 		{
 			Destination = "https://www.xbox.com/en-GB/play/user/Fydar6121",
-			Model = new()
+			Metadata = factory =>
 			{
-				Title = "Fydar's Xbox Profile",
-				Description = "Gaming activity and achievements across the Microsoft ecosystem."
+				factory.UseTitle("Fydar's Xbox Profile");
+				factory.UseDescription("Gaming activity and achievements across the Microsoft ecosystem.");
 			}
 		});
 
@@ -308,10 +308,10 @@ internal static class SocialRedirects
 		app.MapSocialRedirect("/zoom", new()
 		{
 			Destination = "https://community.zoom.com/t5/user/viewprofilepage/user-id/771284",
-			Model = new()
+			Metadata = factory =>
 			{
-				Title = "Fydar's Zoom Room",
-				Description = "Personal meeting space for technical consultations and remote collaboration."
+				factory.UseTitle("Fydar's Zoom Room");
+				factory.UseDescription("Personal meeting space for technical consultations and remote collaboration.");
 			}
 		});
 
@@ -319,10 +319,10 @@ internal static class SocialRedirects
 		// app.MapSocialRedirect("/atlassian", new()
 		// {
 		// 	Destination = "https://community.atlassian.com/t5/user/viewprofilepage/user-id/your-id",
-		// 	Model = new()
+		// 	Metadata = factory =>
 		// 	{
-		// 		Title = "Fydar on Atlassian Community",
-		// 		Description = "Insights and discussions on Jira, Confluence, and team collaboration tools."
+		// 		factory.UseTitle("Fydar on Atlassian Community");
+		// 		factory.UseDescription("Insights and discussions on Jira, Confluence, and team collaboration tools.");
 		// 	}
 		// });
 		//
@@ -330,43 +330,44 @@ internal static class SocialRedirects
 		// app.MapSocialRedirect("/metastackoverflow", new()
 		// {
 		// 	Destination = "https://meta.stackoverflow.com/users/9726948/fydar",
-		// 	Model = new()
+		// 	Metadata = factory =>
 		// 	{
-		// 		Title = "Fydar on Meta Stack Overflow",
-		// 		Description = "Participating in discussions regarding the future of the developer community."
+		// 		factory.UseTitle("Fydar on Meta Stack Overflow");
+		// 		factory.UseDescription("Participating in discussions regarding the future of the developer community.");
 		// 	}
 		// });
-		// 
+		//
 		// // Stack Exchange
 		// app.MapSocialRedirect("/stackexchange", new()
 		// {
 		// 	Destination = "https://stackexchange.com/users/13481916/fydar",
-		// 	Model = new()
+		// 	Metadata = factory =>
 		// 	{
-		// 		Title = "Fydar's StackExchange Profile",
-		// 		Description = "Review my technical contributions, answers, and reputation within the StackExchange community."
+		// 		factory.UseTitle("Fydar's StackExchange Profile");
+		// 		factory.UseDescription("Review my technical contributions, answers, and reputation within the StackExchange community.");
 		// 	}
 		// });
-		// 
+		//
 		// // Game Dev Stack Exchange
 		// app.MapSocialRedirect("/gamedevstackexchange", new()
 		// {
 		// 	Destination = "https://gamedev.stackexchange.com/users/142990/fydar",
-		// 	Model = new()
+		// 	Metadata = factory =>
 		// 	{
-		// 		Title = "Fydar's Game Development StackExchange Profile",
-		// 		Description = "Review my technical contributions, answers, and reputation within the StackExchange community."
+		// 		factory.UseTitle("Fydar's Game Development StackExchange Profile");
+		// 		factory.UseDescription("Review my technical contributions, answers, and reputation within the StackExchange community.");
 		// 	}
 		// });
-		// 
+		//
 		// // Unity Discussions
 		// app.MapSocialRedirect("/unitydiscussions", new()
 		// {
 		// 	Destination = "https://discussions.unity.com/u/fydar",
-		// 	Model = new()
+		// 	Metadata = factory =>
 		// 	{
-		// 		Title = "Fydar on the Unity Community",
-		// 		Description = "Active member of the Unity engine discussion forums and technical troubleshooting." }
+		// 		factory.UseTitle("Fydar on the Unity Community");
+		// 		factory.UseDescription("Active member of the Unity engine discussion forums and technical troubleshooting.");
+		// 	}
 		// });
 	}
 }

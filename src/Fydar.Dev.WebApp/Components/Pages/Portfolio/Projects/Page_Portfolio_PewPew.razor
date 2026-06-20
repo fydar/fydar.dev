@@ -1,40 +1,29 @@
 @layout DefaultLayout
 @page "/portfolio/pewpew"
+
 @{
-    var openGraphModel = new OpenGraphModel()
-    {
-        Title = "Pew Pew - Fydar",
-        Description = "A 20v20 .io style browser game made in 48 hours using ASP.NET Core and hosted in AWS.",
-        CanonicalUrl = "https://fydar.dev/portfolio/pewpew",
-        Properties = [
-            new OpenGraphModelImage()
-            {
-                Url = "https://fydar.dev/media/pewpew/social.webp",
-                Alt = "Promotional material for the game 'Pew Pew'."
-            }
-        ]
-    };
-    var linkData = new LinkData()
-    {
-        new LinkDataBreadcrumbList()
-        {
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Portfolio",
-                Item = "https://fydar.dev/portfolio"
-            },
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Pew Pew",
-                Item = "https://fydar.dev/portfolio/pewpew"
-            }
-        }
-    };
+	var canonicalUrl = "https://fydar.dev/portfolio/pewpew";
+	void PageMetadata(IMetadataFactory factory)
+	{
+		factory.UseTitle("Pew Pew - Fydar");
+		factory.UseDescription("A 20v20 .io style browser game made in 48 hours using ASP.NET Core and hosted in AWS.");
+		factory.UseCanonicalUrl(canonicalUrl);
+		factory.UseImage(image =>
+		{
+			image.Url = "https://fydar.dev/media/pewpew/social.webp";
+			image.Alt = "Promotional material for the game 'Pew Pew'.";
+		});
+	}
+	var breadcrumbs = new BreadcrumbList()
+	{
+		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+		new BreadcrumbListItem("Pew Pew", "https://fydar.dev/portfolio/pewpew"),
+	};
 }
 
 <HeadContent>
-    <OpenGraphComponent Model="@openGraphModel" />
-    <LinkDataComponent Model="@linkData" />
+	<MetadataComponent Metadata="@PageMetadata" />
+	<BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadContent>
 
 <article class="page-pewpew">
@@ -55,14 +44,14 @@
                     <Pill_Multiplayer />
                 </Block_PillCloud>
 
-                <p>@openGraphModel.Description.Default</p>
+                <p>A 20v20 .io style browser game made in 48 hours using ASP.NET Core and hosted in AWS.</p>
 
                 <menu class="externallinks" aria-label="Project External links">
                     <li><a href="https://github.com/fydar/PewPew" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-github" Alt="GitHub" /></a></li>
                     <li class="palette-youtube"><a href="https://youtu.be/9DOz6ob91zM" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-youtube" Alt="YouTube" /></a></li>
                 </menu>
 
-                <ShareLink Url="@openGraphModel.CanonicalUrl.Html" />
+                <ShareLink Url="@canonicalUrl" />
             </Sidebar>
             <Container>
                 <EmbedYouTube Url="https://www.youtube-nocookie.com/embed/9DOz6ob91zM?si=9wSx2SPaN7-wz7OO" />

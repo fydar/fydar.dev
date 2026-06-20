@@ -1,40 +1,29 @@
 @layout DefaultLayout
 @page "/portfolio/legostarwarsbattles"
+
 @{
-    var openGraphModel = new OpenGraphModel()
-    {
-        Title = "LEGO® Star Wars™ Battles - Fydar",
-        Description = "A mobile multiplayer realtime strategy game featuring competitive ranked matchmaking, weekly leaderboards, and clans.",
-        CanonicalUrl = "https://fydar.dev/portfolio/legostarwarsbattles",
-        Properties = [
-            new OpenGraphModelImage()
-            {
-                Url = "https://fydar.dev/media/legostarwarsbattles/social.webp",
-                Alt = "Promotional material for the game 'LEGO® Star Wars™ Battles'."
-            }
-        ]
-    };
-    var linkData = new LinkData()
-    {
-        new LinkDataBreadcrumbList()
-        {
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Portfolio",
-                Item = "https://fydar.dev/portfolio"
-            },
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "LEGO® Star Wars™ Battles",
-                Item = "https://fydar.dev/portfolio/legostarwarsbattles"
-            }
-        }
-    };
+	var canonicalUrl = "https://fydar.dev/portfolio/legostarwarsbattles";
+	void PageMetadata(IMetadataFactory factory)
+	{
+		factory.UseTitle("LEGO® Star Wars™ Battles - Fydar");
+		factory.UseDescription("A mobile multiplayer realtime strategy game featuring competitive ranked matchmaking, weekly leaderboards, and clans.");
+		factory.UseCanonicalUrl(canonicalUrl);
+		factory.UseImage(image =>
+		{
+			image.Url = "https://fydar.dev/media/legostarwarsbattles/social.webp";
+			image.Alt = "Promotional material for the game 'LEGO® Star Wars™ Battles'.";
+		});
+	}
+	var breadcrumbs = new BreadcrumbList()
+	{
+		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+		new BreadcrumbListItem("LEGO® Star Wars™ Battles", "https://fydar.dev/portfolio/legostarwarsbattles"),
+	};
 }
 
 <HeadContent>
-    <OpenGraphComponent Model="@openGraphModel" />
-    <LinkDataComponent Model="@linkData" />
+	<MetadataComponent Metadata="@PageMetadata" />
+	<BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadContent>
 
 <article class="page-legostarwarsbattles">
@@ -92,7 +81,7 @@
                     <Pill_Multiplayer />
                 </Block_PillCloud>
 
-                <p>@openGraphModel.Description.Default</p>
+                <p>A mobile multiplayer realtime strategy game featuring competitive ranked matchmaking, weekly leaderboards, and clans.</p>
 
                 <menu class="externallinks" aria-label="Project External links">
                     <li><a href="https://www.starwars.com/games-apps/lego-star-wars-battles" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-globe" Alt="Website" /></a></li>
@@ -100,7 +89,7 @@
                     <li class="palette-youtube"><a href="https://youtu.be/XGWJk2GxE7c" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-youtube" Alt="YouTube" /></a></li>
                 </menu>
 
-                <ShareLink Url="@openGraphModel.CanonicalUrl.Html" />
+                <ShareLink Url="@canonicalUrl" />
             </Sidebar>
             <Container>
                 <EmbedYouTube Url="https://www.youtube-nocookie.com/embed/XGWJk2GxE7c?si=TnG83ijVHiEqB12P" />

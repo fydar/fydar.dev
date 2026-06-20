@@ -1,40 +1,29 @@
 @layout DefaultLayout
 @page "/portfolio/miniminer"
+
 @{
-    var openGraphModel = new OpenGraphModel()
-    {
-        Title = "Mini Miner - Fydar",
-        Description = "The Game Boy demake of the Nintendo DS Pokémon Diamond and Pearl underground mining minigame.",
-        CanonicalUrl = "https://fydar.dev/portfolio/miniminer",
-        Properties = [
-            new OpenGraphModelImage()
-            {
-                Url = "https://fydar.dev/media/miniminer/social.webp",
-                Alt = "Promotional material for the game 'Mini Miner'."
-            }
-        ]
-    };
-    var linkData = new LinkData()
-    {
-        new LinkDataBreadcrumbList()
-        {
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Portfolio",
-                Item = "https://fydar.dev/portfolio"
-            },
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Mini Miner",
-                Item = "https://fydar.dev/portfolio/miniminer"
-            }
-        }
-    };
+	var canonicalUrl = "https://fydar.dev/portfolio/miniminer";
+	void PageMetadata(IMetadataFactory factory)
+	{
+		factory.UseTitle("Mini Miner - Fydar");
+		factory.UseDescription("The Game Boy demake of the Nintendo DS Pokémon Diamond and Pearl underground mining minigame.");
+		factory.UseCanonicalUrl(canonicalUrl);
+		factory.UseImage(image =>
+		{
+			image.Url = "https://fydar.dev/media/miniminer/social.webp";
+			image.Alt = "Promotional material for the game 'Mini Miner'.";
+		});
+	}
+	var breadcrumbs = new BreadcrumbList()
+	{
+		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+		new BreadcrumbListItem("Mini Miner", "https://fydar.dev/portfolio/miniminer"),
+	};
 }
 
 <HeadContent>
-    <OpenGraphComponent Model="@openGraphModel" />
-    <LinkDataComponent Model="@linkData" />
+	<MetadataComponent Metadata="@PageMetadata" />
+	<BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadContent>
 
 <article class="page-miniminer">
@@ -88,7 +77,7 @@
                     <li class="palette-youtube"><a href="https://youtu.be/_JwmO41hxcI" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-youtube" Alt="YouTube" /></a></li>
                 </menu>
 
-                <ShareLink Url="@openGraphModel.CanonicalUrl.Html" />
+                <ShareLink Url="@canonicalUrl" />
             </Sidebar>
             <Container>
                 <EmbedYouTube Url="https://www.youtube-nocookie.com/embed/_JwmO41hxcI?si=1btWzYt8tR6iS5HH" />

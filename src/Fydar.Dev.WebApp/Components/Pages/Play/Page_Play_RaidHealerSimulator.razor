@@ -1,45 +1,31 @@
 @layout GameLayout
 @page "/play/raidhealersimulator"
 
-
 @{
-    var openGraphModel = new OpenGraphModel()
-    {
-        Title = "Play Raid Healer Simulator - Fydar",
-        Description = "The simulation experience of what it’s like to be a healer in an MMORPG raid, complete with a variety of abilities and a challenging boss battle.",
-        CanonicalUrl = "https://fydar.dev/play/raidhealersimulator",
-        Properties = [
-            new OpenGraphModelImage()
-            {
-                Url = "https://fydar.dev/media/raidhealersimulator/social.webp",
-                Alt = "Promotional material for the game 'Raid Healer Simulator'."
-            }
-        ]
-    };
-    var linkData = new LinkData()
-    {
-        new LinkDataBreadcrumbList()
-        {
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Play",
-                Item = "https://fydar.dev/play/"
-            },
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Raid Healer Simulator",
-                Item = "https://fydar.dev/play/raidhealersimulator"
-            }
-        }
-    };
+	void PageMetadata(IMetadataFactory factory)
+	{
+		factory.UseTitle("Play Raid Healer Simulator - Fydar");
+		factory.UseDescription("The simulation experience of what it’s like to be a healer in an MMORPG raid, complete with a variety of abilities and a challenging boss battle.");
+		factory.UseCanonicalUrl("https://fydar.dev/play/raidhealersimulator");
+		factory.UseImage(image =>
+		{
+			image.Url = "https://fydar.dev/media/raidhealersimulator/social.webp";
+			image.Alt = "Promotional material for the game ‘Raid Healer Simulator’.";
+		});
+	}
+	var breadcrumbs = new BreadcrumbList()
+	{
+		new BreadcrumbListItem("Play", "https://fydar.dev/play/"),
+		new BreadcrumbListItem("Raid Healer Simulator", "https://fydar.dev/play/raidhealersimulator"),
+	};
 }
 
 <HeadContent>
-    <OpenGraphComponent Model="@openGraphModel" />
-    <LinkDataComponent Model="@linkData" />
-    <meta name="theme-color" content="#161618">
-    <link rel="shortcut icon" href="@Assets["/play/raidhealersimulator/favicon.ico"]">
-    <link rel="preload" href="@Assets["/play/raidhealersimulator/build/raidhealersimulator.loader.js"]" as="script" fetchpriority="high" />
+	<MetadataComponent Metadata="@PageMetadata" />
+	<BreadcrumbListComponent Model="@breadcrumbs" />
+	<meta name="theme-color" content="#161618">
+	<link rel="shortcut icon" href="@Assets["/play/raidhealersimulator/favicon.ico"]">
+	<link rel="preload" href="@Assets["/play/raidhealersimulator/build/raidhealersimulator.loader.js"]" as="script" fetchpriority="high" />
 </HeadContent>
 
 @{

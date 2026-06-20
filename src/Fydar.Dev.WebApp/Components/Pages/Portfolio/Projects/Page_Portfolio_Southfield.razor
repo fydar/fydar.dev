@@ -1,40 +1,29 @@
 @layout DefaultLayout
 @page "/portfolio/southfield"
+
 @{
-    var openGraphModel = new OpenGraphModel()
-    {
-        Title = "Southfield - Fydar",
-        Description = "Weird farming meets silly physics, combine crops with unpredictable effects, build your dream farmstead, and experiment with automation.",
-        CanonicalUrl = "https://fydar.dev/portfolio/southfield",
-        Properties = [
-            new OpenGraphModelImage()
-            {
-                Url = "https://fydar.dev/media/southfield/social.webp",
-                Alt = "Promotional material for the game 'Southfield'."
-            }
-        ]
-    };
-    var linkData = new LinkData()
-    {
-        new LinkDataBreadcrumbList()
-        {
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Portfolio",
-                Item = "https://fydar.dev/portfolio"
-            },
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Southfield",
-                Item = "https://fydar.dev/portfolio/southfield"
-            }
-        }
-    };
+	var canonicalUrl = "https://fydar.dev/portfolio/southfield";
+	void PageMetadata(IMetadataFactory factory)
+	{
+		factory.UseTitle("Southfield - Fydar");
+		factory.UseDescription("Weird farming meets silly physics, combine crops with unpredictable effects, build your dream farmstead, and experiment with automation.");
+		factory.UseCanonicalUrl(canonicalUrl);
+		factory.UseImage(image =>
+		{
+			image.Url = "https://fydar.dev/media/southfield/social.webp";
+			image.Alt = "Promotional material for the game 'Southfield'.";
+		});
+	}
+	var breadcrumbs = new BreadcrumbList()
+	{
+		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+		new BreadcrumbListItem("Southfield", "https://fydar.dev/portfolio/southfield"),
+	};
 }
 
 <HeadContent>
-    <OpenGraphComponent Model="@openGraphModel" />
-    <LinkDataComponent Model="@linkData" />
+	<MetadataComponent Metadata="@PageMetadata" />
+	<BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadContent>
 
 <article class="page-southfield">
@@ -87,7 +76,7 @@
                     <Pill_TechnicalArt />
                 </Block_PillCloud>
 
-                <p>@openGraphModel.Description.Default</p>
+                <p>Weird farming meets silly physics, combine crops with unpredictable effects, build your dream farmstead, and experiment with automation.</p>
 
                 <menu class="externallinks" aria-label="Project External links">
                     <li><a href="https://southfieldgame.com/" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-globe" Alt="Website" /></a></li>
@@ -95,7 +84,7 @@
                     <li class="palette-youtube"><a href="https://youtu.be/2NkfRH4AWa8" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-youtube" Alt="YouTube" /></a></li>
                 </menu>
 
-                <ShareLink Url="@openGraphModel.CanonicalUrl.Html" />
+                <ShareLink Url="@canonicalUrl" />
             </Sidebar>
             <Container>
                 <EmbedYouTube Url="https://www.youtube-nocookie.com/embed/2NkfRH4AWa8?si=HRpJ95ddnvms37rC" />

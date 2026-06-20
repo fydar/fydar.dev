@@ -1,45 +1,31 @@
 @layout GameLayout
 @page "/play/lostinstatic"
 
-
 @{
-    var openGraphModel = new OpenGraphModel()
-    {
-        Title = "Play Lost in Static - Fydar",
-        Description = "Remote control a drone to take down a rogue AI controlling the station.",
-        CanonicalUrl = "https://fydar.dev/play/lostinstatic",
-        Properties = [
-            new OpenGraphModelImage()
-            {
-                Url = "https://fydar.dev/media/lostinstatic/social.webp",
-                Alt = "Promotional material for the game 'Lost in Static'."
-            }
-        ]
-    };
-    var linkData = new LinkData()
-    {
-        new LinkDataBreadcrumbList()
-        {
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Play",
-                Item = "https://fydar.dev/play/"
-            },
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Lost in Static",
-                Item = "https://fydar.dev/play/lostinstatic"
-            }
-        }
-    };
+	void PageMetadata(IMetadataFactory factory)
+	{
+		factory.UseTitle("Play Lost in Static - Fydar");
+		factory.UseDescription("Remote control a drone to take down a rogue AI controlling the station.");
+		factory.UseCanonicalUrl("https://fydar.dev/play/lostinstatic");
+		factory.UseImage(image =>
+		{
+			image.Url = "https://fydar.dev/media/lostinstatic/social.webp";
+			image.Alt = "Promotional material for the game 'Lost in Static'.";
+		});
+	}
+	var breadcrumbs = new BreadcrumbList()
+	{
+		new BreadcrumbListItem("Play", "https://fydar.dev/play/"),
+		new BreadcrumbListItem("Lost in Static", "https://fydar.dev/play/lostinstatic"),
+	};
 }
 
 <HeadContent>
-    <OpenGraphComponent Model="@openGraphModel" />
-    <LinkDataComponent Model="@linkData" />
-    <meta name="theme-color" content="#161618">
-    <link rel="shortcut icon" href="@Assets["/play/lostinstatic/favicon.ico"]">
-    <link rel="preload" href="@Assets["/play/lostinstatic/build/lostinstatic.loader.js"]" as="script" fetchpriority="high" />
+	<MetadataComponent Metadata="@PageMetadata" />
+	<BreadcrumbListComponent Model="@breadcrumbs" />
+	<meta name="theme-color" content="#161618">
+	<link rel="shortcut icon" href="@Assets["/play/lostinstatic/favicon.ico"]">
+	<link rel="preload" href="@Assets["/play/lostinstatic/build/lostinstatic.loader.js"]" as="script" fetchpriority="high" />
 </HeadContent>
 
 @{

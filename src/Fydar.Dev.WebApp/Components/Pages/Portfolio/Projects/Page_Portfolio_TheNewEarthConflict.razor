@@ -1,40 +1,29 @@
 @layout DefaultLayout
 @page "/portfolio/thenewearthconflict"
+
 @{
-    var openGraphModel = new OpenGraphModel()
-    {
-        Title = "The New Earth Conflict - Fydar",
-        Description = "A realtime space strategy game where the player takes the pilot seat of a battleship.",
-        CanonicalUrl = "https://fydar.dev/portfolio/thenewearthconflict",
-        Properties = [
-            new OpenGraphModelImage()
-            {
-                Url = "https://fydar.dev/media/thenewearthconflict/social.webp",
-                Alt = "Promotional material for the game 'The New Earth Conflict'."
-            }
-        ]
-    };
-    var linkData = new LinkData()
-    {
-        new LinkDataBreadcrumbList()
-        {
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Portfolio",
-                Item = "https://fydar.dev/portfolio"
-            },
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "The New Earth Conflict",
-                Item = "https://fydar.dev/portfolio/thenewearthconflict"
-            }
-        }
-    };
+	var canonicalUrl = "https://fydar.dev/portfolio/thenewearthconflict";
+	void PageMetadata(IMetadataFactory factory)
+	{
+		factory.UseTitle("The New Earth Conflict - Fydar");
+		factory.UseDescription("A realtime space strategy game where the player takes the pilot seat of a battleship.");
+		factory.UseCanonicalUrl(canonicalUrl);
+		factory.UseImage(image =>
+		{
+			image.Url = "https://fydar.dev/media/thenewearthconflict/social.webp";
+			image.Alt = "Promotional material for the game 'The New Earth Conflict'.";
+		});
+	}
+	var breadcrumbs = new BreadcrumbList()
+	{
+		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+		new BreadcrumbListItem("The New Earth Conflict", "https://fydar.dev/portfolio/thenewearthconflict"),
+	};
 }
 
 <HeadContent>
-    <OpenGraphComponent Model="@openGraphModel" />
-    <LinkDataComponent Model="@linkData" />
+	<MetadataComponent Metadata="@PageMetadata" />
+	<BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadContent>
 
 <article class="page-systems">
@@ -81,13 +70,13 @@
                     <Pill_CSharp />
                 </Block_PillCloud>
 
-                <p>@openGraphModel.Description.Default</p>
+                <p>A realtime space strategy game where the player takes the pilot seat of a battleship.</p>
 
                 <menu class="externallinks" aria-label="Project External links">
                     <li class="palette-youtube"><a href="https://youtu.be/PakFTX3lhwU" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-youtube" Alt="YouTube" /></a></li>
                 </menu>
 
-                <ShareLink Url="@openGraphModel.CanonicalUrl.Html" />
+                <ShareLink Url="@canonicalUrl" />
             </Sidebar>
             <Container>
                 <EmbedYouTube Url="https://www.youtube-nocookie.com/embed/PakFTX3lhwU?si=9d5LTI732JoOYskb" />

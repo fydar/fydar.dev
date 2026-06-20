@@ -1,40 +1,29 @@
 @layout DefaultLayout
 @page "/portfolio/voxelmultiplayer"
+
 @{
-    var openGraphModel = new OpenGraphModel()
-    {
-        Title = "Voxel Multiplayer - Fydar",
-        Description = "Fully bespoke voxel rendering system to create a 'Cube World' style game with a multiplayer component.",
-        CanonicalUrl = "https://fydar.dev/portfolio/voxelmultiplayer",
-        Properties = [
-            new OpenGraphModelImage()
-            {
-                Url = "https://fydar.dev/media/voxelmultiplayer/social.webp",
-                Alt = "Promotional material for the game 'Voxel Multiplayer'."
-            }
-        ]
-    };
-    var linkData = new LinkData()
-    {
-        new LinkDataBreadcrumbList()
-        {
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Portfolio",
-                Item = "https://fydar.dev/portfolio"
-            },
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Voxel Multiplayer",
-                Item = "https://fydar.dev/portfolio/voxelmultiplayer"
-            }
-        }
-    };
+	var canonicalUrl = "https://fydar.dev/portfolio/voxelmultiplayer";
+	void PageMetadata(IMetadataFactory factory)
+	{
+		factory.UseTitle("Voxel Multiplayer - Fydar");
+		factory.UseDescription("Fully bespoke voxel rendering system to create a 'Cube World' style game with a multiplayer component.");
+		factory.UseCanonicalUrl(canonicalUrl);
+		factory.UseImage(image =>
+		{
+			image.Url = "https://fydar.dev/media/voxelmultiplayer/social.webp";
+			image.Alt = "Promotional material for the game 'Voxel Multiplayer'.";
+		});
+	}
+	var breadcrumbs = new BreadcrumbList()
+	{
+		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+		new BreadcrumbListItem("Voxel Multiplayer", "https://fydar.dev/portfolio/voxelmultiplayer"),
+	};
 }
 
 <HeadContent>
-    <OpenGraphComponent Model="@openGraphModel" />
-    <LinkDataComponent Model="@linkData" />
+	<MetadataComponent Metadata="@PageMetadata" />
+	<BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadContent>
 
 <article class="page-systems">
@@ -83,13 +72,13 @@
                     <Pill_CSharp />
                 </Block_PillCloud>
 
-                <p>@openGraphModel.Description.Default</p>
+                <p>Fully bespoke voxel rendering system to create a 'Cube World' style game with a multiplayer component.</p>
 
                 <menu class="externallinks" aria-label="Project External links">
                     <li class="palette-youtube"><a href="https://youtu.be/BbosMaHxAHo" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-youtube" Alt="YouTube" /></a></li>
                 </menu>
 
-                <ShareLink Url="@openGraphModel.CanonicalUrl.Html" />
+                <ShareLink Url="@canonicalUrl" />
             </Sidebar>
             <Container>
                 <EmbedYouTube Url="https://www.youtube-nocookie.com/embed/BbosMaHxAHo?si=HRRzPq68GrrLXLH5" StartTime="45" />

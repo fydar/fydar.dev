@@ -1,45 +1,31 @@
 @layout GameLayout
 @page "/play/roadtonorthstead"
 
-
 @{
-    var openGraphModel = new OpenGraphModel()
-    {
-        Title = "Play Road to Northstead - Fydar",
-        Description = "The game jam visual novel with questing and crafting to survive the night.",
-        CanonicalUrl = "https://fydar.dev/play/roadtonorthstead",
-        Properties = [
-            new OpenGraphModelImage()
-            {
-                Url = "https://fydar.dev/media/roadtonorthstead/social.webp",
-                Alt = "Promotional material for the game 'Road to Northstead'."
-            }
-        ]
-    };
-    var linkData = new LinkData()
-    {
-        new LinkDataBreadcrumbList()
-        {
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Play",
-                Item = "https://fydar.dev/play/"
-            },
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Road to Northstead",
-                Item = "https://fydar.dev/play/roadtonorthstead"
-            }
-        }
-    };
+	void PageMetadata(IMetadataFactory factory)
+	{
+		factory.UseTitle("Play Road to Northstead - Fydar");
+		factory.UseDescription("The game jam visual novel with questing and crafting to survive the night.");
+		factory.UseCanonicalUrl("https://fydar.dev/play/roadtonorthstead");
+		factory.UseImage(image =>
+		{
+			image.Url = "https://fydar.dev/media/roadtonorthstead/social.webp";
+			image.Alt = "Promotional material for the game 'Road to Northstead'.";
+		});
+	}
+	var breadcrumbs = new BreadcrumbList()
+	{
+		new BreadcrumbListItem("Play", "https://fydar.dev/play/"),
+		new BreadcrumbListItem("Road to Northstead", "https://fydar.dev/play/roadtonorthstead"),
+	};
 }
 
 <HeadContent>
-    <OpenGraphComponent Model="@openGraphModel" />
-    <LinkDataComponent Model="@linkData" />
-    <meta name="theme-color" content="#161618">
-    <link rel="shortcut icon" href="@Assets["/play/roadtonorthstead/favicon.ico"]">
-    <link rel="preload" href="@Assets["/play/roadtonorthstead/build/roadtonorthstead.loader.js"]" as="script" fetchpriority="high" />
+	<MetadataComponent Metadata="@PageMetadata" />
+	<BreadcrumbListComponent Model="@breadcrumbs" />
+	<meta name="theme-color" content="#161618">
+	<link rel="shortcut icon" href="@Assets["/play/roadtonorthstead/favicon.ico"]">
+	<link rel="preload" href="@Assets["/play/roadtonorthstead/build/roadtonorthstead.loader.js"]" as="script" fetchpriority="high" />
 </HeadContent>
 
 @{

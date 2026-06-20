@@ -1,40 +1,29 @@
 @layout DefaultLayout
 @page "/portfolio/outrage"
+
 @{
-    var openGraphModel = new OpenGraphModel()
-    {
-        Title = "OutRage: Fight Fest - Fydar",
-        Description = "A 16-player beat-em-up brawler with a sandbox of attacks, weapons, and destructible props in Battle Royale Free for All and Team-based game modes.",
-        CanonicalUrl = "https://fydar.dev/portfolio/outrage",
-        Properties = [
-            new OpenGraphModelImage()
-            {
-                Url = "https://fydar.dev/media/outrage/social.webp",
-                Alt = "Promotional material for the game 'OutRage: Fight Fest'."
-            }
-        ]
-    };
-    var linkData = new LinkData()
-    {
-        new LinkDataBreadcrumbList()
-        {
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Portfolio",
-                Item = "https://fydar.dev/portfolio"
-            },
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "OutRage: Fight Fest",
-                Item = "https://fydar.dev/portfolio/outrage"
-            }
-        }
-    };
+	var canonicalUrl = "https://fydar.dev/portfolio/outrage";
+	void PageMetadata(IMetadataFactory factory)
+	{
+		factory.UseTitle("OutRage: Fight Fest - Fydar");
+		factory.UseDescription("A 16-player beat-em-up brawler with a sandbox of attacks, weapons, and destructible props in Battle Royale Free for All and Team-based game modes.");
+		factory.UseCanonicalUrl(canonicalUrl);
+		factory.UseImage(image =>
+		{
+			image.Url = "https://fydar.dev/media/outrage/social.webp";
+			image.Alt = "Promotional material for the game 'OutRage: Fight Fest'.";
+		});
+	}
+	var breadcrumbs = new BreadcrumbList()
+	{
+		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+		new BreadcrumbListItem("OutRage: Fight Fest", "https://fydar.dev/portfolio/outrage"),
+	};
 }
 
 <HeadContent>
-    <OpenGraphComponent Model="@openGraphModel" />
-    <LinkDataComponent Model="@linkData" />
+	<MetadataComponent Metadata="@PageMetadata" />
+	<BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadContent>
 
 <article class="page-systems">
@@ -86,14 +75,14 @@
                     <Pill_CSharp />
                 </Block_PillCloud>
 
-                <p>@openGraphModel.Description.Default</p>
+                <p>A 16-player beat-em-up brawler with a sandbox of attacks, weapons, and destructible props in Battle Royale Free for All and Team-based game modes.</p>
 
                 <menu class="externallinks" aria-label="Project External links">
                     <li class="palette-steam"><a href="https://store.steampowered.com/app/2307870/OutRage_Fight_Fest/" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-steam" Alt="Steam" /></a></li>
                     <li class="palette-youtube"><a href="https://youtu.be/3f8x4BwqAww" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-youtube" Alt="YouTube" /></a></li>
                 </menu>
 
-                <ShareLink Url="@openGraphModel.CanonicalUrl.Html" />
+                <ShareLink Url="@canonicalUrl" />
             </Sidebar>
             <Container>
                 <EmbedYouTube Url="https://www.youtube-nocookie.com/embed/3f8x4BwqAww?si=IEuFL9_F0NObYgIH" />

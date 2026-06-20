@@ -1,40 +1,29 @@
 @layout DefaultLayout
 @page "/portfolio/void"
+
 @{
-    var openGraphModel = new OpenGraphModel()
-    {
-        Title = "Void - Fydar",
-        Description = "A top-down space RTS.",
-        CanonicalUrl = "https://fydar.dev/portfolio/void",
-        Properties = [
-            new OpenGraphModelImage()
-            {
-                Url = "https://fydar.dev/media/void/social.webp",
-                Alt = "Promotional material for the game 'Void'."
-            }
-        ]
-    };
-    var linkData = new LinkData()
-    {
-        new LinkDataBreadcrumbList()
-        {
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Portfolio",
-                Item = "https://fydar.dev/portfolio"
-            },
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Void",
-                Item = "https://fydar.dev/portfolio/void"
-            }
-        }
-    };
+	var canonicalUrl = "https://fydar.dev/portfolio/void";
+	void PageMetadata(IMetadataFactory factory)
+	{
+		factory.UseTitle("Void - Fydar");
+		factory.UseDescription("A top-down space RTS.");
+		factory.UseCanonicalUrl(canonicalUrl);
+		factory.UseImage(image =>
+		{
+			image.Url = "https://fydar.dev/media/void/social.webp";
+			image.Alt = "Promotional material for the game 'Void'.";
+		});
+	}
+	var breadcrumbs = new BreadcrumbList()
+	{
+		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+		new BreadcrumbListItem("Void", "https://fydar.dev/portfolio/void"),
+	};
 }
 
 <HeadContent>
-    <OpenGraphComponent Model="@openGraphModel" />
-    <LinkDataComponent Model="@linkData" />
+	<MetadataComponent Metadata="@PageMetadata" />
+	<BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadContent>
 
 <article class="page-systems">
@@ -76,12 +65,12 @@
                     <Pill_CSharp />
                 </Block_PillCloud>
 
-                <p>@openGraphModel.Description.Default</p>
+                <p>A top-down space RTS.</p>
 
                 <menu class="externallinks" aria-label="Project External links">
                 </menu>
 
-                <ShareLink Url="@openGraphModel.CanonicalUrl.Html" />
+                <ShareLink Url="@canonicalUrl" />
             </Sidebar>
             <Container>
             </Container>

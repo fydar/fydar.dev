@@ -3,36 +3,28 @@
 @using Fydar.Dev.WebApp.Components.Blocks.Resume;
 
 @inject NavigationManager NavigationManager
+
 @{
-	var openGraphModel = new OpenGraphModel()
+	void PageMetadata(IMetadataFactory factory)
 	{
-		Title = "Resume - Fydar",
-		Description = "Here you can find my resume, documenting my 9-year career in the Games Development industry.",
-		CanonicalUrl = "https://fydar.dev/resume",
-		Properties = [
-			new OpenGraphModelImage()
-			{
-				Url = "https://fydar.dev/media/header.webp",
-				Alt = "A portrait of Fydar in an anime art style."
-			}
-		]
-	};
-	var linkData = new LinkData()
-	{
-		new LinkDataBreadcrumbList()
+		factory.UseTitle("Resume - Fydar");
+		factory.UseDescription("Here you can find my resume, documenting my 9-year career in the Games Development industry.");
+		factory.UseCanonicalUrl("https://fydar.dev/resume");
+		factory.UseImage(image =>
 		{
-			new LinkDataBreadcrumbListItem()
-			{
-				Name = "Resume",
-				Item = "https://fydar.dev/resume/"
-			}
-		}
+			image.Url = "https://fydar.dev/media/header.webp";
+			image.Alt = "A portrait of Fydar in an anime art style.";
+		});
+	}
+	var breadcrumbs = new BreadcrumbList()
+	{
+		new BreadcrumbListItem("Resume", "https://fydar.dev/resume/"),
 	};
 }
 
 <HeadContent>
-	<OpenGraphComponent Model="@openGraphModel" />
-	<LinkDataComponent Model="@linkData" />
+	<MetadataComponent Metadata="@PageMetadata" />
+	<BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadContent>
 
 @{

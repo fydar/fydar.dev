@@ -1,40 +1,29 @@
 @layout DefaultLayout
 @page "/portfolio/cakedodge"
+
 @{
-    var openGraphModel = new OpenGraphModel()
-    {
-        Title = "Cake Dodge - Fydar",
-        Description = "A mobile game created for a code test where the player must dodge falling cakes.",
-        CanonicalUrl = "https://fydar.dev/portfolio/cakedodge",
-        Properties = [
-            new OpenGraphModelImage()
-            {
-                Url = "https://fydar.dev/media/cakedodge/social.webp",
-                Alt = "Promotional material for the game 'Cake Dodge'."
-            }
-        ]
-    };
-    var linkData = new LinkData()
-    {
-        new LinkDataBreadcrumbList()
-        {
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Portfolio",
-                Item = "https://fydar.dev/portfolio"
-            },
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Cake Dodge",
-                Item = "https://fydar.dev/portfolio/cakedodge"
-            }
-        }
-    };
+	var canonicalUrl = "https://fydar.dev/portfolio/cakedodge";
+	void PageMetadata(IMetadataFactory factory)
+	{
+		factory.UseTitle("Cake Dodge - Fydar");
+		factory.UseDescription("A mobile game created for a code test where the player must dodge falling cakes.");
+		factory.UseCanonicalUrl(canonicalUrl);
+		factory.UseImage(image =>
+		{
+			image.Url = "https://fydar.dev/media/cakedodge/social.webp";
+			image.Alt = "Promotional material for the game 'Cake Dodge'.";
+		});
+	}
+	var breadcrumbs = new BreadcrumbList()
+	{
+		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+		new BreadcrumbListItem("Cake Dodge", "https://fydar.dev/portfolio/cakedodge"),
+	};
 }
 
 <HeadContent>
-    <OpenGraphComponent Model="@openGraphModel" />
-    <LinkDataComponent Model="@linkData" />
+	<MetadataComponent Metadata="@PageMetadata" />
+	<BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadContent>
 
 <article class="page-cakedodge">
@@ -81,12 +70,12 @@
                     <Pill_TechnicalArt />
                 </Block_PillCloud>
 
-                <p>@openGraphModel.Description.Default</p>
+                <p>A mobile game created for a code test where the player must dodge falling cakes.</p>
 
                 <menu class="externallinks" aria-label="Project External links">
                 </menu>
 
-                <ShareLink Url="@openGraphModel.CanonicalUrl.Html" />
+                <ShareLink Url="@canonicalUrl" />
             </Sidebar>
             <Container>
             </Container>

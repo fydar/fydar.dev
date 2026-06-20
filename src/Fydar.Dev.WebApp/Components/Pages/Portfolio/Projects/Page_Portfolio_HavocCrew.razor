@@ -1,40 +1,29 @@
 @layout DefaultLayout
 @page "/portfolio/havoccrew"
+
 @{
-    var openGraphModel = new OpenGraphModel()
-    {
-        Title = "Havoc Crew - Fydar",
-        Description = "Co-op realtime multiplayer dungeon crawler for the mobile market.",
-        CanonicalUrl = "https://fydar.dev/portfolio/havoccrew",
-        Properties = [
-            new OpenGraphModelImage()
-            {
-                Url = "https://fydar.dev/media/havoccrew/social.webp",
-                Alt = "Promotional material for the game 'Havoc Crew'."
-            }
-        ]
-    };
-    var linkData = new LinkData()
-    {
-        new LinkDataBreadcrumbList()
-        {
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Portfolio",
-                Item = "https://fydar.dev/portfolio"
-            },
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Havoc Crew",
-                Item = "https://fydar.dev/portfolio/havoccrew"
-            }
-        }
-    };
+	var canonicalUrl = "https://fydar.dev/portfolio/havoccrew";
+	void PageMetadata(IMetadataFactory factory)
+	{
+		factory.UseTitle("Havoc Crew - Fydar");
+		factory.UseDescription("Co-op realtime multiplayer dungeon crawler for the mobile market.");
+		factory.UseCanonicalUrl(canonicalUrl);
+		factory.UseImage(image =>
+		{
+			image.Url = "https://fydar.dev/media/havoccrew/social.webp";
+			image.Alt = "Promotional material for the game 'Havoc Crew'.";
+		});
+	}
+	var breadcrumbs = new BreadcrumbList()
+	{
+		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+		new BreadcrumbListItem("Havoc Crew", "https://fydar.dev/portfolio/havoccrew"),
+	};
 }
 
 <HeadContent>
-    <OpenGraphComponent Model="@openGraphModel" />
-    <LinkDataComponent Model="@linkData" />
+	<MetadataComponent Metadata="@PageMetadata" />
+	<BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadContent>
 
 <article class="page-systems">
@@ -80,13 +69,13 @@
                     <Pill_Tools />
                 </Block_PillCloud>
 
-                <p>@openGraphModel.Description.Default</p>
+                <p>Co-op realtime multiplayer dungeon crawler for the mobile market.</p>
 
                 <menu class="externallinks" aria-label="Project External links">
                     <li><a href="https://play.google.com/store/apps/details?id=com.fortisgames.teamraidrpg&hl=en_GB" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-googleplay" Alt="Google Play" /></a></li>
                 </menu>
 
-                <ShareLink Url="@openGraphModel.CanonicalUrl.Html" />
+                <ShareLink Url="@canonicalUrl" />
             </Sidebar>
             <Container>
                 <p>At Fortis Games I was the dedicated <b>Tools Programmer</b> on <b>Havoc Crew</b>. I built and maintained tooling for the whole team, from on-device debugging utilities for QA to content authoring tools used daily by designers and engineers.</p>

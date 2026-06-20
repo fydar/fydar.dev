@@ -1,0 +1,87 @@
+@using Fydar.AspNetCore.OpenGraph.Internal
+@using Microsoft.AspNetCore.Components.Web
+
+@{
+    var html = new HtmlMetadataFactory();
+    var og = new OpenGraphMetadataFactory();
+    var twitter = new TwitterMetadataFactory();
+
+    Metadata?.Invoke(html);
+    Metadata?.Invoke(og);
+    Metadata?.Invoke(twitter);
+}
+
+@if (!string.IsNullOrWhiteSpace(html.Title))
+{
+    <PageTitle>@html.Title</PageTitle>
+}
+@if (!string.IsNullOrWhiteSpace(html.Description))
+{
+    <meta name="description" content="@html.Description" />
+}
+<meta name="author" content="Fydar Avery" />
+
+@if (!string.IsNullOrWhiteSpace(html.CanonicalUrl))
+{
+    <link rel="canonical" href="@html.CanonicalUrl" />
+}
+
+<!-- OpenGraph Meta Tags -->
+@if (!string.IsNullOrWhiteSpace(og.Title))
+{
+    <meta property="og:title" content="@og.Title" />
+}
+<meta property="og:type" content="website" />
+@if (!string.IsNullOrWhiteSpace(og.CanonicalUrl))
+{
+    <meta property="og:url" content="@og.CanonicalUrl" />
+}
+@if (!string.IsNullOrWhiteSpace(og.Description))
+{
+    <meta property="og:description" content="@og.Description" />
+}
+@if (og.Image != null)
+{
+    @if (!string.IsNullOrWhiteSpace(og.Image.Url))
+    {
+        <meta property="og:image" content="@og.Image.Url" />
+        <meta property="og:image:secure_url" content="@og.Image.Url" />
+    }
+    @if (!string.IsNullOrWhiteSpace(og.Image.Alt))
+    {
+        <meta property="og:image:alt" content="@og.Image.Alt" />
+    }
+}
+<meta property="og:locale" content="en_GB" />
+<meta property="og:site_name" content="Fydar" />
+
+<!-- Twitter Meta Tags -->
+<meta name="twitter:card" content="summary_large_image" />
+@if (!string.IsNullOrWhiteSpace(twitter.CanonicalUrl))
+{
+    <meta property="twitter:url" content="@twitter.CanonicalUrl" />
+}
+@if (!string.IsNullOrWhiteSpace(twitter.Title))
+{
+    <meta property="twitter:title" content="@twitter.Title" />
+}
+@if (!string.IsNullOrWhiteSpace(twitter.Description))
+{
+    <meta property="twitter:description" content="@twitter.Description" />
+}
+@if (twitter.Image != null && !string.IsNullOrWhiteSpace(twitter.Image.Url))
+{
+    <meta name="twitter:image" content="@twitter.Image.Url" />
+    @if (!string.IsNullOrWhiteSpace(twitter.Image.Alt))
+    {
+        <meta name="twitter:image:alt" content="@twitter.Image.Alt" />
+    }
+}
+<meta property="twitter:domain" content="fydar.dev" />
+<meta name="twitter:site" content="@@Fydarus" />
+<meta name="twitter:creator" content="@@Fydarus" />
+
+@code {
+    [Parameter]
+    public Action<IMetadataFactory>? Metadata { get; set; }
+}

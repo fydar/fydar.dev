@@ -1,40 +1,29 @@
 @layout DefaultLayout
 @page "/portfolio/asseticons"
+
 @{
-    var openGraphModel = new OpenGraphModel()
-    {
-        Title = "AssetIcons - Fydar",
-        Description = "Assign your own unique icon to each of your ScriptableObjects.",
-        CanonicalUrl = "https://fydar.dev/portfolio/asseticons",
-        Properties = [
-            new OpenGraphModelImage()
-            {
-                Url = "https://fydar.dev/media/asseticons/social.webp",
-                Alt = "Promotional material for 'AssetIcons'."
-            }
-        ]
-    };
-    var linkData = new LinkData()
-    {
-        new LinkDataBreadcrumbList()
-        {
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Portfolio",
-                Item = "https://fydar.dev/portfolio"
-            },
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "AssetIcons",
-                Item = "https://fydar.dev/portfolio/asseticons"
-            }
-        }
-    };
+	var canonicalUrl = "https://fydar.dev/portfolio/asseticons";
+	void PageMetadata(IMetadataFactory factory)
+	{
+		factory.UseTitle("AssetIcons - Fydar");
+		factory.UseDescription("Assign your own unique icon to each of your ScriptableObjects.");
+		factory.UseCanonicalUrl(canonicalUrl);
+		factory.UseImage(image =>
+		{
+			image.Url = "https://fydar.dev/media/asseticons/social.webp";
+			image.Alt = "Promotional material for 'AssetIcons'.";
+		});
+	}
+	var breadcrumbs = new BreadcrumbList()
+	{
+		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+		new BreadcrumbListItem("AssetIcons", "https://fydar.dev/portfolio/asseticons"),
+	};
 }
 
 <HeadContent>
-    <OpenGraphComponent Model="@openGraphModel" />
-    <LinkDataComponent Model="@linkData" />
+	<MetadataComponent Metadata="@PageMetadata" />
+	<BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadContent>
 
 <article class="page-asseticons">
@@ -74,7 +63,7 @@
                     <Pill_Unity />
                 </Block_PillCloud>
 
-                <p>@openGraphModel.Description.Default</p>
+                <p>Assign your own unique icon to each of your ScriptableObjects.</p>
 
                 <menu class="externallinks" aria-label="Project External links">
                     <li><a href="https://assetstore.unity.com/packages/tools/utilities/asseticons-100547" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-unity" Alt="Unity Asset Store" /></a></li>
@@ -82,7 +71,7 @@
                     <li class="palette-youtube"><a href="https://youtu.be/9tq5_naSYmM" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-youtube" Alt="YouTube" /></a></li>
                 </menu>
 
-                <ShareLink Url="@openGraphModel.CanonicalUrl.Html" />
+                <ShareLink Url="@canonicalUrl" />
 
                 <aside>
                     <Block_TableOfContents />

@@ -22,8 +22,8 @@ public static class IApplicationBuilderExtensions
 
 		return endpoints.MapGet(pattern, async (HttpContext httpContext, [FromServices] HtmlRenderer htmlRenderer) =>
 		{
-			// If there is an OpenGraph model, we will want to generate a page for bots.
-			if (options.Model != null)
+			// If there is metadata, we will want to generate a page for bots.
+			if (options.Metadata != null)
 			{
 				string userAgent = httpContext.Request.Headers.UserAgent.ToString();
 

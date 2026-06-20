@@ -1,40 +1,29 @@
 @layout DefaultLayout
 @page "/portfolio/loversdefence"
+
 @{
-    var openGraphModel = new OpenGraphModel()
-    {
-        Title = "Lovers' Defence - Fydar",
-        Description = "A narrative driven tower defence game.",
-        CanonicalUrl = "https://fydar.dev/portfolio/loversdefence",
-        Properties = [
-            new OpenGraphModelImage()
-            {
-                Url = "https://fydar.dev/media/loversdefence/social.webp",
-                Alt = "Promotional material for the game 'Lovers' Defence'."
-            }
-        ]
-    };
-    var linkData = new LinkData()
-    {
-        new LinkDataBreadcrumbList()
-        {
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Portfolio",
-                Item = "https://fydar.dev/portfolio"
-            },
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Lovers' Defence",
-                Item = "https://fydar.dev/portfolio/loversdefence"
-            }
-        }
-    };
+	var canonicalUrl = "https://fydar.dev/portfolio/loversdefence";
+	void PageMetadata(IMetadataFactory factory)
+	{
+		factory.UseTitle("Lovers' Defence - Fydar");
+		factory.UseDescription("A narrative driven tower defence game.");
+		factory.UseCanonicalUrl(canonicalUrl);
+		factory.UseImage(image =>
+		{
+			image.Url = "https://fydar.dev/media/loversdefence/social.webp";
+			image.Alt = "Promotional material for the game 'Lovers' Defence'.";
+		});
+	}
+	var breadcrumbs = new BreadcrumbList()
+	{
+		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+		new BreadcrumbListItem("Lovers' Defence", "https://fydar.dev/portfolio/loversdefence"),
+	};
 }
 
 <HeadContent>
-    <OpenGraphComponent Model="@openGraphModel" />
-    <LinkDataComponent Model="@linkData" />
+	<MetadataComponent Metadata="@PageMetadata" />
+	<BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadContent>
 
 <article class="page-loversdefence">
@@ -80,13 +69,13 @@
                     <Pill_CSharp />
                 </Block_PillCloud>
 
-                <p>@openGraphModel.Description.Default</p>
+                <p>A narrative driven tower defence game.</p>
 
                 <menu class="externallinks" aria-label="Project External links">
                     <li class="palette-ludumdare-jam"><a href="https://ldjam.com/events/ludum-dare/50/lovers-defence" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-ludumdareinactive" Alt="Ludum Dare" /></a></li>
                 </menu>
 
-                <ShareLink Url="@openGraphModel.CanonicalUrl.Html" />
+                <ShareLink Url="@canonicalUrl" />
             </Sidebar>
             <Container>
             </Container>

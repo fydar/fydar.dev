@@ -1,45 +1,31 @@
 @layout GameLayout
 @page "/play/miniminer"
 
-
 @{
-    var openGraphModel = new OpenGraphModel()
-    {
-        Title = "Play Mini Miner - Fydar",
-        Description = "The Game Boy demake of the Nintendo DS Pokémon Diamond and Pearl underground mining minigame.",
-        CanonicalUrl = "https://fydar.dev/play/miniminer",
-        Properties = [
-            new OpenGraphModelImage()
-            {
-                Url = "https://fydar.dev/media/miniminer/social.webp",
-                Alt = "Promotional material for the game 'Mini Miner'."
-            }
-        ]
-    };
-    var linkData = new LinkData()
-    {
-        new LinkDataBreadcrumbList()
-        {
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Play",
-                Item = "https://fydar.dev/play/"
-            },
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Mini Miner",
-                Item = "https://fydar.dev/play/miniminer"
-            }
-        }
-    };
+	void PageMetadata(IMetadataFactory factory)
+	{
+		factory.UseTitle("Play Mini Miner - Fydar");
+		factory.UseDescription("The Game Boy demake of the Nintendo DS Pokémon Diamond and Pearl underground mining minigame.");
+		factory.UseCanonicalUrl("https://fydar.dev/play/miniminer");
+		factory.UseImage(image =>
+		{
+			image.Url = "https://fydar.dev/media/miniminer/social.webp";
+			image.Alt = "Promotional material for the game 'Mini Miner'.";
+		});
+	}
+	var breadcrumbs = new BreadcrumbList()
+	{
+		new BreadcrumbListItem("Play", "https://fydar.dev/play/"),
+		new BreadcrumbListItem("Mini Miner", "https://fydar.dev/play/miniminer"),
+	};
 }
 
 <HeadContent>
-    <OpenGraphComponent Model="@openGraphModel" />
-    <LinkDataComponent Model="@linkData" />
-    <meta name="theme-color" content="#161618">
-    <link rel="shortcut icon" href="@Assets["/play/miniminer/favicon.ico"]">
-    <link rel="preload" href="@Assets["/play/miniminer/build/miniminer.loader.js"]" as="script" fetchpriority="high" />
+	<MetadataComponent Metadata="@PageMetadata" />
+	<BreadcrumbListComponent Model="@breadcrumbs" />
+	<meta name="theme-color" content="#161618">
+	<link rel="shortcut icon" href="@Assets["/play/miniminer/favicon.ico"]">
+	<link rel="preload" href="@Assets["/play/miniminer/build/miniminer.loader.js"]" as="script" fetchpriority="high" />
 </HeadContent>
 
 @{

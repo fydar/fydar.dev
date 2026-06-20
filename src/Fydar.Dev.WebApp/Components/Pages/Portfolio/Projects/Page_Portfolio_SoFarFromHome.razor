@@ -1,40 +1,29 @@
 @layout DefaultLayout
 @page "/portfolio/sofarfromhome"
+
 @{
-    var openGraphModel = new OpenGraphModel()
-    {
-        Title = "So Far From Home - Fydar",
-        Description = "Searching between the sofa cushions for a missing key, but what else is down there?",
-        CanonicalUrl = "https://fydar.dev/portfolio/sofarfromhome",
-        Properties = [
-            new OpenGraphModelImage()
-            {
-                Url = "https://fydar.dev/media/sofarfromhome/social.webp",
-                Alt = "Promotional material for the game 'So Far From Home'."
-            }
-        ]
-    };
-    var linkData = new LinkData()
-    {
-        new LinkDataBreadcrumbList()
-        {
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Portfolio",
-                Item = "https://fydar.dev/portfolio"
-            },
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "So Far From Home",
-                Item = "https://fydar.dev/portfolio/sofarfromhome"
-            }
-        }
-    };
+	var canonicalUrl = "https://fydar.dev/portfolio/sofarfromhome";
+	void PageMetadata(IMetadataFactory factory)
+	{
+		factory.UseTitle("So Far From Home - Fydar");
+		factory.UseDescription("Searching between the sofa cushions for a missing key, but what else is down there?");
+		factory.UseCanonicalUrl(canonicalUrl);
+		factory.UseImage(image =>
+		{
+			image.Url = "https://fydar.dev/media/sofarfromhome/social.webp";
+			image.Alt = "Promotional material for the game 'So Far From Home'.";
+		});
+	}
+	var breadcrumbs = new BreadcrumbList()
+	{
+		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+		new BreadcrumbListItem("So Far From Home", "https://fydar.dev/portfolio/sofarfromhome"),
+	};
 }
 
 <HeadContent>
-    <OpenGraphComponent Model="@openGraphModel" />
-    <LinkDataComponent Model="@linkData" />
+	<MetadataComponent Metadata="@PageMetadata" />
+	<BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadContent>
 
 <article class="page-sofarfromhome">
@@ -80,14 +69,14 @@
                     <Pill_CSharp />
                 </Block_PillCloud>
 
-                <p>@openGraphModel.Description.Default</p>
+                <p>Searching between the sofa cushions for a missing key, but what else is down there?</p>
 
                 <menu class="externallinks" aria-label="Project External links">
                     <li><a href="https://github.com/fydar/SoFarFromHome" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-github" Alt="GitHub" /></a></li>
                     <li class="palette-youtube"><a href="https://youtu.be/I7_W-q0Np6s" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-youtube" Alt="YouTube" /></a></li>
                 </menu>
 
-                <ShareLink Url="@openGraphModel.CanonicalUrl.Html" />
+                <ShareLink Url="@canonicalUrl" />
             </Sidebar>
             <Container>
                 <EmbedYouTube Url="https://www.youtube-nocookie.com/embed/I7_W-q0Np6s?si=W4b_-U3gF05PN4SB" />

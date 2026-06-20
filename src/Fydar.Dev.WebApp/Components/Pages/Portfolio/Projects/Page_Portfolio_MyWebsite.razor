@@ -1,40 +1,29 @@
 @layout DefaultLayout
 @page "/portfolio/mywebsite"
+
 @{
-    var openGraphModel = new OpenGraphModel()
-    {
-        Title = "My Website - Fydar",
-        Description = "Find out how I created this website.",
-        CanonicalUrl = "https://fydar.dev/portfolio/mywebsite",
-        Properties = [
-            new OpenGraphModelImage()
-            {
-                Url = "https://fydar.dev/media/header.webp",
-                Alt = "A portrait of Fydar in an anime art style."
-            }
-        ]
-    };
-    var linkData = new LinkData()
-    {
-        new LinkDataBreadcrumbList()
-        {
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Portfolio",
-                Item = "https://fydar.dev/portfolio"
-            },
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "My Website",
-                Item = "https://fydar.dev/portfolio/mywebsite"
-            }
-        }
-    };
+	var canonicalUrl = "https://fydar.dev/portfolio/mywebsite";
+	void PageMetadata(IMetadataFactory factory)
+	{
+		factory.UseTitle("My Website - Fydar");
+		factory.UseDescription("Find out how I created this website.");
+		factory.UseCanonicalUrl(canonicalUrl);
+		factory.UseImage(image =>
+		{
+			image.Url = "https://fydar.dev/media/header.webp";
+			image.Alt = "A portrait of Fydar in an anime art style.";
+		});
+	}
+	var breadcrumbs = new BreadcrumbList()
+	{
+		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+		new BreadcrumbListItem("My Website", "https://fydar.dev/portfolio/mywebsite"),
+	};
 }
 
 <HeadContent>
-    <OpenGraphComponent Model="@openGraphModel" />
-    <LinkDataComponent Model="@linkData" />
+	<MetadataComponent Metadata="@PageMetadata" />
+	<BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadContent>
 
 <article class="page-mywebsite">
@@ -51,13 +40,13 @@
                     <Pill_CSharp />
                 </Block_PillCloud>
 
-                <p>@openGraphModel.Description.Default</p>
+                <p>Find out how I created this website.</p>
 
                 <menu class="externallinks" aria-label="Project External links">
                     <li><a href="https://github.com/fydar/fydar.dev" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-github" Alt="GitHub" /></a></li>
                 </menu>
 
-                <ShareLink Url="@openGraphModel.CanonicalUrl.Html" />
+                <ShareLink Url="@canonicalUrl" />
             </Sidebar>
             <Container>
             </Container>

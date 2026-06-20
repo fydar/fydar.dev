@@ -4,41 +4,33 @@
 @layout DefaultLayout
 @page "/myname"
 
+@inject NavigationManager NavigationManager
+@inject Noncer noncer
+
 @attribute [OutputCache(Duration = 600)]
 
-@inject NavigationManager NavigationManager
-@inject Noncer noncer;
-
 @{
-    var openGraphModel = new OpenGraphModel()
-    {
-        Title = "Fydar - Name Pronunciation, Origin, and Meaning",
-        Description = "My name is “Fydar”. It's a unique name, so I decided to document it myself.",
-        CanonicalUrl = "https://fydar.dev/myname",
-        Properties = [
-            new OpenGraphModelImage()
-            {
-                Url = "https://fydar.dev/media/header.webp",
-                Alt = "A portrait of Fydar in an anime art style."
-            }
-        ]
-    };
-    var linkData = new LinkData()
-    {
-        new LinkDataBreadcrumbList()
-        {
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "My Name",
-                Item = "https://fydar.dev/myname"
-            }
-        }
-    };
+	var canonicalUrl = "https://fydar.dev/myname";
+	void PageMetadata(IMetadataFactory factory)
+	{
+        factory.UseTitle("Fydar - Name Pronunciation, Origin, and Meaning");
+        factory.UseDescription("My name is “Fydar”. It’s a unique name, so I decided to document it myself.");
+		factory.UseCanonicalUrl(canonicalUrl);
+		factory.UseImage(image =>
+		{
+			image.Url = "https://fydar.dev/media/header.webp";
+			image.Alt = "A portrait of Fydar in an anime art style.";
+		});
+	}
+	var breadcrumbs = new BreadcrumbList()
+	{
+		new BreadcrumbListItem("My Name", "https://fydar.dev/myname"),
+	};
 }
 
 <HeadContent>
-    <OpenGraphComponent Model="@openGraphModel" />
-    <LinkDataComponent Model="@linkData" />
+    <MetadataComponent Metadata="@PageMetadata" />
+    <BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadContent>
 
 <article class="page-myname">
@@ -51,7 +43,7 @@
             <Sidebar>
                 <p>My name is “Fydar”. It's a unique name, so I decided to document it myself.</p>
 
-                <ShareLink Url="@openGraphModel.CanonicalUrl.Html" />
+                <ShareLink Url="@canonicalUrl" />
 
                 <aside>
                     <Block_TableOfContents />

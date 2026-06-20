@@ -1,40 +1,29 @@
 @layout DefaultLayout
 @page "/portfolio/roadtonorthstead"
+
 @{
-    var openGraphModel = new OpenGraphModel()
-    {
-        Title = "Road to Northstead - Fydar",
-        Description = "The game jam visual novel with questing and crafting to survive the night.",
-        CanonicalUrl = "https://fydar.dev/portfolio/roadtonorthstead",
-        Properties = [
-            new OpenGraphModelImage()
-            {
-                Url = "https://fydar.dev/media/roadtonorthstead/social.webp",
-                Alt = "Promotional material for the game 'Road to Northstead'."
-            }
-        ]
-    };
-    var linkData = new LinkData()
-    {
-        new LinkDataBreadcrumbList()
-        {
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Portfolio",
-                Item = "https://fydar.dev/portfolio"
-            },
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Road to Northstead",
-                Item = "https://fydar.dev/portfolio/roadtonorthstead"
-            }
-        }
-    };
+	var canonicalUrl = "https://fydar.dev/portfolio/roadtonorthstead";
+	void PageMetadata(IMetadataFactory factory)
+	{
+		factory.UseTitle("Road to Northstead - Fydar");
+		factory.UseDescription("The game jam visual novel with questing and crafting to survive the night.");
+		factory.UseCanonicalUrl(canonicalUrl);
+		factory.UseImage(image =>
+		{
+			image.Url = "https://fydar.dev/media/roadtonorthstead/social.webp";
+			image.Alt = "Promotional material for the game 'Road to Northstead'.";
+		});
+	}
+	var breadcrumbs = new BreadcrumbList()
+	{
+		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+		new BreadcrumbListItem("Road to Northstead", "https://fydar.dev/portfolio/roadtonorthstead"),
+	};
 }
 
 <HeadContent>
-    <OpenGraphComponent Model="@openGraphModel" />
-    <LinkDataComponent Model="@linkData" />
+	<MetadataComponent Metadata="@PageMetadata" />
+	<BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadContent>
 
 <article class="page-roadtonorthstead">
@@ -80,13 +69,13 @@
                     <Pill_CSharp />
                 </Block_PillCloud>
 
-                <p>@openGraphModel.Description.Default</p>
+                <p>The game jam visual novel with questing and crafting to survive the night.</p>
 
                 <menu class="externallinks" aria-label="Project External links">
                     <li class="palette-youtube"><a href="https://youtu.be/nt5aEzyqaOU" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-youtube" Alt="YouTube" /></a></li>
                 </menu>
 
-                <ShareLink Url="@openGraphModel.CanonicalUrl.Html" />
+                <ShareLink Url="@canonicalUrl" />
             </Sidebar>
             <Container>
                 <EmbedYouTube Url="https://www.youtube-nocookie.com/embed/nt5aEzyqaOU?si=UYA_5Xe3CJ7Qcsj6" />

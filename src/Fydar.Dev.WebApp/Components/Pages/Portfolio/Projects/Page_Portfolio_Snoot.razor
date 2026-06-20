@@ -1,40 +1,29 @@
 @layout DefaultLayout
 @page "/portfolio/snoot"
+
 @{
-    var openGraphModel = new OpenGraphModel()
-    {
-        Title = "Snoot - Fydar",
-        Description = "Restore life to a desolate world by exploring a sandbox of crafting recipes. On your adventure you will bring rain, grass, bugs, birds, and bees.",
-        CanonicalUrl = "https://fydar.dev/portfolio/snoot",
-        Properties = [
-            new OpenGraphModelImage()
-            {
-                Url = "https://fydar.dev/media/snoot/social.webp",
-                Alt = "Promotional material for the game 'Snoot'."
-            }
-        ]
-    };
-    var linkData = new LinkData()
-    {
-        new LinkDataBreadcrumbList()
-        {
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Portfolio",
-                Item = "https://fydar.dev/portfolio"
-            },
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Snoot",
-                Item = "https://fydar.dev/portfolio/snoot"
-            }
-        }
-    };
+	var canonicalUrl = "https://fydar.dev/portfolio/snoot";
+	void PageMetadata(IMetadataFactory factory)
+	{
+		factory.UseTitle("Snoot - Fydar");
+		factory.UseDescription("Restore life to a desolate world by exploring a sandbox of crafting recipes. On your adventure you will bring rain, grass, bugs, birds, and bees.");
+		factory.UseCanonicalUrl(canonicalUrl);
+		factory.UseImage(image =>
+		{
+			image.Url = "https://fydar.dev/media/snoot/social.webp";
+			image.Alt = "Promotional material for the game 'Snoot'.";
+		});
+	}
+	var breadcrumbs = new BreadcrumbList()
+	{
+		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+		new BreadcrumbListItem("Snoot", "https://fydar.dev/portfolio/snoot"),
+	};
 }
 
 <HeadContent>
-    <OpenGraphComponent Model="@openGraphModel" />
-    <LinkDataComponent Model="@linkData" />
+	<MetadataComponent Metadata="@PageMetadata" />
+	<BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadContent>
 
 <article class="page-snoot">
@@ -80,14 +69,14 @@
                     <Pill_CSharp />
                 </Block_PillCloud>
 
-                <p>@openGraphModel.Description.Default</p>
+                <p>Restore life to a desolate world by exploring a sandbox of crafting recipes. On your adventure you will bring rain, grass, bugs, birds, and bees.</p>
 
                 <menu class="externallinks" aria-label="Project External links">
                     <li><a href="https://github.com/fydar/Snoot" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-github" Alt="GitHub" /></a></li>
                     <li class="palette-youtube"><a href="https://youtu.be/QG4aYGcsoio" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-youtube" Alt="YouTube" /></a></li>
                 </menu>
 
-                <ShareLink Url="@openGraphModel.CanonicalUrl.Html" />
+                <ShareLink Url="@canonicalUrl" />
             </Sidebar>
             <Container>
                 <EmbedYouTube Url="https://www.youtube-nocookie.com/embed/QG4aYGcsoio?si=vaE8GRl9teAlJEjI" />

@@ -1,45 +1,31 @@
 @layout GameLayout
 @page "/play/snoot"
 
-
 @{
-    var openGraphModel = new OpenGraphModel()
-    {
-        Title = "Play Snoot - Fydar",
-        Description = "Restore life to a desolate world by exploring a sandbox of crafting recipes. On your adventure you will bring rain, grass, bugs, birds, and bees.",
-        CanonicalUrl = "https://fydar.dev/play/snoot",
-        Properties = [
-            new OpenGraphModelImage()
-            {
-                Url = "https://fydar.dev/media/snoot/social.webp",
-                Alt = "Promotional material for the game 'Snoot'."
-            }
-        ]
-    };
-    var linkData = new LinkData()
-    {
-        new LinkDataBreadcrumbList()
-        {
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Play",
-                Item = "https://fydar.dev/play/"
-            },
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Snoot",
-                Item = "https://fydar.dev/play/snoot"
-            }
-        }
-    };
+	void PageMetadata(IMetadataFactory factory)
+	{
+		factory.UseTitle("Play Snoot - Fydar");
+		factory.UseDescription("Restore life to a desolate world by exploring a sandbox of crafting recipes. On your adventure you will bring rain, grass, bugs, birds, and bees.");
+		factory.UseCanonicalUrl("https://fydar.dev/play/snoot");
+		factory.UseImage(image =>
+		{
+			image.Url = "https://fydar.dev/media/snoot/social.webp";
+			image.Alt = "Promotional material for the game 'Snoot'.";
+		});
+	}
+	var breadcrumbs = new BreadcrumbList()
+	{
+		new BreadcrumbListItem("Play", "https://fydar.dev/play/"),
+		new BreadcrumbListItem("Snoot", "https://fydar.dev/play/snoot"),
+	};
 }
 
 <HeadContent>
-    <OpenGraphComponent Model="@openGraphModel" />
-    <LinkDataComponent Model="@linkData" />
-    <meta name="theme-color" content="#161618">
-    <link rel="shortcut icon" href="@Assets["/play/snoot/favicon.ico"]">
-    <link rel="preload" href="@Assets["/play/snoot/build/snoot.loader.js"]" as="script" fetchpriority="high" />
+	<MetadataComponent Metadata="@PageMetadata" />
+	<BreadcrumbListComponent Model="@breadcrumbs" />
+	<meta name="theme-color" content="#161618">
+	<link rel="shortcut icon" href="@Assets["/play/snoot/favicon.ico"]">
+	<link rel="preload" href="@Assets["/play/snoot/build/snoot.loader.js"]" as="script" fetchpriority="high" />
 </HeadContent>
 
 @{

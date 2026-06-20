@@ -1,40 +1,29 @@
 @layout DefaultLayout
 @page "/portfolio/twilighttowers"
+
 @{
-    var openGraphModel = new OpenGraphModel()
-    {
-        Title = "Twilight Towers - Fydar",
-        Description = "Tower defence meets merge and puzzle games.",
-        CanonicalUrl = "https://fydar.dev/portfolio/twilighttowers",
-        Properties = [
-            new OpenGraphModelImage()
-            {
-                Url = "https://fydar.dev/media/twilighttowers/social.webp",
-                Alt = "Promotional material for the game 'Twilight Towers'."
-            }
-        ]
-    };
-    var linkData = new LinkData()
-    {
-        new LinkDataBreadcrumbList()
-        {
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Portfolio",
-                Item = "https://fydar.dev/portfolio"
-            },
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Twilight Towers",
-                Item = "https://fydar.dev/portfolio/twilighttowers"
-            }
-        }
-    };
+	var canonicalUrl = "https://fydar.dev/portfolio/twilighttowers";
+	void PageMetadata(IMetadataFactory factory)
+	{
+		factory.UseTitle("Twilight Towers - Fydar");
+		factory.UseDescription("Tower defence meets merge and puzzle games.");
+		factory.UseCanonicalUrl(canonicalUrl);
+		factory.UseImage(image =>
+		{
+			image.Url = "https://fydar.dev/media/twilighttowers/social.webp";
+			image.Alt = "Promotional material for the game 'Twilight Towers'.";
+		});
+	}
+	var breadcrumbs = new BreadcrumbList()
+	{
+		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+		new BreadcrumbListItem("Twilight Towers", "https://fydar.dev/portfolio/twilighttowers"),
+	};
 }
 
 <HeadContent>
-    <OpenGraphComponent Model="@openGraphModel" />
-    <LinkDataComponent Model="@linkData" />
+	<MetadataComponent Metadata="@PageMetadata" />
+	<BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadContent>
 
 <article class="page-systems">
@@ -86,7 +75,7 @@
                     <Pill_Tools />
                 </Block_PillCloud>
 
-                <p>@openGraphModel.Description.Default</p>
+                <p>Tower defence meets merge and puzzle games.</p>
 
                 <menu class="externallinks" aria-label="Project External links">
                     <li><a href="https://play.google.com/store/apps/details?id=com.fortisgames.twilighttower" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-googleplay" Alt="Google Play" /></a></li>
@@ -94,7 +83,7 @@
                     <li class="palette-youtube"><a href="https://youtu.be/3l2rxaeS3Ys" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-youtube" Alt="YouTube" /></a></li>
                 </menu>
 
-                <ShareLink Url="@openGraphModel.CanonicalUrl.Html" />
+                <ShareLink Url="@canonicalUrl" />
             </Sidebar>
             <Container>
                 <EmbedYouTube Url="https://www.youtube-nocookie.com/embed/3l2rxaeS3Ys?si=BXWpkYX5m6tP1PRx" />

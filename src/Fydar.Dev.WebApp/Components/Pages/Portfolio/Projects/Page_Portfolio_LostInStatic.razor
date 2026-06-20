@@ -1,40 +1,29 @@
 @layout DefaultLayout
 @page "/portfolio/lostinstatic"
+
 @{
-    var openGraphModel = new OpenGraphModel()
-    {
-        Title = "Lost in Static - Fydar",
-        Description = "Remote control a drone to take down a rogue AI controlling the station.",
-        CanonicalUrl = "https://fydar.dev/portfolio/lostinstatic",
-        Properties = [
-            new OpenGraphModelImage()
-            {
-                Url = "https://fydar.dev/media/lostinstatic/social.webp",
-                Alt = "Promotional material for the game 'Lost in Static'."
-            }
-        ]
-    };
-    var linkData = new LinkData()
-    {
-        new LinkDataBreadcrumbList()
-        {
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Portfolio",
-                Item = "https://fydar.dev/portfolio"
-            },
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Lost in Static",
-                Item = "https://fydar.dev/portfolio/lostinstatic"
-            }
-        }
-    };
+	var canonicalUrl = "https://fydar.dev/portfolio/lostinstatic";
+	void PageMetadata(IMetadataFactory factory)
+	{
+		factory.UseTitle("Lost in Static - Fydar");
+		factory.UseDescription("Remote control a drone to take down a rogue AI controlling the station.");
+		factory.UseCanonicalUrl(canonicalUrl);
+		factory.UseImage(image =>
+		{
+			image.Url = "https://fydar.dev/media/lostinstatic/social.webp";
+			image.Alt = "Promotional material for the game 'Lost in Static'.";
+		});
+	}
+	var breadcrumbs = new BreadcrumbList()
+	{
+		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+		new BreadcrumbListItem("Lost in Static", "https://fydar.dev/portfolio/lostinstatic"),
+	};
 }
 
 <HeadContent>
-    <OpenGraphComponent Model="@openGraphModel" />
-    <LinkDataComponent Model="@linkData" />
+	<MetadataComponent Metadata="@PageMetadata" />
+	<BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadContent>
 
 <article class="page-lostinstatic">
@@ -80,13 +69,13 @@
                     <Pill_CSharp />
                 </Block_PillCloud>
 
-                <p>@openGraphModel.Description.Default</p>
+                <p>Remote control a drone to take down a rogue AI controlling the station.</p>
 
                 <menu class="externallinks" aria-label="Project External links">
                     <li class="palette-youtube"><a href="https://youtu.be/Pms5NU5-IHQ" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-youtube" Alt="YouTube" /></a></li>
                 </menu>
 
-                <ShareLink Url="@openGraphModel.CanonicalUrl.Html" />
+                <ShareLink Url="@canonicalUrl" />
             </Sidebar>
             <Container>
                 <EmbedYouTube Url="https://www.youtube-nocookie.com/embed/Pms5NU5-IHQ?si=Mrgnpsi5yvvkqaqR" />

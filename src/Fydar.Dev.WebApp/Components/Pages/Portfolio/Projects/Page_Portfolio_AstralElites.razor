@@ -1,41 +1,30 @@
 @layout DefaultLayout
 @page "/portfolio/astralelites"
+
 @{
-    var openGraphModel = new OpenGraphModel()
-    {
-        Title = "Astral Elites - Fydar",
-        Description = "The physics-based and fast-paced asteroids clone for the modern era.",
-        CanonicalUrl = "https://fydar.dev/portfolio/astralelites",
-        Properties = [
-            new OpenGraphModelImage()
-            {
-                Url = "https://fydar.dev/media/astralelites/social.webp",
-                Alt = "Promotional material for the game 'Astral Elites'."
-            }
-        ]
-    };
-    var linkData = new LinkData()
-    {
-        new LinkDataBreadcrumbList()
-        {
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Portfolio",
-                Item = "https://fydar.dev/portfolio"
-            },
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Astral Elites",
-                Item = "https://fydar.dev/portfolio/astralelites"
-            }
-        }
-    };
+	var canonicalUrl = "https://fydar.dev/portfolio/astralelites";
+	void PageMetadata(IMetadataFactory factory)
+	{
+		factory.UseTitle("Astral Elites - Fydar");
+		factory.UseDescription("The physics-based and fast-paced asteroids clone for the modern era.");
+		factory.UseCanonicalUrl(canonicalUrl);
+		factory.UseImage(image =>
+		{
+			image.Url = "https://fydar.dev/media/astralelites/social.webp";
+			image.Alt = "Promotional material for the game 'Astral Elites'.";
+		});
+	}
+	var breadcrumbs = new BreadcrumbList()
+	{
+		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+		new BreadcrumbListItem("Astral Elites", "https://fydar.dev/portfolio/astralelites"),
+	};
 }
 
 <HeadContent>
-    <OpenGraphComponent Model="@openGraphModel" />
-    <LinkDataComponent Model="@linkData" />
-    <link rel="preload" href="@Assets["/play/astralelites/build/0.1.2.8.loader.js"]" as="script" fetchpriority="high" />
+	<MetadataComponent Metadata="@PageMetadata" />
+	<BreadcrumbListComponent Model="@breadcrumbs" />
+	<link rel="preload" href="@Assets["/play/astralelites/build/0.1.2.8.loader.js"]" as="script" fetchpriority="high" />
 </HeadContent>
 
 <article class="page-astralelites">
@@ -76,14 +65,14 @@
                     <Pill_CSharp />
                 </Block_PillCloud>
 
-                <p>@openGraphModel.Description.Default</p>
+                <p>The physics-based and fast-paced asteroids clone for the modern era.</p>
 
                 <menu data-nosnippet class="externallinks" aria-label="Project External links">
                     <li><a href="https://github.com/fydar/AstralElites" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-github" Alt="GitHub" /></a></li>
                     <li class="palette-youtube"><a href="https://youtu.be/r4RrKXTHTGY" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-youtube" Alt="YouTube" /></a></li>
                 </menu>
 
-                <ShareLink Url="@openGraphModel.CanonicalUrl.Html" />
+                <ShareLink Url="@canonicalUrl" />
             </Sidebar>
             <Container>
                 <EmbedYouTube Url="https://www.youtube-nocookie.com/embed/r4RrKXTHTGY?si=02R98hFpkABaYXAy" />

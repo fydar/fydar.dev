@@ -1,45 +1,31 @@
 @layout GameLayout
 @page "/play/cryptcrawl"
 
-
 @{
-    var openGraphModel = new OpenGraphModel()
-    {
-        Title = "Play Crypt Crawl - Fydar",
-        Description = "A pixel art dungeon crawler with dungeon textures generated in Substance Designer.",
-        CanonicalUrl = "https://fydar.dev/play/cryptcrawl",
-        Properties = [
-            new OpenGraphModelImage()
-            {
-                Url = "https://fydar.dev/media/cryptcrawl/social.webp",
-                Alt = "Promotional material for the game 'Crypt Crawl'."
-            }
-        ]
-    };
-    var linkData = new LinkData()
-    {
-        new LinkDataBreadcrumbList()
-        {
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Play",
-                Item = "https://fydar.dev/play/"
-            },
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Crypt Crawl",
-                Item = "https://fydar.dev/play/cryptcrawl"
-            }
-        }
-    };
+	void PageMetadata(IMetadataFactory factory)
+	{
+		factory.UseTitle("Play Crypt Crawl - Fydar");
+		factory.UseDescription("A pixel art dungeon crawler with dungeon textures generated in Substance Designer.");
+		factory.UseCanonicalUrl("https://fydar.dev/play/cryptcrawl");
+		factory.UseImage(image =>
+		{
+			image.Url = "https://fydar.dev/media/cryptcrawl/social.webp";
+			image.Alt = "Promotional material for the game 'Crypt Crawl'.";
+		});
+	}
+	var breadcrumbs = new BreadcrumbList()
+	{
+		new BreadcrumbListItem("Play", "https://fydar.dev/play/"),
+		new BreadcrumbListItem("Crypt Crawl", "https://fydar.dev/play/cryptcrawl"),
+	};
 }
 
 <HeadContent>
-    <OpenGraphComponent Model="@openGraphModel" />
-    <LinkDataComponent Model="@linkData" />
-    <meta name="theme-color" content="#161618">
-    <link rel="shortcut icon" href="@Assets["/play/cryptcrawl/favicon.ico"]">
-    <link rel="preload" href="@Assets["/play/cryptcrawl/build/cryptcrawl.loader.js"]" as="script" fetchpriority="high" />
+	<MetadataComponent Metadata="@PageMetadata" />
+	<BreadcrumbListComponent Model="@breadcrumbs" />
+	<meta name="theme-color" content="#161618">
+	<link rel="shortcut icon" href="@Assets["/play/cryptcrawl/favicon.ico"]">
+	<link rel="preload" href="@Assets["/play/cryptcrawl/build/cryptcrawl.loader.js"]" as="script" fetchpriority="high" />
 </HeadContent>
 
 @{

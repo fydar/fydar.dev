@@ -1,45 +1,31 @@
 @layout GameLayout
 @page "/play/void"
 
-
 @{
-    var openGraphModel = new OpenGraphModel()
-    {
-        Title = "Play Void - Fydar",
-        Description = "Explore the empty void, deploy mining vessels to mine asteroids.",
-        CanonicalUrl = "https://fydar.dev/play/void",
-        Properties = [
-            new OpenGraphModelImage()
-            {
-                Url = "https://fydar.dev/media/void/social.webp",
-                Alt = "Promotional material for the game 'Void'."
-            }
-        ]
-    };
-    var linkData = new LinkData()
-    {
-        new LinkDataBreadcrumbList()
-        {
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Play",
-                Item = "https://fydar.dev/play/"
-            },
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Void",
-                Item = "https://fydar.dev/play/void"
-            }
-        }
-    };
+	void PageMetadata(IMetadataFactory factory)
+	{
+		factory.UseTitle("Play Void - Fydar");
+		factory.UseDescription("Explore the empty void, deploy mining vessels to mine asteroids.");
+		factory.UseCanonicalUrl("https://fydar.dev/play/void");
+		factory.UseImage(image =>
+		{
+			image.Url = "https://fydar.dev/media/void/social.webp";
+			image.Alt = "Promotional material for the game 'Void'.";
+		});
+	}
+	var breadcrumbs = new BreadcrumbList()
+	{
+		new BreadcrumbListItem("Play", "https://fydar.dev/play/"),
+		new BreadcrumbListItem("Void", "https://fydar.dev/play/void"),
+	};
 }
 
 <HeadContent>
-    <OpenGraphComponent Model="@openGraphModel" />
-    <LinkDataComponent Model="@linkData" />
-    <meta name="theme-color" content="#161618">
-    <link rel="shortcut icon" href="@Assets["/play/void/favicon.ico"]">
-    <link rel="preload" href="@Assets["/play/void/build/void.loader.js"]" as="script" fetchpriority="high" />
+	<MetadataComponent Metadata="@PageMetadata" />
+	<BreadcrumbListComponent Model="@breadcrumbs" />
+	<meta name="theme-color" content="#161618">
+	<link rel="shortcut icon" href="@Assets["/play/void/favicon.ico"]">
+	<link rel="preload" href="@Assets["/play/void/build/void.loader.js"]" as="script" fetchpriority="high" />
 </HeadContent>
 
 @{

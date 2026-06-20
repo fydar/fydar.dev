@@ -1,0 +1,48 @@
+@using System.Text
+@using System.Text.Json
+
+@if (Model != null && Model.Count > 0)
+{
+    <script type="application/ld+json">
+        @(new Microsoft.AspNetCore.Components.MarkupString(ToJson()))
+    </script>
+}
+
+@code {
+    [Parameter, EditorRequired]
+    public BreadcrumbList Model { get; set; } = null!;
+
+    private string ToJson()
+    {
+        var options = new JsonWriterOptions { Indented = false };
+        using var stream = new MemoryStream();
+        using var writer = new Utf8JsonWriter(stream, options);
+
+        writer.WriteStartArray();
+        writer.WriteStartObject();
+        writer.WriteString("@context", "https://schema.org");
+        writer.WriteString("@type", "BreadcrumbList");
+        writer.WriteString("name", string.Join(" > ", Model.Select(b => b.Name).Where(n => !string.IsNullOrWhiteSpace(n))));
+        writer.WritePropertyName("itemListElement");
+        writer.WriteStartArray();
+        for (int i = 0; i < Model.Count; i++)
+        {
+            var item = Model[i];
+            writer.WriteStartObject();
+            writer.WriteString("@type", "ListItem");
+            writer.WriteNumber("position", i + 1);
+            writer.WriteString("name", item.Name);
+            if (!string.IsNullOrWhiteSpace(item.Href))
+            {
+                writer.WriteString("item", item.Href);
+            }
+            writer.WriteEndObject();
+        }
+        writer.WriteEndArray();
+        writer.WriteEndObject();
+        writer.WriteEndArray();
+
+        writer.Flush();
+        return Encoding.UTF8.GetString(stream.ToArray());
+    }
+}

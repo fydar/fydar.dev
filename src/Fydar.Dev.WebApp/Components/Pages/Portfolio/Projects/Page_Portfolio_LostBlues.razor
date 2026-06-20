@@ -1,40 +1,29 @@
 @layout DefaultLayout
 @page "/portfolio/lostblues"
+
 @{
-    var openGraphModel = new OpenGraphModel()
-    {
-        Title = "Lost Blues - Fydar",
-        Description = "The clicker-style where you farm kelp and release fish.",
-        CanonicalUrl = "https://fydar.dev/portfolio/lostblues",
-        Properties = [
-            new OpenGraphModelImage()
-            {
-                Url = "https://fydar.dev/media/lostblues/social.webp",
-                Alt = "Promotional material for the game 'Lost Blues'."
-            }
-        ]
-    };
-    var linkData = new LinkData()
-    {
-        new LinkDataBreadcrumbList()
-        {
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Portfolio",
-                Item = "https://fydar.dev/portfolio"
-            },
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Lost Blues",
-                Item = "https://fydar.dev/portfolio/lostblues"
-            }
-        }
-    };
+	var canonicalUrl = "https://fydar.dev/portfolio/lostblues";
+	void PageMetadata(IMetadataFactory factory)
+	{
+		factory.UseTitle("Lost Blues - Fydar");
+		factory.UseDescription("The clicker-style where you farm kelp and release fish.");
+		factory.UseCanonicalUrl(canonicalUrl);
+		factory.UseImage(image =>
+		{
+			image.Url = "https://fydar.dev/media/lostblues/social.webp";
+			image.Alt = "Promotional material for the game 'Lost Blues'.";
+		});
+	}
+	var breadcrumbs = new BreadcrumbList()
+	{
+		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+		new BreadcrumbListItem("Lost Blues", "https://fydar.dev/portfolio/lostblues"),
+	};
 }
 
 <HeadContent>
-    <OpenGraphComponent Model="@openGraphModel" />
-    <LinkDataComponent Model="@linkData" />
+	<MetadataComponent Metadata="@PageMetadata" />
+	<BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadContent>
 
 <article class="page-lostblues">
@@ -80,13 +69,13 @@
                     <Pill_CSharp />
                 </Block_PillCloud>
 
-                <p>@openGraphModel.Description.Default</p>
+                <p>The clicker-style where you farm kelp and release fish.</p>
 
                 <menu class="externallinks" aria-label="Project External links">
                     <li class="palette-youtube"><a href="https://youtu.be/N0eWZrliNG4" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-youtube" Alt="YouTube" /></a></li>
                 </menu>
 
-                <ShareLink Url="@openGraphModel.CanonicalUrl.Html" />
+                <ShareLink Url="@canonicalUrl" />
             </Sidebar>
             <Container>
                 <EmbedYouTube Url="https://www.youtube-nocookie.com/embed/N0eWZrliNG4?si=h22aoTU4bFP9cmiF" />

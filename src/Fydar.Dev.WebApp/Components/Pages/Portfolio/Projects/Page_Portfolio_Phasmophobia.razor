@@ -1,40 +1,29 @@
 @layout DefaultLayout
 @page "/portfolio/phasmophobia"
+
 @{
-    var openGraphModel = new OpenGraphModel()
-    {
-        Title = "Phasmophobia - Fydar",
-        Description = "A 4 player online co-op psychological horror. Paranormal activity is on the rise and it’s up to you and your team to use all the ghost-hunting equipment at your disposal in order to gather as much evidence as you can.",
-        CanonicalUrl = "https://fydar.dev/portfolio/phasmophobia",
-        Properties = [
-            new OpenGraphModelImage()
-            {
-                Url = "https://fydar.dev/media/phasmophobia/social.webp",
-                Alt = "Promotional material for the game 'Phasmophobia'."
-            }
-        ]
-    };
-    var linkData = new LinkData()
-    {
-        new LinkDataBreadcrumbList()
-        {
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Portfolio",
-                Item = "https://fydar.dev/portfolio"
-            },
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Phasmophobia",
-                Item = "https://fydar.dev/portfolio/phasmophobia"
-            }
-        }
-    };
+	var canonicalUrl = "https://fydar.dev/portfolio/phasmophobia";
+	void PageMetadata(IMetadataFactory factory)
+	{
+		factory.UseTitle("Phasmophobia - Fydar");
+		factory.UseDescription("A 4 player online co-op psychological horror. Paranormal activity is on the rise and it’s up to you and your team to use all the ghost-hunting equipment at your disposal in order to gather as much evidence as you can.");
+		factory.UseCanonicalUrl(canonicalUrl);
+		factory.UseImage(image =>
+		{
+			image.Url = "https://fydar.dev/media/phasmophobia/social.webp";
+			image.Alt = "Promotional material for the game ‘Phasmophobia’.";
+		});
+	}
+	var breadcrumbs = new BreadcrumbList()
+	{
+		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+		new BreadcrumbListItem("Phasmophobia", "https://fydar.dev/portfolio/phasmophobia"),
+	};
 }
 
 <HeadContent>
-    <OpenGraphComponent Model="@openGraphModel" />
-    <LinkDataComponent Model="@linkData" />
+	<MetadataComponent Metadata="@PageMetadata" />
+	<BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadContent>
 
 <article class="page-phasmophobia">
@@ -80,7 +69,7 @@
                     <Pill_TechnicalArt />
                 </Block_PillCloud>
 
-                <p>@openGraphModel.Description.Default</p>
+                <p>A 4 player online co-op psychological horror. Paranormal activity is on the rise and it's up to you and your team to use all the ghost-hunting equipment at your disposal in order to gather as much evidence as you can.</p>
 
                 <menu class="externallinks" aria-label="Project External links">
                     <li><a href="https://www.kineticgames.co.uk/phasmophobia" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-globe" Alt="Website" /></a></li>
@@ -90,7 +79,7 @@
                     <li class="palette-youtube"><a href="https://youtu.be/sRa9oeo5KiY" target="_blank"><SvgSprite Link="/icons.svg?v=1#icon-youtube" Alt="YouTube" /></a></li>
                 </menu>
 
-                <ShareLink Url="@openGraphModel.CanonicalUrl.Html" />
+                <ShareLink Url="@canonicalUrl" />
             </Sidebar>
             <Container>
                 <EmbedYouTube Url="https://www.youtube-nocookie.com/embed/sRa9oeo5KiY?si=ReT_v-pScRGteTmx" />

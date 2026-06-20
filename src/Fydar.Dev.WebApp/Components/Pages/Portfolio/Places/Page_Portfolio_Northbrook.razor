@@ -1,40 +1,27 @@
 @layout DefaultLayout
 @page "/portfolio/northbrook"
 @{
-	var openGraphModel = new OpenGraphModel()
+	void PageMetadata(IMetadataFactory factory)
 	{
-		Title = "Northbrook - Fydar",
-		Description = "Fydar is a Northbrook Alumni, having recieved a distinction in their study of Games Development.",
-		CanonicalUrl = "https://fydar.dev/portfolio/northbrook",
-		Properties = [
-			new OpenGraphModelImage()
-			{
-				Url = "https://fydar.dev/media/northbrook/social.webp",
-				Alt = "Promotional material for 'Northbrook'."
-			}
-		]
-	};
-	var linkData = new LinkData()
-	{
-		new LinkDataBreadcrumbList()
+		factory.UseTitle("Northbrook - Fydar");
+		factory.UseDescription("Fydar is a Northbrook Alumni, having recieved a distinction in their study of Games Development.");
+		factory.UseCanonicalUrl("https://fydar.dev/portfolio/northbrook");
+		factory.UseImage(image =>
 		{
-			new LinkDataBreadcrumbListItem()
-			{
-				Name = "Portfolio",
-				Item = "https://fydar.dev/portfolio"
-			},
-			new LinkDataBreadcrumbListItem()
-			{
-				Name = "Northbrook",
-				Item = "https://fydar.dev/portfolio/northbrook"
-			}
-		}
+			image.Url = "https://fydar.dev/media/northbrook/social.webp";
+			image.Alt = "Promotional material for 'Northbrook'.";
+		});
+	}
+	var breadcrumbs = new BreadcrumbList()
+	{
+		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+		new BreadcrumbListItem("Northbrook", "https://fydar.dev/portfolio/northbrook"),
 	};
 }
 
 <HeadContent>
-	<OpenGraphComponent Model="@openGraphModel" />
-	<LinkDataComponent Model="@linkData" />
+	<MetadataComponent Metadata="@PageMetadata" />
+	<BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadContent>
 
 <article class="page-northbrook">

@@ -1,40 +1,29 @@
 @layout DefaultLayout
 @page "/portfolio/endlessplatform"
+
 @{
-    var openGraphModel = new OpenGraphModel()
-    {
-        Title = "Endless Platform - Fydar",
-        Description = "A fully procedurally generated spline-based terrain for a 2D platformer.",
-        CanonicalUrl = "https://fydar.dev/portfolio/endlessplatform",
-        Properties = [
-            new OpenGraphModelImage()
-            {
-                Url = "https://fydar.dev/media/endlessplatform/social.webp",
-                Alt = "Promotional material for the game 'Endless Platform'."
-            }
-        ]
-    };
-    var linkData = new LinkData()
-    {
-        new LinkDataBreadcrumbList()
-        {
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Portfolio",
-                Item = "https://fydar.dev/portfolio"
-            },
-            new LinkDataBreadcrumbListItem()
-            {
-                Name = "Endless Platform",
-                Item = "https://fydar.dev/portfolio/endlessplatform"
-            }
-        }
-    };
+	var canonicalUrl = "https://fydar.dev/portfolio/endlessplatform";
+	void PageMetadata(IMetadataFactory factory)
+	{
+		factory.UseTitle("Endless Platform - Fydar");
+		factory.UseDescription("A fully procedurally generated spline-based terrain for a 2D platformer.");
+		factory.UseCanonicalUrl(canonicalUrl);
+		factory.UseImage(image =>
+		{
+			image.Url = "https://fydar.dev/media/endlessplatform/social.webp";
+			image.Alt = "Promotional material for the game 'Endless Platform'.";
+		});
+	}
+	var breadcrumbs = new BreadcrumbList()
+	{
+		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+		new BreadcrumbListItem("Endless Platform", "https://fydar.dev/portfolio/endlessplatform"),
+	};
 }
 
 <HeadContent>
-    <OpenGraphComponent Model="@openGraphModel" />
-    <LinkDataComponent Model="@linkData" />
+	<MetadataComponent Metadata="@PageMetadata" />
+	<BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadContent>
 
 <article class="page-endlessplatform">
@@ -82,12 +71,12 @@
                     <Pill_CSharp />
                 </Block_PillCloud>
 
-                <p>@openGraphModel.Description.Default</p>
+                <p>A fully procedurally generated spline-based terrain for a 2D platformer.</p>
 
                 <menu class="externallinks" aria-label="Project External links">
                 </menu>
 
-                <ShareLink Url="@openGraphModel.CanonicalUrl.Html" />
+                <ShareLink Url="@canonicalUrl" />
             </Sidebar>
             <Container>
                 <EmbedYouTube Url="REPLACE WITH YOUTUBE LINK" />
