@@ -238,6 +238,20 @@ public class Program
 		app.MapIconLibrary<SiteIcons>("/icons.svg");
 		app.UseStaticUnityFiles();
 
+		app.Use(async (context, next) =>
+		{
+			if (context.Request.Path.Value?.EndsWith("/ServiceWorker.js", StringComparison.OrdinalIgnoreCase) == true
+				|| context.Request.Path.Value?.EndsWith(".serviceworker.js", StringComparison.OrdinalIgnoreCase) == true)
+			{
+				context.Response.OnStarting(() =>
+				{
+					context.Response.Headers["Service-Worker-Allowed"] = "/play/";
+					return Task.CompletedTask;
+				});
+			}
+			await next.Invoke();
+		});
+
 		app.MapStaticAssets();
 
 		app.UseAntiforgery();

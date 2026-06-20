@@ -1,4 +1,4 @@
-@layout GameLayout
+﻿@layout GameLayout
 @page "/play/cryptcrawl"
 
 @inject Noncer noncer;
@@ -69,7 +69,14 @@
     var serviceWorkerUrl = "@Assets["play/cryptcrawl/ServiceWorker.js"]";
     window.addEventListener("load", function () {
         if ("serviceWorker" in navigator) {
-            navigator.serviceWorker.register(serviceWorkerUrl);
+            let swUrl = serviceWorkerUrl;
+            if (window.trustedTypes && window.trustedTypes.createPolicy) {
+                const policy = window.trustedTypes.createPolicy("sw-policy", {
+                    createScriptURL: (url) => url
+                });
+                swUrl = policy.createScriptURL(serviceWorkerUrl);
+            }
+            navigator.serviceWorker.register(swUrl, { scope: window.location.pathname });
         }
     });
 </script>
