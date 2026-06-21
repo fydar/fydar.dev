@@ -25,19 +25,19 @@
 	<BreadcrumbListComponent Model="@breadcrumbs" />
 	<meta name="theme-color" content="#161618">
 	<link rel="shortcut icon" href="@Assets["/play/miniminer/favicon.ico"]">
-	<link rel="preload" href="@Assets["/play/miniminer/build/miniminer.loader.js"]" as="script" fetchpriority="high" />
+	<link rel="preload" href="@Assets["/play/miniminer/build/0.1.2.1.loader.js"]" as="script" fetchpriority="high" />
 </HeadContent>
 
 @{
     var embedUnityConfig = new EmbedUnityConfig()
     {
         ProductName = "Mini Miner",
-        ProductVersion = new Version(0, 1, 0),
+        ProductVersion = new Version(0, 1, 2, 1),
         CompanyName = "Fydar",
-        LoaderUrl = Assets["/play/miniminer/build/miniminer.loader.js"],
-        FrameworkUrl = Assets["/play/miniminer/build/miniminer.framework.js.br"],
-        CodeUrl = Assets["/play/miniminer/build/miniminer.wasm.br"],
-        DataUrl = Assets["/play/miniminer/build/miniminer.data.br"],
+        LoaderUrl = Assets["/play/miniminer/build/0.1.2.1.loader.js"],
+        FrameworkUrl = Assets["/play/miniminer/build/0.1.2.1.framework.js.br"],
+        CodeUrl = Assets["/play/miniminer/build/0.1.2.1.wasm.br"],
+        DataUrl = Assets["/play/miniminer/build/0.1.2.1.data.br"],
         StreamingAssetsUrl = "/play/miniminer/StreamingAssets",
         Arguments = [],
     };

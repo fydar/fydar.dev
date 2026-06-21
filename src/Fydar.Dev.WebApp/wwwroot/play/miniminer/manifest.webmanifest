@@ -1,18 +1,29 @@
-﻿{
-    "name":  "Mini Miner",
-    "short_name":  "Mini Miner",
-    "start_url":  "/play/miniminer",
-    "display":  "fullscreen",
-    "background_color":  "#12171A",
-    "theme_color":  "#000",
-    "description":  "",
-    "icons":  [
-                  {
-                      "src":  "favicon.svg",
-                      "sizes":  "48x48 72x72 96x96 128x128 256x256 512x512",
-                      "type":  "image/svg+xml",
-                      "purpose":  "any"
-                  }
-              ],
-    "scope":  "/play/miniminer"
+{
+    "name": "Mini Miner",
+    "short_name": "Mini Miner",
+    "version": "0.1.2.1",
+    "description": "The Game Boy demake of the Nintendo DS Pokémon Diamond and Pearl underground mining minigame.",
+    "categories": [
+        "games"
+    ],
+    "id": "/play/miniminer",
+    "start_url": "/play/miniminer",
+    "display": "standalone",
+    "display_override": [
+        "fullscreen"
+    ],
+    "orientation": "any",
+    "background_color": "#12171A",
+    "theme_color": "#000",
+    "lang": "en",
+    "dir": "ltr",
+    "icons": [
+        {
+            "src": "favicon.svg",
+            "sizes": "48x48 72x72 96x96 128x128 256x256 512x512 any",
+            "type": "image/svg+xml",
+            "purpose": "any"
+        }
+    ],
+    "scope": "/play/miniminer"
 }
