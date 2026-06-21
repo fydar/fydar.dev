@@ -65,38 +65,6 @@
             });
         }
 
-        const cacheName = "@(Config.CompanyName.ToLower().Replace(" ", ""))-@(Config.ProductName.ToLower().Replace(" ", ""))-@("v" + Config.ProductVersion)";
-
-        const originalFetch = window.fetch;
-
-        window.fetch = async (...args) => {
-            const [resource, config] = args;
-
-            const requestUrl = new URL((typeof resource === 'string') ? resource : resource.url, window.location.href).href;
-            const currentBaseUrl = window.location.href;
-
-            if (requestUrl.startsWith(currentBaseUrl) && requestUrl !== currentBaseUrl) {
-                const cache = await caches.open(cacheName);
-                const cachedResponse = await cache.match(resource);
-
-                if (cachedResponse) {
-                    console.log(`[Cache Hit] Serving child asset: ${requestUrl}`);
-                    return cachedResponse;
-                }
-
-                const response = await originalFetch(...args);
-
-                if (response.ok && response.status === 200) {
-                    const responseToCache = response.clone();
-                    cache.put(resource, responseToCache);
-                    console.log(`[Cache Save] Child asset saved: ${requestUrl}`);
-                }
-                return response;
-            }
-
-            return originalFetch(...args);
-        };
-
         var loaderUrl = "@Config.LoaderUrl";
         var frameworkUrl = "@Config.FrameworkUrl";
 
