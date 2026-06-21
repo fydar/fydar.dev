@@ -246,6 +246,13 @@ const handleResize = () => {
     }, 150);
 };
 
+function beginNavigationHighlighting() {
+
+    mq.addEventListener("change", updateState);
+
+    updateState();
+}
+
 function updateState() {
     if (mq.matches) {
         // Enable
@@ -272,12 +279,12 @@ function updateState() {
     }
 }
 
-mq.addEventListener("change", updateState);
+const delayedUpdate = () => setTimeout(beginNavigationHighlighting, 250);
 
 if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", updateState);
+    document.addEventListener("DOMContentLoaded", delayedUpdate);
 } else {
-    updateState();
+    delayedUpdate();
 }
 
 
