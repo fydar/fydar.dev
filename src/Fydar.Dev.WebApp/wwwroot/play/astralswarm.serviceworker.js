@@ -1,11 +1,11 @@
-﻿const CACHE_NAME = "fydar-astralswarm-v0.1.0";
+const CACHE_NAME = "fydar-astralswarm-v0.1.1.0";
 const MAIN_PAGE = "/play/astralswarm";
 const ASSETS = [
     MAIN_PAGE,
     "/play/astralswarm/favicon.svg",
     "/play/astralswarm/manifest.webmanifest",
-    "/play/astralswarm/build/astralswarm.loader.js",
-    "/play/astralswarm/build/astralswarm.framework.js.br",
+    "/play/astralswarm/build/0.1.1.0.loader.js",
+    "/play/astralswarm/build/0.1.1.0.framework.js.br",
 ];
 
 self.addEventListener('install', (e) => {
