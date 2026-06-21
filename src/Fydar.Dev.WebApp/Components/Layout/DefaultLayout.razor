@@ -50,6 +50,22 @@ else
 </SectionContent>
 
 <SectionContent SectionName="layoutbodyscript">
+    <script nonce="@noncer.Nonce">
+        // Must run before pagereveal fires (which is before DOMContentLoaded and before deferred scripts).
+        const _suppressTransitionAbort = (err) => { if (err.name !== 'AbortError') throw err; };
+        document.addEventListener('pageswap', (e) => {
+            if (e.viewTransition) {
+                e.viewTransition.ready.catch(_suppressTransitionAbort);
+                e.viewTransition.finished.catch(_suppressTransitionAbort);
+            }
+        });
+        document.addEventListener('pagereveal', (e) => {
+            if (e.viewTransition) {
+                e.viewTransition.ready.catch(_suppressTransitionAbort);
+                e.viewTransition.finished.catch(_suppressTransitionAbort);
+            }
+        });
+    </script>
     <script defer src="@Assets["site.js"]"></script>
     <ImportMap nonce="@noncer.Nonce" />
 </SectionContent>
