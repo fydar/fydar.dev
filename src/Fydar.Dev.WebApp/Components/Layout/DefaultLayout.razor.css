@@ -742,16 +742,25 @@ header:has(+ main > article:first-child > div.fullscreen:first-child) {
     height: 100%;
     overflow: clip;
     clip-path: inset(0);
+    view-timeline-name: --parallax-timeline;
+    view-timeline-axis: block;
+}
+
+@keyframes parallax-slide {
+    from { transform: translateY(calc(100svh * var(--parallax-multiplier))); }
+    to { transform: translateY(calc(-100svh * var(--parallax-multiplier))); }
 }
 
     ::deep .parallax-frame .parallax-layer {
         object-fit: cover;
         width: 100%;
-        height: 100%;
+        height: 100svh;
         z-index: -1;
         position: fixed;
         top: 0;
-        transform: translateY(calc(var(--parallax-offset) * var(--parallax-multiplier) * -1px));
+        animation: parallax-slide linear;
+        animation-timeline: --parallax-timeline;
+        animation-range: cover;
         user-select: none;
     }
 

@@ -3,51 +3,6 @@ queueMicrotask(console.log.bind(console, "%c   ___             __\n /\'___\\    
 queueMicrotask(console.log.bind(console, "This website has been made using ASP.NET Core and Blazor.\nLike what you see? I\'m available for hire!\n\nhttps://fydar.dev/contact"));
 
 
-const clamp = (a, min = 0, max = 1) => Math.min(max, Math.max(min, a));
-const invlerp = (x, y, a) => (a - x) / (y - x);
-function lerp(start, end, amt) {
-    return (1 - amt) * start + amt * end
-}
-
-function UpdateParallaxLayerSize() {
-    var elements = document.getElementsByClassName("parallax-layer");
-    for (let i = 0; i < elements.length; i++) {
-        var element = elements[i];
-
-        var containerRect = element.parentElement.parentElement.getBoundingClientRect();
-        element.style.width = containerRect.width + "px";
-        element.style.height = containerRect.height + "px";
-    }
-}
-function UpdateRelativeElements() {
-    var elements = document.getElementsByClassName("parallax-focalanchortop");
-    for (let i = 0; i < elements.length; i++) {
-        var element = elements[i];
-        var clientRect = element.getBoundingClientRect()
-        var time = clamp(invlerp(clientRect.height, -clientRect.height, clientRect.top), 0, 1);
-        element.style.setProperty("--animation-time", time.toFixed(5));
-        element.style.setProperty("--parallax-offset", lerp(-clientRect.height, clientRect.height, time).toFixed(1));
-    }
-}
-
-UpdateParallaxLayerSize();
-UpdateRelativeElements();
-
-window.addEventListener("scroll",
-    eventArgs => {
-        UpdateRelativeElements();
-    }, { passive: true }
-);
-
-window.addEventListener("resize",
-    eventArgs => {
-        UpdateParallaxLayerSize();
-        UpdateRelativeElements();
-    }, { passive: true }
-);
-
-
-
 function createStylesheet() {
     const style = document.createElement('style');
     document.head.appendChild(style);
