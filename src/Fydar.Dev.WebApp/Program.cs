@@ -155,12 +155,15 @@ public class Program
 			});
 		}
 
+		int httpPort = builder.Configuration.GetValue("HTTPPORT", 80);
+		int httpsPort = builder.Configuration.GetValue("HTTPSPORT", 443);
+
 		builder.WebHost.UseKestrel(kestrel =>
 		{
-			kestrel.ListenAnyIP(8060);
+			kestrel.ListenAnyIP(httpPort);
 
 			kestrel.ListenAnyIP(
-				8061,
+				httpsPort,
 				listen =>
 				{
 					listen.Protocols = HttpProtocols.Http1 | HttpProtocols.Http2 | HttpProtocols.Http3;

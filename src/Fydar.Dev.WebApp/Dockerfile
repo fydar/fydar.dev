@@ -4,10 +4,9 @@ FROM mcr.microsoft.com/dotnet/aspnet:10.0-noble-chiseled AS base
 USER app
 WORKDIR /app
 
-ENV ASPNETCORE_HTTP_PORTS=8060
-EXPOSE 8060
-EXPOSE 8061/tcp
-EXPOSE 8061/udp
+EXPOSE 80
+EXPOSE 443/tcp
+EXPOSE 443/udp
 
 # Use the native build platform for faster compilation
 FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:10.0 AS build

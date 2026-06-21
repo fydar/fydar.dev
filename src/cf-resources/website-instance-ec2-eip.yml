@@ -217,7 +217,7 @@ Resources:
     Type: AWS::ECS::TaskDefinition
     Properties:
       Family: website-instance
-      NetworkMode: bridge
+      NetworkMode: host
       RequiresCompatibilities:
         - EC2
       ExecutionRoleArn: !GetAtt ECSTaskExecutionRole.Arn
@@ -227,20 +227,21 @@ Resources:
           Image: !Sub '${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/websiteinstance:${Tag}'
           Memory: 900
           PortMappings:
-            - ContainerPort: 8060
-              HostPort: 80
+            - ContainerPort: 80
               Protocol: tcp
-            - ContainerPort: 8061
-              HostPort: 443
+            - ContainerPort: 443
               Protocol: tcp
-            - ContainerPort: 8061
-              HostPort: 443
+            - ContainerPort: 443
               Protocol: udp
           Environment:
             - Name: CONFIG_DOMAINNAME
               Value: !Ref DomainName
             - Name: CONFIG_CERTIFICATEARN
               Value: !Ref CertificateArn
+            - Name: CONFIG_HTTPPORT
+              Value: '80'
+            - Name: CONFIG_HTTPSPORT
+              Value: '443'
           LogConfiguration:
             LogDriver: awslogs
             Options:
@@ -344,6 +345,11 @@ Resources:
         Fn::Base64: !Sub |
           #!/bin/bash -xe
           echo ECS_CLUSTER=${WebsiteCluster} >> /etc/ecs/ecs.config
+
+          # Allow non-root processes to bind to ports 80+ (inherited by
+          # containers in host network mode, persisted across reboots).
+          sysctl -w net.ipv4.ip_unprivileged_port_start=80
+          echo 'net.ipv4.ip_unprivileged_port_start=80' >> /etc/sysctl.conf
       Tags:
         - Key: Name
           Value: !Sub '${DomainName} instance'
