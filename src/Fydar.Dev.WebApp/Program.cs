@@ -1,3 +1,5 @@
+using Amazon.CertificateManager;
+using Amazon.CertificateManager.Model;
 using Amazon.S3;
 using Amazon.SimpleEmail;
 using Fydar.AspNetCore.CSP;
@@ -20,6 +22,8 @@ using Microsoft.Net.Http.Headers;
 using Serilog;
 using Serilog.Events;
 using System.Net;
+using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace Fydar.Dev.WebApp;
@@ -130,17 +134,11 @@ public class Program
 
 		builder.Services.AddAWSService<IAmazonSimpleEmailService>();
 		builder.Services.AddAWSService<IAmazonS3>();
+		builder.Services.AddAWSService<IAmazonCertificateManager>();
 
-		string domainName = builder.Configuration.GetValue<string>("DOMAINNAME") ?? string.Empty;
-		bool hasAcceptedLettuceEncryptTerms = builder.Configuration.GetValue<bool>("ACCEPT_LETTUCE_ENCRYPT_TERMS");
+		string certificateArn = builder.Configuration.GetValue<string>("CERTIFICATEARN") ?? string.Empty;
 
-		bool useDevelopmentCertificate = string.IsNullOrEmpty(domainName) || !hasAcceptedLettuceEncryptTerms;
-
-		if (!useDevelopmentCertificate)
-		{
-			builder.Services.AddLettuceEncrypt(options =>
-				builder.Configuration.Bind("LettuceEncrypt", options));
-		}
+		bool useDevelopmentCertificate = string.IsNullOrEmpty(certificateArn);
 
 		if (builder.WebHost.GetSetting("Environment") != "Development")
 		{
@@ -159,8 +157,6 @@ public class Program
 
 		builder.WebHost.UseKestrel(kestrel =>
 		{
-			var appServices = kestrel.ApplicationServices;
-
 			kestrel.ListenAnyIP(8060);
 
 			kestrel.ListenAnyIP(
@@ -175,7 +171,9 @@ public class Program
 					}
 					else
 					{
-						listen.UseLettuceEncrypt(appServices);
+						var acmClient = kestrel.ApplicationServices.GetRequiredService<IAmazonCertificateManager>();
+						var cert = ExportAcmCertificateAsync(acmClient, certificateArn).GetAwaiter().GetResult();
+						listen.UseHttps(cert);
 					}
 				});
 		});
@@ -260,5 +258,21 @@ public class Program
 				typeof(Icon).Assembly);
 
 		return app;
+	}
+
+	private static async Task<X509Certificate2> ExportAcmCertificateAsync(IAmazonCertificateManager acmClient, string certificateArn)
+	{
+		byte[] passphraseBytes = RandomNumberGenerator.GetBytes(32);
+		string passphrase = Convert.ToBase64String(passphraseBytes);
+
+		var response = await acmClient.ExportCertificateAsync(new ExportCertificateRequest
+		{
+			CertificateArn = certificateArn,
+			Passphrase = new MemoryStream(Encoding.ASCII.GetBytes(passphrase))
+		});
+
+		string certPem = $"{response.Certificate}\n{response.CertificateChain}";
+		return X509Certificate2.CreateFromEncryptedPem(
+			certPem, response.PrivateKey, passphrase);
 	}
 }

@@ -34,8 +34,6 @@ Corridor/Library/ShaderCache/
 Corridor/Library/metadata/
 Project/Library/EditorInstance.json
 *.stamp
-src/Portfolio.Instance/lettuce
-src/Portfolio.Instance/wwwimg
 
 !src/Fydar.Dev.WebApp/wwwroot/**/[Bb]uild/
 !src/Fydar.Dev.WebApp/precompressed/**/[Bb]uild/

@@ -1,61 +1,52 @@
 AWSTemplateFormatVersion: '2010-09-09'
 
-Description: 'fydar.dev ECS Cluster: Website'
+Description: 'fydar.dev website: ECS on EC2 with Elastic IP'
 
 Parameters:
 
   Tag:
     Type: String
-    Description: 'Image tag to launch task with.'
-    Default: 'latest'
+    Description: Image tag to deploy.
+    Default: latest
 
   DomainName:
     Type: String
-    Description: The domain name for the deployed server.
-    Default: 'www.fydar.dev'
-    AllowedPattern: '^.*fydar.dev$'
+    Description: Primary domain name for the server.
+    Default: fydar.dev
+    AllowedPattern: '^.*fydar\.dev$'
 
   KeyPairName:
     Type: String
-    Description: The KeyPair used for SSHing into instances deployed by the service.
+    Description: EC2 KeyPair for SSH access.
     Default: manual-instance
 
+  CertificateArn:
+    Type: String
+    Description: ARN of the exportable ACM certificate for HTTPS.
+    Default: 'arn:aws:acm:us-east-1:222779217717:certificate/a9c7a3e6-a4df-48f4-b9ed-6c2e68c689e0'
 
   VpcCidr:
     Type: String
-    Description: Specifies the CIDR Block of VPC
+    Description: IPv4 CIDR block for the VPC.
     Default: '10.10.0.0/16'
     AllowedPattern: '^((1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])\.){3}(1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])\/(8|16|24)$'
 
   SubnetIPv4Cidr1:
     Type: String
-    Description: Specifies the IPv4 CIDR Block of Subnet 1
+    Description: IPv4 CIDR block for subnet 1.
     Default: '10.10.0.0/24'
     AllowedPattern: '^((1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])\.){3}(1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])\/(8|16|24|32)$'
 
   SubnetIPv4Cidr2:
     Type: String
-    Description: Specifies the IPv4 CIDR Block of Subnet 2
+    Description: IPv4 CIDR block for subnet 2.
     Default: '10.10.1.0/24'
     AllowedPattern: '^((1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])\.){3}(1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])\/(8|16|24|32)$'
 
-  SubnetIpv6Cidr1:
-    Type: String
-    Description: Specifies the IPv6 CIDR Block of Subnet 1
-    Default: '2600:1f18:30d:9606::/64'
-    AllowedPattern: '^([0-9a-fA-F]{1,4}:){4}:/64$'
-
-  SubnetIpv6Cidr2:
-    Type: String
-    Description: Specifies the IPv6 CIDR Block of Subnet 2
-    Default: '2600:1f18:30d:9607::/64'
-    AllowedPattern: '^([0-9a-fA-F]{1,4}:){4}:/64$'
-
   SubnetAz1:
     Type: String
-    Description: >
-      Specifies an availability zone for a subnet.
-    Default: 'us-east-1a'
+    Description: Availability zone for subnet 1.
+    Default: us-east-1a
     AllowedValues:
       - us-east-1a
       - us-east-1b
@@ -66,9 +57,8 @@ Parameters:
 
   SubnetAz2:
     Type: String
-    Description: >
-      Specifies an availability zone for a subnet.
-    Default: 'us-east-1b'
+    Description: Availability zone for subnet 2.
+    Default: us-east-1b
     AllowedValues:
       - us-east-1a
       - us-east-1b
@@ -77,9 +67,9 @@ Parameters:
       - us-east-1e
       - us-east-1f
 
-Mappings: {}
-
 Resources:
+
+  # ── Networking ────────────────────────────────────────────────────────────────
 
   Vpc:
     Type: AWS::EC2::VPC
@@ -89,7 +79,7 @@ Resources:
       EnableDnsHostnames: true
       Tags:
         - Key: Name
-          Value: !Sub ${DomainName}
+          Value: !Ref DomainName
 
   PubSubnetAz1:
     Type: AWS::EC2::Subnet
@@ -98,11 +88,9 @@ Resources:
       AvailabilityZone: !Ref SubnetAz1
       CidrBlock: !Ref SubnetIPv4Cidr1
       MapPublicIpOnLaunch: true
-      # Ipv6CidrBlock: !Ref SubnetIpv6Cidr1
-      # AssignIpv6AddressOnCreation: true
       Tags:
         - Key: Name
-          Value: !Sub ${DomainName} SbAz1
+          Value: !Sub '${DomainName} subnet-az1'
 
   PubSubnetAz2:
     Type: AWS::EC2::Subnet
@@ -111,18 +99,16 @@ Resources:
       AvailabilityZone: !Ref SubnetAz2
       CidrBlock: !Ref SubnetIPv4Cidr2
       MapPublicIpOnLaunch: true
-      # Ipv6CidrBlock: !Ref SubnetIpv6Cidr2
-      # AssignIpv6AddressOnCreation: true
       Tags:
         - Key: Name
-          Value: !Sub ${DomainName} SbAz2
+          Value: !Sub '${DomainName} subnet-az2'
 
   InternetGateway:
     Type: AWS::EC2::InternetGateway
     Properties:
       Tags:
         - Key: Name
-          Value: !Sub ${DomainName} Igw
+          Value: !Sub '${DomainName} igw'
 
   AttachGateway:
     Type: AWS::EC2::VPCGatewayAttachment
@@ -136,21 +122,15 @@ Resources:
       VpcId: !Ref Vpc
       Tags:
         - Key: Name
-          Value: !Sub ${DomainName} Rtb
+          Value: !Sub '${DomainName} rtb'
 
-  PublicRouteViaIgwIpv4:
+  PublicRouteViaIgw:
     Type: AWS::EC2::Route
+    DependsOn: AttachGateway
     Properties:
       RouteTableId: !Ref RouteViaIgw
       GatewayId: !Ref InternetGateway
       DestinationCidrBlock: 0.0.0.0/0
-
-  PublicRouteViaIgwIpv6:
-    Type: AWS::EC2::Route
-    Properties:
-      RouteTableId: !Ref RouteViaIgw
-      GatewayId: !Ref InternetGateway
-      DestinationIpv6CidrBlock: ::/0
 
   PubSubnet1RouteTableAssociation:
     Type: AWS::EC2::SubnetRouteTableAssociation
@@ -164,95 +144,113 @@ Resources:
       RouteTableId: !Ref RouteViaIgw
       SubnetId: !Ref PubSubnetAz2
 
+  # ── IAM ───────────────────────────────────────────────────────────────────────
 
-  WebsiteCluster:
-    Type: AWS::ECS::Cluster
+  Ec2InstanceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: ec2.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role
+        - arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+
+  Ec2InstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Roles:
+        - !Ref Ec2InstanceRole
 
   ECSTaskExecutionRole:
     Type: AWS::IAM::Role
     Properties:
       AssumeRolePolicyDocument:
-        Version: 2012-10-17
+        Version: '2012-10-17'
         Statement:
           - Effect: Allow
             Principal:
-              Service:
-                - ec2.amazonaws.com
-                - ecs-tasks.amazonaws.com
-            Action:
-              - 'sts:AssumeRole'
+              Service: ecs-tasks.amazonaws.com
+            Action: sts:AssumeRole
       ManagedPolicyArns:
-        - 'arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy'
-        - 'arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role'
+        - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
 
   ECSTaskRole:
     Type: AWS::IAM::Role
     Properties:
-      ManagedPolicyArns:
-        - 'arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role'
       AssumeRolePolicyDocument:
-        Version: 2012-10-17
+        Version: '2012-10-17'
         Statement:
           - Effect: Allow
             Principal:
-              Service:
-                - ec2.amazonaws.com
-                - ecs-tasks.amazonaws.com
-            Action:
-              - 'sts:AssumeRole'
+              Service: ecs-tasks.amazonaws.com
+            Action: sts:AssumeRole
       Policies:
-        - PolicyName: emailtickets-resources
+        - PolicyName: website-task-policy
           PolicyDocument:
-            Version: 2012-10-17
+            Version: '2012-10-17'
             Statement:
               - Effect: Allow
-                Action: 'ses:SendRawEmail'
+                Action:
+                  - ses:SendRawEmail
+                  - ses:SendEmail
                 Resource: '*'
               - Effect: Allow
-                Action: 'ses:SendEmail'
+                Action: s3:GetObject
                 Resource: '*'
               - Effect: Allow
-                Action: 's3:GetObject'
-                Resource: '*'
+                Action: acm:ExportCertificate
+                Resource: !Ref CertificateArn
 
+  # ── ECS ───────────────────────────────────────────────────────────────────────
+
+  WebsiteCluster:
+    Type: AWS::ECS::Cluster
+    Properties:
+      ClusterName: 'fydardev-cluster'
 
   WebsiteInstanceTask:
     Type: AWS::ECS::TaskDefinition
     Properties:
-      ContainerDefinitions:
-        - Name: website-instance
-          Image: !Sub 222779217717.dkr.ecr.us-east-1.amazonaws.com/websiteinstance:${Tag}
-          PortMappings:
-            - ContainerPort: 8060
-              HostPort: 80
-              Protocol: "tcp"
-            - ContainerPort: 8061
-              HostPort: 443
-              Protocol: "tcp"
-            - ContainerPort: 8061
-              HostPort: 443
-              Protocol: "udp"
-          Environment:
-            - Name: CONFIG_DOMAINNAME
-              Value: !Ref DomainName
-          LogConfiguration:
-            LogDriver: awslogs
-            Options:
-              awslogs-group: 'website-logs'
-              awslogs-region: 'us-east-1'
-              awslogs-stream-prefix: 'website-instance'
-      ExecutionRoleArn: !GetAtt [ECSTaskExecutionRole, Arn]
-      TaskRoleArn: !GetAtt [ECSTaskRole, Arn]
+      Family: website-instance
       NetworkMode: bridge
       RequiresCompatibilities:
         - EC2
-      Cpu: 1 vCPU
-      Memory: 0.9 GB
-
-
+      ExecutionRoleArn: !GetAtt ECSTaskExecutionRole.Arn
+      TaskRoleArn: !GetAtt ECSTaskRole.Arn
+      ContainerDefinitions:
+        - Name: website-instance
+          Image: !Sub '${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/websiteinstance:${Tag}'
+          Memory: 900
+          PortMappings:
+            - ContainerPort: 8060
+              HostPort: 80
+              Protocol: tcp
+            - ContainerPort: 8061
+              HostPort: 443
+              Protocol: tcp
+            - ContainerPort: 8061
+              HostPort: 443
+              Protocol: udp
+          Environment:
+            - Name: CONFIG_DOMAINNAME
+              Value: !Ref DomainName
+            - Name: CONFIG_CERTIFICATEARN
+              Value: !Ref CertificateArn
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-group: website-logs
+              awslogs-region: !Ref AWS::Region
+              awslogs-stream-prefix: website-instance
 
   WebsiteInstanceService:
     Type: AWS::ECS::Service
+    DependsOn: Ec2Instance
     Properties:
       Cluster: !Ref WebsiteCluster
       ServiceName: WebsiteInstance
@@ -263,62 +261,67 @@ Resources:
         MaximumPercent: 200
         MinimumHealthyPercent: 50
 
+  # ── EC2 ───────────────────────────────────────────────────────────────────────
 
-  Ec2Instance:
-    Type: AWS::EC2::Instance
+  WebsiteInstanceSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
     Properties:
-      InstanceType: "t4g.micro"
-      ImageId: ami-055458a83541771a4
-      NetworkInterfaces:
-        - DeviceIndex: 0
-          NetworkInterfaceId: !Ref WebsiteInstanceNetworkInterface
-      KeyName: !Ref KeyPairName
-      UserData:
-        Fn::Base64: !Sub |
-          #!/bin/bash -xe
-          echo ECS_CLUSTER=${WebsiteCluster} >> /etc/ecs/ecs.config
-      IamInstanceProfile:
-          Ref: WebsiteInstanceIAMProfile
-      Tags:
-        - Key: Name
-          Value: !Sub ${DomainName} Instance
-
-  WebsiteInstanceIAMProfile:
-    Type: AWS::IAM::InstanceProfile
-    Properties:
-      Roles:
-        - Ref: "ECSTaskRole"
+      GroupName: !Sub '${DomainName}-sg'
+      GroupDescription: SSH, HTTP, and HTTPS (TCP + UDP)
+      VpcId: !Ref Vpc
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIpv6: '::/0'
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIpv6: '::/0'
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIpv6: '::/0'
+        - IpProtocol: udp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: udp
+          FromPort: 443
+          ToPort: 443
+          CidrIpv6: '::/0'
 
   WebsiteInstanceNetworkInterface:
     Type: AWS::EC2::NetworkInterface
     Properties:
       SubnetId: !Ref PubSubnetAz1
-      Description: Interface for controlling traffic such as SSH
+      Description: Website instance primary network interface
       GroupSet:
-      - !Ref WebsiteInstanceSecurityGroup
+        - !Ref WebsiteInstanceSecurityGroup
       SourceDestCheck: true
       Tags:
-        - Key: Network
-          Value: Web
+        - Key: Name
+          Value: !Sub '${DomainName} eni'
 
   WebPortAddress:
     Type: AWS::EC2::EIP
     Properties:
-      Domain: standard
+      Domain: vpc
       Tags:
         - Key: Name
-          Value: !Sub ${DomainName} IP
-
-  WebsiteInstanceRecord:
-    Type: AWS::Route53::RecordSet
-    Properties:
-      HostedZoneName: fydar.dev.
-      Name: !Ref DomainName
-      ResourceRecords:
-        - !Ref WebPortAddress
-      Type: A
-      TTL: '30'
-
+          Value: !Sub '${DomainName} eip'
 
   AssociateWebPort:
     Type: AWS::EC2::EIPAssociation
@@ -326,44 +329,57 @@ Resources:
       AllocationId: !GetAtt WebPortAddress.AllocationId
       NetworkInterfaceId: !Ref WebsiteInstanceNetworkInterface
 
-  WebsiteInstanceSecurityGroup:
-    Type: AWS::EC2::SecurityGroup
+  Ec2Instance:
+    Type: AWS::EC2::Instance
+    DependsOn: AttachGateway
     Properties:
-      GroupName: !Sub ${DomainName} SSH/HTTP/HTTPS
-      GroupDescription: 'Allow TCP ports 22, 80 and 443 and UDP port 443 for IPv4 and IPv6'
-      VpcId: !Ref Vpc
-      SecurityGroupIngress:
-        - CidrIp: 0.0.0.0/0
-          FromPort: 22
-          ToPort: 22
-          IpProtocol: tcp
-        - CidrIpv6: '::/0'
-          FromPort: 22
-          ToPort: 22
-          IpProtocol: tcp
-        - CidrIp: 0.0.0.0/0
-          FromPort: 80
-          ToPort: 80
-          IpProtocol: tcp
-        - CidrIpv6: '::/0'
-          FromPort: 80
-          ToPort: 80
-          IpProtocol: tcp
-        - CidrIp: 0.0.0.0/0
-          FromPort: 443
-          ToPort: 443
-          IpProtocol: tcp
-        - CidrIpv6: '::/0'
-          FromPort: 443
-          ToPort: 443
-          IpProtocol: tcp
-        - CidrIp: 0.0.0.0/0
-          FromPort: 443
-          ToPort: 443
-          IpProtocol: udp
-        - CidrIpv6: '::/0'
-          FromPort: 443
-          ToPort: 443
-          IpProtocol: udp
+      InstanceType: t4g.micro
+      ImageId: ami-055458a83541771a4
+      KeyName: !Ref KeyPairName
+      IamInstanceProfile: !Ref Ec2InstanceProfile
+      NetworkInterfaces:
+        - DeviceIndex: 0
+          NetworkInterfaceId: !Ref WebsiteInstanceNetworkInterface
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash -xe
+          echo ECS_CLUSTER=${WebsiteCluster} >> /etc/ecs/ecs.config
+      Tags:
+        - Key: Name
+          Value: !Sub '${DomainName} instance'
 
-Outputs: {}
+  # ── DNS ───────────────────────────────────────────────────────────────────────
+
+  WebsiteInstanceRecord:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      HostedZoneName: fydar.dev.
+      Name: !Ref DomainName
+      Type: A
+      TTL: 30
+      ResourceRecords:
+        - !Ref WebPortAddress
+
+  WebsiteWwwRecord:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      HostedZoneName: fydar.dev.
+      Name: www.fydar.dev
+      Type: A
+      TTL: 30
+      ResourceRecords:
+        - !Ref WebPortAddress
+
+Outputs:
+
+  PublicIp:
+    Description: Elastic IP address of the website.
+    Value: !Ref WebPortAddress
+
+  ClusterName:
+    Description: ECS cluster name.
+    Value: !Ref WebsiteCluster
+
+  ServiceName:
+    Description: ECS service name.
+    Value: !GetAtt WebsiteInstanceService.Name
