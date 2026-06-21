@@ -1,6 +1,14 @@
 # syntax=docker/dockerfile:1.7-labs
 
-FROM mcr.microsoft.com/dotnet/aspnet:10.0-noble-chiseled AS base
+FROM mcr.microsoft.com/dotnet/aspnet:10.0-noble AS base
+USER root
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends curl ca-certificates \
+    && curl -sSL https://packages.microsoft.com/config/ubuntu/24.04/packages-microsoft-prod.deb -o /tmp/packages-microsoft-prod.deb \
+    && dpkg -i /tmp/packages-microsoft-prod.deb \
+    && apt-get update \
+    && apt-get install -y libmsquic \
+    && rm -rf /var/lib/apt/lists/* /tmp/packages-microsoft-prod.deb
 USER app
 WORKDIR /app
 
@@ -9,7 +17,7 @@ EXPOSE 443/tcp
 EXPOSE 443/udp
 
 # Use the native build platform for faster compilation
-FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:10.0-noble AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 

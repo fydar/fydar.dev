@@ -134,11 +134,14 @@ public class Program
 
 		builder.Services.AddAWSService<IAmazonSimpleEmailService>();
 		builder.Services.AddAWSService<IAmazonS3>();
-		builder.Services.AddAWSService<IAmazonCertificateManager>();
 
 		string certificateArn = builder.Configuration.GetValue<string>("CERTIFICATEARN") ?? string.Empty;
-
 		bool useDevelopmentCertificate = string.IsNullOrEmpty(certificateArn);
+
+		if (!useDevelopmentCertificate)
+		{
+			builder.Services.AddAWSService<IAmazonCertificateManager>();
+		}
 
 		if (builder.WebHost.GetSetting("Environment") != "Development")
 		{
