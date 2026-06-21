@@ -1,15 +1,26 @@
-﻿{
+{
     "name": "The New Earth Conflict",
     "short_name": "The New Earth Conflict",
+    "version": "0.1.0",
+    "description": "A realtime space strategy game where the player takes the pilot seat of a battleship.",
+    "categories": [
+        "games"
+    ],
+    "id": "/play/thenewearthconflict",
     "start_url": "/play/thenewearthconflict",
-    "display": "fullscreen",
-    "background_color": "#12171A",
-    "theme_color": "#000",
-    "description": "",
+    "display": "standalone",
+    "display_override": [
+        "fullscreen"
+    ],
+    "orientation": "any",
+    "background_color": "#161618",
+    "theme_color": "#161618",
+    "lang": "en",
+    "dir": "ltr",
     "icons": [
         {
             "src": "favicon.svg",
-            "sizes": "48x48 72x72 96x96 128x128 256x256 512x512",
+            "sizes": "48x48 72x72 96x96 128x128 256x256 512x512 any",
             "type": "image/svg+xml",
             "purpose": "any"
         }

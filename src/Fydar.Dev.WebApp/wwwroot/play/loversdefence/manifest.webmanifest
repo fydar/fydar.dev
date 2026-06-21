@@ -1,11 +1,22 @@
-﻿{
-    "name": "Lovers Defence",
-    "short_name": "Lovers Defence",
+{
+    "name": "Lovers' Defence",
+    "short_name": "Lovers' Defence",
+    "version": "1.0.0",
+    "description": "A narrative driven tower defence game.",
+    "categories": [
+        "games"
+    ],
+    "id": "/play/loversdefence",
     "start_url": "/play/loversdefence",
-    "display": "fullscreen",
-    "background_color": "#12171A",
-    "theme_color": "#000",
-    "description": "",
+    "display": "standalone",
+    "display_override": [
+        "fullscreen"
+    ],
+    "orientation": "any",
+    "background_color": "#161618",
+    "theme_color": "#161618",
+    "lang": "en",
+    "dir": "ltr",
     "icons": [
         {
             "src": "favicon.ico",

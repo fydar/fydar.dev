@@ -1,15 +1,26 @@
-﻿{
+{
     "name": "Air-Sea Battle",
     "short_name": "Air-Sea Battle",
+    "version": "0.1.0",
+    "description": "The Game Boy demake of the Nintendo DS Pokémon Diamond and Pearl underground mining minigame.",
+    "categories": [
+        "games"
+    ],
+    "id": "/play/airseabattle",
     "start_url": "/play/airseabattle",
-    "display": "fullscreen",
-    "background_color": "#12171A",
-    "theme_color": "#000",
-    "description": "",
+    "display": "standalone",
+    "display_override": [
+        "fullscreen"
+    ],
+    "orientation": "any",
+    "background_color": "#161618",
+    "theme_color": "#161618",
+    "lang": "en",
+    "dir": "ltr",
     "icons": [
         {
             "src": "favicon.svg",
-            "sizes": "48x48 72x72 96x96 128x128 256x256 512x512",
+            "sizes": "48x48 72x72 96x96 128x128 256x256 512x512 any",
             "type": "image/svg+xml",
             "purpose": "any"
         }

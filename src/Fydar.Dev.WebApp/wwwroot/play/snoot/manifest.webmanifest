@@ -1,15 +1,26 @@
-﻿{
+{
     "name": "Snoot",
     "short_name": "Snoot",
+    "version": "0.0.4",
+    "description": "Restore life to a desolate world by exploring a sandbox of crafting recipes. On your adventure you will bring rain, grass, bugs, birds, and bees.",
+    "categories": [
+        "games"
+    ],
+    "id": "/play/snoot",
     "start_url": "/play/snoot",
-    "display": "fullscreen",
-    "background_color": "#12171A",
-    "theme_color": "#000",
-    "description": "",
+    "display": "standalone",
+    "display_override": [
+        "fullscreen"
+    ],
+    "orientation": "any",
+    "background_color": "#161618",
+    "theme_color": "#161618",
+    "lang": "en",
+    "dir": "ltr",
     "icons": [
         {
             "src": "favicon.svg",
-            "sizes": "48x48 72x72 96x96 128x128 256x256 512x512",
+            "sizes": "48x48 72x72 96x96 128x128 256x256 512x512 any",
             "type": "image/svg+xml",
             "purpose": "any"
         }

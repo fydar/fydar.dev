@@ -1,15 +1,26 @@
-﻿{
+{
     "name": "Bloodlust",
     "short_name": "Bloodlust",
+    "version": "0.1.1",
+    "description": "The morality of a recently turned vampire comes into question when his thirst for life must be quenched.",
+    "categories": [
+        "games"
+    ],
+    "id": "/play/bloodlust",
     "start_url": "/play/bloodlust",
-    "display": "fullscreen",
-    "background_color": "#12171A",
-    "theme_color": "#000",
-    "description": "",
+    "display": "standalone",
+    "display_override": [
+        "fullscreen"
+    ],
+    "orientation": "any",
+    "background_color": "#161618",
+    "theme_color": "#161618",
+    "lang": "en",
+    "dir": "ltr",
     "icons": [
         {
             "src": "favicon.svg",
-            "sizes": "48x48 72x72 96x96 128x128 256x256 512x512",
+            "sizes": "48x48 72x72 96x96 128x128 256x256 512x512 any",
             "type": "image/svg+xml",
             "purpose": "any"
         }

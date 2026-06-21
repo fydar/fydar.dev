@@ -1,15 +1,26 @@
-﻿{
+{
     "name": "So Far From Home",
     "short_name": "So Far From Home",
+    "version": "1.1.0",
+    "description": "Searching between the sofa cushions for a missing key, but what else is down there?",
+    "categories": [
+        "games"
+    ],
+    "id": "/play/sofarfromhome",
     "start_url": "/play/sofarfromhome",
-    "display": "fullscreen",
-    "background_color": "#12171A",
-    "theme_color": "#000",
-    "description": "",
+    "display": "standalone",
+    "display_override": [
+        "fullscreen"
+    ],
+    "orientation": "any",
+    "background_color": "#161618",
+    "theme_color": "#161618",
+    "lang": "en",
+    "dir": "ltr",
     "icons": [
         {
             "src": "favicon.svg",
-            "sizes": "48x48 72x72 96x96 128x128 256x256 512x512",
+            "sizes": "48x48 72x72 96x96 128x128 256x256 512x512 any",
             "type": "image/svg+xml",
             "purpose": "any"
         }

@@ -1,16 +1,26 @@
 {
     "name": "Raid Healer Simulator",
     "short_name": "Raid Healer Simulator",
-    "start_url": "/play/raidhealersimulator",
     "version": "0.1.2.1",
-    "display": "fullscreen",
-    "background_color": "#12171A",
-    "theme_color": "#000",
-    "description": "",
+    "description": "The simulation experience of what it's like to be a healer in an MMORPG raid, complete with a variety of abilities and a challenging boss battle.",
+    "categories": [
+        "games"
+    ],
+    "id": "/play/raidhealersimulator",
+    "start_url": "/play/raidhealersimulator",
+    "display": "standalone",
+    "display_override": [
+        "fullscreen"
+    ],
+    "orientation": "any",
+    "background_color": "#161618",
+    "theme_color": "#161618",
+    "lang": "en",
+    "dir": "ltr",
     "icons": [
         {
             "src": "favicon.svg",
-            "sizes": "48x48 72x72 96x96 128x128 256x256 512x512",
+            "sizes": "48x48 72x72 96x96 128x128 256x256 512x512 any",
             "type": "image/svg+xml",
             "purpose": "any"
         }
