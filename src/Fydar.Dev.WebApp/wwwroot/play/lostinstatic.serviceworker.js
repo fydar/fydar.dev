@@ -1,11 +1,11 @@
-const CACHE_NAME = "fydar-astralelites-v0.1.2.8";
-const MAIN_PAGE = "/play/astralelites";
+const CACHE_NAME = "fydar-lostinstatic-v1.0.0";
+const MAIN_PAGE = "/play/lostinstatic";
 const ASSETS = [
     MAIN_PAGE,
-    "/play/astralelites/favicon.svg",
-    "/play/astralelites/manifest.webmanifest",
-    "/play/astralelites/build/0.1.2.8.loader.js",
-    "/play/astralelites/build/0.1.2.8.framework.js.br",
+    "/play/lostinstatic/favicon.svg",
+    "/play/lostinstatic/manifest.webmanifest",
+    "/play/lostinstatic/build/lostinstatic.loader.js",
+    "/play/lostinstatic/build/lostinstatic.framework.js.br",
 ];
 
 self.addEventListener('install', (e) => {
@@ -38,7 +38,7 @@ self.addEventListener('activate', (e) => {
             caches.keys().then((keys) => {
                 return Promise.all(
                     keys.map((key) => {
-                        if (key.startsWith("fydar-astralelites-") && key !== CACHE_NAME) {
+                        if (key.startsWith("fydar-lostinstatic-") && key !== CACHE_NAME) {
                             return caches.delete(key);
                         }
                     })
@@ -56,7 +56,6 @@ self.addEventListener('fetch', (e) => {
     if (!isAsset && !isMainPage) return;
 
     if (isMainPage) {
-        // Cache Strategy 1: Network-First for the Main Page
         e.respondWith(
             fetch(e.request)
                 .then((networkResponse) => {
@@ -68,7 +67,6 @@ self.addEventListener('fetch', (e) => {
         );
     }
     else {
-        // Cache Strategy 2: Cache-First for everything else
         e.respondWith(
             caches.match(e.request).then((cachedResponse) => {
                 if (cachedResponse) return cachedResponse;
