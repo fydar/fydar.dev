@@ -77,12 +77,17 @@ else
                     {
                         "source": "document",
                         "where": {
-                            "not": {
-                                "or": [
-                                    { "href_matches": "/play/*" },
-                                    { "href_matches": "/error/*" }
-                                ]
-                            }
+                            "and": [
+                                { "href_matches": "/*" },
+                                {
+                                    "not": {
+                                        "or": [
+                                            { "href_matches": "/play/*" },
+                                            { "href_matches": "/error/*" }
+                                        ]
+                                    }
+                                }
+                            ]
                         },
                         "eagerness": "moderate"
                     }
