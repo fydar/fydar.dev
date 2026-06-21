@@ -37,28 +37,10 @@ Parameters:
     Default: '10.10.0.0/24'
     AllowedPattern: '^((1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])\.){3}(1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])\/(8|16|24|32)$'
 
-  SubnetIPv4Cidr2:
-    Type: String
-    Description: IPv4 CIDR block for subnet 2.
-    Default: '10.10.1.0/24'
-    AllowedPattern: '^((1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])\.){3}(1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])\/(8|16|24|32)$'
-
   SubnetAz1:
     Type: String
     Description: Availability zone for subnet 1.
     Default: us-east-1a
-    AllowedValues:
-      - us-east-1a
-      - us-east-1b
-      - us-east-1c
-      - us-east-1d
-      - us-east-1e
-      - us-east-1f
-
-  SubnetAz2:
-    Type: String
-    Description: Availability zone for subnet 2.
-    Default: us-east-1b
     AllowedValues:
       - us-east-1a
       - us-east-1b
@@ -91,17 +73,6 @@ Resources:
       Tags:
         - Key: Name
           Value: !Sub '${DomainName} subnet-az1'
-
-  PubSubnetAz2:
-    Type: AWS::EC2::Subnet
-    Properties:
-      VpcId: !Ref Vpc
-      AvailabilityZone: !Ref SubnetAz2
-      CidrBlock: !Ref SubnetIPv4Cidr2
-      MapPublicIpOnLaunch: true
-      Tags:
-        - Key: Name
-          Value: !Sub '${DomainName} subnet-az2'
 
   InternetGateway:
     Type: AWS::EC2::InternetGateway
@@ -137,12 +108,6 @@ Resources:
     Properties:
       RouteTableId: !Ref RouteViaIgw
       SubnetId: !Ref PubSubnetAz1
-
-  PubSubnet2RouteTableAssociation:
-    Type: AWS::EC2::SubnetRouteTableAssociation
-    Properties:
-      RouteTableId: !Ref RouteViaIgw
-      SubnetId: !Ref PubSubnetAz2
 
   # ── IAM ───────────────────────────────────────────────────────────────────────
 
@@ -338,6 +303,13 @@ Resources:
       ImageId: ami-055458a83541771a4
       KeyName: !Ref KeyPairName
       IamInstanceProfile: !Ref Ec2InstanceProfile
+      BlockDeviceMappings:
+        - DeviceName: /dev/xvda
+          Ebs:
+            VolumeSize: 30
+            VolumeType: gp3
+            DeleteOnTermination: true
+      PropagateTagsToVolumeOnCreation: true
       NetworkInterfaces:
         - DeviceIndex: 0
           NetworkInterfaceId: !Ref WebsiteInstanceNetworkInterface
