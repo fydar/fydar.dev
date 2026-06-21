@@ -1,4 +1,4 @@
-const CACHE_NAME = "fydar-astralelites-v0.1.2.9";
+﻿const CACHE_NAME = "fydar-astralelites-v0.1.2.9";
 const MAIN_PAGE = "/play/astralelites";
 const ASSETS = [
     MAIN_PAGE,
@@ -49,7 +49,9 @@ self.addEventListener('activate', (e) => {
 });
 
 self.addEventListener('fetch', (e) => {
+    if (e.request.method !== 'GET') return;
     const url = new URL(e.request.url);
+    if (url.origin !== location.origin) return;
     const isMainPage = url.pathname === MAIN_PAGE || url.pathname === MAIN_PAGE + "/";
 
     if (!isMainPage && !url.pathname.startsWith(MAIN_PAGE + "/")) return;
