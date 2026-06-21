@@ -161,9 +161,12 @@
     </Interactive>
 
     <Placeholder>
-        <svg viewBox="0 0 96 96" class="embed--placeholdermainappicon" style="color: #fff;">
-            <path fill="currentColor" d="M87 56.8v15L48 95V80Zm-78 0 39 23.1V95L9 71.9ZM48 1l6.3 21.7 21.6-.4-17.7 13 7 21.5L48 43.2 30.8 56.8l7-21.5-17.7-13 21.6.4Z" />
-        </svg>
+        @if (!IsBackground)
+        {
+            <svg viewBox="0 0 96 96" class="embed--placeholdermainappicon" style="color: #fff;">
+                <path fill="currentColor" d="M87 56.8v15L48 95V80Zm-78 0 39 23.1V95L9 71.9ZM48 1l6.3 21.7 21.6-.4-17.7 13 7 21.5L48 43.2 30.8 56.8l7-21.5-17.7-13 21.6.4Z" />
+            </svg>
+        }
     </Placeholder>
 
     <Details>
