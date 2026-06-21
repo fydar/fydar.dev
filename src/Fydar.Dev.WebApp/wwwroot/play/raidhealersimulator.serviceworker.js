@@ -1,11 +1,11 @@
-﻿const CACHE_NAME = "fydar-raidhealersimulator-v0.1.2";
+const CACHE_NAME = "fydar-raidhealersimulator-v0.1.2.1";
 const MAIN_PAGE = "/play/raidhealersimulator";
 const ASSETS = [
     MAIN_PAGE,
     "/play/raidhealersimulator/favicon.svg",
     "/play/raidhealersimulator/manifest.webmanifest",
-    "/play/raidhealersimulator/build/raidhealersimulator.loader.js",
-    "/play/raidhealersimulator/build/raidhealersimulator.framework.js.br",
+    "/play/raidhealersimulator/build/0.1.2.1.loader.js",
+    "/play/raidhealersimulator/build/0.1.2.1.framework.js.br",
 ];
 
 self.addEventListener('install', (e) => {
