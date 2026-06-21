@@ -48,6 +48,40 @@ else
     <link rel="stylesheet" href="@Assets["Fydar.Dev.WebApp.styles.css"]" />
 
     <link rel="icon" href="@Assets["favicon.svg"]" type="image/svg+xml" />
+
+    <script type="speculationrules" nonce="@noncer.Nonce">
+    {
+        "prerender": [
+            {
+                "source": "document",
+                "where": {
+                    "not": {
+                        "or": [
+                            { "href_matches": "/play/*" },
+                            { "href_matches": "/error/*" }
+                        ]
+                    }
+                },
+                "eagerness": "moderate"
+            }
+        ],
+        "prefetch": [
+            {
+                "source": "document",
+                "where": {
+                    "or": [
+                        { "href_matches": "/" },
+                        { "href_matches": "/resume" },
+                        { "href_matches": "/contact" },
+                        { "href_matches": "/portfolio/*" },
+                        { "href_matches": "/play/*" }
+                    ]
+                },
+                "eagerness": "moderate"
+            }
+        ]
+    }
+    </script>
 </SectionContent>
 
 <SectionContent SectionName="layoutbodyscript">
