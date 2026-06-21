@@ -47,9 +47,6 @@ else
     <link rel="stylesheet" href="@Assets["Fydar.Dev.WebApp.styles.css"]" />
 
     <link rel="icon" href="@Assets["favicon.svg"]" type="image/svg+xml" />
-</SectionContent>
-
-<SectionContent SectionName="layoutbodyscript">
     <script nonce="@noncer.Nonce">
         // Must run before pagereveal fires (which is before DOMContentLoaded and before deferred scripts).
         const _suppressTransitionAbort = (err) => { if (err.name !== 'AbortError') throw err; };
@@ -66,6 +63,9 @@ else
             }
         });
     </script>
+</SectionContent>
+
+<SectionContent SectionName="layoutbodyscript">
     <script defer src="@Assets["site.js"]"></script>
     <ImportMap nonce="@noncer.Nonce" />
 </SectionContent>
