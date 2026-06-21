@@ -1,18 +1,21 @@
 ﻿{
-    "name":  "Cake Dodge",
-    "short_name":  "Cake Dodge",
-    "start_url":  "/play/cakedodge",
-    "display":  "fullscreen",
-    "background_color":  "#12171A",
-    "theme_color":  "#000",
-    "description":  "",
-    "icons":  [
-                  {
-                      "src":  "favicon.svg",
-                      "sizes":  "48x48 72x72 96x96 128x128 256x256 512x512",
-                      "type":  "image/svg+xml",
-                      "purpose":  "any"
-                  }
-              ],
-    "scope":  "/play/cakedodge"
+    "name": "Cake Dodge",
+    "short_name": "Cake Dodge",
+    "start_url": "/play/cakedodge",
+    "display": "fullscreen",
+    "background_color": "#12171A",
+    "theme_color": "#000",
+    "description": "",
+    "icons": [
+        {
+            "src": "favicon.svg",
+            "sizes": "48x48 72x72 96x96 128x128 256x256 512x512",
+            "type": "image/svg+xml",
+            "purpose": "any"
+        }
+    ],
+    "scope": "/play/cakedodge",
+    "launch_handler": {
+        "client_mode": "navigate-existing"
+    }
 }

@@ -18,7 +18,8 @@
                 });
                 swUrl = policy.createScriptURL(swUrl);
             }
-            navigator.serviceWorker.register(swUrl, { scope: '@Scope' });
+            navigator.serviceWorker.register(swUrl, { scope: '@Scope' })
+                .catch(function (err) { console.warn('ServiceWorker registration failed:', err); });
         });
     }
 })();

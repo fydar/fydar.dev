@@ -1,4 +1,4 @@
-const CACHE_NAME = "fydar-void-v0.1.0";
+﻿const CACHE_NAME = "fydar-void-v0.1.0";
 const MAIN_PAGE = "/play/void";
 const ASSETS = [
     MAIN_PAGE,
@@ -50,20 +50,21 @@ self.addEventListener('activate', (e) => {
 
 self.addEventListener('fetch', (e) => {
     const url = new URL(e.request.url);
-    const isMainPage = url.pathname.endsWith(MAIN_PAGE) || url.pathname.endsWith(MAIN_PAGE + "/");
-    const isAsset = ASSETS.some(path => url.pathname.endsWith(path));
+    const isMainPage = url.pathname === MAIN_PAGE || url.pathname === MAIN_PAGE + "/";
 
-    if (!isAsset && !isMainPage) return;
+    if (!isMainPage && !url.pathname.startsWith(MAIN_PAGE + "/")) return;
 
     if (isMainPage) {
         e.respondWith(
-            fetch(e.request)
+            fetch(MAIN_PAGE)
                 .then((networkResponse) => {
-                    const responseToCache = networkResponse.clone();
-                    caches.open(CACHE_NAME).then((cache) => cache.put(e.request, responseToCache));
+                    caches.open(CACHE_NAME).then((cache) => cache.put(MAIN_PAGE, networkResponse.clone())).catch(() => { });
                     return networkResponse;
                 })
-                .catch(() => caches.match(e.request))
+                .catch(async () => {
+                    const cached = await caches.match(MAIN_PAGE);
+                    return cached || Response.error();
+                })
         );
     }
     else {
@@ -77,9 +78,9 @@ self.addEventListener('fetch', (e) => {
                     }
 
                     const responseToCache = networkResponse.clone();
-                    caches.open(CACHE_NAME).then((cache) => cache.put(e.request, responseToCache));
+                    caches.open(CACHE_NAME).then((cache) => cache.put(e.request, responseToCache)).catch(() => { });
                     return networkResponse;
-                });
+                }).catch(() => Response.error());
             })
         );
     }

@@ -25,5 +25,8 @@
             "purpose": "any"
         }
     ],
-    "scope": "/play/miniminer"
+    "scope": "/play/miniminer",
+    "launch_handler": {
+        "client_mode": "navigate-existing"
+    }
 }

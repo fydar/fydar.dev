@@ -1,11 +1,11 @@
-const CACHE_NAME = "fydar-astralelites-v0.1.2.8";
+const CACHE_NAME = "fydar-astralelites-v0.1.2.9";
 const MAIN_PAGE = "/play/astralelites";
 const ASSETS = [
     MAIN_PAGE,
     "/play/astralelites/favicon.svg",
     "/play/astralelites/manifest.webmanifest",
-    "/play/astralelites/build/0.1.2.8.loader.js",
-    "/play/astralelites/build/0.1.2.8.framework.js.br",
+    "/play/astralelites/build/0.1.2.9.loader.js",
+    "/play/astralelites/build/0.1.2.9.framework.js.br",
 ];
 
 self.addEventListener('install', (e) => {
@@ -50,25 +50,24 @@ self.addEventListener('activate', (e) => {
 
 self.addEventListener('fetch', (e) => {
     const url = new URL(e.request.url);
-    const isMainPage = url.pathname.endsWith(MAIN_PAGE) || url.pathname.endsWith(MAIN_PAGE + "/");
-    const isAsset = ASSETS.some(path => url.pathname.endsWith(path));
+    const isMainPage = url.pathname === MAIN_PAGE || url.pathname === MAIN_PAGE + "/";
 
-    if (!isAsset && !isMainPage) return;
+    if (!isMainPage && !url.pathname.startsWith(MAIN_PAGE + "/")) return;
 
     if (isMainPage) {
-        // Cache Strategy 1: Network-First for the Main Page
         e.respondWith(
-            fetch(e.request)
+            fetch(MAIN_PAGE)
                 .then((networkResponse) => {
-                    const responseToCache = networkResponse.clone();
-                    caches.open(CACHE_NAME).then((cache) => cache.put(e.request, responseToCache));
+                    caches.open(CACHE_NAME).then((cache) => cache.put(MAIN_PAGE, networkResponse.clone())).catch(() => { });
                     return networkResponse;
                 })
-                .catch(() => caches.match(e.request))
+                .catch(async () => {
+                    const cached = await caches.match(MAIN_PAGE);
+                    return cached || Response.error();
+                })
         );
     }
     else {
-        // Cache Strategy 2: Cache-First for everything else
         e.respondWith(
             caches.match(e.request).then((cachedResponse) => {
                 if (cachedResponse) return cachedResponse;
@@ -79,9 +78,9 @@ self.addEventListener('fetch', (e) => {
                     }
 
                     const responseToCache = networkResponse.clone();
-                    caches.open(CACHE_NAME).then((cache) => cache.put(e.request, responseToCache));
+                    caches.open(CACHE_NAME).then((cache) => cache.put(e.request, responseToCache)).catch(() => { });
                     return networkResponse;
-                });
+                }).catch(() => Response.error());
             })
         );
     }
