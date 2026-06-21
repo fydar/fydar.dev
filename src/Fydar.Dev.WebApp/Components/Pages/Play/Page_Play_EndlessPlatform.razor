@@ -1,4 +1,4 @@
-@layout GameLayout
+﻿@layout GameLayout
 @page "/play/endlessplatform"
 
 @{
@@ -20,13 +20,13 @@
 	};
 }
 
-<HeadContent>
+<HeadFragment>
 	<MetadataComponent Metadata="@PageMetadata" />
 	<BreadcrumbListComponent Model="@breadcrumbs" />
 	<meta name="theme-color" content="#161618">
 	<link rel="shortcut icon" href="@Assets["/play/endlessplatform/favicon.ico"]">
 	<link rel="preload" href="@Assets["/play/endlessplatform/build/endlessplatform.loader.js"]" as="script" fetchpriority="high" />
-</HeadContent>
+</HeadFragment>
 
 @{
     var embedUnityConfig = new EmbedUnityConfig()

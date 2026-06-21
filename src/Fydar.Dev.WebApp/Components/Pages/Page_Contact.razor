@@ -1,4 +1,4 @@
-@layout DefaultLayout
+﻿@layout DefaultLayout
 @page "/contact"
 
 @inject IEnumerable<IContactSubmitSink> contactSubmitSinks;
@@ -21,10 +21,10 @@
 	};
 }
 
-<HeadContent>
+<HeadFragment>
 	<MetadataComponent Metadata="@PageMetadata" />
 	<BreadcrumbListComponent Model="@breadcrumbs" />
-</HeadContent>
+</HeadFragment>
 
 <article class="page-contact">
     <div class="container" style="max-width: 680px;">

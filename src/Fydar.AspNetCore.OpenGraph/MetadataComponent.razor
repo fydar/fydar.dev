@@ -1,5 +1,4 @@
 @using Fydar.AspNetCore.OpenGraph.Internal
-@using Microsoft.AspNetCore.Components.Web
 
 @{
     var html = new HtmlMetadataFactory();
@@ -13,7 +12,7 @@
 
 @if (!string.IsNullOrWhiteSpace(html.Title))
 {
-    <PageTitle>@html.Title</PageTitle>
+    <title>@html.Title</title>
 }
 @if (!string.IsNullOrWhiteSpace(html.Description))
 {

@@ -1,4 +1,4 @@
-@using Fydar.Dev.WebApp.Components.Blocks.Phonetics
+﻿@using Fydar.Dev.WebApp.Components.Blocks.Phonetics
 @using Microsoft.AspNetCore.OutputCaching;
 
 @layout DefaultLayout
@@ -28,10 +28,10 @@
 	};
 }
 
-<HeadContent>
+<HeadFragment>
     <MetadataComponent Metadata="@PageMetadata" />
     <BreadcrumbListComponent Model="@breadcrumbs" />
-</HeadContent>
+</HeadFragment>
 
 <article class="page-myname">
     <div class="container">

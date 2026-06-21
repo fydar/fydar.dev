@@ -1,4 +1,4 @@
-@layout GameLayout
+﻿@layout GameLayout
 @page "/play/astralelites"
 
 @{
@@ -20,13 +20,13 @@
 	};
 }
 
-<HeadContent>
+<HeadFragment>
 	<MetadataComponent Metadata="@PageMetadata" />
 	<BreadcrumbListComponent Model="@breadcrumbs" />
 	<meta name="theme-color" content="#161618">
 	<link rel="shortcut icon" href="@Assets["/play/astralelites/favicon.svg"]">
 	<link rel="preload" href="@Assets["/play/astralelites/build/0.1.2.9.loader.js"]" as="script" fetchpriority="high" />
-</HeadContent>
+</HeadFragment>
 
 <EmbedUnity__AstralElites IsBackground="@Background" />
 

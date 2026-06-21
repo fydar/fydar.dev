@@ -1,4 +1,4 @@
-@using Microsoft.AspNetCore.OutputCaching;
+﻿@using Microsoft.AspNetCore.OutputCaching;
 
 @layout DefaultLayout
 @page "/"
@@ -26,12 +26,12 @@
 	};
 }
 
-<HeadContent>
+<HeadFragment>
 	<MetadataComponent Metadata="@PageMetadata" />
 	<BreadcrumbListComponent Model="@breadcrumbs" />
 
 	<link rel="preload" href="@Assets["media/signature.svg"]" as="image" fetchpriority="high" />
-</HeadContent>
+</HeadFragment>
 
 <article class="page-portfolio">
 	<div class="container">

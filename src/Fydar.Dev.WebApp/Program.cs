@@ -96,6 +96,7 @@ public class Program
 		});
 
 		builder.Services.AddScoped<Noncer>();
+		builder.Services.AddScoped<HeadFragmentRegistry>();
 
 		builder.Services.AddHttpContextAccessor();
 

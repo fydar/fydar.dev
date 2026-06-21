@@ -2,9 +2,9 @@
 
 @if (!string.IsNullOrEmpty(ManifestUrl))
 {
-    <HeadContent>
+    <HeadFragment>
         <link rel="manifest" href="@ManifestUrl">
-    </HeadContent>
+    </HeadFragment>
 }
 
 <script defer nonce="@noncer.Nonce">

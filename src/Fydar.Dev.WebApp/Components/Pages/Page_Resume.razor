@@ -1,4 +1,4 @@
-@layout DefaultLayout
+﻿@layout DefaultLayout
 @page "/resume"
 @using Fydar.Dev.WebApp.Components.Blocks.Resume;
 
@@ -22,10 +22,10 @@
 	};
 }
 
-<HeadContent>
+<HeadFragment>
 	<MetadataComponent Metadata="@PageMetadata" />
 	<BreadcrumbListComponent Model="@breadcrumbs" />
-</HeadContent>
+</HeadFragment>
 
 @{
 	string explicitBaseUri = "https://fydar.dev";

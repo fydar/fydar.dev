@@ -1,0 +1,18 @@
+@inject HeadFragmentRegistry Registry
+@implements IDisposable
+
+@foreach (var fragment in Registry.Fragments)
+{
+	@fragment
+}
+
+@code {
+	protected override void OnInitialized()
+	{
+		Registry.Subscribe(this);
+	}
+
+	internal void Notify() => StateHasChanged();
+
+	public void Dispose() { }
+}

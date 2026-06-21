@@ -1,4 +1,4 @@
-@layout GameLayout
+﻿@layout GameLayout
 @page "/play/astralswarm"
 
 @{
@@ -20,13 +20,13 @@
 	};
 }
 
-<HeadContent>
+<HeadFragment>
 	<MetadataComponent Metadata="@PageMetadata" />
 	<BreadcrumbListComponent Model="@breadcrumbs" />
 	<meta name="theme-color" content="#161618">
 	<link rel="shortcut icon" href="@Assets["/play/astralswarm/favicon.ico"]">
 	<link rel="preload" href="@Assets["/play/astralswarm/build/0.1.1.0.loader.js"]" as="script" fetchpriority="high" />
-</HeadContent>
+</HeadFragment>
 
 @{
     var embedUnityConfig = new EmbedUnityConfig()
