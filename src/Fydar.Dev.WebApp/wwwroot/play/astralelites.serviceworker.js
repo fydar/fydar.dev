@@ -1,11 +1,11 @@
-﻿const CACHE_NAME = "fydar-astralelites-v0.1.2.9";
+const CACHE_NAME = "fydar-astralelites-v0.1.2.10";
 const MAIN_PAGE = "/play/astralelites";
 const ASSETS = [
     MAIN_PAGE,
     "/play/astralelites/favicon.svg",
     "/play/astralelites/manifest.webmanifest",
-    "/play/astralelites/build/0.1.2.9.loader.js",
-    "/play/astralelites/build/0.1.2.9.framework.js.br",
+    "/play/astralelites/build/0.1.2.10.loader.js",
+    "/play/astralelites/build/0.1.2.10.framework.js.br",
 ];
 
 self.addEventListener('install', (e) => {
