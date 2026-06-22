@@ -1,4 +1,4 @@
-﻿@layout DefaultLayout
+@layout DefaultLayout
 @page "/portfolio/multiplayer"
 
 @{
@@ -46,11 +46,7 @@
                     <Block_CoverGrid>
 
                         <CoverDate Date="2022">
-                            <Cover_StarCitizen />
-                        </CoverDate>
-
-                        <CoverDate>
-                            <Cover_Squadron42 />
+                            <Cover_Outrage />
                         </CoverDate>
 
                         <CoverDate Date="2020">
@@ -67,16 +63,16 @@
 
                     <Block_CardGrid>
                         <Card>
-                            <a class="card__link" href="/portfolio/mywebsite">My Website</a>
+                            <a class="card__link" href="/portfolio/voxelmultiplayer">Voxel Multiplayer</a>
+                            <picture>
+                                <img class="card__image" decoding="async" loading="lazy" width="640" height="480" src="@Assets["media/voxelmultiplayer/card.webp"]" alt="Preview of the Voxel Multiplayer, showing the player character atop of a mountain." />
+                            </picture>
                             <div class="container">
                                 <header>
-                                    <SvgSprite class="card-keyicon" Link="/icons.svg?v=1#icon-fydar" />
-                                    <h3>My Website</h3>
+                                    <SvgSprite class="card-keyicon" Link="/icons.svg?v=1#icon-voxelmultiplayer" />
+                                    <h3>Voxel Multiplayer</h3>
                                 </header>
-                                <Block_PillCloud>
-                                    <Pill_AspNetCore />
-                                </Block_PillCloud>
-                                <p>This portfolio website made using <b>ASP.NET Core</b> and hosted in <b>AWS</b>.</p>
+                                <p>A voxel-art multiplayer PvP game with a custom voxel-art terrain generator for rendering large worlds.</p>
                             </div>
                         </Card>
                         <Card>
@@ -86,9 +82,6 @@
                                     <SvgSprite class="card-keyicon" Link="/icons.svg?v=1#icon-network-right-solid" />
                                     <h3>Pew Pew</h3>
                                 </header>
-                                <Block_PillCloud>
-                                    <Pill_AspNetCore />
-                                </Block_PillCloud>
                                 <p>A 20v20 .io style browser game made in 48 hours using <b>ASP.NET Core</b> and hosted in <b>AWS</b>.</p>
                             </div>
                         </Card>
@@ -98,70 +91,3 @@
         </Block_ArticleOutlined>
     </div>
 </article>
-
-
-<section class="container container-wide" data-nosnippet>
-    <h1> Programming</h1>
-</section>
-
-<HeadingScope>
-    <aside>
-        <section style="position: sticky; top: 64px;">
-            <div style="height: 5rem"></div>
-            <Block_TableOfContents />
-        </section>
-
-    </aside>
-
-    <section class="container">
-
-        <Heading Level="2" Identifier="professional">
-            <Text>Professional</Text>
-            <Content>
-                <Block_CoverGrid>
-
-                    <CoverDate Date="2022">
-                        <Cover_Outrage />
-                    </CoverDate>
-
-                    <CoverDate Date="2020">
-                        <Cover_LegoStarWarsBattles />
-                    </CoverDate>
-
-                </Block_CoverGrid>
-            </Content>
-        </Heading>
-
-        <Heading Level="2" Identifier="Hobbyist">
-            <Text>Hobbyist</Text>
-            <Content>
-				<Block_CardGrid>
-					<Card>
-						<a class="card__link" href="/portfolio/voxelmultiplayer">Voxel Multiplayer</a>
-						<picture>
-							<img class="card__image" decoding="async" loading="lazy" width="640" height="480" src="@Assets["media/voxelmultiplayer/card.webp"]" alt="Preview of the Voxel Multiplayer, showing the player character atop of a mountain." />
-						</picture>
-						<div class="container">
-							<header>
-								<SvgSprite class="card-keyicon" Link="/icons.svg?v=1#icon-voxelmultiplayer" />
-								<h3>Voxel Multiplayer</h3>
-							</header>
-							<p>A voxel-art multiplayer PvP game with a custom voxel-art terrain generator for rendering large worlds.</p>
-						</div>
-					</Card>
-					<Card>
-						<a class="card__link" href="/portfolio/pewpew">Pew Pew</a>
-						<div class="container">
-							<header>
-								<SvgSprite class="card-keyicon" Link="/icons.svg?v=1#icon-network-right-solid" />
-								<h3>Pew Pew</h3>
-							</header>
-							<p>A 20v20 .io style browser game made in 48 hours using <b>ASP.NET Core</b> and hosted in <b>AWS</b>.</p>
-						</div>
-					</Card>
-                </Block_CardGrid>
-            </Content>
-        </Heading>
-
-    </section>
-</HeadingScope>
