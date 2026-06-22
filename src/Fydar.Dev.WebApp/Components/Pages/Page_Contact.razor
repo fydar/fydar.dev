@@ -1,4 +1,4 @@
-﻿@layout DefaultLayout
+@layout DefaultLayout
 @page "/contact"
 
 @inject IEnumerable<IContactSubmitSink> contactSubmitSinks;
@@ -11,8 +11,8 @@
 		factory.UseCanonicalUrl("https://fydar.dev/contact");
 		factory.UseImage(image =>
 		{
-			image.Url = "https://fydar.dev/media/header.webp";
-			image.Alt = "A portrait of Fydar in an anime art style.";
+            image.Url = "https://fydar.dev/media/placeholdersocial.webp";
+			image.Alt = "Fydar's signature.";
 		});
 	}
 	var breadcrumbs = new BreadcrumbList()
