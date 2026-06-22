@@ -1,4 +1,4 @@
-﻿@layout DefaultLayout
+@layout DefaultLayout
 @page "/portfolio/starcitizen"
 
 @{
@@ -36,7 +36,8 @@
             </div>
 
             <video class="parallax-layer" style="--parallax-multiplier: 0.5" autoplay muted loop playsinline>
-                <source src="@Assets["media/starcitizen/background.mp4"]" type="video/mp4">
+                <source src="@Assets["media/starcitizen/background.h265.mp4"]" type='video/mp4; codecs="hvc1.1.6.L120.90"'>
+                <source src="@Assets["media/starcitizen/background.h264.mp4"]" type='video/mp4; codecs="avc1.640028"'>
             </video>
         </div>
 
@@ -160,8 +161,8 @@
 
                     <figure class="figure-image">
                         <video controls>
-                            <source src="@Assets["media/starcitizen/dataforge.h265.mp4"]" type='video/mp4; codecs="hvc1.1.2.L123.90"; profiles="isom,iso2,mp41"'>
-                            <source src="@Assets["media/starcitizen/dataforge.h264.mp4"]" type='video/mp4; codecs="avc1.4d4028"; profiles="isom,iso2,avc1,mp41"'>
+                            <source src="@Assets["media/starcitizen/dataforge.h265.mp4"]" type='video/mp4; codecs="hvc1.1.6.L120.90"'>
+                            <source src="@Assets["media/starcitizen/dataforge.h264.mp4"]" type='video/mp4; codecs="avc1.640028"'>
                             <track src="@Assets["media/starcitizen/dataforge.en.vtt"]" kind="subtitles" srclang="en" label="English">
                         </video>
                         <figcaption>Martin Senior presenting <i>'Data Forge'</i> from <i><a href="https://youtu.be/293kvgEkKb4?t=289" target="_blank">'Inside Star Citizen: On The Prowl | Fall 2019'<SvgSprite Link="/icons.svg?v=1#icon-external-link" class="external-link-icon" /></a></i>.</figcaption>
@@ -196,8 +197,8 @@
 
                     <figure class="figure-image">
                         <video controls>
-                            <source src="@Assets["media/starcitizen/copybuild.h265.mp4"]" type='video/mp4; codecs="hvc1.1.2.L123.90"; profiles="isom,iso2,mp41"'>
-                            <source src="@Assets["media/starcitizen/copybuild.h264.mp4"]" type='video/mp4; codecs="avc1.4d4028"; profiles="isom,iso2,avc1,mp41"'>
+                            <source src="@Assets["media/starcitizen/copybuild.h265.mp4"]" type='video/mp4; codecs="hvc1.1.6.L120.90"'>
+                            <source src="@Assets["media/starcitizen/copybuild.h264.mp4"]" type='video/mp4; codecs="avc1.640028"'>
                             <track src="@Assets["media/starcitizen/copybuild.en.vtt"]" kind="subtitles" srclang="en" label="English">
                         </video>
                         <figcaption>Martin Senior presenting <i>'Copy Build'</i> from <i><a href="https://youtu.be/293kvgEkKb4?t=289" target="_blank">'Inside Star Citizen: On The Prowl | Fall 2019'<SvgSprite Link="/icons.svg?v=1#icon-external-link" class="external-link-icon" /></a></i>.</figcaption>
