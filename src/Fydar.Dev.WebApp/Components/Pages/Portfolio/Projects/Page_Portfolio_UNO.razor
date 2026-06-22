@@ -129,7 +129,7 @@
                     <p>The original implementation scaled hitboxes during hover animations, creating a “moving target” effect. I re-engineered the logic to ensure hitbox geometry remained static and predictable while the visual layer handled the juice.</p>
 
                     <figure class="figure-image">
-                        <video autoplay muted loop playsinline controls>
+                        <video loading="lazy" autoplay muted loop playsinline controls>
                             <source src="@Assets["media/uno/issue1-before.30fps.h265.mp4"]" type='video/mp4; codecs="hvc1.1.2.L123.90"; profiles="isom,iso2,mp41"'>
                             <source src="@Assets["media/uno/issue1-before.30fps.h264.mp4"]" type='video/mp4; codecs="avc1.4d4028"; profiles="isom,iso2,avc1,mp41"'>
                         </video>
@@ -137,7 +137,7 @@
                     </figure>
 
                     <figure class="figure-image">
-                        <video autoplay muted loop playsinline controls>
+                        <video loading="lazy" autoplay muted loop playsinline controls>
                             <source src="@Assets["media/uno/issue1-after.30fps.h265.mp4"]" type='video/mp4; codecs="hvc1.1.2.L123.90"; profiles="isom,iso2,mp41"'>
                             <source src="@Assets["media/uno/issue1-after.30fps.h264.mp4"]" type='video/mp4; codecs="avc1.4d4028"; profiles="isom,iso2,avc1,mp41"'>
                         </video>
@@ -151,7 +151,7 @@
                     <p>I introduced a dedicated button “depressed” state across all input modalities. This ensures that the user receives a tactile visual response the instant a button is engaged, providing the “snappiness” of a modern UI while respecting the technical constraints of the 2016 codebase.</p>
 
                     <figure class="figure-image">
-                        <video autoplay muted loop playsinline controls>
+                        <video loading="lazy" autoplay muted loop playsinline controls>
                             <source src="@Assets["media/uno/issue2-after.30fps.h265.mp4"]" type='video/mp4; codecs="hvc1.1.2.L123.90"; profiles="isom,iso2,mp41"'>
                             <source src="@Assets["media/uno/issue2-after.30fps.h264.mp4"]" type='video/mp4; codecs="avc1.4d4028"; profiles="isom,iso2,avc1,mp41"'>
                         </video>
@@ -163,7 +163,7 @@
                     <p>I implemented a standardized state machine to ensure animations and labels (e.g., glows and hover tooltips) triggered identically regardless of the input device, eliminating the disparity between mouse and controller users.</p>
 
                     <figure class="figure-image">
-                        <video autoplay muted loop playsinline controls>
+                        <video loading="lazy" autoplay muted loop playsinline controls>
                             <source src="@Assets["media/uno/issue3-after.30fps.h265.mp4"]" type='video/mp4; codecs="hvc1.1.2.L123.90"; profiles="isom,iso2,mp41"'>
                             <source src="@Assets["media/uno/issue3-after.30fps.h264.mp4"]" type='video/mp4; codecs="avc1.4d4028"; profiles="isom,iso2,avc1,mp41"'>
                         </video>
