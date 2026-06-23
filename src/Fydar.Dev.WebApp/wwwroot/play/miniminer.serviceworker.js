@@ -1,4 +1,4 @@
-﻿const CACHE_NAME = "fydar-miniminer-v0.1.2.1";
+const CACHE_NAME = "fydar-miniminer-v0.1.2.1";
 const MAIN_PAGE = "/play/miniminer";
 const ASSETS = [
     MAIN_PAGE,
@@ -33,18 +33,17 @@ self.addEventListener('install', (e) => {
 
 self.addEventListener('activate', (e) => {
     e.waitUntil(
-        Promise.all([
-            self.clients.claim(),
-            caches.keys().then((keys) => {
-                return Promise.all(
-                    keys.map((key) => {
-                        if (key.startsWith("fydar-miniminer-") && key !== CACHE_NAME) {
-                            return caches.delete(key);
-                        }
-                    })
-                );
-            })
-        ])
+        caches.keys().then((keys) => {
+            Promise.all([
+                self.clients.claim(),
+                caches.keys().then((keys) => {
+                    const oldCaches = keys.filter(key =>
+                        key.startsWith("fydar-miniminer-") && key !== CACHE_NAME
+                    );
+                    return Promise.all(oldCaches.map(key => caches.delete(key)));
+                })
+            ])
+        })
     );
 });
 

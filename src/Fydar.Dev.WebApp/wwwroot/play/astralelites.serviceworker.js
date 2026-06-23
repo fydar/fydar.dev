@@ -33,18 +33,17 @@ self.addEventListener('install', (e) => {
 
 self.addEventListener('activate', (e) => {
     e.waitUntil(
-        Promise.all([
-            self.clients.claim(),
-            caches.keys().then((keys) => {
-                return Promise.all(
-                    keys.map((key) => {
-                        if (key.startsWith("fydar-astralelites-") && key !== CACHE_NAME) {
-                            return caches.delete(key);
-                        }
-                    })
-                );
-            })
-        ])
+        caches.keys().then((keys) => {
+            Promise.all([
+                self.clients.claim(),
+                caches.keys().then((keys) => {
+                    const oldCaches = keys.filter(key =>
+                        key.startsWith("fydar-astralelites-") && key !== CACHE_NAME
+                    );
+                    return Promise.all(oldCaches.map(key => caches.delete(key)));
+                })
+            ])
+        })
     );
 });
 

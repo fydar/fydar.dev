@@ -1,4 +1,4 @@
-﻿const CACHE_NAME = "fydar-roadtonorthstead-v0.1.0";
+const CACHE_NAME = "fydar-roadtonorthstead-v0.1.0";
 const MAIN_PAGE = "/play/roadtonorthstead";
 const ASSETS = [
     MAIN_PAGE,
@@ -33,18 +33,17 @@ self.addEventListener('install', (e) => {
 
 self.addEventListener('activate', (e) => {
     e.waitUntil(
-        Promise.all([
-            self.clients.claim(),
-            caches.keys().then((keys) => {
-                return Promise.all(
-                    keys.map((key) => {
-                        if (key.startsWith("fydar-roadtonorthstead-") && key !== CACHE_NAME) {
-                            return caches.delete(key);
-                        }
-                    })
-                );
-            })
-        ])
+        caches.keys().then((keys) => {
+            Promise.all([
+                self.clients.claim(),
+                caches.keys().then((keys) => {
+                    const oldCaches = keys.filter(key =>
+                        key.startsWith("fydar-roadtonorthstead-") && key !== CACHE_NAME
+                    );
+                    return Promise.all(oldCaches.map(key => caches.delete(key)));
+                })
+            ])
+        })
     );
 });
 
