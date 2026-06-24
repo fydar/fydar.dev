@@ -22,11 +22,37 @@
             "src": "favicon.svg",
             "sizes": "48x48 72x72 96x96 128x128 256x256 512x512 any",
             "type": "image/svg+xml",
+            "purpose": "monochrome"
+        },
+        {
+            "src": "maskable.webp",
+            "sizes": "256x256",
+            "type": "image/webp",
+            "purpose": "maskable"
+        },
+        {
+            "src": "maskable.webp",
+            "sizes": "256x256",
+            "type": "image/webp",
             "purpose": "any"
         }
     ],
     "scope": "/play/lostblues",
     "launch_handler": {
         "client_mode": "navigate-existing"
-    }
+    },
+    "screenshots": [
+        {
+            "src": "media/landscape.webp",
+            "sizes": "1280x720",
+            "form_factor": "wide",
+            "label": "Desktop gameplay"
+        },
+        {
+            "src": "media/portrait.webp",
+            "sizes": "720x1280",
+            "form_factor": "narrow",
+            "label": "Mobile gameplay"
+        }
+    ]
 }

@@ -28,5 +28,19 @@
     "scope": "/play/cryptcrawl",
     "launch_handler": {
         "client_mode": "navigate-existing"
-    }
+    },
+    "screenshots": [
+        {
+            "src": "media/landscape.webp",
+            "sizes": "1280x720",
+            "form_factor": "wide",
+            "label": "Desktop gameplay"
+        },
+        {
+            "src": "media/portrait.webp",
+            "sizes": "720x1280",
+            "form_factor": "narrow",
+            "label": "Mobile gameplay"
+        }
+    ]
 }

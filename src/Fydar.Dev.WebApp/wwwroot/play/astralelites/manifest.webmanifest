@@ -20,7 +20,7 @@
     "icons": [
         {
             "src": "favicon.svg",
-            "sizes": "48x48 72x72 96x96 128x128 256x256 512x512 any",
+            "sizes": "any",
             "type": "image/svg+xml",
             "purpose": "any"
         }
@@ -28,5 +28,19 @@
     "scope": "/play/astralelites",
     "launch_handler": {
         "client_mode": "navigate-existing"
-    }
+    },
+    "screenshots": [
+        {
+            "src": "media/landscape.webp",
+            "sizes": "1280x720",
+            "form_factor": "wide",
+            "label": "Desktop gameplay"
+        },
+        {
+            "src": "media/portrait.webp",
+            "sizes": "1080x2272",
+            "form_factor": "narrow",
+            "label": "Mobile gameplay"
+        }
+    ]
 }

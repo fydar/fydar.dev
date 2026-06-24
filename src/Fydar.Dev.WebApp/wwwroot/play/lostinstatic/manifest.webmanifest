@@ -28,5 +28,13 @@
     "scope": "/play/lostinstatic",
     "launch_handler": {
         "client_mode": "navigate-existing"
-    }
+    },
+    "screenshots": [
+        {
+            "src": "media/landscape.webp",
+            "sizes": "1280x720",
+            "form_factor": "wide",
+            "label": "Desktop gameplay"
+        }
+    ]
 }

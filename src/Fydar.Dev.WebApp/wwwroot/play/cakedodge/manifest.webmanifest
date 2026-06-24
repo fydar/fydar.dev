@@ -20,7 +20,13 @@
     "icons": [
         {
             "src": "favicon.svg",
-            "sizes": "48x48 72x72 96x96 128x128 256x256 512x512 any",
+            "sizes": "16x16 24x24 32x32",
+            "type": "image/svg+xml",
+            "purpose": "any"
+        },
+        {
+            "src": "logo.svg",
+            "sizes": "72x72 96x96 128x128 256x256 512x512 any",
             "type": "image/svg+xml",
             "purpose": "any"
         }
@@ -28,5 +34,19 @@
     "scope": "/play/cakedodge",
     "launch_handler": {
         "client_mode": "navigate-existing"
-    }
+    },
+    "screenshots": [
+        {
+            "src": "media/landscape.webp",
+            "sizes": "1280x720",
+            "form_factor": "wide",
+            "label": "Desktop gameplay"
+        },
+        {
+            "src": "media/portrait.webp",
+            "sizes": "720x1280",
+            "form_factor": "narrow",
+            "label": "Mobile gameplay"
+        }
+    ]
 }
