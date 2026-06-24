@@ -194,6 +194,8 @@ public class Program
 		app.Use(async (context, next) =>
 		{
 			context.Response.Headers["Cross-Origin-Opener-Policy"] = "same-origin";
+			context.Response.Headers["Cross-Origin-Embedder-Policy"] = "require-corp";
+			context.Response.Headers["Cross-Origin-Resource-Policy"] = "cross-origin";
 			await next.Invoke();
 		});
 

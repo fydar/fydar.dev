@@ -632,7 +632,7 @@ header:has(+ main > article:first-child > div.fullscreen:first-child) {
 }
 
     ::deep div.fullscreen .parallax-frame {
-        mask: linear-gradient(to top, #00000000 0px, #80808080 70px, #ffffff 144px, #ffffff);
+        mask: linear-gradient(to top, #00000000 -20px, #00000000 0px, #80808080 70px, #ffffff 144px, #ffffff);
         position: absolute;
         top: 0;
         left: 0;
