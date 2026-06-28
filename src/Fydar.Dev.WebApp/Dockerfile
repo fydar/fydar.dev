@@ -21,13 +21,13 @@ FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:10.0-noble AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
-COPY --parents **/*.csproj ./
+COPY --link --parents **/*.csproj ./
 
 # Mount the NuGet cache to speed up restores
 RUN --mount=type=cache,id=nuget,target=/root/.nuget/packages \
     dotnet restore "./Fydar.Dev.WebApp/Fydar.Dev.WebApp.csproj"
 
-COPY . .
+COPY --link . .
 WORKDIR "/src/Fydar.Dev.WebApp"
 
 # Use the previously constructed NuGet cache to publish the build.
@@ -36,8 +36,8 @@ RUN --mount=type=cache,id=nuget,target=/root/.nuget/packages \
 
 FROM base AS final
 WORKDIR /app
-COPY --from=build /app/publish/precompressed ./precompressed
-COPY --from=build /app/publish/wwwroot/play ./wwwroot/play
-COPY --from=build /app/publish/wwwroot/media ./wwwroot/media
-COPY --exclude=wwwroot/precompressed/* --exclude=wwwroot/play/* --exclude=wwwroot/media/* --from=build /app/publish .
+COPY --link --from=build /app/publish/precompressed ./precompressed
+COPY --link --from=build /app/publish/wwwroot/play ./wwwroot/play
+COPY --link --from=build /app/publish/wwwroot/media ./wwwroot/media
+COPY --link --exclude=wwwroot/precompressed/* --exclude=wwwroot/play/* --exclude=wwwroot/media/* --from=build /app/publish .
 ENTRYPOINT ["dotnet", "Fydar.Dev.WebApp.dll"]
