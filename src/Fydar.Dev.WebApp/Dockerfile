@@ -36,8 +36,7 @@ RUN --mount=type=cache,id=nuget,target=/root/.nuget/packages \
 
 FROM base AS final
 WORKDIR /app
-COPY --link --from=build /app/publish/precompressed ./precompressed
 COPY --link --from=build /app/publish/wwwroot/play ./wwwroot/play
 COPY --link --from=build /app/publish/wwwroot/media ./wwwroot/media
-COPY --link --exclude=wwwroot/precompressed/* --exclude=wwwroot/play/* --exclude=wwwroot/media/* --from=build /app/publish .
+COPY --link --exclude=wwwroot/play/* --exclude=wwwroot/media/* --from=build /app/publish .
 ENTRYPOINT ["dotnet", "Fydar.Dev.WebApp.dll"]

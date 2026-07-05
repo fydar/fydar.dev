@@ -15,6 +15,26 @@
     <InvariantGlobalization>true</InvariantGlobalization>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <BrotliCompressionLevel>11</BrotliCompressionLevel>
+    <CompressionExcludePatterns>**/play/**/build/*.br</CompressionExcludePatterns>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot/play/**/build/*.wasm.br">
+      <ContentType>application/wasm</ContentType>
+    </Content>
+    <Content Update="wwwroot/play/**/build/*.framework.js.br">
+      <ContentType>text/javascript</ContentType>
+    </Content>
+    <Content Update="wwwroot/play/**/build/*.data.br">
+      <ContentType>application/octet-stream</ContentType>
+    </Content>
+    <Content Update="wwwroot/play/**/build/*.symbols.json.br">
+      <ContentType>application/json</ContentType>
+    </Content>
+  </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\Fydar.AspNetCore.CSP\Fydar.AspNetCore.CSP.csproj" />
     <ProjectReference Include="..\Fydar.AspNetCore.OpenGraph\Fydar.AspNetCore.OpenGraph.csproj" />
@@ -35,12 +55,6 @@
     <PackageReference Include="Serilog.Sinks.Async" Version="2.1.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="6.1.1" />
     <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <Content Include="precompressed\**">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   
 </Project>

@@ -1,52 +1,25 @@
-using Microsoft.AspNetCore.StaticFiles;
-using Microsoft.Extensions.FileProviders;
-
 namespace Fydar.Dev.WebApp.Internal.UnityFiles;
 
 internal static class WebApplicationExtensions
 {
-	public static void UseStaticUnityFiles(this WebApplication app)
+	internal static WebApplication UseStaticUnityFiles(this WebApplication app)
 	{
-		var provider = new FileExtensionContentTypeProvider();
-		provider.Mappings.Remove(".br");
-		provider.Mappings.Clear();
-		provider.Mappings[".js"] = "application/javascript";
-		provider.Mappings[".br"] = "application/octet-stream";
-		provider.Mappings[".data"] = "application/octet-stream";
-		provider.Mappings[".bank"] = "application/octet-stream";
-
-		app.UseStaticFiles(new StaticFileOptions
+		app.Use(async (context, next) =>
 		{
-			FileProvider = new PhysicalFileProvider(
-				Path.Combine(app.Environment.ContentRootPath, "precompressed")),
-			ContentTypeProvider = provider,
-			OnPrepareResponse = context =>
+			if (context.Request.Path.Value?.EndsWith(".br", StringComparison.OrdinalIgnoreCase) == true)
 			{
-				var headers = context.Context.Response.Headers;
-
-				if (context.File.Name.EndsWith(".br", StringComparison.OrdinalIgnoreCase))
+				context.Response.OnStarting(() =>
 				{
-					headers.ContentEncoding = "br";
-
-					if (context.File.Name.Contains(".wasm", StringComparison.OrdinalIgnoreCase))
+					if (context.Response.StatusCode == StatusCodes.Status200OK)
 					{
-						headers.ContentType = "application/wasm";
+						context.Response.Headers.ContentEncoding = "br";
 					}
-					else if (context.File.Name.Contains(".js", StringComparison.OrdinalIgnoreCase))
-					{
-						headers.ContentType = "application/javascript";
-					}
-					else if (context.File.Name.Contains(".data", StringComparison.OrdinalIgnoreCase))
-					{
-						headers.ContentType = "application/octet-stream";
-					}
-				}
-
-				if (context.File.Name.EndsWith(".data", StringComparison.OrdinalIgnoreCase))
-				{
-					headers.ContentType = "application/octet-stream";
-				}
+					return Task.CompletedTask;
+				});
 			}
+			await next(context);
 		});
+
+		return app;
 	}
 }
