@@ -1,14 +1,14 @@
 const CACHE_PREFIX = "fydar-astralelites-";
-const CACHE_NAME = CACHE_PREFIX + "v0.1.2.11";
+const CACHE_NAME = CACHE_PREFIX + "v0.1.2.12";
 const MAIN_PAGE = "/play/astralelites";
 const ASSETS = [
     MAIN_PAGE,
     "/play/astralelites/favicon.svg",
     "/play/astralelites/manifest.webmanifest",
-    "/play/astralelites/build/0.1.2.11.loader.js",
-    "/play/astralelites/build/0.1.2.11.framework.js.br",
-    "/play/astralelites/build/0.1.2.11.wasm.br",
-    "/play/astralelites/build/0.1.2.11.data.br",
+    "/play/astralelites/build/0.1.2.12.loader.js",
+    "/play/astralelites/build/0.1.2.12.framework.js.br",
+    "/play/astralelites/build/0.1.2.12.wasm.br",
+    "/play/astralelites/build/0.1.2.12.data.br",
     "/play/astralelites/StreamingAssets/AssetBundles/music.data",
     "/play/astralelites/StreamingAssets/AssetBundles/music.data.manifest",
     "/play/astralelites/StreamingAssets/AssetBundles/sfx.data",
