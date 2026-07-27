@@ -1,7 +1,7 @@
 {
     "name": "Endless Platform",
     "short_name": "Endless Platform",
-    "version": "0.1.0",
+    "version": "1.1.0",
     "description": "A fully procedurally generated spline-based terrain for a 2D platformer.",
     "categories": [
         "games"

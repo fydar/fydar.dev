@@ -1,4 +1,4 @@
-﻿@layout GameLayout
+@layout GameLayout
 @page "/play/endlessplatform"
 
 @{
@@ -25,31 +25,16 @@
 	<BreadcrumbListComponent Model="@breadcrumbs" />
 	<meta name="theme-color" content="#161618">
 	<link rel="shortcut icon" href="@Assets["/play/endlessplatform/favicon.ico"]">
-	<link rel="preload" href="@Assets["/play/endlessplatform/build/endlessplatform.loader.js"]" as="script" fetchpriority="high" />
+    <link rel="preload" href="@Assets["/play/endlessplatform/build/1.1.0.loader.js"]" as="script" fetchpriority="high" />
 </HeadFragment>
 
-@{
-    var embedUnityConfig = new EmbedUnityConfig()
-    {
-        ProductName = "Endless Platform",
-        ProductVersion = new Version(0, 1, 0),
-        CompanyName = "Fydar",
-        LoaderUrl = Assets["/play/endlessplatform/build/endlessplatform.loader.js"],
-        FrameworkUrl = Assets["/play/endlessplatform/build/endlessplatform.framework.js.br"],
-        CodeUrl = Assets["/play/endlessplatform/build/endlessplatform.wasm.br"],
-        DataUrl = Assets["/play/endlessplatform/build/endlessplatform.data.br"],
-        StreamingAssetsUrl = "/play/endlessplatform/StreamingAssets",
-        Arguments = [],
-    };
-}
-
-<EmbedUnity Config="embedUnityConfig">
-    <Placeholder>
-        <img decoding="async" src="@Assets["play/endlessplatform/favicon.ico"]" alt="The logo for 'Endless Platform'." class="embed--placeholdermainappicon" />
-    </Placeholder>
-</EmbedUnity>
+<EmbedUnity__EndlessPlatform Pattern="@Pattern" />
 
 <PwaInstall AppId="endlessplatform"
             Scope="/play/endlessplatform"
             ServiceWorkerUrl="@Assets["play/endlessplatform.serviceworker.js"]"
             ManifestUrl="@Assets["/play/endlessplatform/manifest.webmanifest"]" />
+
+@code {
+    [Parameter][SupplyParameterFromQuery(Name = "pattern")] public string? Pattern { get; set; }
+}

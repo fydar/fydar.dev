@@ -1,11 +1,11 @@
-const CACHE_NAME = "fydar-endlessplatform-v0.1.0";
+const CACHE_NAME = "fydar-endlessplatform-v1.1.0";
 const MAIN_PAGE = "/play/endlessplatform";
 const ASSETS = [
     MAIN_PAGE,
     "/play/endlessplatform/favicon.svg",
     "/play/endlessplatform/manifest.webmanifest",
-    "/play/endlessplatform/build/endlessplatform.loader.js",
-    "/play/endlessplatform/build/endlessplatform.framework.js.br",
+    "/play/endlessplatform/build/1.1.0.loader.js",
+    "/play/endlessplatform/build/1.1.0.framework.js.br",
 ];
 
 self.addEventListener('install', (e) => {
