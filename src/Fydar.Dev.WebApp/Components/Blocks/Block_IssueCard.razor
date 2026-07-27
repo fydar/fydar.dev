@@ -1,0 +1,119 @@
+@inject NavigationManager Navigation
+
+@{
+    var cssClass = $"issue-card issue-card-state-{IssueCardStateHelper.ToClass(State)}{(IsEpic ? " issue-card-epic" : "")}{(Href != null ? " issue-card-link" : "")}";
+    var styleAttr = IsEpic && AccentHue != null ? $"--epic-hue: {AccentHue};" : null;
+}
+
+@if (Href != null)
+{
+    <a id="@Id" href="@(new Uri(Navigation.Uri).AbsolutePath)#@Href" class="@cssClass" style="@styleAttr">
+        @CardBody
+    </a>
+}
+else
+{
+    <div id="@Id" class="@cssClass" style="@styleAttr">
+        @CardBody
+    </div>
+}
+
+@if (ChildCards != null)
+{
+    <div class="issue-card-children">
+        @ChildCards
+    </div>
+}
+
+@code {
+    [Parameter, EditorRequired]
+    public int Number { get; set; }
+
+    [Parameter, EditorRequired]
+    public string Title { get; set; } = string.Empty;
+
+    [Parameter]
+    public IssueCardState State { get; set; } = IssueCardState.Open;
+
+    [Parameter]
+    public bool IsEpic { get; set; }
+
+    [Parameter]
+    public int? AccentHue { get; set; }
+
+    [Parameter]
+    public string? Description { get; set; }
+
+    [Parameter]
+    public string? EpicName { get; set; }
+
+    [Parameter]
+    public int? EpicNumber { get; set; }
+
+    [Parameter]
+    public int? EpicHue { get; set; }
+
+    /// <summary>
+    /// The DOM id to give this card, e.g. <c>"issue-1"</c>. Leave unset for a
+    /// card that isn't a link target — most cards have exactly one instance
+    /// on the page with an <see cref="Id"/>, which is where every link to it
+    /// should land.
+    /// </summary>
+    [Parameter]
+    public string? Id { get; set; }
+
+    /// <summary>
+    /// The id of the card this one should link to, e.g. <c>"issue-1"</c>
+    /// (without the leading <c>#</c>). When set, the whole card renders as a
+    /// clickable link to that id. A card can set both <see cref="Id"/> and
+    /// <see cref="Href"/> at once — including a link to its own id — to be
+    /// both a link target and clickable at the same time.
+    /// </summary>
+    [Parameter]
+    public string? Href { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildCards { get; set; }
+
+    private RenderFragment CardBody => @<text>
+        <span class="issue-card-state">
+            @switch (State)
+            {
+                case IssueCardState.Completed:
+                    <svg aria-hidden="true" focusable="false" viewBox="0 0 16 16" width="16" height="16" fill="currentColor">
+                        <path d="M11.28 6.78a.75.75 0 0 0-1.06-1.06L7.25 8.69 5.78 7.22a.75.75 0 0 0-1.06 1.06l2 2a.75.75 0 0 0 1.06 0l3.5-3.5Z"></path>
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0Zm-1.5 0a6.5 6.5 0 1 0-13 0 6.5 6.5 0 0 0 13 0Z"></path>
+                    </svg>
+                    break;
+                case IssueCardState.NotPlanned:
+                    <svg aria-hidden="true" focusable="false" viewBox="0 0 16 16" width="16" height="16" fill="currentColor">
+                        <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Zm9.78-2.22-5.5 5.5a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734l5.5-5.5a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042Z"></path>
+                    </svg>
+                    break;
+                default:
+                    <svg aria-hidden="true" focusable="false" viewBox="0 0 16 16" width="16" height="16" fill="currentColor">
+                        <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"></path>
+                        <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Z"></path>
+                    </svg>
+                    break;
+            }
+        </span>
+
+        <div class="issue-card-title">
+            @Title
+        </div>
+
+        <div class="issue-card-meta">
+            @if (EpicName != null && EpicNumber != null && Href == null)
+            {
+                <a href="@(new Uri(Navigation.Uri).AbsolutePath)#issue-@EpicNumber" class="issue-card-epicref" style="--epicref-hue: @EpicHue;">@EpicName</a>
+            }
+            <span class="issue-card-number">#@Number</span>
+        </div>
+
+        @if (Description != null)
+        {
+            <div class="issue-card-description">@Description</div>
+        }
+    </text>;
+}

@@ -777,6 +777,17 @@ header:has(+ main > article:first-child > div.fullscreen:first-child) {
             pointer-events: none;
         }
 
+    ::deep .parallax-frame .parallax-layer--fixed {
+        top: 0;
+        left: 0;
+        animation: none;
+    }
+        ::deep .parallax-frame .parallax-layer--fixed .embed--placeholder {
+            animation: parallax-slide linear;
+            animation-timeline: --parallax-timeline;
+            animation-range: cover;
+        }
+
     ::deep .parallax-frame video.parallax-layer {
         pointer-events: none;
         opacity: 1;

@@ -1,0 +1,65 @@
+<figure class="figure-code">
+    @if (FileName != null)
+    {
+        <div class="figure-code-header">
+            <span class="figure-code-filename">@FileName</span>
+            @if (Language != null)
+            {
+                <span class="figure-code-language">@Language</span>
+            }
+        </div>
+    }
+
+    <div class="figure-code-body">
+        @if (ShowLineNumbers && lineCount > 0)
+        {
+            <div class="figure-code-gutter" aria-hidden="true">@lineNumbers</div>
+        }
+        <pre><code>@((MarkupString)normalisedCode)</code></pre>
+    </div>
+
+    @if (Caption != null)
+    {
+        <figcaption>
+            @Caption
+        </figcaption>
+    }
+</figure>
+
+@code {
+    private string normalisedCode = string.Empty;
+    private string lineNumbers = string.Empty;
+    private int lineCount;
+
+    [Parameter, EditorRequired]
+    public string? Code { get; set; }
+
+    [Parameter]
+    public RenderFragment? Caption { get; set; }
+
+    [Parameter]
+    public string? FileName { get; set; }
+
+    [Parameter]
+    public string? Language { get; set; }
+
+    [Parameter]
+    public bool ShowLineNumbers { get; set; } = true;
+
+    [Parameter]
+    public int StartLine { get; set; } = 1;
+
+    protected override void OnParametersSet()
+    {
+        normalisedCode = (Code ?? string.Empty)
+            .Replace("\r\n", "\n")
+            .Replace('\r', '\n')
+            .Trim('\n');
+
+        lineCount = normalisedCode.Length == 0
+            ? 0
+            : normalisedCode.AsSpan().Count('\n') + 1;
+
+        lineNumbers = string.Join('\n', Enumerable.Range(Math.Max(1, StartLine), lineCount));
+    }
+}

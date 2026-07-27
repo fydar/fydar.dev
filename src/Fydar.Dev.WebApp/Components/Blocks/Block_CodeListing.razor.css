@@ -1,0 +1,157 @@
+/* Code listing */
+figure.figure-code {
+    margin: 1.5rem 0;
+    border-radius: 8px;
+    background: #1b1b1e;
+    border: 1px solid #ffffff14;
+    overflow: hidden;
+    width: 0;
+    min-width: 100%;
+}
+
+    figure.figure-code ::deep *::selection,
+    figure.figure-code::selection {
+        background-color: #ffcf9642;
+        color: white;
+    }
+
+    figure.figure-code .figure-code-header {
+        display: flex;
+        flex-direction: row;
+        align-items: baseline;
+        gap: 1rem;
+        padding: .55em 1rem;
+        background: #ffffff0a;
+        border-bottom: 1px solid #ffffff14;
+        font-size: 12.6px;
+    }
+
+    figure.figure-code .figure-code-filename {
+        font-family: Consolas, Monaco, 'Andale Mono', monospace;
+        color: #d6d6d6;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    figure.figure-code .figure-code-language {
+        margin-left: auto;
+        color: #8d8d8d;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-size: 11px;
+    }
+
+    figure.figure-code {
+        --code-font: Consolas, Monaco, 'Andale Mono', monospace;
+        --code-font-size: 13px;
+        --code-line-height: 1.6;
+        --code-padding-block: 1rem;
+    }
+
+    figure.figure-code .figure-code-body {
+        display: flex;
+        align-items: stretch;
+    }
+
+    figure.figure-code .figure-code-gutter {
+        flex: 0 0 auto;
+        padding: var(--code-padding-block) .7rem var(--code-padding-block) 1rem;
+        font-family: var(--code-font);
+        font-size: var(--code-font-size);
+        line-height: var(--code-line-height);
+        white-space: pre;
+        text-align: right;
+        color: #6f6f78;
+        background: #ffffff05;
+        border-right: 1px solid #ffffff10;
+        user-select: none;
+        -webkit-user-select: none;
+    }
+
+    figure.figure-code pre {
+        flex: 1 1 auto;
+        min-width: 0;
+        margin: 0;
+        padding: var(--code-padding-block) 1rem;
+        overflow-x: auto;
+        text-align: left;
+        -webkit-overflow-scrolling: touch;
+    }
+
+        figure.figure-code pre code {
+            display: block;
+            border: none;
+            background: none;
+            border-radius: 0;
+            padding: 0;
+            margin: 0;
+            font-family: var(--code-font);
+            font-size: var(--code-font-size);
+            line-height: var(--code-line-height);
+            color: #dcdcdc;
+            white-space: pre;
+            tab-size: 4;
+        }
+
+    figure.figure-code figcaption {
+        padding: .8em 1rem;
+        font-size: 12.6px;
+        background-color: #3d3d3d3b;
+        border-top: 1px solid #ffffff14;
+    }
+
+        figure.figure-code figcaption ::deep p {
+            text-align: left;
+            margin-block-start: 0;
+            margin-block-end: 0;
+        }
+
+
+
+
+
+    figure.figure-code pre code ::deep .blue-1 {
+        color: rgb(86, 156, 214);
+    }
+
+    /* keywords */
+    figure.figure-code pre code ::deep .green-1 {
+        color: rgb(87, 166, 74);
+    }
+
+    /* comments */
+    figure.figure-code pre code ::deep .peach-1 {
+        color: rgb(214, 157, 133);
+    }
+
+    /* strings */
+    figure.figure-code pre code ::deep .teal-1 {
+        color: rgb(78, 201, 176);
+    }
+
+    /* classes / types */
+    figure.figure-code pre code ::deep .yellow-1 {
+        color: rgb(220, 220, 170);
+    }
+
+    /* methods */
+    figure.figure-code pre code ::deep .cyan-1 {
+        color: rgb(156, 220, 254);
+    }
+
+    /* locals */
+    figure.figure-code pre code ::deep .purple-1 {
+        color: rgb(216, 160, 223);
+    }
+
+    /* control */
+    figure.figure-code pre code ::deep .green-2 {
+        color: rgb(181, 207, 168);
+    }
+
+    /* numeric */
+    figure.figure-code pre code ::deep .bold {
+        font-weight: bold;
+    }

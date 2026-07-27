@@ -2,43 +2,43 @@
 @page "/portfolio/endlessplatform"
 
 @{
-	var canonicalUrl = "https://fydar.dev/portfolio/endlessplatform";
-	void PageMetadata(IMetadataFactory factory)
-	{
-		factory.UseTitle("Endless Platform - Fydar");
-		factory.UseDescription("A fully procedurally generated spline-based terrain for a 2D platformer.");
-		factory.UseCanonicalUrl(canonicalUrl);
-		factory.UseImage(image =>
-		{
-			image.Url = "https://fydar.dev/media/endlessplatform/social.webp";
-			image.Alt = "Promotional material for the game 'Endless Platform'.";
-		});
-	}
-	var breadcrumbs = new BreadcrumbList()
-	{
-		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
-		new BreadcrumbListItem("Endless Platform", "https://fydar.dev/portfolio/endlessplatform"),
-	};
+    var canonicalUrl = "https://fydar.dev/portfolio/endlessplatform";
+    void PageMetadata(IMetadataFactory factory)
+    {
+        factory.UseTitle("Endless Platform - Fydar");
+        factory.UseDescription("A fully procedurally generated spline-based terrain for a 2D platformer.");
+        factory.UseCanonicalUrl(canonicalUrl);
+        factory.UseImage(image =>
+        {
+            image.Url = "https://fydar.dev/media/endlessplatform/social.webp";
+            image.Alt = "Promotional material for the game 'Endless Platform'.";
+        });
+    }
+    var breadcrumbs = new BreadcrumbList()
+    {
+        new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+        new BreadcrumbListItem("Endless Platform", "https://fydar.dev/portfolio/endlessplatform"),
+    };
 }
 
 <HeadFragment>
-	<MetadataComponent Metadata="@PageMetadata" />
-	<BreadcrumbListComponent Model="@breadcrumbs" />
+    <MetadataComponent Metadata="@PageMetadata" />
+    <BreadcrumbListComponent Model="@breadcrumbs" />
+    <link rel="preload" href="@Assets["/play/endlessplatform/build/1.1.0.loader.js"]" as="script" fetchpriority="high" />
 </HeadFragment>
 
 <article class="page-endlessplatform">
 
     <div class="fullscreen" data-nosnippet>
-        <div class="parallax-frame">
+        <div class="parallax-frame" data-unity-viewport>
             <div class="parallax-layer" style="--parallax-multiplier: 0.5;">
                 <div class="blur" data-thumbhash="0jcGC4I4h4eIhweXR4B0AQc=" style="background: radial-gradient(100% 100% at 50% 50%, #302e32 25%, #1f2136 100%);">
                 </div>
             </div>
 
-            <video class="parallax-layer" style="--parallax-multiplier: 0.5" autoplay muted loop playsinline>
-                <source src="@Assets["media/endlessplatform/background.h265.mp4"]" type='video/mp4; codecs="hvc1.1.6.L120.90"'>
-                <source src="@Assets["media/endlessplatform/background.h264.mp4"]" type='video/mp4; codecs="avc1.640028"'>
-            </video>
+            <div class="parallax-layer parallax-layer--fixed" style="--parallax-multiplier: 0.5">
+                <EmbedUnity__EndlessPlatform IsBackground="true" />
+            </div>
         </div>
 
         <div class="fullscreen-footer">
@@ -79,7 +79,6 @@
                 <ShareLink Url="@canonicalUrl" />
             </Sidebar>
             <Container>
-                <EmbedYouTube Url="REPLACE WITH YOUTUBE LINK" />
             </Container>
         </Block_ArticleIntroduction>
 
@@ -91,6 +90,348 @@
             </Sidebar>
             <Content>
 
+                <OutlineSection Id="planning" LinkName="Planning the Work">
+                    <Block_ArticleHeading>
+                        <hgroup>
+                            <p>Before writing any code</p>
+                            <h2>Planning the Work</h2>
+                        </hgroup>
+                    </Block_ArticleHeading>
+
+                    <p><cite>Endless Platform</cite> was built as a <b>technical code test</b>. The task: to recreate the endlessly generated, flat colour terrain of <cite>Alto's Odyssey</cite>, from scratch, in little over a day.</p>
+
+                    <p>Everything below &ndash; the planning, the experimentation, the trade-offs, and the one bet that went badly wrong &ndash; was decided inside that window and written down as it happened.</p>
+
+                    <p>Before touching Unity, I spent the first hour of the assignment turning every user-facing "story" into a ticket to plan the project and document my initial thoughts. I used <a href="https://github.com/features/issues" target="_blank">GitHub Issues<SvgSprite Link="/icons.svg?v=1#icon-external-link" class="external-link-icon" /></a> because it was free, immediate, and the "comments" feature gave me somewhere to write my reasoning down as I worked.</p>
+
+                    <p>I built a mood board, pulled the reference apart, and annotated it &ndash; I had to capture "make it look like <cite>Alto's Odyssey</cite>" as a list of concrete and discrete technical problems, and almost every annotation on it became a ticket.</p>
+
+                    <figure class="figure-image">
+                        <img decoding="async" loading="lazy" src="@Assets["media/endlessplatform/terrain-reference.webp"]" alt="An annotated mood board of Alto's Odyssey screenshots, marked up with the technical requirements each one implies." />
+                        <figcaption>The annotated mood board I built while defining the terrain requirements. Reference imagery from <cite><a href="https://altosodyssey.com/" target="_blank">Alto's Odyssey<SvgSprite Link="/icons.svg?v=1#icon-external-link" class="external-link-icon" /></a></cite> by <a href="https://altosadventure.com/team/" target="_blank">Team Alto<SvgSprite Link="/icons.svg?v=1#icon-external-link" class="external-link-icon" /></a>.</figcaption>
+                    </figure>
+
+                    <p>I identified that the art style of <cite>Alto's Odyssey</cite> meant that antialiasing was very important, but I qualified this with the understanding that antialiasing on mobile can be very expensive to do to a high quality &ndash; this is something that I would otherwise would have discovered halfway through implementation and could have remained unaddressed until I conducted a retrospective.</p>
+
+                    <p>When I was writing the tickets, I noted my initial thoughts on the background dunes &ndash; that they could be generated by <i>alternating between flat, high-strength spline nodes with strong tangents and elevated nodes with broken tangents pointing downwards</i>. That description translated into the surface generator implementation almost verbatim.</p>
+
+                    <p>Planning up front let me mark tickets as low-priority <b>before</b> I was under time pressure to make cuts. The ticket for orienting surface details perpendicular to the slope carried an explicit note that it <i>only provides minor aesthetic benefits&hellip; this feature may not be a deliverable</i>. When the deadline arrived, I already knew what to cut and didn't have to make that call in a panic.</p>
+
+                    <p>In all, completed list of tickets was relatively small. Three <b>epics</b> covered the main deliverables of the assignment &ndash; the <i>Terrain Generation</i>, the <i>Player Controller</i>, and the <i>Code Test Submission</i>. All of the tickets contained reference screenshots from <cite>Alto's Odyssey</cite> where appropriate. These epics were broken down as follows below.</p>
+
+                    <Block_IssueCard Number="1" Title="Terrain Generation" Description="Procedurally generated terrain." IsEpic="true" AccentHue="128" State="IssueCardState.Completed" Id="issue-1" Href="issue-1">
+                        <ChildCards>
+                            <Block_IssueCard Number="3" Title="Terrain surface pattern generation" Description="Generate a pattern in the terrain's surface, for dunes and cliffs the player can jump and slide on." State="IssueCardState.Completed" Href="issue-3" />
+                            <Block_IssueCard Number="4" Title="Terrain Landscape pattern generation" Description="Generate the large-scale shape of the terrain, summing multiple noise layers together." State="IssueCardState.Completed" Href="issue-4" />
+                            <Block_IssueCard Number="5" Title="Terrain stylisation and lighting" Description="Configure and generate the terrain's colour and lighting at runtime, per biome." State="IssueCardState.Completed" Href="issue-5" />
+                            <Block_IssueCard Number="6" Title="Day and night cycle" Description="Change terrain, structure, and atmosphere colour over a day-night cycle." State="IssueCardState.NotPlanned" Href="issue-6" />
+                            <Block_IssueCard Number="7" Title="Terrain structure generation" Description="Scatter obstructions, foliage, and decoration across the surface of the terrain." State="IssueCardState.NotPlanned" Href="issue-7" />
+                            <Block_IssueCard Number="8" Title="Terrain parallaxing" Description="Divide the terrain into layers that move independently, at different rates from the camera." State="IssueCardState.Completed" Href="issue-8" />
+                            <Block_IssueCard Number="9" Title="Terrain chunk generation" Description="Generate terrain in chunks ahead of the player, sliced at spline nodes to avoid seams." State="IssueCardState.Completed" Href="issue-9" />
+                            <Block_IssueCard Number="10" Title="Terrain chunk instantiation and pooling" Description="Pool terrain chunk objects around the camera instead of allocating and destroying them." State="IssueCardState.Completed" Href="issue-10" />
+                            <Block_IssueCard Number="14" Title="Terrain surface pattern forming" Description="Orient surface details relative to the slope beneath them, instead of always pointing up." State="IssueCardState.NotPlanned" Href="issue-14" />
+                            <Block_IssueCard Number="15" Title="Terrain anti-aliasing alternative" Description="Explore a cheaper alternative to full-scene anti-aliasing for the terrain silhouette." State="IssueCardState.Completed" Href="issue-15" />
+                            <Block_IssueCard Number="16" Title="Terrain holes" Description="Experiment with carving holes into the terrain mesh, since SpriteShape only emits solid polygons." State="IssueCardState.NotPlanned" Href="issue-16" />
+                        </ChildCards>
+                    </Block_IssueCard>
+
+                    <Block_IssueCard Number="2" Title="Player Controller" Description="A player controller." IsEpic="true" AccentHue="212" State="IssueCardState.Completed" Id="issue-2" Href="issue-2">
+                        <ChildCards>
+                            <Block_IssueCard Number="11" Title="Player instantiation on the terrain" Description="Place the player in a safe location on the terrain at the start of the game." State="IssueCardState.NotPlanned" Href="issue-11" />
+                            <Block_IssueCard Number="12" Title="Player passive locomotion on the terrain" Description="Move the player along the surface of the terrain using physics and collision." State="IssueCardState.Completed" Href="issue-12" />
+                            <Block_IssueCard Number="13" Title="Player camera and following behaviour" Description="A camera that follows the player around the scene." State="IssueCardState.Completed" Href="issue-13" />
+                        </ChildCards>
+                    </Block_IssueCard>
+
+                    <Block_IssueCard Number="17" Title="Code test submission" Description="The write-up and development log for the code test submission." IsEpic="true" AccentHue="262" State="IssueCardState.Completed" Id="issue-17" Href="issue-17" />
+
+                    <p>Every ticket was eventually closed with a comment explaining what was actually built, what was cut, and why. This write-up is assembled almost entirely from those comments &ndash; including some the parts that don't flatter me. I'm very glad I documented this assignment so well, as it's provided so many oppertunities for reflection since.</p>
+                </OutlineSection>
+
+                <OutlineSection Id="spline-terrain" LinkName="Spline-Based Terrain">
+                    <Block_ArticleHeading>
+                        <hgroup>
+                            <p>Generating the</p>
+                            <h2>Spline-Based Terrain</h2>
+                        </hgroup>
+                    </Block_ArticleHeading>
+
+                    
+                    <Block_IssueCard Number="1" Title="Terrain Generation" Description="Procedurally generated terrain." IsEpic="true" AccentHue="128" State="IssueCardState.Completed" Href="issue-1" />
+
+                    <p>The obvious approach to 2D terrain is a heightmap &ndash; sample noise along the X-axis and connect the points. I was concerned that the heightmap approach wouldn't be able to create sharp peaks that the dunes featured, so I chose to use <b>splines</b> instead &ndash; it turned out to be the single best decision in the project.</p>
+
+                    <p>The generator is split in two major components:</p>
+                        
+                    <ul>
+                        <li><b>Surface generation</b> then handles the local detail &ndash; the dunes and cliffs the player actually jumps off and slides down.</li>
+                        <li><b>Landscape generation</b> handles the large-scale shape of the world, summing many layers of noise together to produce the overall trend of the terrain.</li>
+                    </ul>
+
+                    <h3>Surface Generation</h3>
+
+                    <Block_IssueCard Number="3" Title="Terrain surface pattern generation" Description="Generate a pattern in the terrain's surface, for dunes and cliffs the player can jump and slide on." EpicName="Terrain Generation" EpicNumber="1" EpicHue="128" State="IssueCardState.Completed" Id="issue-3" />
+
+                    <p>The terrain is generated as a chain of spline nodes. The character of the terrain is controlled by random ranges which influence how those nodes place their tangents. The same generator can produce very different silhouettes depending on how it's configured:</p>
+
+                    <ul>
+                        <li>Using <b>flat tangents</b> at a consistent elevation produced lumpy, rolling hills.</li>
+                        <li>Using <b>low flat-tangent nodes</b> with <b>elevated broken-tangent nodes</b> produces dunes with sharp, sculpted peaks.</li>
+                        <li>Using <b>strong tangents pointing downwards</b> produce the smooth descending slopes the player builds speed on.</li>
+                        <li>Using <b>zero-length broken tangents</b> at alternating heights produced triangular mountains only suitable for backgrounds.</li>
+                    </ul>
+
+                    <figure class="figure-image">
+                        <img decoding="async" loading="lazy" src="@Assets["media/endlessplatform/terrain-splines-hills.webp"]" alt="Untextured greyscale terrain layers forming soft rolling hills." />
+                        <figcaption>Flat tangents across every node produce soft, rolling hills. Shown untextured so the silhouette is the only variable.</figcaption>
+                    </figure>
+
+                    <figure class="figure-image">
+                        <img decoding="async" loading="lazy" src="@Assets["media/endlessplatform/terrain-splines-dunes.webp"]" alt="Untextured greyscale terrain layers forming sharp, sculpted dune peaks." />
+                        <figcaption>The same generator, with elevated broken-tangent nodes alternating between the flat ones, producing sharp dune peaks.</figcaption>
+                    </figure>
+
+                    <h3>Landscape Generation</h3>
+
+                    <Block_IssueCard Number="4" Title="Terrain Landscape pattern generation" Description="Generate the large-scale shape of the terrain, summing multiple noise layers together." EpicName="Terrain Generation" EpicNumber="1" EpicHue="128" State="IssueCardState.Completed" Id="issue-4" />
+
+                    <p>Landscapes needed to be able to create long, clean descending slopes for the foreground playable layer, while background layers should remain mostly flat.</p>
+
+                    <p>Both the foreground layer and the background layers are configured through <code>ScriptableObject</code>s. Using data-driven assets allows new landscapes could be authored in the inspector without recompiling. A landscape is formed from a stack of layers summed together, and the whole evaluation is four lines:</p>
+
+                    @{
+                        const string codeLandscapeSample = """
+                            <span class="blue-1">public</span> <span class="blue-1">float</span> <span class="yellow-1">Sample</span>(<span class="blue-1">float</span> <span class="cyan-1">time</span>)
+                            {
+                                <span class="blue-1">float</span> <span class="cyan-1">value</span> = <span class="green-2">0.0f</span>;
+                                <span class="purple-1">foreach</span> (<span class="blue-1">var</span> <span class="cyan-1">layer</span> <span class="purple-1">in</span> Layers)
+                                {
+                                    <span class="cyan-1">value</span> += <span class="cyan-1">layer</span>.<span class="yellow-1">Sample</span>(<span class="cyan-1">time</span>);
+                                }
+                                <span class="purple-1">return</span> <span class="cyan-1">value</span>;
+                            }
+                            """;
+                    }
+                    <Block_CodeListing FileName="TerrainLandscapePattern.cs" Language="C#" Code="@codeLandscapeSample" StartLine="10">
+                        <Caption>
+                            <p>Each layer is one of three types &ndash; <code>Uniform</code> returns a constant, <code>Perlin</code> samples noise at its own frequency, and <code>Descending</code> returns <code>time * -Scale</code> to tilt the whole world downhill.</p>
+                        </Caption>
+                    </Block_CodeListing>
+
+                    <p>We use the <code>Descending</code> type to enable our the downwards slope that our endless runner needs to keep the player gaining speed, and rather than special-casing a slope into the generator, we introduce a downhill bias as a layer we combine with the noise layers.</p>
+
+                    <figure class="figure-image">
+                        <img decoding="async" loading="lazy" src="@Assets["media/endlessplatform/landscape-descending.webp"]" alt="Generated terrain in the Unity scene view following a wave pattern with an overall descending trend." />
+                        <figcaption>Generated terrain following the summed noise pattern, with an overall descending trend for the player to build speed on.</figcaption>
+                    </figure>
+
+                    <h3>Previewing Noise Layers in the Editor</h3>
+
+                    <p>To enable me to tune the noise layers we use to create the lanescape, I dug out an old <code>PropertyDrawer</code> I'd written a few years earlier to graph spring curves in the inspector, and I adapted it into a drawer that plots the combined noise directly in the editor.</p>
+
+                    <figure class="figure-image" style="background: #2727273b;">
+                        <img decoding="async" loading="lazy" src="@Assets["media/endlessplatform/landscape-pattern-inspector.webp"]" alt="A Unity inspector showing a Terrain Landscape Pattern asset with three noise layers, each drawing a green preview graph of its curve." />
+                        <figcaption>The custom drawer. Each layer graphs its own contribution &ndash; here a descending trend, a low-frequency Perlin wave, and a high-frequency detail pass.</figcaption>
+                    </figure>
+                    
+                </OutlineSection>
+
+                <OutlineSection Id="antialiasing" LinkName="Faking Anti-Aliasing">
+                    <Block_ArticleHeading>
+                        <hgroup>
+                            <p>A cheaper approach to</p>
+                            <h2>Fake Anti-Aliasing</h2>
+                        </hgroup>
+                    </Block_ArticleHeading>
+
+                    <Block_IssueCard Number="15" Title="Terrain anti-aliasing alternative" Description="Explore a cheaper alternative to full-scene anti-aliasing for the terrain silhouette." EpicName="Terrain Generation" EpicNumber="1" EpicHue="128" State="IssueCardState.Completed" Id="issue-15" />
+
+                    <p>Studying the reference material, I identified that <b>anti-aliasing is critical to the art style</b>. The whole look depends on long, clean, curved silhouettes against flat colour, and any stair-stepping on the edges ruins it immediately.</p>
+
+                    <figure class="figure-image">
+                        <img decoding="async" loading="lazy" src="@Assets["media/endlessplatform/reference-aliasing.webp"]" alt="A close-up crop of Alto's Odyssey showing pronounced stair-stepping along a diagonal cable and the terrain silhouette." />
+                        <figcaption>A close-up of the reference material. Even at 100% scale the stair-stepping along the cable and the rooflines is hard to ignore. Reference imagery from <cite><a href="https://altosodyssey.com/" target="_blank">Alto's Odyssey<SvgSprite Link="/icons.svg?v=1#icon-external-link" class="external-link-icon" /></a></cite> by <a href="https://altosadventure.com/team/" target="_blank">Team Alto<SvgSprite Link="/icons.svg?v=1#icon-external-link" class="external-link-icon" /></a>.</figcaption>
+                    </figure>
+
+                    <p>The problem is that this is a mobile game, and full-scene anti-aliasing using an algorithm like MSAA to fix a handful of artefacting edges is often prohibitively expensive on mobile hardware.</p>
+
+                    <p>We could represent our whole terrain using signed-distance fields and evaluate those to perform antialiasing on our terrain shader, but again, doing this on every pixel &ndash; even those which we know will be within a solid block of terrain &ndash; can become quite expensive. So, instead of anti-aliasing the whole screen or even just the terrain, we can anti-aliased only the terrain <b>outline</b> by generating an outline mesh whose only job is to fade the hard edge out with a gradient.</p>
+
+                    <figure class="figure-image">
+                        <img decoding="async" loading="lazy" src="@Assets["media/endlessplatform/terrain-edge-gradient.webp"]" alt="A heavily zoomed close-up of a terrain peak, its edge softened into a smooth gradient rather than hard stair-stepped pixels." />
+                        <figcaption>The same kind of close-up on my terrain. The edge resolves into a gradient rather than a staircase, with no full-screen anti-aliasing pass involved.</figcaption>
+                    </figure>
+
+                    <p>We can encode into this outline mesh vertex data the "distance" from the terrain surface, and then our shader compute coverage using <b>screen-space derivatives</b> &ndash; <code>ddx</code> and <code>ddy</code> report how much any interpolated value changes between horizontally and vertically adjacent pixels, and <code>fwidth</code> sums their magnitudes.</p>
+
+                    @{
+                        const string codeDerivativeAa = """
+                            <span class="green-1">// d is 0 at the silhouette, 1 at the strip's inner edge.</span>
+                            <span class="blue-1">float</span> <span class="cyan-1">d</span> = <span class="cyan-1">input</span>.<span class="cyan-1">edgeDistance</span>;
+
+                            <span class="green-1">// fwidth(d) is abs(ddx(d)) + abs(ddy(d)): how much d</span>
+                            <span class="green-1">// changes across a single pixel. Dividing by it restates</span>
+                            <span class="green-1">// the distance in pixels instead of mesh units.</span>
+                            <span class="blue-1">float</span> <span class="cyan-1">coverage</span> = <span class="yellow-1">saturate</span>(<span class="cyan-1">d</span> / <span class="yellow-1">fwidth</span>(<span class="cyan-1">d</span>));
+
+                            <span class="blue-1">return</span> <span class="blue-1">float4</span>(<span class="cyan-1">colour</span>.<span class="cyan-1">rgb</span>, <span class="cyan-1">colour</span>.<span class="cyan-1">a</span> * <span class="cyan-1">coverage</span>);
+                            """;
+                    }
+                    <Block_CodeListing FileName="The version I didn't write" Language="HLSL" Code="@codeDerivativeAa">
+                        <Caption>
+                            <p>Illustrative implementation of the shader &ndash; the sort of thing I would add if I had more time.</p>
+                        </Caption>
+                    </Block_CodeListing>
+
+                    <p>For now, using the raw distance data produces a "soft effect" that will serve as a simpler substitute to an actual anti-aliased effect that will work fell enough for the code test submission, but it won't scale to various resolutions we may wish to support in the future.</p>
+                </OutlineSection>
+
+                <OutlineSection Id="spriteshape" LinkName="Betting on SpriteShape">
+                    <Block_ArticleHeading>
+                        <hgroup>
+                            <p>The decision that cost the most</p>
+                            <h2>Betting on SpriteShape</h2>
+                        </hgroup>
+                    </Block_ArticleHeading>
+
+                    <p>I had to decide how the splines became geometry. I'd written terrain meshers many times before and knew I could do it in an hour or two. Despite my confidence in the subject, I decided to defer the meshing to Unity's <code>SpriteShape</code> package.</p>
+
+                    <p>My reasoning was sound. With so little time, leaning on engine features rather than rebuilding them needlessly meant I'd inherit Unity's built-in optimisations and get a collision mesh generated for free, which I'd need for the player anyway.</p>
+
+                    <p>The handoff itself is straightforward. Each generated node becomes a spline point with both tangents set explicitly, and the first and last nodes get an extra point dropped fifty units below them so the open surface line closes into a solid polygon:</p>
+
+                    <p><b>It was the wrong call</b>, and I recorded exactly how it went wrong.</p>
+
+                    <Block_Callout Type="danger">
+                        <Icon><SvgSprite Link="/icons.svg?v=1#icon-seal-check-fill" Alt="Check" /></Icon>
+                        <ChildContent>
+                            <p><b>Runtime mesh mutation was broken</b></p>
+                            <p>From package version 3.0 onwards, changing a <code>SpriteShape</code>'s mesh at runtime simply didn't work. I had to downgrade the package from <b>7.0.3</b> all the way back to <b>3.0</b> to get procedural generation working at all.</p>
+                        </ChildContent>
+                    </Block_Callout>
+
+                    <Block_Callout Type="danger">
+                        <Icon><SvgSprite Link="/icons.svg?v=1#icon-seal-check-fill" Alt="Check" /></Icon>
+                        <ChildContent>
+                            <p><b>Rebuilds didn't fire from the pool</b></p>
+                            <p>Chunks pulled out of the object pool never triggered a mesh rebuild, so recycled terrain rendered with the previous chunk's shape. The fix is the last line of the render method, a call to <code>BakeMesh().Complete()</code> that reaches into the Job System and forces the bake to finish synchronously, every time a chunk is grabbed.</p>
+                        </ChildContent>
+                    </Block_Callout>
+
+                    <Block_Callout Type="danger">
+                        <Icon><SvgSprite Link="/icons.svg?v=1#icon-seal-check-fill" Alt="Check" /></Icon>
+                        <ChildContent>
+                            <p><b>Edge UVs can't stretch</b></p>
+                            <p>Unity only supports stretching UVs for the <b>fill</b> of a <code>SpriteShape</code>, not for its edges. The soft outline I needed for anti-aliasing therefore generated far more geometry than the effect warranted, and there was no way to reduce it without doing the meshing myself.</p>
+                        </ChildContent>
+                    </Block_Callout>
+
+                    <Block_Callout Type="danger">
+                        <Icon><SvgSprite Link="/icons.svg?v=1#icon-seal-check-fill" Alt="Check" /></Icon>
+                        <ChildContent>
+                            <p><b>Solid polygons only</b></p>
+                            <p><code>SpriteShape</code> can only emit solid polygons, so holes in the terrain had to be faked with a custom masking shader rather than expressed in the mesh.</p>
+                        </ChildContent>
+                    </Block_Callout>
+
+                    <figure class="figure-image">
+                        <img decoding="async" loading="lazy" src="@Assets["media/endlessplatform/spriteshape-edge-geometry.webp"]" alt="A Unity scene view wireframe of a terrain peak, showing a dense strip of narrow triangles running along the entire silhouette." />
+                        <figcaption>Poor geometry generated by edge UVs. The fill needs a handful of triangles, but the soft edge running along the silhouette needs hundreds, because its UVs can't be stretched.</figcaption>
+                    </figure>
+
+                    <p>The frustrating part is that the fix was always just around the corner. I noted at the time that writing the mesher myself would cost <i>perhaps 1&ndash;2 hours of development time</i> &ndash; but that having already sunk time into <code>SpriteShape</code>, this was <i>time I can't afford</i>. I ate the mesh complexity and moved on.</p>
+
+                    <p>The decision to use an engine feature was defensible when I made it, but the cost of reversing it grew faster than the cost of living with it. Knowing when a bet has gone bad is easy in hindsight. Next time, I'd generate the <code>Mesh</code> myself.</p>
+                </OutlineSection>
+
+                <OutlineSection Id="chunking" LinkName="Chunking and Pooling">
+                    <Block_ArticleHeading>
+                        <hgroup>
+                            <p>Streaming the world with</p>
+                            <h2>Chunking and Pooling</h2>
+                        </hgroup>
+                    </Block_ArticleHeading>
+
+                    <Block_IssueCard Number="9" Title="Terrain chunk generation" Description="Generate terrain in chunks ahead of the player, sliced at spline nodes to avoid seams." EpicName="Terrain Generation" EpicNumber="1" EpicHue="128" State="IssueCardState.Completed" Id="issue-9" />
+
+                    <p>An endless runner can't hold its world in memory, so instead the terrain is generated in chunks ahead of the player and recycled behind them. Two details mattered more than the streaming itself.</p>
+
+                    <h3>Chunking and Pooling</h3>
+
+                    <Block_IssueCard Number="10" Title="Terrain chunk instantiation and pooling" Description="Pool terrain chunk objects around the camera instead of allocating and destroying them." EpicName="Terrain Generation" EpicNumber="1" EpicHue="128" State="IssueCardState.Completed" Id="issue-10" />
+
+                    <p>Rather than cutting the world into fixed-width chunks, I implemented dynamic width chunks that would be deliminted by spline nodes. A chunk keeps adding nodes until it has covered a target width of at least 50 units and then stops at whatever node it happens to be on, so <b>chunks vary in width by design</b>. That keeps the splines calculations simple.</p>
+
+                    <p>The first implementation just instantiated and destroyed chunks. Once that was proven, I replaced it with an object pool adapted from a generic <code>UIPool</code> I reuse across many of my game jam games, rewritten into a <code>PrefabPool</code> for terrain objects. Chunks are now grabbed and returned around the camera position rather than allocated.</p>
+
+                    <figure class="figure-image">
+                        <video loading="lazy" autoplay muted loop playsinline controls>
+                            <source src="@Assets["media/endlessplatform/chunk-streaming.h265.mp4"]" type='video/mp4; codecs="hvc1.1.6.L120.90"'>
+                            <source src="@Assets["media/endlessplatform/chunk-streaming.h264.mp4"]" type='video/mp4; codecs="avc1.640028"'>
+                        </video>
+                        <figcaption>The scene view while the game runs. Chunks are generated ahead of the camera and returned to the pool once they fall behind it, so the world outside the frustum barely exists.</figcaption>
+                    </figure>
+                </OutlineSection>
+
+                <OutlineSection Id="terrain-holes" LinkName="Carving Terrain Holes">
+                    <Block_ArticleHeading>
+                        <hgroup>
+                            <p>Experimenting with</p>
+                            <h2>Carving Terrain Holes</h2>
+                        </hgroup>
+                    </Block_ArticleHeading>
+
+                    <Block_IssueCard Number="16" Title="Terrain holes" Description="Experiment with carving holes into the terrain mesh, since SpriteShape only emits solid polygons." EpicName="Terrain Generation" EpicNumber="1" EpicHue="128" State="IssueCardState.NotPlanned" Id="issue-16" />
+
+                    <p>Some of the most striking formations in the reference material are elevated arches with holes punched through them. <code>SpriteShape</code> can only generate solid polygons, so I ran a timeboxed experiment to see whether I could get holes into the terrain mesh anyway.</p>
+
+                    <p>Unity's Sprite Masking system turned out to be a good option for this &ndash; however there's no <code>SpriteMask</code> equivalent for the <code>SpriteShapeRenderer</code>. So I took Unity's built-in sprite shader and added a stencil block to it, shown below.</p>
+
+                    @{
+                        const string codeStencil = """
+                            <span class="teal-1">Pass</span>
+                            {
+                                <span class="green-1">/* Always write 1 into the stencil buffer. */</span>
+                                <span class="teal-1">Stencil</span> {
+                                    <span class="teal-1">Ref</span> <span class="green-2">1</span>
+                                    <span class="teal-1">Comp</span> always
+                                    <span class="teal-1">Pass</span> replace
+                                }
+
+                                <span class="teal-1">CGPROGRAM</span>
+                                    <span class="blue-1">#pragma</span> vertex SpriteVert
+                                    <span class="blue-1">#pragma</span> fragment SpriteFrag
+                                    <span class="green-1">/* ... */</span>
+                                <span class="teal-1">ENDCG</span>
+                            }
+                            """;
+                    }
+                    <Block_CodeListing FileName="CustomMaskWrite.shader" Language="ShaderLab" Code="@codeStencil" StartLine="32">
+                        <Caption>
+                            <p>The vertex and fragment programs are Unity's own, untouched. The shader does nothing but stamp a <code>1</code> into the stencil buffer wherever the cutout sprite covers, which the terrain layer above it then tests against.</p>
+                        </Caption>
+                    </Block_CodeListing>
+
+                    <p>I like this solution because of how quick and easy it was to implement. The cheapest, correct answer was to find the exact seam where Unity's pipeline was already doing almost the right thing, and add the six lines it was missing. The cutouts then became ordinary prefabs that could be placed along chunk boundaries, provided their order-in-layer values were configured correctly.</p>
+
+                    <figure class="figure-image">
+                        <img decoding="async" loading="lazy" src="@Assets["media/endlessplatform/terrain-holes-cutout.webp"]" alt="The Unity editor showing a teardrop-shaped cutout punched through a terrain layer, with the inspector listing a Sprites/CustomMaskWrite shader." />
+                        <figcaption>A cutout punched through a terrain layer. The inspector shows the custom <code>Sprites/CustomMaskWrite</code> shader doing the work that a <code>SpriteMask</code> would normally do.</figcaption>
+                    </figure>
+
+                    <p>It worked. I then cut it.</p>
+
+                    <Block_CutContent>
+                        <ChildContent>
+                            <p>Terrain holes were cut from the submission.</p>
+                            <p>Placing them convincingly depended on <b>structure generation</b> &ndash; scattering rocks, foliage and decoration across the surface &ndash; which didn't land before the deadline. Scattering holes randomly without that system produced formations that looked arbitrary rather than sculpted.</p>
+                            <p>Once the art style came together, the holes weren't adding enough to justify finishing the system that would have placed them properly.</p>
+                        </ChildContent>
+                    </Block_CutContent>
+
+                    <p>I would not persue this solution for a finished product due to the complexity of adding additional shaders and difficulties with antialiasing, but it was a fun and valuable experiment nonetheless.</p>
+                </OutlineSection>
+
                 <OutlineSection Id="biomes" LinkName="Unique Biomes">
                     <Block_ArticleHeading>
                         <hgroup>
@@ -99,12 +440,85 @@
                         </hgroup>
                     </Block_ArticleHeading>
 
+                    <Block_IssueCard Number="8" Title="Terrain parallaxing" Description="Divide the terrain into layers that move independently, at different rates from the camera." EpicName="Terrain Generation" EpicNumber="1" EpicHue="128" State="IssueCardState.Completed" Id="issue-8" />
+
+                    <p>With the generator working, the problem remains that these monotone shapes don't yet resemble biomes. To add a sense of depth, I split the terrain into a stack of <b>parallax layers</b> with each moving at a different rate relative to the camera:</p>
+
+                    <ul>
+                        <li><b>Background layers</b> are recessed and move slowly. They carry no collision at all.</li>
+                        <li>A <b>single gameplay layer</b> moves 1:1 with the camera and owns the collision the player interacts with.</li>
+                        <li><b>Foreground layers</b> move faster than the camera, selling enclosure &ndash; the feeling of being inside a cave or under a canopy.</li>
+                    </ul>
+
+                    <h3>Everything a biome is&hellip;</h3>
+
+                    <Block_IssueCard Number="5" Title="Terrain stylisation and lighting" Description="Configure and generate the terrain's colour and lighting at runtime, per biome." EpicName="Terrain Generation" EpicNumber="1" EpicHue="128" State="IssueCardState.Completed" Id="issue-5" />
+
+                    <p>A layer's entire identity, including how it plays, how it moves, and how it's coloured &ndash; is one serialisable class:</p>
+
+                    @{
+                        const string codeBiomeLayer = """
+                            [<span class="teal-1">Serializable</span>]
+                            <span class="blue-1">public</span> <span class="blue-1">class</span> <span class="teal-1">TerrainBiomeLayer</span>
+                            {
+                                [<span class="teal-1">Header</span>(<span class="peach-1">"Gameplay"</span>)]
+                                <span class="blue-1">public</span> <span class="blue-1">bool</span> IsCollidable = <span class="blue-1">false</span>;
+
+                                [<span class="teal-1">Header</span>(<span class="peach-1">"Parallaxing"</span>)]
+                                <span class="blue-1">public</span> <span class="blue-1">float</span> Offset = <span class="green-2">0.0f</span>;
+                                <span class="blue-1">public</span> <span class="blue-1">float</span> Scale = <span class="green-2">1.0f</span>;
+                                <span class="blue-1">public</span> <span class="teal-1">Vector2</span> MovementScale = <span class="blue-1">new</span>(<span class="green-2">1.0f</span>, <span class="green-2">1.0f</span>);
+
+                                [<span class="teal-1">Header</span>(<span class="peach-1">"Style"</span>)]
+                                <span class="blue-1">public</span> <span class="teal-1">Color</span> TerrainColour = <span class="teal-1">Color</span>.white;
+
+                                [<span class="teal-1">Space</span>]
+                                <span class="blue-1">public</span> <span class="teal-1">Color</span> FogColour = <span class="blue-1">new</span>(<span class="green-2">0.75f</span>, <span class="green-2">0.75f</span>, <span class="green-2">0.75f</span>, <span class="green-2">1.0f</span>);
+                                <span class="blue-1">public</span> <span class="blue-1">float</span> FogOffset = -<span class="green-2">0.01f</span>;
+                                <span class="blue-1">public</span> <span class="blue-1">float</span> FogDensity = <span class="green-2">0.1f</span>;
+
+                                [<span class="teal-1">Header</span>(<span class="peach-1">"Generation"</span>)]
+                                <span class="blue-1">public</span> <span class="teal-1">TerrainSurfacePattern</span> Surface;
+                                <span class="blue-1">public</span> <span class="teal-1">TerrainLandscapePattern</span> Landscape;
+                                <span class="blue-1">public</span> <span class="teal-1">TerrainStructurePattern</span><span class="blue-1">[]</span> Structures;
+                            }
+                            """;
+                    }
+                    <Block_CodeListing FileName="TerrainBiome.cs" Language="C#" Code="@codeBiomeLayer" StartLine="9">
+                        <Caption>
+                            <p>Six biomes exist as assets, each contains an array of four of these layers. Authoring a new biome never involved touching a script.</p>
+                        </Caption>
+                    </Block_CodeListing>
+
+                    <p><code>IsCollidable</code> is the whole of the "one layer owns collision" rule &ndash; the chunk renderer just assigns it straight to <code>polygonCollider.enabled</code>. The parallax itself is equally small, subtract one from the layer's movement scale, and translate the layer by the camera position times the negated result. A layer at <code>1.0</code> resolves to zero offset and simply sits in world space.</p>
+
+                    <h3>The structure system that never got built</h3>
+
+                    <p><b>Structure generation</b> &ndash; scattering obstructions, ground detail, foliage, collectables and decoration across the surface &ndash; was the biggest casualty of the deadline. Its absence also took terrain holes down with it, since the holes needed a placement system to look intentional.</p>
+
+                    <Block_IssueCard Number="7" Title="Terrain structure generation" Description="Scatter obstructions, foliage, and decoration across the surface of the terrain." EpicName="Terrain Generation" EpicNumber="1" EpicHue="128" State="IssueCardState.NotPlanned" Id="issue-7" />
+
+                    <h3>One gradient, every layer</h3>
+
+                    <p>Colour is applied through a Shader Graph gradient across the mesh rather than as a flat fill per layer. Because every background layer samples the <b>same</b> gradient, an entire scene resolves to a very small number of colours, while the layers still separate cleanly because their edges land at different points along it.</p>
+
+                    <figure class="figure-image">
+                        <img decoding="async" loading="lazy" src="@Assets["media/endlessplatform/terrain-gradient-layers.webp"]" alt="Stacked purple terrain layers, each fading from light at its base to dark at its crest, separating cleanly against one another." />
+                        <figcaption>Every layer samples the same gradient. The layers stay readable against each other because their edges land at different points along it, not because they use different colours.</figcaption>
+                    </figure>
+
+                    <p>Each biome then only needs to define its palette in a <code>ScriptableObject</code>, and the whole stack recolours coherently.</p>
+
+                    <h3>Atmosphere</h3>
+
+                    <p>The last pass was atmosphere, all of it cheap and easy additions. I added a slowly rotating starfield built from a particle system, a sun glow made from a radial gradient in Shader Graph, and a dust trail kicked up behind the player. I added a terrain shader that implemented a custom fog, which did more for the sense of distance than anything else I tried.</p>
+
                     <figure class="figure-image">
                         <video loading="lazy" autoplay muted loop playsinline controls>
                             <source src="@Assets["media/endlessplatform/dawn-1.h265.mp4"]" type='video/mp4; codecs="hvc1.1.6.L120.90"'>
                             <source src="@Assets["media/endlessplatform/dawn-1.h264.mp4"]" type='video/mp4; codecs="avc1.640028"'>
                         </video>
-                        <figcaption>Rolling desert dunes using the "dawn" colour palette.</figcaption>
+                        <figcaption>Rolling desert dunes using the "dawn" colour palette. <a href="/play/endlessplatform?pattern=2" target="_blank">Play the orange desert<SvgSprite Link="/icons.svg?v=1#icon-external-link" class="external-link-icon" /></a></figcaption>
                     </figure>
 
                     <figure class="figure-image">
@@ -112,7 +526,7 @@
                             <source src="@Assets["media/endlessplatform/dusk-1.h265.mp4"]" type='video/mp4; codecs="hvc1.1.6.L120.90"'>
                             <source src="@Assets["media/endlessplatform/dusk-1.h264.mp4"]" type='video/mp4; codecs="avc1.640028"'>
                         </video>
-                        <figcaption>Rolling desert dunes using the "dusk" colour palette.</figcaption>
+                        <figcaption>Rolling desert dunes using the "dusk" colour palette. <a href="/play/endlessplatform?pattern=0" target="_blank">Play the purple desert<SvgSprite Link="/icons.svg?v=1#icon-external-link" class="external-link-icon" /></a></figcaption>
                     </figure>
 
                     <figure class="figure-image">
@@ -120,9 +534,148 @@
                             <source src="@Assets["media/endlessplatform/forest-1.h265.mp4"]" type='video/mp4; codecs="hvc1.1.6.L120.90"'>
                             <source src="@Assets["media/endlessplatform/forest-1.h264.mp4"]" type='video/mp4; codecs="avc1.640028"'>
                         </video>
-                        <figcaption>Distant forested mountains and rolling hills.</figcaption>
+                        <figcaption>Distant forested mountains and rolling hills. <a href="/play/endlessplatform?pattern=1" target="_blank">Play the green mountains<SvgSprite Link="/icons.svg?v=1#icon-external-link" class="external-link-icon" /></a></figcaption>
                     </figure>
 
+                    <h3>Out-of-Scope Features</h3>
+
+                    <p>A <b>day/night cycle</b> and <b>surface pattern forming</b> were both flagged as stretch goals when I first planned this assessment. The second is the one I'd most like to have built, as surface details currently deform the landscape additively and therefore always point straight up, but dunes should form perpendicular to the slope they sit on while rocky spikes stay vertical regardless of the terrain beneath them. I think it could have made a tangible improvement to the terrain silhouette.</p>
+
+                    <Block_IssueCard Number="6" Title="Day and night cycle" Description="Change terrain, structure, and atmosphere colour over a day-night cycle." EpicName="Terrain Generation" EpicNumber="1" EpicHue="128" State="IssueCardState.NotPlanned" Id="issue-6" />
+
+                    <Block_IssueCard Number="14" Title="Terrain surface pattern forming" Description="Orient surface details relative to the slope beneath them, instead of always pointing up." EpicName="Terrain Generation" EpicNumber="1" EpicHue="128" State="IssueCardState.NotPlanned" Id="issue-14" />
+                </OutlineSection>
+
+                <OutlineSection Id="player-controller" LinkName="Player Controller">
+                    <Block_ArticleHeading>
+                        <hgroup>
+                            <p>Half an hour for the</p>
+                            <h2>Player Controller</h2>
+                        </hgroup>
+                    </Block_ArticleHeading>
+                    
+                    <Block_IssueCard Number="2" Title="Player Controller" Description="A player controller." IsEpic="true" AccentHue="212" State="IssueCardState.Completed" Href="issue-2" />
+
+                    <p>The entire player took <b>under thirty minutes</b>. Because <code>SpriteShape</code> was already generating a collision mesh for the terrain, physics became the cheapest possible route to locomotion &ndash; no need for spline evaluation and no need for raycasting againsts surfaces.</p>
+
+                    <h3>Dropping the player onto the terrain</h3>
+
+                    <p><b>Player instantiation</b> was specified as either raycasting into the collision mesh or evaluating the spline algorithmically to find a safe spawn point. In practice, dropping the player in above the terrain and letting gravity resolve it looked identical and cost nothing. The ticket had already anticipated this, noting I'd <i>use whichever proves easier</i>. Building the sophisticated version would have been effort spent on something no player would ever perceive.</p>
+
+                    <Block_IssueCard Number="11" Title="Player instantiation on the terrain" Description="Place the player in a safe location on the terrain at the start of the game." EpicName="Player Controller" EpicNumber="2" EpicHue="212" State="IssueCardState.NotPlanned" Id="issue-11" />
+
+                    <p>I add to the players rigidbody a passive forward motion with a constant force applied only while its velocity is below a target speed, which gives acceleration off-the-line and a natural terminal velocity without any explicit clamping. A custom physics material removes surface friction so the player carries momentum through dips instead of scrubbing speed on every slope.</p>
+
+                    <Block_IssueCard Number="12" Title="Player passive locomotion on the terrain" Description="Move the player along the surface of the terrain using physics and collision." EpicName="Player Controller" EpicNumber="2" EpicHue="212" State="IssueCardState.Completed" Id="issue-12" />
+
+                    <p>The camera is a Cinemachine rig following the player. That part took minutes. The bug it caused did not.</p>
+
+                    <Block_IssueCard Number="13" Title="Player camera and following behaviour" Description="A camera that follows the player around the scene." EpicName="Player Controller" EpicNumber="2" EpicHue="212" State="IssueCardState.Completed" Id="issue-13" />
+
+                    <h3>Thirty minutes lost to update order</h3>
+
+                    <p>The background jittered whenever the camera moved. The cause was the <code>Update</code> order of components in the scene. The parallax layers and the camera were resolving their positions in an order that changed between frames, so the layers were being placed against a camera position that was about to change.</p>
+
+                    <p>The quick fix was Unity's script execution order settings, but I chose not to use it. Instead I took ownership of the ordering explicitly in code and put Cinemachine into manual mode, tick it myself, and only then tell the parallax layers to place themselves.</p>
+
+                    @{
+                        const string codeParallaxManager = """
+                            [<span class="teal-1">RequireComponent</span>(<span class="blue-1">typeof</span>(<span class="teal-1">CinemachineBrain</span>))]
+                            <span class="blue-1">public</span> <span class="blue-1">class</span> <span class="teal-1">ParallaxManager</span> : <span class="teal-1">MonoBehaviour</span>
+                            {
+                                <span class="blue-1">public</span> <span class="blue-1">static</span> <span class="teal-1">Action</span> PostUpdateCallback;
+
+                                <span class="blue-1">private</span> <span class="teal-1">CinemachineBrain</span> brain;
+
+                                <span class="blue-1">private</span> <span class="blue-1">void</span> <span class="blue-1">Awake</span>()
+                                {
+                                    brain = <span class="yellow-1">GetComponent</span>&lt;<span class="teal-1">CinemachineBrain</span>&gt;();
+                                }
+
+                                <span class="blue-1">private</span> <span class="blue-1">void</span> <span class="blue-1">LateUpdate</span>()
+                                {
+                                    brain.<span class="yellow-1">ManualUpdate</span>();
+
+                                    PostUpdateCallback?.<span class="yellow-1">Invoke</span>();
+                                }
+                            }
+                            """;
+                    }
+                    <Block_CodeListing FileName="ParallaxManager.cs" Language="C#" Code="@codeParallaxManager" StartLine="7">
+                        <Caption>
+                            <p>The whole fix. Each layer subscribes to <code>PostUpdateCallback</code> in <code>OnEnable</code>, so "the camera has finished moving" becomes an explicit event rather than an assumption about frame order.</p>
+                        </Caption>
+                    </Block_CodeListing>
+
+                    <p>Twenty lines, and the ordering is now stated in code that sits right next to the thing it orders. The alternative would have been a value in a project settings window that the next person to open this repository would have no reason to look at, and no way to connect to a jittering background if they did.</p>
+
+                    <p>It cost me nearly thirty minutes of trying combinations before it was stable &ndash; the single most expensive bug in the project.</p>
+
+                </OutlineSection>
+
+                <OutlineSection Id="retrospective" LinkName="Retrospective">
+                    <Block_ArticleHeading>
+                        <hgroup>
+                            <p>Project</p>
+                            <h2>Retrospective</h2>
+                        </hgroup>
+                    </Block_ArticleHeading>
+
+                    <p>Everything on this page &ndash; the sixteen tickets, the trade-offs, and the cuts &ndash; was eventually folded into one closing epic.</p>
+
+                    <Block_IssueCard Number="17" Title="Code test submission" Description="The write-up and development log for the code test submission." IsEpic="true" AccentHue="262" State="IssueCardState.Completed" Href="issue-17" />
+
+                    <h3>What worked</h3>
+
+                    <Block_Callout>
+                        <Icon><SvgSprite Link="/icons.svg?v=1#icon-seal-check-fill" Alt="Check" /></Icon>
+                        <ChildContent>
+                            <p><b>Splines were the right primitive</b></p>
+                            <p>Pointed peaks, sloping dunes and rounded mountains all fell out of one system. Choosing a representation expressive enough to cover the whole design space meant I never had to special-case a terrain feature.</p>
+                        </ChildContent>
+                    </Block_Callout>
+
+                    <Block_Callout>
+                        <Icon><SvgSprite Link="/icons.svg?v=1#icon-seal-check-fill" Alt="Check" /></Icon>
+                        <ChildContent>
+                            <p><b>Shader Graph earns its place in 2D</b></p>
+                            <p>Gradients, the sun glow and especially the fog were all faster to build and iterate on in Shader Graph than in hand-written shaders, and they did most of the work of making the scenes feel deep.</p>
+                        </ChildContent>
+                    </Block_Callout>
+
+                    <Block_Callout>
+                        <Icon><SvgSprite Link="/icons.svg?v=1#icon-seal-check-fill" Alt="Check" /></Icon>
+                        <ChildContent>
+                            <p><b>Planning in tickets paid for itself</b></p>
+                            <p>Writing the board before the code meant the cuts were pre-negotiated, the implementation notes were already written, and the reasoning survived the project. It's the reason this page exists.</p>
+                        </ChildContent>
+                    </Block_Callout>
+
+                    <h3>What I'd do differently</h3>
+
+                    <Block_Callout Type="danger">
+                        <Icon><SvgSprite Link="/icons.svg?v=1#icon-seal-check-fill" Alt="Check" /></Icon>
+                        <ChildContent>
+                            <p><b>Generate the mesh myself</b></p>
+                            <p><code>SpriteShape</code> is not built to be manipulated at runtime, and the package got worse at it over time rather than better. Every workaround in this project traces back to that one decision. Writing a procedural <code>Mesh</code> would have cost an hour or two up front and saved considerably more.</p>
+                        </ChildContent>
+                    </Block_Callout>
+
+                    <Block_Callout Type="danger">
+                        <Icon><SvgSprite Link="/icons.svg?v=1#icon-seal-check-fill" Alt="Check" /></Icon>
+                        <ChildContent>
+                            <p><b>Invest earlier in data abstractions</b></p>
+                            <p>Surfaces and landscapes each became their own <code>ScriptableObject</code>, reusable across any biome that wanted them. Colour and fog didn't &ndash; they're loose fields sitting on the biome layer, so two biomes that share a palette have to restate it. Style deserved the same treatment as generation.</p>
+                        </ChildContent>
+                    </Block_Callout>
+
+                    <Block_Callout Type="danger">
+                        <Icon><SvgSprite Link="/icons.svg?v=1#icon-seal-check-fill" Alt="Check" /></Icon>
+                        <ChildContent>
+                            <p><b>Push the colours to the GPU once, not every frame</b></p>
+                            <p>Every chunk re-reads its renderer's material array and re-assigns all four shader properties in <code>Update</code>, every frame, for terrain whose colours only change when the biome does. On a mobile target that's the first thing I'd move to a <code>MaterialPropertyBlock</code> set once at render time.</p>
+                        </ChildContent>
+                    </Block_Callout>
                 </OutlineSection>
 
             </Content>

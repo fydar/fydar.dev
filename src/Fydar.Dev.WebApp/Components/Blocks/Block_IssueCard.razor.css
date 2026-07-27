@@ -1,0 +1,135 @@
+/* Issue card */
+.issue-card {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.425em 0.9em;
+    width: 0;
+    min-width: 100%;
+    margin: 1.25rem 0;
+    padding: 0.65em 1em;
+    border-radius: 6px;
+    background: #1c1c1f;
+    border: 1px solid #ffffff14;
+    scroll-margin-top: 5rem;
+}
+
+.issue-card.issue-card-epic {
+    --epic-hue: 3;
+    background: linear-gradient(hsl(var(--epic-hue) 85% 60% / 4%), hsl(var(--epic-hue) 85% 60% / 4%)), #1c1c1f;
+    border-color: hsl(var(--epic-hue) 85% 60% / 20%);
+}
+
+a.issue-card.issue-card-link {
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color .12s ease-in-out, border-color .12s ease-in-out;
+}
+
+a.issue-card.issue-card-link:hover,
+a.issue-card.issue-card-link:focus-visible {
+    background: #232326;
+    border-color: #ffffff33;
+}
+
+a.issue-card.issue-card-link.issue-card-epic:hover,
+a.issue-card.issue-card-link.issue-card-epic:focus-visible {
+    background: linear-gradient(hsl(var(--epic-hue) 85% 60% / 10%), hsl(var(--epic-hue) 85% 60% / 10%)), #232326;
+    border-color: hsl(var(--epic-hue) 85% 60% / 40%);
+}
+
+/* State icon */
+.issue-card .issue-card-state {
+    display: flex;
+    flex: none;
+}
+
+.issue-card.issue-card-state-open .issue-card-state svg {
+    color: #3fb950;
+}
+
+.issue-card.issue-card-state-completed .issue-card-state svg {
+    color: #a371f7;
+}
+
+.issue-card.issue-card-state-not-planned .issue-card-state svg {
+    color: #848d97;
+}
+
+/* Title */
+.issue-card .issue-card-title {
+    flex: 1 1 220px;
+    min-width: 0;
+    font-size: 13.8px;
+    font-weight: 600;
+    line-height: 1.35;
+    color: #e6e6e6;
+}
+
+/* Description */
+.issue-card .issue-card-description {
+    flex-basis: 100%;
+    margin-inline-start: calc(16px + 0.9em);
+    font-size: 13px;
+    line-height: 1.45;
+    color: #8b939c;
+}
+
+/* Meta cluster */
+.issue-card .issue-card-meta {
+    display: flex;
+    align-items: center;
+    flex: none;
+    flex-wrap: wrap;
+    gap: 0.5em;
+    margin-left: auto;
+    font-size: 11px;
+    color: #6f6f78;
+}
+
+.issue-card .issue-card-epicref {
+    --epicref-hue: 220;
+    padding: 0.05em 0.6em;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.6;
+    white-space: nowrap;
+    text-decoration: none;
+    color: hsl(var(--epicref-hue) 90% 75%);
+    background: hsl(var(--epicref-hue) 90% 60% / 10%);
+    border: 1px solid hsl(var(--epicref-hue) 90% 60% / 35%);
+    transition: background-color .12s ease-in-out, border-color .12s ease-in-out;
+}
+
+.issue-card .issue-card-epicref:hover,
+.issue-card .issue-card-epicref:focus-visible {
+    background: hsl(var(--epicref-hue) 90% 60% / 24%);
+    border-color: hsl(var(--epicref-hue) 90% 60% / 60%);
+}
+
+.issue-card .issue-card-number {
+    font-family: Consolas, Monaco, 'Andale Mono', monospace;
+}
+
+.issue-card .issue-card-date {
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+/* Indented block of full child ticket cards, shown as a preview beneath an epic */
+.issue-card-children {
+    box-sizing: border-box;
+    margin: -0.75rem 0 1.25rem calc(16px + 0.9em);
+    padding-left: 0.9em;
+    border-inline-start: 2px solid #ffffff14;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.issue-card-children ::deep .issue-card {
+    margin: 0;
+}
