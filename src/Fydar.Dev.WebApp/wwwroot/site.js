@@ -73,13 +73,14 @@ window.document.addEventListener("pointerenter",
 
 let sectionCache = [];
 let visibleMenus = [];
+let observedSections = new Map();
 const menus = document.querySelectorAll("menu.toc");
 const mq = window.matchMedia("(min-width: 992px)");
 
 // Throttle/Debounce helpers
 let scrollTick = false;
 let resizeTimeout;
-let isCacheBuilt = false;
+let rebuildTick = false;
 
 function clearHighlighting() {
     menus.forEach(menu => {
@@ -87,59 +88,89 @@ function clearHighlighting() {
     });
 }
 
-function BuildCache() {
-    if (window.scrollY === 0) return;
+function ScheduleRebuild() {
+    if (rebuildTick) return;
+    rebuildTick = true;
+    window.requestAnimationFrame(() => {
+        rebuildTick = false;
+        BuildCache();
+        NavHighlighter();
+    });
+}
 
+const sectionObserver = new ResizeObserver(ScheduleRebuild);
+
+function BuildCache() {
     sectionCache = [];
     visibleMenus = [];
     menus.forEach(menu => {
         if (menu.offsetParent !== null) visibleMenus.push(menu);
     });
 
-    if (visibleMenus.length === 0) return;
+    const nextObserved = new Map();
 
-    const links = visibleMenus[0].querySelectorAll("li > a");
-    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    if (visibleMenus.length !== 0) {
+        const links = visibleMenus[0].querySelectorAll("li > a");
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
+        const scrollPaddingTop = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
 
-    links.forEach(link => {
-        const id = link.hash ? link.hash.substring(1) : null;
-        const section = id ? document.getElementById(id) : null;
-        if (section) {
-            const rect = section.getBoundingClientRect();
-            const absoluteTop = rect.top + scrollTop;
-            sectionCache.push({
-                id: id,
-                top: absoluteTop,
-                bottom: rect.bottom + scrollTop,
-                center: absoluteTop + (rect.height / 2)
-            });
+        links.forEach(link => {
+            const id = link.hash ? link.hash.substring(1) : null;
+            const section = id ? document.getElementById(id) : null;
+            if (section) {
+                nextObserved.set(id, section);
+
+                const rect = section.getBoundingClientRect();
+                const scrollMarginTop = parseFloat(getComputedStyle(section).scrollMarginTop) || 0;
+
+                const anchorTop = rect.top + scrollTop - scrollPaddingTop - scrollMarginTop;
+
+                sectionCache.push({
+                    id: id,
+                    anchorTop: anchorTop
+                });
+            }
+        });
+    }
+
+    observedSections.forEach((section, id) => {
+        if (nextObserved.get(id) !== section) {
+            sectionObserver.unobserve(section);
         }
     });
-
-    isCacheBuilt = true;
+    nextObserved.forEach((section, id) => {
+        if (observedSections.get(id) !== section) {
+            sectionObserver.observe(section);
+        }
+    });
+    observedSections = nextObserved;
 }
 
 function NavHighlighter() {
     if (sectionCache.length === 0 || visibleMenus.length === 0) return;
 
+    const scrollingElement = document.scrollingElement || document.documentElement;
     const scrollY = window.scrollY;
-    const viewportHeight = window.innerHeight;
-    const viewportCenter = scrollY + (viewportHeight * 0.333);
+    const maxScrollY = scrollingElement.scrollHeight - window.innerHeight;
+    const atBottom = scrollY >= maxScrollY - 1;
 
     let closestId = null;
-    let minDistance = Infinity;
+    let closestAnchorTop = -Infinity;
+    let minAnchorTop = Infinity;
 
     sectionCache.forEach((data) => {
-        const distance = Math.abs(viewportCenter - data.center);
-        if (distance < minDistance) {
-            minDistance = distance;
+        if (data.anchorTop < minAnchorTop) {
+            minAnchorTop = data.anchorTop;
+        }
+
+        if ((atBottom || scrollY + 1 >= data.anchorTop) && data.anchorTop > closestAnchorTop) {
+            closestAnchorTop = data.anchorTop;
             closestId = data.id;
         }
     });
 
     // Out of bounds check
-    if (scrollY < (sectionCache[0].top - (viewportHeight * 0.333)) ||
-        (scrollY + viewportHeight) > (sectionCache[sectionCache.length - 1].bottom + (viewportHeight * 0.333))) {
+    if (!atBottom && scrollY + 1 < minAnchorTop) {
         closestId = null;
     }
 
@@ -158,12 +189,7 @@ const handleScroll = () => {
         window.requestAnimationFrame(() => {
             if (window.scrollY === 0) {
                 clearHighlighting();
-                isCacheBuilt = false; // Invalidate cache so it rebuilds on next scroll down
-                sectionCache = [];
             } else {
-                if (!isCacheBuilt) {
-                    BuildCache(); // Lazy execution on first scroll pixel
-                }
                 NavHighlighter();
             }
             scrollTick = false;
@@ -175,14 +201,8 @@ const handleScroll = () => {
 const handleResize = () => {
     clearTimeout(resizeTimeout);
     resizeTimeout = setTimeout(() => {
-        if (window.scrollY > 0) {
-            BuildCache();
-            NavHighlighter();
-        } else {
-            // Keep state clean if resized at the top of the page
-            isCacheBuilt = false;
-            sectionCache = [];
-        }
+        BuildCache();
+        NavHighlighter();
     }, 150);
 };
 
@@ -199,11 +219,8 @@ function updateState() {
         window.addEventListener("scroll", handleScroll, { passive: true });
         window.addEventListener("resize", handleResize, { passive: true });
 
-        // Handle scenario where page is refreshed while already scrolled down
-        if (window.scrollY > 0) {
-            BuildCache();
-            NavHighlighter();
-        }
+        BuildCache();
+        NavHighlighter();
     } else {
         clearTimeout(resizeTimeout);
 
@@ -211,11 +228,13 @@ function updateState() {
         window.removeEventListener("scroll", handleScroll);
         window.removeEventListener("resize", handleResize);
 
+        sectionObserver.disconnect();
+        observedSections = new Map();
+
         clearHighlighting();
 
         sectionCache = [];
         visibleMenus = [];
-        isCacheBuilt = false;
     }
 }
 
