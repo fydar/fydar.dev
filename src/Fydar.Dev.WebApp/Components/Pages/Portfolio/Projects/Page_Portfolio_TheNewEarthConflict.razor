@@ -2,28 +2,28 @@
 @page "/portfolio/thenewearthconflict"
 
 @{
-	var canonicalUrl = "https://fydar.dev/portfolio/thenewearthconflict";
-	void PageMetadata(IMetadataFactory factory)
-	{
-		factory.UseTitle("The New Earth Conflict - Fydar");
-		factory.UseDescription("A realtime space strategy game where the player takes the pilot seat of a battleship.");
-		factory.UseCanonicalUrl(canonicalUrl);
-		factory.UseImage(image =>
-		{
-			image.Url = "https://fydar.dev/media/thenewearthconflict/social.webp";
-			image.Alt = "Promotional material for the game 'The New Earth Conflict'.";
-		});
-	}
-	var breadcrumbs = new BreadcrumbList()
-	{
-		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
-		new BreadcrumbListItem("The New Earth Conflict", "https://fydar.dev/portfolio/thenewearthconflict"),
-	};
+    var canonicalUrl = "https://fydar.dev/portfolio/thenewearthconflict";
+    void PageMetadata(IMetadataFactory factory)
+    {
+        factory.UseTitle("The New Earth Conflict - Fydar");
+        factory.UseDescription("A realtime space strategy game where the player takes the pilot seat of a battleship.");
+        factory.UseCanonicalUrl(canonicalUrl);
+        factory.UseImage(image =>
+        {
+            image.Url = "https://fydar.dev/media/thenewearthconflict/social.webp";
+            image.Alt = "Promotional material for the game 'The New Earth Conflict'.";
+        });
+    }
+    var breadcrumbs = new BreadcrumbList()
+    {
+        new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+        new BreadcrumbListItem("The New Earth Conflict", "https://fydar.dev/portfolio/thenewearthconflict"),
+    };
 }
 
 <HeadFragment>
-	<MetadataComponent Metadata="@PageMetadata" />
-	<BreadcrumbListComponent Model="@breadcrumbs" />
+    <MetadataComponent Metadata="@PageMetadata" />
+    <BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadFragment>
 
 <article class="page-systems">

@@ -2,30 +2,30 @@
 @page "/play/lostblues"
 
 @{
-	void PageMetadata(IMetadataFactory factory)
-	{
-		factory.UseTitle("Play Lost Blues - Fydar");
-		factory.UseDescription("The clicker-style where you farm kelp and release fish.");
-		factory.UseCanonicalUrl("https://fydar.dev/play/lostblues");
-		factory.UseImage(image =>
-		{
-			image.Url = "https://fydar.dev/media/lostblues/social.webp";
-			image.Alt = "Promotional material for the game 'Lost Blues'.";
-		});
-	}
-	var breadcrumbs = new BreadcrumbList()
-	{
-		new BreadcrumbListItem("Play", "https://fydar.dev/play/"),
-		new BreadcrumbListItem("Lost Blues", "https://fydar.dev/play/lostblues"),
-	};
+    void PageMetadata(IMetadataFactory factory)
+    {
+        factory.UseTitle("Play Lost Blues - Fydar");
+        factory.UseDescription("The clicker-style where you farm kelp and release fish.");
+        factory.UseCanonicalUrl("https://fydar.dev/play/lostblues");
+        factory.UseImage(image =>
+        {
+            image.Url = "https://fydar.dev/media/lostblues/social.webp";
+            image.Alt = "Promotional material for the game 'Lost Blues'.";
+        });
+    }
+    var breadcrumbs = new BreadcrumbList()
+    {
+        new BreadcrumbListItem("Play", "https://fydar.dev/play/"),
+        new BreadcrumbListItem("Lost Blues", "https://fydar.dev/play/lostblues"),
+    };
 }
 
 <HeadFragment>
-	<MetadataComponent Metadata="@PageMetadata" />
-	<BreadcrumbListComponent Model="@breadcrumbs" />
-	<meta name="theme-color" content="#161618">
-	<link rel="shortcut icon" href="@Assets["/play/lostblues/favicon.ico"]">
-	<link rel="preload" href="@Assets["/play/lostblues/build/lostblues.loader.js"]" as="script" fetchpriority="high" />
+    <MetadataComponent Metadata="@PageMetadata" />
+    <BreadcrumbListComponent Model="@breadcrumbs" />
+    <meta name="theme-color" content="#161618">
+    <link rel="shortcut icon" href="@Assets["/play/lostblues/favicon.ico"]">
+    <link rel="preload" href="@Assets["/play/lostblues/build/lostblues.loader.js"]" as="script" fetchpriority="high" />
 </HeadFragment>
 
 @{

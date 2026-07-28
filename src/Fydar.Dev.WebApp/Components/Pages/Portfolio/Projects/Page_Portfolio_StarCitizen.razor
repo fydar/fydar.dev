@@ -2,28 +2,28 @@
 @page "/portfolio/starcitizen"
 
 @{
-	var canonicalUrl = "https://fydar.dev/portfolio/starcitizen";
-	void PageMetadata(IMetadataFactory factory)
-	{
-		factory.UseTitle("Star Citizen - Fydar");
-		factory.UseDescription("A next-generation AAA massively multiplayer online sandbox of life-size planets, moons, cities, space stations, asteroid belts, and more.");
-		factory.UseCanonicalUrl(canonicalUrl);
-		factory.UseImage(image =>
-		{
-			image.Url = "https://fydar.dev/media/starcitizen/social.webp";
-			image.Alt = "Promotional material for the game 'Star Citizen'.";
-		});
-	}
-	var breadcrumbs = new BreadcrumbList()
-	{
-		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
-		new BreadcrumbListItem("Star Citizen", "https://fydar.dev/portfolio/starcitizen"),
-	};
+    var canonicalUrl = "https://fydar.dev/portfolio/starcitizen";
+    void PageMetadata(IMetadataFactory factory)
+    {
+        factory.UseTitle("Star Citizen - Fydar");
+        factory.UseDescription("A next-generation AAA massively multiplayer online sandbox of life-size planets, moons, cities, space stations, asteroid belts, and more.");
+        factory.UseCanonicalUrl(canonicalUrl);
+        factory.UseImage(image =>
+        {
+            image.Url = "https://fydar.dev/media/starcitizen/social.webp";
+            image.Alt = "Promotional material for the game 'Star Citizen'.";
+        });
+    }
+    var breadcrumbs = new BreadcrumbList()
+    {
+        new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+        new BreadcrumbListItem("Star Citizen", "https://fydar.dev/portfolio/starcitizen"),
+    };
 }
 
 <HeadFragment>
-	<MetadataComponent Metadata="@PageMetadata" />
-	<BreadcrumbListComponent Model="@breadcrumbs" />
+    <MetadataComponent Metadata="@PageMetadata" />
+    <BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadFragment>
 
 <article class="page-starcitizen">

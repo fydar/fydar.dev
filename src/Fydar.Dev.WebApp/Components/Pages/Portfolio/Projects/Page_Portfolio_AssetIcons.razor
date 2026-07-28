@@ -2,28 +2,28 @@
 @page "/portfolio/asseticons"
 
 @{
-	var canonicalUrl = "https://fydar.dev/portfolio/asseticons";
-	void PageMetadata(IMetadataFactory factory)
-	{
-		factory.UseTitle("AssetIcons - Fydar");
-		factory.UseDescription("Assign your own unique icon to each of your ScriptableObjects.");
-		factory.UseCanonicalUrl(canonicalUrl);
-		factory.UseImage(image =>
-		{
-			image.Url = "https://fydar.dev/media/asseticons/social.webp";
-			image.Alt = "Promotional material for 'AssetIcons'.";
-		});
-	}
-	var breadcrumbs = new BreadcrumbList()
-	{
-		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
-		new BreadcrumbListItem("AssetIcons", "https://fydar.dev/portfolio/asseticons"),
-	};
+    var canonicalUrl = "https://fydar.dev/portfolio/asseticons";
+    void PageMetadata(IMetadataFactory factory)
+    {
+        factory.UseTitle("AssetIcons - Fydar");
+        factory.UseDescription("Assign your own unique icon to each of your ScriptableObjects.");
+        factory.UseCanonicalUrl(canonicalUrl);
+        factory.UseImage(image =>
+        {
+            image.Url = "https://fydar.dev/media/asseticons/social.webp";
+            image.Alt = "Promotional material for 'AssetIcons'.";
+        });
+    }
+    var breadcrumbs = new BreadcrumbList()
+    {
+        new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+        new BreadcrumbListItem("AssetIcons", "https://fydar.dev/portfolio/asseticons"),
+    };
 }
 
 <HeadFragment>
-	<MetadataComponent Metadata="@PageMetadata" />
-	<BreadcrumbListComponent Model="@breadcrumbs" />
+    <MetadataComponent Metadata="@PageMetadata" />
+    <BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadFragment>
 
 <article class="page-asseticons">

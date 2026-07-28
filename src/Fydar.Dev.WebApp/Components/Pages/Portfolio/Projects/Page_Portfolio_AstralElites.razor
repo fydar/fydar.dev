@@ -2,29 +2,29 @@
 @page "/portfolio/astralelites"
 
 @{
-	var canonicalUrl = "https://fydar.dev/portfolio/astralelites";
-	void PageMetadata(IMetadataFactory factory)
-	{
-		factory.UseTitle("Astral Elites - Fydar");
-		factory.UseDescription("The physics-based and fast-paced asteroids clone for the modern era.");
-		factory.UseCanonicalUrl(canonicalUrl);
-		factory.UseImage(image =>
-		{
-			image.Url = "https://fydar.dev/media/astralelites/social.webp";
-			image.Alt = "Promotional material for the game 'Astral Elites'.";
-		});
-	}
-	var breadcrumbs = new BreadcrumbList()
-	{
-		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
-		new BreadcrumbListItem("Astral Elites", "https://fydar.dev/portfolio/astralelites"),
-	};
+    var canonicalUrl = "https://fydar.dev/portfolio/astralelites";
+    void PageMetadata(IMetadataFactory factory)
+    {
+        factory.UseTitle("Astral Elites - Fydar");
+        factory.UseDescription("The physics-based and fast-paced asteroids clone for the modern era.");
+        factory.UseCanonicalUrl(canonicalUrl);
+        factory.UseImage(image =>
+        {
+            image.Url = "https://fydar.dev/media/astralelites/social.webp";
+            image.Alt = "Promotional material for the game 'Astral Elites'.";
+        });
+    }
+    var breadcrumbs = new BreadcrumbList()
+    {
+        new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+        new BreadcrumbListItem("Astral Elites", "https://fydar.dev/portfolio/astralelites"),
+    };
 }
 
 <HeadFragment>
-	<MetadataComponent Metadata="@PageMetadata" />
-	<BreadcrumbListComponent Model="@breadcrumbs" />
-	<link rel="preload" href="@Assets["/play/astralelites/build/0.1.2.12.loader.js"]" as="script" fetchpriority="high" />
+    <MetadataComponent Metadata="@PageMetadata" />
+    <BreadcrumbListComponent Model="@breadcrumbs" />
+    <link rel="preload" href="@Assets["/play/astralelites/build/0.1.2.12.loader.js"]" as="script" fetchpriority="high" />
 </HeadFragment>
 
 <article class="page-astralelites">

@@ -1,16 +1,16 @@
 <div class="layout-split layout-split--introduction">
-	<div class="layout-split__sidebar">
-		@Sidebar
-	</div>
-	<div class="layout-split__content">
-		@Container
-	</div>
+    <div class="layout-split__sidebar">
+        @Sidebar
+    </div>
+    <div class="layout-split__content">
+        @Container
+    </div>
 </div>
 
 @code {
-	[Parameter, EditorRequired]
-	public RenderFragment Sidebar { get; set; }
+    [Parameter, EditorRequired]
+    public RenderFragment Sidebar { get; set; }
 
-	[Parameter, EditorRequired]
-	public RenderFragment Container { get; set; }
+    [Parameter, EditorRequired]
+    public RenderFragment Container { get; set; }
 }

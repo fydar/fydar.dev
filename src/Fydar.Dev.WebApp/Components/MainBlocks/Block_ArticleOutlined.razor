@@ -1,18 +1,18 @@
 <div class="layout-split layout-split--outlined">
-	<OutlineScope>
+    <OutlineScope>
         <div class="layout-split__sidebar">
             @Sidebar
-		</div>
-		<div class="layout-split__content">
-			@Content
-		</div>
-	</OutlineScope>
+        </div>
+        <div class="layout-split__content">
+            @Content
+        </div>
+    </OutlineScope>
 </div>
 
 @code {
-	[Parameter]
-	public RenderFragment? Sidebar { get; set; }
+    [Parameter]
+    public RenderFragment? Sidebar { get; set; }
 
-	[Parameter, EditorRequired]
-	public RenderFragment? Content { get; set; }
+    [Parameter, EditorRequired]
+    public RenderFragment? Content { get; set; }
 }

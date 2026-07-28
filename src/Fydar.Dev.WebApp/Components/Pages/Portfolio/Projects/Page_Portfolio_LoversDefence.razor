@@ -2,28 +2,28 @@
 @page "/portfolio/loversdefence"
 
 @{
-	var canonicalUrl = "https://fydar.dev/portfolio/loversdefence";
-	void PageMetadata(IMetadataFactory factory)
-	{
-		factory.UseTitle("Lovers' Defence - Fydar");
-		factory.UseDescription("A narrative driven tower defence game.");
-		factory.UseCanonicalUrl(canonicalUrl);
-		factory.UseImage(image =>
-		{
-			image.Url = "https://fydar.dev/media/loversdefence/social.webp";
-			image.Alt = "Promotional material for the game 'Lovers' Defence'.";
-		});
-	}
-	var breadcrumbs = new BreadcrumbList()
-	{
-		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
-		new BreadcrumbListItem("Lovers' Defence", "https://fydar.dev/portfolio/loversdefence"),
-	};
+    var canonicalUrl = "https://fydar.dev/portfolio/loversdefence";
+    void PageMetadata(IMetadataFactory factory)
+    {
+        factory.UseTitle("Lovers' Defence - Fydar");
+        factory.UseDescription("A narrative driven tower defence game.");
+        factory.UseCanonicalUrl(canonicalUrl);
+        factory.UseImage(image =>
+        {
+            image.Url = "https://fydar.dev/media/loversdefence/social.webp";
+            image.Alt = "Promotional material for the game 'Lovers' Defence'.";
+        });
+    }
+    var breadcrumbs = new BreadcrumbList()
+    {
+        new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+        new BreadcrumbListItem("Lovers' Defence", "https://fydar.dev/portfolio/loversdefence"),
+    };
 }
 
 <HeadFragment>
-	<MetadataComponent Metadata="@PageMetadata" />
-	<BreadcrumbListComponent Model="@breadcrumbs" />
+    <MetadataComponent Metadata="@PageMetadata" />
+    <BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadFragment>
 
 <article class="page-loversdefence">

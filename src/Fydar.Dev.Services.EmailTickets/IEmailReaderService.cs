@@ -6,7 +6,7 @@ namespace Fydar.Dev.Services.EmailTickets;
 
 public interface IEmailReaderService
 {
-	public Task<MimeMessage> ReadEmailAsync(
-		string ticketId,
-		CancellationToken cancellationToken = default);
+    public Task<MimeMessage> ReadEmailAsync(
+        string ticketId,
+        CancellationToken cancellationToken = default);
 }

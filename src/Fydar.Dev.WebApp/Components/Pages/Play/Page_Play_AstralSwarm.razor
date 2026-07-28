@@ -2,30 +2,30 @@
 @page "/play/astralswarm"
 
 @{
-	void PageMetadata(IMetadataFactory factory)
-	{
-		factory.UseTitle("Play Astral Swarm - Fydar");
-		factory.UseDescription("Battle endless swarms of enemy space ships across the galaxy.");
-		factory.UseCanonicalUrl("https://fydar.dev/play/astralswarm");
-		factory.UseImage(image =>
-		{
-			image.Url = "https://fydar.dev/media/astralswarm/social.webp";
-			image.Alt = "Promotional material for the game 'Astral Swarm'.";
-		});
-	}
-	var breadcrumbs = new BreadcrumbList()
-	{
-		new BreadcrumbListItem("Play", "https://fydar.dev/play/"),
-		new BreadcrumbListItem("Astral Swarm", "https://fydar.dev/play/astralswarm"),
-	};
+    void PageMetadata(IMetadataFactory factory)
+    {
+        factory.UseTitle("Play Astral Swarm - Fydar");
+        factory.UseDescription("Battle endless swarms of enemy space ships across the galaxy.");
+        factory.UseCanonicalUrl("https://fydar.dev/play/astralswarm");
+        factory.UseImage(image =>
+        {
+            image.Url = "https://fydar.dev/media/astralswarm/social.webp";
+            image.Alt = "Promotional material for the game 'Astral Swarm'.";
+        });
+    }
+    var breadcrumbs = new BreadcrumbList()
+    {
+        new BreadcrumbListItem("Play", "https://fydar.dev/play/"),
+        new BreadcrumbListItem("Astral Swarm", "https://fydar.dev/play/astralswarm"),
+    };
 }
 
 <HeadFragment>
-	<MetadataComponent Metadata="@PageMetadata" />
-	<BreadcrumbListComponent Model="@breadcrumbs" />
-	<meta name="theme-color" content="#161618">
-	<link rel="shortcut icon" href="@Assets["/play/astralswarm/favicon.ico"]">
-	<link rel="preload" href="@Assets["/play/astralswarm/build/0.1.1.0.loader.js"]" as="script" fetchpriority="high" />
+    <MetadataComponent Metadata="@PageMetadata" />
+    <BreadcrumbListComponent Model="@breadcrumbs" />
+    <meta name="theme-color" content="#161618">
+    <link rel="shortcut icon" href="@Assets["/play/astralswarm/favicon.ico"]">
+    <link rel="preload" href="@Assets["/play/astralswarm/build/0.1.1.0.loader.js"]" as="script" fetchpriority="high" />
 </HeadFragment>
 
 @{

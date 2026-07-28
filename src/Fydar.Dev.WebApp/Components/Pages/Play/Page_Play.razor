@@ -2,26 +2,26 @@
 @page "/play"
 
 @{
-	void PageMetadata(IMetadataFactory factory)
-	{
-		factory.UseTitle("Play - Fydar");
-		factory.UseDescription("Explore my library of playable games and experiences.");
-		factory.UseCanonicalUrl("https://fydar.dev/play");
-		factory.UseImage(image =>
+    void PageMetadata(IMetadataFactory factory)
+    {
+        factory.UseTitle("Play - Fydar");
+        factory.UseDescription("Explore my library of playable games and experiences.");
+        factory.UseCanonicalUrl("https://fydar.dev/play");
+        factory.UseImage(image =>
         {
             image.Url = "https://fydar.dev/media/placeholdersocial.webp";
             image.Alt = "Fydar's signature.";
-		});
-	}
-	var breadcrumbs = new BreadcrumbList()
-	{
-		new BreadcrumbListItem("Play", "https://fydar.dev/play/"),
-	};
+        });
+    }
+    var breadcrumbs = new BreadcrumbList()
+    {
+        new BreadcrumbListItem("Play", "https://fydar.dev/play/"),
+    };
 }
 
 <HeadFragment>
-	<MetadataComponent Metadata="@PageMetadata" />
-	<BreadcrumbListComponent Model="@breadcrumbs" />
+    <MetadataComponent Metadata="@PageMetadata" />
+    <BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadFragment>
 
 <section class="container" style="max-width: 680px;place-self: center;">

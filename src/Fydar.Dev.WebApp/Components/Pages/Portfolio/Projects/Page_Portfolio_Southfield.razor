@@ -2,28 +2,28 @@
 @page "/portfolio/southfield"
 
 @{
-	var canonicalUrl = "https://fydar.dev/portfolio/southfield";
-	void PageMetadata(IMetadataFactory factory)
-	{
-		factory.UseTitle("Southfield - Fydar");
-		factory.UseDescription("Weird farming meets silly physics, combine crops with unpredictable effects, build your dream farmstead, and experiment with automation.");
-		factory.UseCanonicalUrl(canonicalUrl);
-		factory.UseImage(image =>
-		{
-			image.Url = "https://fydar.dev/media/southfield/social.webp";
-			image.Alt = "Promotional material for the game 'Southfield'.";
-		});
-	}
-	var breadcrumbs = new BreadcrumbList()
-	{
-		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
-		new BreadcrumbListItem("Southfield", "https://fydar.dev/portfolio/southfield"),
-	};
+    var canonicalUrl = "https://fydar.dev/portfolio/southfield";
+    void PageMetadata(IMetadataFactory factory)
+    {
+        factory.UseTitle("Southfield - Fydar");
+        factory.UseDescription("Weird farming meets silly physics, combine crops with unpredictable effects, build your dream farmstead, and experiment with automation.");
+        factory.UseCanonicalUrl(canonicalUrl);
+        factory.UseImage(image =>
+        {
+            image.Url = "https://fydar.dev/media/southfield/social.webp";
+            image.Alt = "Promotional material for the game 'Southfield'.";
+        });
+    }
+    var breadcrumbs = new BreadcrumbList()
+    {
+        new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+        new BreadcrumbListItem("Southfield", "https://fydar.dev/portfolio/southfield"),
+    };
 }
 
 <HeadFragment>
-	<MetadataComponent Metadata="@PageMetadata" />
-	<BreadcrumbListComponent Model="@breadcrumbs" />
+    <MetadataComponent Metadata="@PageMetadata" />
+    <BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadFragment>
 
 <article class="page-southfield">

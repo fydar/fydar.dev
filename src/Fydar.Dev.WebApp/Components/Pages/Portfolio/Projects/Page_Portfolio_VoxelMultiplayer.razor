@@ -2,28 +2,28 @@
 @page "/portfolio/voxelmultiplayer"
 
 @{
-	var canonicalUrl = "https://fydar.dev/portfolio/voxelmultiplayer";
-	void PageMetadata(IMetadataFactory factory)
-	{
-		factory.UseTitle("Voxel Multiplayer - Fydar");
-		factory.UseDescription("Fully bespoke voxel rendering system to create a 'Cube World' style game with a multiplayer component.");
-		factory.UseCanonicalUrl(canonicalUrl);
-		factory.UseImage(image =>
-		{
-			image.Url = "https://fydar.dev/media/voxelmultiplayer/social.webp";
-			image.Alt = "Promotional material for the game 'Voxel Multiplayer'.";
-		});
-	}
-	var breadcrumbs = new BreadcrumbList()
-	{
-		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
-		new BreadcrumbListItem("Voxel Multiplayer", "https://fydar.dev/portfolio/voxelmultiplayer"),
-	};
+    var canonicalUrl = "https://fydar.dev/portfolio/voxelmultiplayer";
+    void PageMetadata(IMetadataFactory factory)
+    {
+        factory.UseTitle("Voxel Multiplayer - Fydar");
+        factory.UseDescription("Fully bespoke voxel rendering system to create a 'Cube World' style game with a multiplayer component.");
+        factory.UseCanonicalUrl(canonicalUrl);
+        factory.UseImage(image =>
+        {
+            image.Url = "https://fydar.dev/media/voxelmultiplayer/social.webp";
+            image.Alt = "Promotional material for the game 'Voxel Multiplayer'.";
+        });
+    }
+    var breadcrumbs = new BreadcrumbList()
+    {
+        new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+        new BreadcrumbListItem("Voxel Multiplayer", "https://fydar.dev/portfolio/voxelmultiplayer"),
+    };
 }
 
 <HeadFragment>
-	<MetadataComponent Metadata="@PageMetadata" />
-	<BreadcrumbListComponent Model="@breadcrumbs" />
+    <MetadataComponent Metadata="@PageMetadata" />
+    <BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadFragment>
 
 <article class="page-systems">

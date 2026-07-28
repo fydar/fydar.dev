@@ -2,28 +2,28 @@
 @page "/portfolio/inventory"
 
 @{
-	var canonicalUrl = "https://fydar.dev/portfolio/inventory";
-	void PageMetadata(IMetadataFactory factory)
-	{
-		factory.UseTitle("Inventory - Fydar");
-		factory.UseDescription("A complete inventory system.");
-		factory.UseCanonicalUrl(canonicalUrl);
-		factory.UseImage(image =>
+    var canonicalUrl = "https://fydar.dev/portfolio/inventory";
+    void PageMetadata(IMetadataFactory factory)
+    {
+        factory.UseTitle("Inventory - Fydar");
+        factory.UseDescription("A complete inventory system.");
+        factory.UseCanonicalUrl(canonicalUrl);
+        factory.UseImage(image =>
         {
             image.Url = "https://fydar.dev/media/placeholdersocial.webp";
             image.Alt = "Fydar's signature.";
-		});
-	}
-	var breadcrumbs = new BreadcrumbList()
-	{
-		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
-		new BreadcrumbListItem("Inventory", "https://fydar.dev/portfolio/inventory"),
-	};
+        });
+    }
+    var breadcrumbs = new BreadcrumbList()
+    {
+        new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+        new BreadcrumbListItem("Inventory", "https://fydar.dev/portfolio/inventory"),
+    };
 }
 
 <HeadFragment>
-	<MetadataComponent Metadata="@PageMetadata" />
-	<BreadcrumbListComponent Model="@breadcrumbs" />
+    <MetadataComponent Metadata="@PageMetadata" />
+    <BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadFragment>
 
 <article class="page-inventory">

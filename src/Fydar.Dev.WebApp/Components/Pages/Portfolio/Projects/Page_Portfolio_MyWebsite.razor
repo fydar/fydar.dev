@@ -2,28 +2,28 @@
 @page "/portfolio/mywebsite"
 
 @{
-	var canonicalUrl = "https://fydar.dev/portfolio/mywebsite";
-	void PageMetadata(IMetadataFactory factory)
-	{
-		factory.UseTitle("My Website - Fydar");
-		factory.UseDescription("Find out how I created this website.");
-		factory.UseCanonicalUrl(canonicalUrl);
-		factory.UseImage(image =>
+    var canonicalUrl = "https://fydar.dev/portfolio/mywebsite";
+    void PageMetadata(IMetadataFactory factory)
+    {
+        factory.UseTitle("My Website - Fydar");
+        factory.UseDescription("Find out how I created this website.");
+        factory.UseCanonicalUrl(canonicalUrl);
+        factory.UseImage(image =>
         {
             image.Url = "https://fydar.dev/media/placeholdersocial.webp";
             image.Alt = "Fydar's signature.";
-		});
-	}
-	var breadcrumbs = new BreadcrumbList()
-	{
-		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
-		new BreadcrumbListItem("My Website", "https://fydar.dev/portfolio/mywebsite"),
-	};
+        });
+    }
+    var breadcrumbs = new BreadcrumbList()
+    {
+        new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+        new BreadcrumbListItem("My Website", "https://fydar.dev/portfolio/mywebsite"),
+    };
 }
 
 <HeadFragment>
-	<MetadataComponent Metadata="@PageMetadata" />
-	<BreadcrumbListComponent Model="@breadcrumbs" />
+    <MetadataComponent Metadata="@PageMetadata" />
+    <BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadFragment>
 
 <article class="page-mywebsite">

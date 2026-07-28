@@ -2,28 +2,28 @@
 @page "/portfolio/tools"
 
 @{
-	var canonicalUrl = "https://fydar.dev/portfolio/tools";
-	void PageMetadata(IMetadataFactory factory)
-	{
-		factory.UseTitle("Tools Engineering - Fydar");
-		factory.UseDescription("A collection of tools I've developed.");
-		factory.UseCanonicalUrl(canonicalUrl);
-		factory.UseImage(image =>
+    var canonicalUrl = "https://fydar.dev/portfolio/tools";
+    void PageMetadata(IMetadataFactory factory)
+    {
+        factory.UseTitle("Tools Engineering - Fydar");
+        factory.UseDescription("A collection of tools I've developed.");
+        factory.UseCanonicalUrl(canonicalUrl);
+        factory.UseImage(image =>
         {
             image.Url = "https://fydar.dev/media/placeholdersocial.webp";
             image.Alt = "Fydar's signature.";
-		});
-	}
-	var breadcrumbs = new BreadcrumbList()
-	{
-		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
-		new BreadcrumbListItem("Tools Engineering", "https://fydar.dev/portfolio/tools"),
-	};
+        });
+    }
+    var breadcrumbs = new BreadcrumbList()
+    {
+        new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+        new BreadcrumbListItem("Tools Engineering", "https://fydar.dev/portfolio/tools"),
+    };
 }
 
 <HeadFragment>
-	<MetadataComponent Metadata="@PageMetadata" />
-	<BreadcrumbListComponent Model="@breadcrumbs" />
+    <MetadataComponent Metadata="@PageMetadata" />
+    <BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadFragment>
 
 <article class="page-tools">

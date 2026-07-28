@@ -2,30 +2,30 @@
 @page "/play/loversdefence"
 
 @{
-	void PageMetadata(IMetadataFactory factory)
-	{
-		factory.UseTitle("Play Lovers' Defence - Fydar");
-		factory.UseDescription("A narrative driven tower defence game.");
-		factory.UseCanonicalUrl("https://fydar.dev/play/loversdefence");
-		factory.UseImage(image =>
-		{
-			image.Url = "https://fydar.dev/media/loversdefence/social.webp";
-			image.Alt = "Promotional material for the game 'Lovers Defence'.";
-		});
-	}
-	var breadcrumbs = new BreadcrumbList()
-	{
-		new BreadcrumbListItem("Play", "https://fydar.dev/play/"),
-		new BreadcrumbListItem("Lovers' Defence", "https://fydar.dev/play/loversdefence"),
-	};
+    void PageMetadata(IMetadataFactory factory)
+    {
+        factory.UseTitle("Play Lovers' Defence - Fydar");
+        factory.UseDescription("A narrative driven tower defence game.");
+        factory.UseCanonicalUrl("https://fydar.dev/play/loversdefence");
+        factory.UseImage(image =>
+        {
+            image.Url = "https://fydar.dev/media/loversdefence/social.webp";
+            image.Alt = "Promotional material for the game 'Lovers Defence'.";
+        });
+    }
+    var breadcrumbs = new BreadcrumbList()
+    {
+        new BreadcrumbListItem("Play", "https://fydar.dev/play/"),
+        new BreadcrumbListItem("Lovers' Defence", "https://fydar.dev/play/loversdefence"),
+    };
 }
 
 <HeadFragment>
-	<MetadataComponent Metadata="@PageMetadata" />
-	<BreadcrumbListComponent Model="@breadcrumbs" />
-	<meta name="theme-color" content="#161618">
-	<link rel="shortcut icon" href="@Assets["/play/loversdefence/favicon.ico"]">
-	<link rel="preload" href="@Assets["/play/loversdefence/build/loversdefence.loader.js"]" as="script" fetchpriority="high" />
+    <MetadataComponent Metadata="@PageMetadata" />
+    <BreadcrumbListComponent Model="@breadcrumbs" />
+    <meta name="theme-color" content="#161618">
+    <link rel="shortcut icon" href="@Assets["/play/loversdefence/favicon.ico"]">
+    <link rel="preload" href="@Assets["/play/loversdefence/build/loversdefence.loader.js"]" as="script" fetchpriority="high" />
 </HeadFragment>
 
 @{

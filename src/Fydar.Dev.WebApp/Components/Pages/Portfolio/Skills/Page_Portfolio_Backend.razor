@@ -2,27 +2,27 @@
 @page "/portfolio/backend"
 
 @{
-	void PageMetadata(IMetadataFactory factory)
-	{
-		factory.UseTitle("Backend Engineering - Fydar");
-		factory.UseDescription("A collection of backend I've developed.");
-		factory.UseCanonicalUrl("https://fydar.dev/portfolio/backend");
-		factory.UseImage(image =>
+    void PageMetadata(IMetadataFactory factory)
+    {
+        factory.UseTitle("Backend Engineering - Fydar");
+        factory.UseDescription("A collection of backend I've developed.");
+        factory.UseCanonicalUrl("https://fydar.dev/portfolio/backend");
+        factory.UseImage(image =>
         {
             image.Url = "https://fydar.dev/media/placeholdersocial.webp";
             image.Alt = "Fydar's signature.";
-		});
-	}
-	var breadcrumbs = new BreadcrumbList()
-	{
-		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
-		new BreadcrumbListItem("Backend Engineering", "https://fydar.dev/portfolio/backend"),
-	};
+        });
+    }
+    var breadcrumbs = new BreadcrumbList()
+    {
+        new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+        new BreadcrumbListItem("Backend Engineering", "https://fydar.dev/portfolio/backend"),
+    };
 }
 
 <HeadFragment>
-	<MetadataComponent Metadata="@PageMetadata" />
-	<BreadcrumbListComponent Model="@breadcrumbs" />
+    <MetadataComponent Metadata="@PageMetadata" />
+    <BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadFragment>
 
 <article class="page-backend">

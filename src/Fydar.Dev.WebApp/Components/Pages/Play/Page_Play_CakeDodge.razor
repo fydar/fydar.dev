@@ -2,30 +2,30 @@
 @page "/play/cakedodge"
 
 @{
-	void PageMetadata(IMetadataFactory factory)
-	{
-		factory.UseTitle("Play Cake Dodge - Fydar");
-		factory.UseDescription("Play as Cookie, a little monster who is unfortunately allergic to cake.");
-		factory.UseCanonicalUrl("https://fydar.dev/play/cakedodge");
-		factory.UseImage(image =>
-		{
-			image.Url = "https://fydar.dev/media/cakedodge/social.webp";
-			image.Alt = "Promotional material for the game 'Cake Dodge'.";
-		});
-	}
-	var breadcrumbs = new BreadcrumbList()
-	{
-		new BreadcrumbListItem("Play", "https://fydar.dev/play/"),
-		new BreadcrumbListItem("Cake Dodge", "https://fydar.dev/play/cakedodge"),
-	};
+    void PageMetadata(IMetadataFactory factory)
+    {
+        factory.UseTitle("Play Cake Dodge - Fydar");
+        factory.UseDescription("Play as Cookie, a little monster who is unfortunately allergic to cake.");
+        factory.UseCanonicalUrl("https://fydar.dev/play/cakedodge");
+        factory.UseImage(image =>
+        {
+            image.Url = "https://fydar.dev/media/cakedodge/social.webp";
+            image.Alt = "Promotional material for the game 'Cake Dodge'.";
+        });
+    }
+    var breadcrumbs = new BreadcrumbList()
+    {
+        new BreadcrumbListItem("Play", "https://fydar.dev/play/"),
+        new BreadcrumbListItem("Cake Dodge", "https://fydar.dev/play/cakedodge"),
+    };
 }
 
 <HeadFragment>
-	<MetadataComponent Metadata="@PageMetadata" />
-	<BreadcrumbListComponent Model="@breadcrumbs" />
-	<meta name="theme-color" content="#161618">
-	<link rel="shortcut icon" href="@Assets["/play/cakedodge/favicon.ico"]">
-	<link rel="preload" href="@Assets["/play/cakedodge/build/cakedodge.loader.js"]" as="script" fetchpriority="high" />
+    <MetadataComponent Metadata="@PageMetadata" />
+    <BreadcrumbListComponent Model="@breadcrumbs" />
+    <meta name="theme-color" content="#161618">
+    <link rel="shortcut icon" href="@Assets["/play/cakedodge/favicon.ico"]">
+    <link rel="preload" href="@Assets["/play/cakedodge/build/cakedodge.loader.js"]" as="script" fetchpriority="high" />
 </HeadFragment>
 
 @{

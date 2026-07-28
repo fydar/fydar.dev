@@ -1,24 +1,24 @@
 @inject NavigationManager NavigationManager
 
 <menu class="toc" aria-label="Table of Contents" data-nosnippet>
-	@if (ParentScope != null)
-	{
-		@foreach (var outlineSection in ParentScope.Sections)
-		{
-			<li><a href="@NavigationManager.Uri#@outlineSection.Id">@outlineSection.LinkName</a></li>
-		}
-	}
+    @if (ParentScope != null)
+    {
+        @foreach (var outlineSection in ParentScope.Sections)
+        {
+            <li><a href="@NavigationManager.Uri#@outlineSection.Id">@outlineSection.LinkName</a></li>
+        }
+    }
 </menu>
 
 @code {
-	[CascadingParameter(Name = "ParentScope")]
-	public OutlineScope ParentScope { get; set; }
+    [CascadingParameter(Name = "ParentScope")]
+    public OutlineScope ParentScope { get; set; }
 
-	protected override void OnInitialized()
-	{
-		if (ParentScope != null)
-		{
-			ParentScope.PropertyChanged += (evt, a) => StateHasChanged();
-		}
+    protected override void OnInitialized()
+    {
+        if (ParentScope != null)
+        {
+            ParentScope.PropertyChanged += (evt, a) => StateHasChanged();
+        }
     }
 }

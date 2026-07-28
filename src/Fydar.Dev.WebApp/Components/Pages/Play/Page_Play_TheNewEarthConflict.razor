@@ -2,30 +2,30 @@
 @page "/play/thenewearthconflict"
 
 @{
-	void PageMetadata(IMetadataFactory factory)
-	{
-		factory.UseTitle("Play The New Earth Conflict - Fydar");
-		factory.UseDescription("A realtime space strategy game where the player takes the pilot seat of a battleship.");
-		factory.UseCanonicalUrl("https://fydar.dev/play/thenewearthconflict");
-		factory.UseImage(image =>
-		{
-			image.Url = "https://fydar.dev/media/thenewearthconflict/social.webp";
-			image.Alt = "Promotional material for the game 'The New Earth Conflict'.";
-		});
-	}
-	var breadcrumbs = new BreadcrumbList()
-	{
-		new BreadcrumbListItem("Play", "https://fydar.dev/play/"),
-		new BreadcrumbListItem("The New Earth Conflict", "https://fydar.dev/play/thenewearthconflict"),
-	};
+    void PageMetadata(IMetadataFactory factory)
+    {
+        factory.UseTitle("Play The New Earth Conflict - Fydar");
+        factory.UseDescription("A realtime space strategy game where the player takes the pilot seat of a battleship.");
+        factory.UseCanonicalUrl("https://fydar.dev/play/thenewearthconflict");
+        factory.UseImage(image =>
+        {
+            image.Url = "https://fydar.dev/media/thenewearthconflict/social.webp";
+            image.Alt = "Promotional material for the game 'The New Earth Conflict'.";
+        });
+    }
+    var breadcrumbs = new BreadcrumbList()
+    {
+        new BreadcrumbListItem("Play", "https://fydar.dev/play/"),
+        new BreadcrumbListItem("The New Earth Conflict", "https://fydar.dev/play/thenewearthconflict"),
+    };
 }
 
 <HeadFragment>
-	<MetadataComponent Metadata="@PageMetadata" />
-	<BreadcrumbListComponent Model="@breadcrumbs" />
-	<meta name="theme-color" content="#161618">
-	<link rel="shortcut icon" href="@Assets["/play/thenewearthconflict/favicon.ico"]">
-	<link rel="preload" href="@Assets["/play/thenewearthconflict/build/thenewearthconflict.loader.js"]" as="script" fetchpriority="high" />
+    <MetadataComponent Metadata="@PageMetadata" />
+    <BreadcrumbListComponent Model="@breadcrumbs" />
+    <meta name="theme-color" content="#161618">
+    <link rel="shortcut icon" href="@Assets["/play/thenewearthconflict/favicon.ico"]">
+    <link rel="preload" href="@Assets["/play/thenewearthconflict/build/thenewearthconflict.loader.js"]" as="script" fetchpriority="high" />
 </HeadFragment>
 
 @{

@@ -2,27 +2,27 @@
 @page "/portfolio/gameplay"
 
 @{
-	void PageMetadata(IMetadataFactory factory)
-	{
-		factory.UseTitle("Gameplay Programming - Fydar");
-		factory.UseDescription("A collection of gameplay I've developed.");
-		factory.UseCanonicalUrl("https://fydar.dev/portfolio/gameplay");
-		factory.UseImage(image =>
+    void PageMetadata(IMetadataFactory factory)
+    {
+        factory.UseTitle("Gameplay Programming - Fydar");
+        factory.UseDescription("A collection of gameplay I've developed.");
+        factory.UseCanonicalUrl("https://fydar.dev/portfolio/gameplay");
+        factory.UseImage(image =>
         {
             image.Url = "https://fydar.dev/media/placeholdersocial.webp";
             image.Alt = "Fydar's signature.";
-		});
-	}
-	var breadcrumbs = new BreadcrumbList()
-	{
-		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
-		new BreadcrumbListItem("Gameplay Programming", "https://fydar.dev/portfolio/gameplay"),
-	};
+        });
+    }
+    var breadcrumbs = new BreadcrumbList()
+    {
+        new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+        new BreadcrumbListItem("Gameplay Programming", "https://fydar.dev/portfolio/gameplay"),
+    };
 }
 
 <HeadFragment>
-	<MetadataComponent Metadata="@PageMetadata" />
-	<BreadcrumbListComponent Model="@breadcrumbs" />
+    <MetadataComponent Metadata="@PageMetadata" />
+    <BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadFragment>
 
 <article class="page-gameplay">

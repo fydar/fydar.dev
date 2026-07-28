@@ -2,27 +2,27 @@
 @page "/portfolio/technicalart"
 
 @{
-	void PageMetadata(IMetadataFactory factory)
-	{
-		factory.UseTitle("Technical Art - Fydar");
-		factory.UseDescription("A collection of technical art pieces I've developed.");
-		factory.UseCanonicalUrl("https://fydar.dev/portfolio/technicalart");
-		factory.UseImage(image =>
+    void PageMetadata(IMetadataFactory factory)
+    {
+        factory.UseTitle("Technical Art - Fydar");
+        factory.UseDescription("A collection of technical art pieces I've developed.");
+        factory.UseCanonicalUrl("https://fydar.dev/portfolio/technicalart");
+        factory.UseImage(image =>
         {
             image.Url = "https://fydar.dev/media/placeholdersocial.webp";
             image.Alt = "Fydar's signature.";
-		});
-	}
-	var breadcrumbs = new BreadcrumbList()
-	{
-		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
-		new BreadcrumbListItem("Technical Art", "https://fydar.dev/portfolio/technicalart"),
-	};
+        });
+    }
+    var breadcrumbs = new BreadcrumbList()
+    {
+        new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+        new BreadcrumbListItem("Technical Art", "https://fydar.dev/portfolio/technicalart"),
+    };
 }
 
 <HeadFragment>
-	<MetadataComponent Metadata="@PageMetadata" />
-	<BreadcrumbListComponent Model="@breadcrumbs" />
+    <MetadataComponent Metadata="@PageMetadata" />
+    <BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadFragment>
 
 <article class="page-technicalart">

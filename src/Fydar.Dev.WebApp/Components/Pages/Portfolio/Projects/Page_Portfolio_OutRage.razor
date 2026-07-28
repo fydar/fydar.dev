@@ -2,28 +2,28 @@
 @page "/portfolio/outrage"
 
 @{
-	var canonicalUrl = "https://fydar.dev/portfolio/outrage";
-	void PageMetadata(IMetadataFactory factory)
-	{
-		factory.UseTitle("OutRage: Fight Fest - Fydar");
-		factory.UseDescription("A 16-player beat-em-up brawler with a sandbox of attacks, weapons, and destructible props in Battle Royale Free for All and Team-based game modes.");
-		factory.UseCanonicalUrl(canonicalUrl);
-		factory.UseImage(image =>
-		{
-			image.Url = "https://fydar.dev/media/outrage/social.webp";
-			image.Alt = "Promotional material for the game 'OutRage: Fight Fest'.";
-		});
-	}
-	var breadcrumbs = new BreadcrumbList()
-	{
-		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
-		new BreadcrumbListItem("OutRage: Fight Fest", "https://fydar.dev/portfolio/outrage"),
-	};
+    var canonicalUrl = "https://fydar.dev/portfolio/outrage";
+    void PageMetadata(IMetadataFactory factory)
+    {
+        factory.UseTitle("OutRage: Fight Fest - Fydar");
+        factory.UseDescription("A 16-player beat-em-up brawler with a sandbox of attacks, weapons, and destructible props in Battle Royale Free for All and Team-based game modes.");
+        factory.UseCanonicalUrl(canonicalUrl);
+        factory.UseImage(image =>
+        {
+            image.Url = "https://fydar.dev/media/outrage/social.webp";
+            image.Alt = "Promotional material for the game 'OutRage: Fight Fest'.";
+        });
+    }
+    var breadcrumbs = new BreadcrumbList()
+    {
+        new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+        new BreadcrumbListItem("OutRage: Fight Fest", "https://fydar.dev/portfolio/outrage"),
+    };
 }
 
 <HeadFragment>
-	<MetadataComponent Metadata="@PageMetadata" />
-	<BreadcrumbListComponent Model="@breadcrumbs" />
+    <MetadataComponent Metadata="@PageMetadata" />
+    <BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadFragment>
 
 <article class="page-systems">

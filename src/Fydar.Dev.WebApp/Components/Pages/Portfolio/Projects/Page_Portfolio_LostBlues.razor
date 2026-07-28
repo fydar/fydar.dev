@@ -2,28 +2,28 @@
 @page "/portfolio/lostblues"
 
 @{
-	var canonicalUrl = "https://fydar.dev/portfolio/lostblues";
-	void PageMetadata(IMetadataFactory factory)
-	{
-		factory.UseTitle("Lost Blues - Fydar");
-		factory.UseDescription("The clicker-style where you farm kelp and release fish.");
-		factory.UseCanonicalUrl(canonicalUrl);
-		factory.UseImage(image =>
-		{
-			image.Url = "https://fydar.dev/media/lostblues/social.webp";
-			image.Alt = "Promotional material for the game 'Lost Blues'.";
-		});
-	}
-	var breadcrumbs = new BreadcrumbList()
-	{
-		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
-		new BreadcrumbListItem("Lost Blues", "https://fydar.dev/portfolio/lostblues"),
-	};
+    var canonicalUrl = "https://fydar.dev/portfolio/lostblues";
+    void PageMetadata(IMetadataFactory factory)
+    {
+        factory.UseTitle("Lost Blues - Fydar");
+        factory.UseDescription("The clicker-style where you farm kelp and release fish.");
+        factory.UseCanonicalUrl(canonicalUrl);
+        factory.UseImage(image =>
+        {
+            image.Url = "https://fydar.dev/media/lostblues/social.webp";
+            image.Alt = "Promotional material for the game 'Lost Blues'.";
+        });
+    }
+    var breadcrumbs = new BreadcrumbList()
+    {
+        new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+        new BreadcrumbListItem("Lost Blues", "https://fydar.dev/portfolio/lostblues"),
+    };
 }
 
 <HeadFragment>
-	<MetadataComponent Metadata="@PageMetadata" />
-	<BreadcrumbListComponent Model="@breadcrumbs" />
+    <MetadataComponent Metadata="@PageMetadata" />
+    <BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadFragment>
 
 <article class="page-lostblues">

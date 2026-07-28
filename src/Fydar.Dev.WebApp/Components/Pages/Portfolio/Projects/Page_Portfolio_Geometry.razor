@@ -2,28 +2,28 @@
 @page "/portfolio/geometry"
 
 @{
-	var canonicalUrl = "https://fydar.dev/portfolio/geometry";
-	void PageMetadata(IMetadataFactory factory)
-	{
-		factory.UseTitle("Geometry - Fydar");
-		factory.UseDescription("A complete geometry library.");
-		factory.UseCanonicalUrl(canonicalUrl);
-		factory.UseImage(image =>
+    var canonicalUrl = "https://fydar.dev/portfolio/geometry";
+    void PageMetadata(IMetadataFactory factory)
+    {
+        factory.UseTitle("Geometry - Fydar");
+        factory.UseDescription("A complete geometry library.");
+        factory.UseCanonicalUrl(canonicalUrl);
+        factory.UseImage(image =>
         {
             image.Url = "https://fydar.dev/media/placeholdersocial.webp";
             image.Alt = "Fydar's signature.";
-		});
-	}
-	var breadcrumbs = new BreadcrumbList()
-	{
-		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
-		new BreadcrumbListItem("Geometry", "https://fydar.dev/portfolio/geometry"),
-	};
+        });
+    }
+    var breadcrumbs = new BreadcrumbList()
+    {
+        new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+        new BreadcrumbListItem("Geometry", "https://fydar.dev/portfolio/geometry"),
+    };
 }
 
 <HeadFragment>
-	<MetadataComponent Metadata="@PageMetadata" />
-	<BreadcrumbListComponent Model="@breadcrumbs" />
+    <MetadataComponent Metadata="@PageMetadata" />
+    <BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadFragment>
 
 <article class="page-geometry">

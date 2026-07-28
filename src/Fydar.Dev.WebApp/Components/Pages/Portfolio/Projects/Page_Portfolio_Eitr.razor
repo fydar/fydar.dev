@@ -2,28 +2,28 @@
 @page "/portfolio/eitr"
 
 @{
-	var canonicalUrl = "https://fydar.dev/portfolio/eitr";
-	void PageMetadata(IMetadataFactory factory)
-	{
-		factory.UseTitle("EITR - Fydar");
-		factory.UseDescription("A soulslike RPG built around exceptional combat and formidable challenges set within a mythological Norse world.");
-		factory.UseCanonicalUrl(canonicalUrl);
-		factory.UseImage(image =>
-		{
-			image.Url = "https://fydar.dev/media/eitr/social.webp";
-			image.Alt = "Promotional material for the game 'EITR'.";
-		});
-	}
-	var breadcrumbs = new BreadcrumbList()
-	{
-		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
-		new BreadcrumbListItem("EITR", "https://fydar.dev/portfolio/eitr"),
-	};
+    var canonicalUrl = "https://fydar.dev/portfolio/eitr";
+    void PageMetadata(IMetadataFactory factory)
+    {
+        factory.UseTitle("EITR - Fydar");
+        factory.UseDescription("A soulslike RPG built around exceptional combat and formidable challenges set within a mythological Norse world.");
+        factory.UseCanonicalUrl(canonicalUrl);
+        factory.UseImage(image =>
+        {
+            image.Url = "https://fydar.dev/media/eitr/social.webp";
+            image.Alt = "Promotional material for the game 'EITR'.";
+        });
+    }
+    var breadcrumbs = new BreadcrumbList()
+    {
+        new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+        new BreadcrumbListItem("EITR", "https://fydar.dev/portfolio/eitr"),
+    };
 }
 
 <HeadFragment>
-	<MetadataComponent Metadata="@PageMetadata" />
-	<BreadcrumbListComponent Model="@breadcrumbs" />
+    <MetadataComponent Metadata="@PageMetadata" />
+    <BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadFragment>
 
 <article class="page-eitr">

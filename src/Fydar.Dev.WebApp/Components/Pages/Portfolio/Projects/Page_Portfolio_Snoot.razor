@@ -2,28 +2,28 @@
 @page "/portfolio/snoot"
 
 @{
-	var canonicalUrl = "https://fydar.dev/portfolio/snoot";
-	void PageMetadata(IMetadataFactory factory)
-	{
-		factory.UseTitle("Snoot - Fydar");
-		factory.UseDescription("Restore life to a desolate world by exploring a sandbox of crafting recipes. On your adventure you will bring rain, grass, bugs, birds, and bees.");
-		factory.UseCanonicalUrl(canonicalUrl);
-		factory.UseImage(image =>
-		{
-			image.Url = "https://fydar.dev/media/snoot/social.webp";
-			image.Alt = "Promotional material for the game 'Snoot'.";
-		});
-	}
-	var breadcrumbs = new BreadcrumbList()
-	{
-		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
-		new BreadcrumbListItem("Snoot", "https://fydar.dev/portfolio/snoot"),
-	};
+    var canonicalUrl = "https://fydar.dev/portfolio/snoot";
+    void PageMetadata(IMetadataFactory factory)
+    {
+        factory.UseTitle("Snoot - Fydar");
+        factory.UseDescription("Restore life to a desolate world by exploring a sandbox of crafting recipes. On your adventure you will bring rain, grass, bugs, birds, and bees.");
+        factory.UseCanonicalUrl(canonicalUrl);
+        factory.UseImage(image =>
+        {
+            image.Url = "https://fydar.dev/media/snoot/social.webp";
+            image.Alt = "Promotional material for the game 'Snoot'.";
+        });
+    }
+    var breadcrumbs = new BreadcrumbList()
+    {
+        new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+        new BreadcrumbListItem("Snoot", "https://fydar.dev/portfolio/snoot"),
+    };
 }
 
 <HeadFragment>
-	<MetadataComponent Metadata="@PageMetadata" />
-	<BreadcrumbListComponent Model="@breadcrumbs" />
+    <MetadataComponent Metadata="@PageMetadata" />
+    <BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadFragment>
 
 <article class="page-snoot">

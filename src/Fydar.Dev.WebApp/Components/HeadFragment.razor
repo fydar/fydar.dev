@@ -2,27 +2,27 @@
 @implements IDisposable
 
 @code {
-	[Parameter] public RenderFragment? ChildContent { get; set; }
-	private RenderFragment? _current;
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    private RenderFragment? _current;
 
-	protected override void OnParametersSet()
-	{
-		if (_current != null)
-		{
-			Registry.Remove(_current);
-		}
-		_current = ChildContent;
-		if (_current != null)
-		{
-			Registry.Add(_current);
-		}
-	}
+    protected override void OnParametersSet()
+    {
+        if (_current != null)
+        {
+            Registry.Remove(_current);
+        }
+        _current = ChildContent;
+        if (_current != null)
+        {
+            Registry.Add(_current);
+        }
+    }
 
-	public void Dispose()
-	{
-		if (_current != null)
-		{
-			Registry.Remove(_current);
-		}
-	}
+    public void Dispose()
+    {
+        if (_current != null)
+        {
+            Registry.Remove(_current);
+        }
+    }
 }

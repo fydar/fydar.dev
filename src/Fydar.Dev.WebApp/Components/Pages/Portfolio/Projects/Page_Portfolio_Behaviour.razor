@@ -2,28 +2,28 @@
 @page "/portfolio/behaviour"
 
 @{
-	var canonicalUrl = "https://fydar.dev/portfolio/behaviour";
-	void PageMetadata(IMetadataFactory factory)
-	{
-		factory.UseTitle("Behaviour - Fydar");
-		factory.UseDescription("A complete node-based behaviour system.");
-		factory.UseCanonicalUrl(canonicalUrl);
-		factory.UseImage(image =>
+    var canonicalUrl = "https://fydar.dev/portfolio/behaviour";
+    void PageMetadata(IMetadataFactory factory)
+    {
+        factory.UseTitle("Behaviour - Fydar");
+        factory.UseDescription("A complete node-based behaviour system.");
+        factory.UseCanonicalUrl(canonicalUrl);
+        factory.UseImage(image =>
         {
             image.Url = "https://fydar.dev/media/placeholdersocial.webp";
             image.Alt = "Fydar's signature.";
-		});
-	}
-	var breadcrumbs = new BreadcrumbList()
-	{
-		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
-		new BreadcrumbListItem("Behaviour", "https://fydar.dev/portfolio/behaviour"),
-	};
+        });
+    }
+    var breadcrumbs = new BreadcrumbList()
+    {
+        new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+        new BreadcrumbListItem("Behaviour", "https://fydar.dev/portfolio/behaviour"),
+    };
 }
 
 <HeadFragment>
-	<MetadataComponent Metadata="@PageMetadata" />
-	<BreadcrumbListComponent Model="@breadcrumbs" />
+    <MetadataComponent Metadata="@PageMetadata" />
+    <BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadFragment>
 
 <article class="page-behaviour">

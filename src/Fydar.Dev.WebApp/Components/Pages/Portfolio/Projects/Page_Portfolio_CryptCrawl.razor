@@ -2,28 +2,28 @@
 @page "/portfolio/cryptcrawl"
 
 @{
-	var canonicalUrl = "https://fydar.dev/portfolio/cryptcrawl";
-	void PageMetadata(IMetadataFactory factory)
-	{
-		factory.UseTitle("Crypt Crawl - Fydar");
-		factory.UseDescription("A pixel art dungeon crawler with dungeon textures generated in Substance Designer.");
-		factory.UseCanonicalUrl(canonicalUrl);
-		factory.UseImage(image =>
-		{
-			image.Url = "https://fydar.dev/media/cryptcrawl/social.webp";
-			image.Alt = "Promotional material for the game 'Crypt Crawl'.";
-		});
-	}
-	var breadcrumbs = new BreadcrumbList()
-	{
-		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
-		new BreadcrumbListItem("Crypt Crawl", "https://fydar.dev/portfolio/cryptcrawl"),
-	};
+    var canonicalUrl = "https://fydar.dev/portfolio/cryptcrawl";
+    void PageMetadata(IMetadataFactory factory)
+    {
+        factory.UseTitle("Crypt Crawl - Fydar");
+        factory.UseDescription("A pixel art dungeon crawler with dungeon textures generated in Substance Designer.");
+        factory.UseCanonicalUrl(canonicalUrl);
+        factory.UseImage(image =>
+        {
+            image.Url = "https://fydar.dev/media/cryptcrawl/social.webp";
+            image.Alt = "Promotional material for the game 'Crypt Crawl'.";
+        });
+    }
+    var breadcrumbs = new BreadcrumbList()
+    {
+        new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+        new BreadcrumbListItem("Crypt Crawl", "https://fydar.dev/portfolio/cryptcrawl"),
+    };
 }
 
 <HeadFragment>
-	<MetadataComponent Metadata="@PageMetadata" />
-	<BreadcrumbListComponent Model="@breadcrumbs" />
+    <MetadataComponent Metadata="@PageMetadata" />
+    <BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadFragment>
 
 <article class="page-cryptcrawl">

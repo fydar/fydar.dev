@@ -2,28 +2,28 @@
 @page "/portfolio/roadtonorthstead"
 
 @{
-	var canonicalUrl = "https://fydar.dev/portfolio/roadtonorthstead";
-	void PageMetadata(IMetadataFactory factory)
-	{
-		factory.UseTitle("Road to Northstead - Fydar");
-		factory.UseDescription("The game jam visual novel with questing and crafting to survive the night.");
-		factory.UseCanonicalUrl(canonicalUrl);
-		factory.UseImage(image =>
-		{
-			image.Url = "https://fydar.dev/media/roadtonorthstead/social.webp";
-			image.Alt = "Promotional material for the game 'Road to Northstead'.";
-		});
-	}
-	var breadcrumbs = new BreadcrumbList()
-	{
-		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
-		new BreadcrumbListItem("Road to Northstead", "https://fydar.dev/portfolio/roadtonorthstead"),
-	};
+    var canonicalUrl = "https://fydar.dev/portfolio/roadtonorthstead";
+    void PageMetadata(IMetadataFactory factory)
+    {
+        factory.UseTitle("Road to Northstead - Fydar");
+        factory.UseDescription("The game jam visual novel with questing and crafting to survive the night.");
+        factory.UseCanonicalUrl(canonicalUrl);
+        factory.UseImage(image =>
+        {
+            image.Url = "https://fydar.dev/media/roadtonorthstead/social.webp";
+            image.Alt = "Promotional material for the game 'Road to Northstead'.";
+        });
+    }
+    var breadcrumbs = new BreadcrumbList()
+    {
+        new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+        new BreadcrumbListItem("Road to Northstead", "https://fydar.dev/portfolio/roadtonorthstead"),
+    };
 }
 
 <HeadFragment>
-	<MetadataComponent Metadata="@PageMetadata" />
-	<BreadcrumbListComponent Model="@breadcrumbs" />
+    <MetadataComponent Metadata="@PageMetadata" />
+    <BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadFragment>
 
 <article class="page-roadtonorthstead">

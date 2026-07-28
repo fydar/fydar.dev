@@ -2,28 +2,28 @@
 @page "/portfolio/raidhealersimulator"
 
 @{
-	var canonicalUrl = "https://fydar.dev/portfolio/raidhealersimulator";
-	void PageMetadata(IMetadataFactory factory)
-	{
-		factory.UseTitle("Raid Healer Simulator - Fydar");
-		factory.UseDescription("The simulation experience of what it’s like to be a healer in an MMORPG raid, complete with a variety of abilities and a challenging boss battle.");
-		factory.UseCanonicalUrl(canonicalUrl);
-		factory.UseImage(image =>
-		{
-			image.Url = "https://fydar.dev/media/raidhealersimulator/social.webp";
-			image.Alt = "Promotional material for the game ‘Raid Healer Simulator’.";
-		});
-	}
-	var breadcrumbs = new BreadcrumbList()
-	{
-		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
-		new BreadcrumbListItem("Raid Healer Simulator", "https://fydar.dev/portfolio/raidhealersimulator"),
-	};
+    var canonicalUrl = "https://fydar.dev/portfolio/raidhealersimulator";
+    void PageMetadata(IMetadataFactory factory)
+    {
+        factory.UseTitle("Raid Healer Simulator - Fydar");
+        factory.UseDescription("The simulation experience of what it’s like to be a healer in an MMORPG raid, complete with a variety of abilities and a challenging boss battle.");
+        factory.UseCanonicalUrl(canonicalUrl);
+        factory.UseImage(image =>
+        {
+            image.Url = "https://fydar.dev/media/raidhealersimulator/social.webp";
+            image.Alt = "Promotional material for the game ‘Raid Healer Simulator’.";
+        });
+    }
+    var breadcrumbs = new BreadcrumbList()
+    {
+        new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+        new BreadcrumbListItem("Raid Healer Simulator", "https://fydar.dev/portfolio/raidhealersimulator"),
+    };
 }
 
 <HeadFragment>
-	<MetadataComponent Metadata="@PageMetadata" />
-	<BreadcrumbListComponent Model="@breadcrumbs" />
+    <MetadataComponent Metadata="@PageMetadata" />
+    <BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadFragment>
 
 <article class="page-raidhealersimulator">

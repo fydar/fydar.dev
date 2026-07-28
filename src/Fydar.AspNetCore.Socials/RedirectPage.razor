@@ -5,18 +5,18 @@
 
 <head>
     <meta charset="utf-8" />
-	<MetadataComponent Metadata="@Redirect.Metadata" />
+    <MetadataComponent Metadata="@Redirect.Metadata" />
 </head>
 
 <body>
-	<p>Redirecting you to <a href="@Redirect.Destination">@Redirect.Destination</a>&hellip; If nothing happens, <a href="@Redirect.Destination">click here</a>.</p>
+    <p>Redirecting you to <a href="@Redirect.Destination">@Redirect.Destination</a>&hellip; If nothing happens, <a href="@Redirect.Destination">click here</a>.</p>
     <script>
-		window.location.href = "@Redirect.Destination";
+        window.location.href = "@Redirect.Destination";
     </script>
 </body>
 </html>
 
 @code {
-	[Parameter]
-	public SocialRedirectPolicy Redirect { get; set; }
+    [Parameter]
+    public SocialRedirectPolicy Redirect { get; set; }
 }

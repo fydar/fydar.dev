@@ -2,30 +2,30 @@
 @page "/play/lilypadleap"
 
 @{
-	void PageMetadata(IMetadataFactory factory)
-	{
-		factory.UseTitle("Play Lilypad Leap - Fydar");
-		factory.UseDescription("A meditative and addictive game where you jump a frog across lily pads.");
-		factory.UseCanonicalUrl("https://fydar.dev/play/lilypadleap");
-		factory.UseImage(image =>
-		{
-			image.Url = "https://fydar.dev/media/lilypadleap/social.webp";
-			image.Alt = "Promotional material for the game 'Lilypad Leap'.";
-		});
-	}
-	var breadcrumbs = new BreadcrumbList()
-	{
-		new BreadcrumbListItem("Play", "https://fydar.dev/play/"),
-		new BreadcrumbListItem("Lilypad Leap", "https://fydar.dev/play/lilypadleap"),
-	};
+    void PageMetadata(IMetadataFactory factory)
+    {
+        factory.UseTitle("Play Lilypad Leap - Fydar");
+        factory.UseDescription("A meditative and addictive game where you jump a frog across lily pads.");
+        factory.UseCanonicalUrl("https://fydar.dev/play/lilypadleap");
+        factory.UseImage(image =>
+        {
+            image.Url = "https://fydar.dev/media/lilypadleap/social.webp";
+            image.Alt = "Promotional material for the game 'Lilypad Leap'.";
+        });
+    }
+    var breadcrumbs = new BreadcrumbList()
+    {
+        new BreadcrumbListItem("Play", "https://fydar.dev/play/"),
+        new BreadcrumbListItem("Lilypad Leap", "https://fydar.dev/play/lilypadleap"),
+    };
 }
 
 <HeadFragment>
-	<MetadataComponent Metadata="@PageMetadata" />
-	<BreadcrumbListComponent Model="@breadcrumbs" />
-	<meta name="theme-color" content="#161618">
-	<link rel="shortcut icon" href="@Assets["/play/lilypadleap/favicon.ico"]">
-	<link rel="preload" href="@Assets["/play/lilypadleap/build/lilypadleap.loader.js"]" as="script" fetchpriority="high" />
+    <MetadataComponent Metadata="@PageMetadata" />
+    <BreadcrumbListComponent Model="@breadcrumbs" />
+    <meta name="theme-color" content="#161618">
+    <link rel="shortcut icon" href="@Assets["/play/lilypadleap/favicon.ico"]">
+    <link rel="preload" href="@Assets["/play/lilypadleap/build/lilypadleap.loader.js"]" as="script" fetchpriority="high" />
 </HeadFragment>
 
 @{

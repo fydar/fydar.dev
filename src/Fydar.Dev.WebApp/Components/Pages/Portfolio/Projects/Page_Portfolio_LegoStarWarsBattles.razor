@@ -2,28 +2,28 @@
 @page "/portfolio/legostarwarsbattles"
 
 @{
-	var canonicalUrl = "https://fydar.dev/portfolio/legostarwarsbattles";
-	void PageMetadata(IMetadataFactory factory)
-	{
-		factory.UseTitle("LEGO® Star Wars™ Battles - Fydar");
-		factory.UseDescription("A mobile multiplayer realtime strategy game featuring competitive ranked matchmaking, weekly leaderboards, and clans.");
-		factory.UseCanonicalUrl(canonicalUrl);
-		factory.UseImage(image =>
-		{
-			image.Url = "https://fydar.dev/media/legostarwarsbattles/social.webp";
-			image.Alt = "Promotional material for the game 'LEGO® Star Wars™ Battles'.";
-		});
-	}
-	var breadcrumbs = new BreadcrumbList()
-	{
-		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
-		new BreadcrumbListItem("LEGO® Star Wars™ Battles", "https://fydar.dev/portfolio/legostarwarsbattles"),
-	};
+    var canonicalUrl = "https://fydar.dev/portfolio/legostarwarsbattles";
+    void PageMetadata(IMetadataFactory factory)
+    {
+        factory.UseTitle("LEGO® Star Wars™ Battles - Fydar");
+        factory.UseDescription("A mobile multiplayer realtime strategy game featuring competitive ranked matchmaking, weekly leaderboards, and clans.");
+        factory.UseCanonicalUrl(canonicalUrl);
+        factory.UseImage(image =>
+        {
+            image.Url = "https://fydar.dev/media/legostarwarsbattles/social.webp";
+            image.Alt = "Promotional material for the game 'LEGO® Star Wars™ Battles'.";
+        });
+    }
+    var breadcrumbs = new BreadcrumbList()
+    {
+        new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+        new BreadcrumbListItem("LEGO® Star Wars™ Battles", "https://fydar.dev/portfolio/legostarwarsbattles"),
+    };
 }
 
 <HeadFragment>
-	<MetadataComponent Metadata="@PageMetadata" />
-	<BreadcrumbListComponent Model="@breadcrumbs" />
+    <MetadataComponent Metadata="@PageMetadata" />
+    <BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadFragment>
 
 <article class="page-legostarwarsbattles">

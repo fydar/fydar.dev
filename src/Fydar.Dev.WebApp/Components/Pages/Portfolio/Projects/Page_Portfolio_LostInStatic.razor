@@ -2,28 +2,28 @@
 @page "/portfolio/lostinstatic"
 
 @{
-	var canonicalUrl = "https://fydar.dev/portfolio/lostinstatic";
-	void PageMetadata(IMetadataFactory factory)
-	{
-		factory.UseTitle("Lost in Static - Fydar");
-		factory.UseDescription("Remote control a drone to take down a rogue AI controlling the station.");
-		factory.UseCanonicalUrl(canonicalUrl);
-		factory.UseImage(image =>
-		{
-			image.Url = "https://fydar.dev/media/lostinstatic/social.webp";
-			image.Alt = "Promotional material for the game 'Lost in Static'.";
-		});
-	}
-	var breadcrumbs = new BreadcrumbList()
-	{
-		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
-		new BreadcrumbListItem("Lost in Static", "https://fydar.dev/portfolio/lostinstatic"),
-	};
+    var canonicalUrl = "https://fydar.dev/portfolio/lostinstatic";
+    void PageMetadata(IMetadataFactory factory)
+    {
+        factory.UseTitle("Lost in Static - Fydar");
+        factory.UseDescription("Remote control a drone to take down a rogue AI controlling the station.");
+        factory.UseCanonicalUrl(canonicalUrl);
+        factory.UseImage(image =>
+        {
+            image.Url = "https://fydar.dev/media/lostinstatic/social.webp";
+            image.Alt = "Promotional material for the game 'Lost in Static'.";
+        });
+    }
+    var breadcrumbs = new BreadcrumbList()
+    {
+        new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+        new BreadcrumbListItem("Lost in Static", "https://fydar.dev/portfolio/lostinstatic"),
+    };
 }
 
 <HeadFragment>
-	<MetadataComponent Metadata="@PageMetadata" />
-	<BreadcrumbListComponent Model="@breadcrumbs" />
+    <MetadataComponent Metadata="@PageMetadata" />
+    <BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadFragment>
 
 <article class="page-lostinstatic">

@@ -9,50 +9,50 @@ namespace Fydar.Dev.Lambda.EmailToTicket.Services;
 
 public class SESNotifyingService : IEmailSinkService
 {
-	private readonly IAmazonSimpleEmailService amazonSimpleEmailService;
-	private readonly string destination;
+    private readonly IAmazonSimpleEmailService amazonSimpleEmailService;
+    private readonly string destination;
 
-	public SESNotifyingService(
-		IAmazonSimpleEmailService amazonSimpleEmailService,
-		string destination)
-	{
-		this.amazonSimpleEmailService = amazonSimpleEmailService;
-		this.destination = destination;
-	}
+    public SESNotifyingService(
+        IAmazonSimpleEmailService amazonSimpleEmailService,
+        string destination)
+    {
+        this.amazonSimpleEmailService = amazonSimpleEmailService;
+        this.destination = destination;
+    }
 
-	public async Task<bool> ForwardEmailAsync(
-		EmailModel email)
-	{
-		var body = new BodyBuilder
-		{
-			TextBody = $"You have new unread messages from a user using your contact email address.\n" +
-				$"To view the message; use the administrator contact panel.\n" +
-				$"Your new message can be found here. https://fydar.dev/ticket/{email.Header.MessageId}"
-		};
+    public async Task<bool> ForwardEmailAsync(
+        EmailModel email)
+    {
+        var body = new BodyBuilder
+        {
+            TextBody = $"You have new unread messages from a user using your contact email address.\n" +
+                $"To view the message; use the administrator contact panel.\n" +
+                $"Your new message can be found here. https://fydar.dev/ticket/{email.Header.MessageId}"
+        };
 
-		var notificationMessage = new MimeMessage
-		(
-			from: new[] { new MailboxAddress("Fydar", "contact@fydar.dev") },
-			to: new[] { new MailboxAddress("Fydar", destination) },
-			subject: "You have new unread messages",
-			body: body.ToMessageBody()
-		);
+        var notificationMessage = new MimeMessage
+        (
+            from: new[] { new MailboxAddress("Fydar", "contact@fydar.dev") },
+            to: new[] { new MailboxAddress("Fydar", destination) },
+            subject: "You have new unread messages",
+            body: body.ToMessageBody()
+        );
 
-		using var stream = new MemoryStream();
-		await notificationMessage.WriteToAsync(stream);
+        using var stream = new MemoryStream();
+        await notificationMessage.WriteToAsync(stream);
 
-		var request = new SendRawEmailRequest()
-		{
-			Source = "contact@fydar.dev",
-			RawMessage = new RawMessage(stream),
-			Destinations =
-			[
-				destination
-			]
-		};
+        var request = new SendRawEmailRequest()
+        {
+            Source = "contact@fydar.dev",
+            RawMessage = new RawMessage(stream),
+            Destinations =
+            [
+                destination
+            ]
+        };
 
-		var response = await amazonSimpleEmailService.SendRawEmailAsync(request);
+        var response = await amazonSimpleEmailService.SendRawEmailAsync(request);
 
-		return true;
-	}
+        return true;
+    }
 }

@@ -2,28 +2,28 @@
 @page "/portfolio/twilighttowers"
 
 @{
-	var canonicalUrl = "https://fydar.dev/portfolio/twilighttowers";
-	void PageMetadata(IMetadataFactory factory)
-	{
-		factory.UseTitle("Twilight Towers - Fydar");
-		factory.UseDescription("Tower defence meets merge and puzzle games.");
-		factory.UseCanonicalUrl(canonicalUrl);
-		factory.UseImage(image =>
-		{
-			image.Url = "https://fydar.dev/media/twilighttowers/social.webp";
-			image.Alt = "Promotional material for the game 'Twilight Towers'.";
-		});
-	}
-	var breadcrumbs = new BreadcrumbList()
-	{
-		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
-		new BreadcrumbListItem("Twilight Towers", "https://fydar.dev/portfolio/twilighttowers"),
-	};
+    var canonicalUrl = "https://fydar.dev/portfolio/twilighttowers";
+    void PageMetadata(IMetadataFactory factory)
+    {
+        factory.UseTitle("Twilight Towers - Fydar");
+        factory.UseDescription("Tower defence meets merge and puzzle games.");
+        factory.UseCanonicalUrl(canonicalUrl);
+        factory.UseImage(image =>
+        {
+            image.Url = "https://fydar.dev/media/twilighttowers/social.webp";
+            image.Alt = "Promotional material for the game 'Twilight Towers'.";
+        });
+    }
+    var breadcrumbs = new BreadcrumbList()
+    {
+        new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+        new BreadcrumbListItem("Twilight Towers", "https://fydar.dev/portfolio/twilighttowers"),
+    };
 }
 
 <HeadFragment>
-	<MetadataComponent Metadata="@PageMetadata" />
-	<BreadcrumbListComponent Model="@breadcrumbs" />
+    <MetadataComponent Metadata="@PageMetadata" />
+    <BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadFragment>
 
 <article class="page-systems">

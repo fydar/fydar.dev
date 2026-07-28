@@ -2,28 +2,28 @@
 @page "/portfolio/thedwellers"
 
 @{
-	var canonicalUrl = "https://fydar.dev/portfolio/thedwellers";
-	void PageMetadata(IMetadataFactory factory)
-	{
-		factory.UseTitle("The Dwellers - Fydar");
-		factory.UseDescription("A 3D dungeon crawler game demo with a full RPG item system, featuring a wide range of weapons and other equipment.");
-		factory.UseCanonicalUrl(canonicalUrl);
-		factory.UseImage(image =>
-		{
-			image.Url = "https://fydar.dev/media/thedwellers/social.webp";
-			image.Alt = "Promotional material for the game 'The Dwellers'.";
-		});
-	}
-	var breadcrumbs = new BreadcrumbList()
-	{
-		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
-		new BreadcrumbListItem("The Dwellers", "https://fydar.dev/portfolio/thedwellers"),
-	};
+    var canonicalUrl = "https://fydar.dev/portfolio/thedwellers";
+    void PageMetadata(IMetadataFactory factory)
+    {
+        factory.UseTitle("The Dwellers - Fydar");
+        factory.UseDescription("A 3D dungeon crawler game demo with a full RPG item system, featuring a wide range of weapons and other equipment.");
+        factory.UseCanonicalUrl(canonicalUrl);
+        factory.UseImage(image =>
+        {
+            image.Url = "https://fydar.dev/media/thedwellers/social.webp";
+            image.Alt = "Promotional material for the game 'The Dwellers'.";
+        });
+    }
+    var breadcrumbs = new BreadcrumbList()
+    {
+        new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+        new BreadcrumbListItem("The Dwellers", "https://fydar.dev/portfolio/thedwellers"),
+    };
 }
 
 <HeadFragment>
-	<MetadataComponent Metadata="@PageMetadata" />
-	<BreadcrumbListComponent Model="@breadcrumbs" />
+    <MetadataComponent Metadata="@PageMetadata" />
+    <BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadFragment>
 
 <article class="page-systems">

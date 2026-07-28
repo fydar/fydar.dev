@@ -2,28 +2,28 @@
 @page "/portfolio/uno"
 
 @{
-	var canonicalUrl = "https://fydar.dev/portfolio/uno";
-	void PageMetadata(IMetadataFactory factory)
-	{
-		factory.UseTitle("UNO™ - Fydar");
-		factory.UseDescription("Modernizing a legacy UI and optimizing performance for Ubisoft's iconic card game.");
-		factory.UseCanonicalUrl(canonicalUrl);
-		factory.UseImage(image =>
-		{
-			image.Url = "https://fydar.dev/media/uno/social.webp";
-			image.Alt = "Promotional material for the game 'UNO™'.";
-		});
-	}
-	var breadcrumbs = new BreadcrumbList()
-	{
-		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
-		new BreadcrumbListItem("UNO™", "https://fydar.dev/portfolio/uno"),
-	};
+    var canonicalUrl = "https://fydar.dev/portfolio/uno";
+    void PageMetadata(IMetadataFactory factory)
+    {
+        factory.UseTitle("UNO™ - Fydar");
+        factory.UseDescription("Modernizing a legacy UI and optimizing performance for Ubisoft's iconic card game.");
+        factory.UseCanonicalUrl(canonicalUrl);
+        factory.UseImage(image =>
+        {
+            image.Url = "https://fydar.dev/media/uno/social.webp";
+            image.Alt = "Promotional material for the game 'UNO™'.";
+        });
+    }
+    var breadcrumbs = new BreadcrumbList()
+    {
+        new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+        new BreadcrumbListItem("UNO™", "https://fydar.dev/portfolio/uno"),
+    };
 }
 
 <HeadFragment>
-	<MetadataComponent Metadata="@PageMetadata" />
-	<BreadcrumbListComponent Model="@breadcrumbs" />
+    <MetadataComponent Metadata="@PageMetadata" />
+    <BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadFragment>
 
 <article class="page-uno">

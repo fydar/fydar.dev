@@ -2,27 +2,27 @@
 @page "/portfolio/multiplayer"
 
 @{
-	void PageMetadata(IMetadataFactory factory)
-	{
-		factory.UseTitle("Multiplayer Engineering - Fydar");
-		factory.UseDescription("A collection of multiplayer games I've developed.");
-		factory.UseCanonicalUrl("https://fydar.dev/portfolio/multiplayer");
-		factory.UseImage(image =>
+    void PageMetadata(IMetadataFactory factory)
+    {
+        factory.UseTitle("Multiplayer Engineering - Fydar");
+        factory.UseDescription("A collection of multiplayer games I've developed.");
+        factory.UseCanonicalUrl("https://fydar.dev/portfolio/multiplayer");
+        factory.UseImage(image =>
         {
             image.Url = "https://fydar.dev/media/placeholdersocial.webp";
             image.Alt = "Fydar's signature.";
-		});
-	}
-	var breadcrumbs = new BreadcrumbList()
-	{
-		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
-		new BreadcrumbListItem("Multiplayer Engineering", "https://fydar.dev/portfolio/multiplayer"),
-	};
+        });
+    }
+    var breadcrumbs = new BreadcrumbList()
+    {
+        new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+        new BreadcrumbListItem("Multiplayer Engineering", "https://fydar.dev/portfolio/multiplayer"),
+    };
 }
 
 <HeadFragment>
-	<MetadataComponent Metadata="@PageMetadata" />
-	<BreadcrumbListComponent Model="@breadcrumbs" />
+    <MetadataComponent Metadata="@PageMetadata" />
+    <BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadFragment>
 
 <article class="page-multiplayer">

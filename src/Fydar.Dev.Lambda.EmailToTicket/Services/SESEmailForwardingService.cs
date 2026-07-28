@@ -9,43 +9,43 @@ namespace Fydar.Dev.Lambda.EmailToTicket.Services;
 
 public class SESEmailForwardingService : IEmailSinkService
 {
-	private readonly IAmazonSimpleEmailService amazonSimpleEmailService;
-	private readonly string destination;
+    private readonly IAmazonSimpleEmailService amazonSimpleEmailService;
+    private readonly string destination;
 
-	public SESEmailForwardingService(
-		IAmazonSimpleEmailService amazonSimpleEmailService,
-		string destination)
-	{
-		this.amazonSimpleEmailService = amazonSimpleEmailService;
-		this.destination = destination;
-	}
+    public SESEmailForwardingService(
+        IAmazonSimpleEmailService amazonSimpleEmailService,
+        string destination)
+    {
+        this.amazonSimpleEmailService = amazonSimpleEmailService;
+        this.destination = destination;
+    }
 
-	public async Task<bool> ForwardEmailAsync(
-		EmailModel email)
-	{
-		var forwardedMessage = new MimeMessage
-		(
-			from: new[] { new MailboxAddress("Anthony Marmont", "contact@fydar.dev") },
-			to: new[] { new MailboxAddress("Anthony Marmont", destination) },
-			subject: email.Message.Subject,
-			body: email.Message.Body
-		);
+    public async Task<bool> ForwardEmailAsync(
+        EmailModel email)
+    {
+        var forwardedMessage = new MimeMessage
+        (
+            from: new[] { new MailboxAddress("Anthony Marmont", "contact@fydar.dev") },
+            to: new[] { new MailboxAddress("Anthony Marmont", destination) },
+            subject: email.Message.Subject,
+            body: email.Message.Body
+        );
 
-		using var stream = new MemoryStream();
-		await forwardedMessage.WriteToAsync(stream);
+        using var stream = new MemoryStream();
+        await forwardedMessage.WriteToAsync(stream);
 
-		var request = new SendRawEmailRequest()
-		{
-			Source = "contact@fydar.dev",
-			RawMessage = new RawMessage(stream),
-			Destinations =
-			[
-				destination
-			]
-		};
+        var request = new SendRawEmailRequest()
+        {
+            Source = "contact@fydar.dev",
+            RawMessage = new RawMessage(stream),
+            Destinations =
+            [
+                destination
+            ]
+        };
 
-		var response = await amazonSimpleEmailService.SendRawEmailAsync(request);
+        var response = await amazonSimpleEmailService.SendRawEmailAsync(request);
 
-		return true;
-	}
+        return true;
+    }
 }

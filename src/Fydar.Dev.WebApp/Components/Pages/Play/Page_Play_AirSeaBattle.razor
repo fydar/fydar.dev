@@ -2,30 +2,30 @@
 @page "/play/airseabattle"
 
 @{
-	void PageMetadata(IMetadataFactory factory)
-	{
-		factory.UseTitle("Play Air-Sea Battle - Fydar");
-		factory.UseDescription("The Game Boy demake of the Nintendo DS Pokémon Diamond and Pearl underground mining minigame.");
-		factory.UseCanonicalUrl("https://fydar.dev/play/airseabattle");
-		factory.UseImage(image =>
-		{
-			image.Url = "https://fydar.dev/media/airseabattle/social.webp";
-			image.Alt = "Promotional material for the game 'Air-Sea Battle'.";
-		});
-	}
-	var breadcrumbs = new BreadcrumbList()
-	{
-		new BreadcrumbListItem("Play", "https://fydar.dev/play/"),
-		new BreadcrumbListItem("Air-Sea Battle", "https://fydar.dev/play/airseabattle"),
-	};
+    void PageMetadata(IMetadataFactory factory)
+    {
+        factory.UseTitle("Play Air-Sea Battle - Fydar");
+        factory.UseDescription("The Game Boy demake of the Nintendo DS Pokémon Diamond and Pearl underground mining minigame.");
+        factory.UseCanonicalUrl("https://fydar.dev/play/airseabattle");
+        factory.UseImage(image =>
+        {
+            image.Url = "https://fydar.dev/media/airseabattle/social.webp";
+            image.Alt = "Promotional material for the game 'Air-Sea Battle'.";
+        });
+    }
+    var breadcrumbs = new BreadcrumbList()
+    {
+        new BreadcrumbListItem("Play", "https://fydar.dev/play/"),
+        new BreadcrumbListItem("Air-Sea Battle", "https://fydar.dev/play/airseabattle"),
+    };
 }
 
 <HeadFragment>
-	<MetadataComponent Metadata="@PageMetadata" />
-	<BreadcrumbListComponent Model="@breadcrumbs" />
-	<meta name="theme-color" content="#161618">
-	<link rel="shortcut icon" href="@Assets["/play/airseabattle/favicon.ico"]">
-	<link rel="preload" href="@Assets["/play/airseabattle/build/airseabattle.loader.js"]" as="script" fetchpriority="high" />
+    <MetadataComponent Metadata="@PageMetadata" />
+    <BreadcrumbListComponent Model="@breadcrumbs" />
+    <meta name="theme-color" content="#161618">
+    <link rel="shortcut icon" href="@Assets["/play/airseabattle/favicon.ico"]">
+    <link rel="preload" href="@Assets["/play/airseabattle/build/airseabattle.loader.js"]" as="script" fetchpriority="high" />
 </HeadFragment>
 
 @{

@@ -4,26 +4,26 @@
 @inject IEnumerable<IContactSubmitSink> contactSubmitSinks;
 
 @{
-	void PageMetadata(IMetadataFactory factory)
-	{
-		factory.UseTitle("Contact - Fydar");
-		factory.UseDescription("Feel free to reach out to me! I'm passionate about what I do and I love to talk about it.");
-		factory.UseCanonicalUrl("https://fydar.dev/contact");
-		factory.UseImage(image =>
-		{
+    void PageMetadata(IMetadataFactory factory)
+    {
+        factory.UseTitle("Contact - Fydar");
+        factory.UseDescription("Feel free to reach out to me! I'm passionate about what I do and I love to talk about it.");
+        factory.UseCanonicalUrl("https://fydar.dev/contact");
+        factory.UseImage(image =>
+        {
             image.Url = "https://fydar.dev/media/placeholdersocial.webp";
-			image.Alt = "Fydar's signature.";
-		});
-	}
-	var breadcrumbs = new BreadcrumbList()
-	{
-		new BreadcrumbListItem("Contact", "https://fydar.dev/contact/"),
-	};
+            image.Alt = "Fydar's signature.";
+        });
+    }
+    var breadcrumbs = new BreadcrumbList()
+    {
+        new BreadcrumbListItem("Contact", "https://fydar.dev/contact/"),
+    };
 }
 
 <HeadFragment>
-	<MetadataComponent Metadata="@PageMetadata" />
-	<BreadcrumbListComponent Model="@breadcrumbs" />
+    <MetadataComponent Metadata="@PageMetadata" />
+    <BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadFragment>
 
 <article class="page-contact">

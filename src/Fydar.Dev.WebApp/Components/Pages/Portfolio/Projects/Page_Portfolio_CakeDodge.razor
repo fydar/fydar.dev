@@ -2,28 +2,28 @@
 @page "/portfolio/cakedodge"
 
 @{
-	var canonicalUrl = "https://fydar.dev/portfolio/cakedodge";
-	void PageMetadata(IMetadataFactory factory)
-	{
-		factory.UseTitle("Cake Dodge - Fydar");
-		factory.UseDescription("A mobile game created for a code test where the player must dodge falling cakes.");
-		factory.UseCanonicalUrl(canonicalUrl);
-		factory.UseImage(image =>
-		{
-			image.Url = "https://fydar.dev/media/cakedodge/social.webp";
-			image.Alt = "Promotional material for the game 'Cake Dodge'.";
-		});
-	}
-	var breadcrumbs = new BreadcrumbList()
-	{
-		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
-		new BreadcrumbListItem("Cake Dodge", "https://fydar.dev/portfolio/cakedodge"),
-	};
+    var canonicalUrl = "https://fydar.dev/portfolio/cakedodge";
+    void PageMetadata(IMetadataFactory factory)
+    {
+        factory.UseTitle("Cake Dodge - Fydar");
+        factory.UseDescription("A mobile game created for a code test where the player must dodge falling cakes.");
+        factory.UseCanonicalUrl(canonicalUrl);
+        factory.UseImage(image =>
+        {
+            image.Url = "https://fydar.dev/media/cakedodge/social.webp";
+            image.Alt = "Promotional material for the game 'Cake Dodge'.";
+        });
+    }
+    var breadcrumbs = new BreadcrumbList()
+    {
+        new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+        new BreadcrumbListItem("Cake Dodge", "https://fydar.dev/portfolio/cakedodge"),
+    };
 }
 
 <HeadFragment>
-	<MetadataComponent Metadata="@PageMetadata" />
-	<BreadcrumbListComponent Model="@breadcrumbs" />
+    <MetadataComponent Metadata="@PageMetadata" />
+    <BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadFragment>
 
 <article class="page-cakedodge">

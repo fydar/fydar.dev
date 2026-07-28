@@ -2,28 +2,28 @@
 @page "/portfolio/pewpew"
 
 @{
-	var canonicalUrl = "https://fydar.dev/portfolio/pewpew";
-	void PageMetadata(IMetadataFactory factory)
-	{
-		factory.UseTitle("Pew Pew - Fydar");
-		factory.UseDescription("A 20v20 .io style browser game made in 48 hours using ASP.NET Core and hosted in AWS.");
-		factory.UseCanonicalUrl(canonicalUrl);
-		factory.UseImage(image =>
-		{
-			image.Url = "https://fydar.dev/media/pewpew/social.webp";
-			image.Alt = "Promotional material for the game 'Pew Pew'.";
-		});
-	}
-	var breadcrumbs = new BreadcrumbList()
-	{
-		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
-		new BreadcrumbListItem("Pew Pew", "https://fydar.dev/portfolio/pewpew"),
-	};
+    var canonicalUrl = "https://fydar.dev/portfolio/pewpew";
+    void PageMetadata(IMetadataFactory factory)
+    {
+        factory.UseTitle("Pew Pew - Fydar");
+        factory.UseDescription("A 20v20 .io style browser game made in 48 hours using ASP.NET Core and hosted in AWS.");
+        factory.UseCanonicalUrl(canonicalUrl);
+        factory.UseImage(image =>
+        {
+            image.Url = "https://fydar.dev/media/pewpew/social.webp";
+            image.Alt = "Promotional material for the game 'Pew Pew'.";
+        });
+    }
+    var breadcrumbs = new BreadcrumbList()
+    {
+        new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+        new BreadcrumbListItem("Pew Pew", "https://fydar.dev/portfolio/pewpew"),
+    };
 }
 
 <HeadFragment>
-	<MetadataComponent Metadata="@PageMetadata" />
-	<BreadcrumbListComponent Model="@breadcrumbs" />
+    <MetadataComponent Metadata="@PageMetadata" />
+    <BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadFragment>
 
 <article class="page-pewpew">

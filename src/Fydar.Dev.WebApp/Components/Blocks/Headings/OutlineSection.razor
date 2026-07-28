@@ -1,35 +1,35 @@
 <section id="@Id" @attributes="AdditionalAttributes">
-	<CascadingValue Name="ParentSection" Value="this">
-		<OutlineScope @ref="ChildScope">
-			@ChildContent
-		</OutlineScope>
-	</CascadingValue>
+    <CascadingValue Name="ParentSection" Value="this">
+        <OutlineScope @ref="ChildScope">
+            @ChildContent
+        </OutlineScope>
+    </CascadingValue>
 </section>
 
 @code {
-	[CascadingParameter(Name = "ParentScope")]
-	public OutlineScope? ParentScope { get; set; }
+    [CascadingParameter(Name = "ParentScope")]
+    public OutlineScope? ParentScope { get; set; }
 
-	public OutlineScope? ChildScope { get; set; }
+    public OutlineScope? ChildScope { get; set; }
 
-	[Parameter, EditorRequired]
-	public string Id { get; set; }
+    [Parameter, EditorRequired]
+    public string Id { get; set; }
 
-	[Parameter, EditorRequired]
-	public string LinkName { get; set; }
+    [Parameter, EditorRequired]
+    public string LinkName { get; set; }
 
-	[Parameter, EditorRequired]
-	public RenderFragment? ChildContent { get; set; }
+    [Parameter, EditorRequired]
+    public RenderFragment? ChildContent { get; set; }
 
-	[Parameter(CaptureUnmatchedValues = true)]
-	public IDictionary<string, object>? AdditionalAttributes { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IDictionary<string, object>? AdditionalAttributes { get; set; }
 
-	protected override void OnParametersSet()
-	{
-		if (ParentScope != null)
-		{
-			ParentScope.Register(this);
-		}
+    protected override void OnParametersSet()
+    {
+        if (ParentScope != null)
+        {
+            ParentScope.Register(this);
+        }
 
         base.OnParametersSet();
     }

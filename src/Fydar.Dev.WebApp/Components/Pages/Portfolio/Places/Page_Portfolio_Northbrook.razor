@@ -1,27 +1,27 @@
 @layout DefaultLayout
 @page "/portfolio/northbrook"
 @{
-	void PageMetadata(IMetadataFactory factory)
-	{
-		factory.UseTitle("Northbrook - Fydar");
-		factory.UseDescription("Fydar is a Northbrook Alumni, having recieved a distinction in their study of Games Development.");
-		factory.UseCanonicalUrl("https://fydar.dev/portfolio/northbrook");
-		factory.UseImage(image =>
-		{
-			image.Url = "https://fydar.dev/media/northbrook/social.webp";
-			image.Alt = "Promotional material for 'Northbrook'.";
-		});
-	}
-	var breadcrumbs = new BreadcrumbList()
-	{
-		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
-		new BreadcrumbListItem("Northbrook", "https://fydar.dev/portfolio/northbrook"),
-	};
+    void PageMetadata(IMetadataFactory factory)
+    {
+        factory.UseTitle("Northbrook - Fydar");
+        factory.UseDescription("Fydar is a Northbrook Alumni, having recieved a distinction in their study of Games Development.");
+        factory.UseCanonicalUrl("https://fydar.dev/portfolio/northbrook");
+        factory.UseImage(image =>
+        {
+            image.Url = "https://fydar.dev/media/northbrook/social.webp";
+            image.Alt = "Promotional material for 'Northbrook'.";
+        });
+    }
+    var breadcrumbs = new BreadcrumbList()
+    {
+        new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+        new BreadcrumbListItem("Northbrook", "https://fydar.dev/portfolio/northbrook"),
+    };
 }
 
 <HeadFragment>
-	<MetadataComponent Metadata="@PageMetadata" />
-	<BreadcrumbListComponent Model="@breadcrumbs" />
+    <MetadataComponent Metadata="@PageMetadata" />
+    <BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadFragment>
 
 <article class="page-northbrook">
@@ -51,185 +51,185 @@
         </div>
     </div>
 
-	<div class="container">
-		<Block_ArticleHeader>
-			<h1 data-nosnippet>Northbrook</h1>
-		</Block_ArticleHeader>
+    <div class="container">
+        <Block_ArticleHeader>
+            <h1 data-nosnippet>Northbrook</h1>
+        </Block_ArticleHeader>
 
-		<Block_ArticleOutlined>
+        <Block_ArticleOutlined>
             <Sidebar>
                 <aside>
                     <Block_TableOfContents />
                 </aside>
-			</Sidebar>
-			<Content>
+            </Sidebar>
+            <Content>
 
-				<OutlineSection LinkName="The Course" Id="course">
-					<Block_ArticleHeading>
-						<h2>The Course</h2>
-					</Block_ArticleHeading>
+                <OutlineSection LinkName="The Course" Id="course">
+                    <Block_ArticleHeading>
+                        <h2>The Course</h2>
+                    </Block_ArticleHeading>
 
-					<p>I joined this course with a strong understanding of game development and programming from my hobbyist experience. This course offered me the freedom to explore programming concepts at my speed. I also had the opportunity to learn the fundamentals of 2D and 3D art.</p>
+                    <p>I joined this course with a strong understanding of game development and programming from my hobbyist experience. This course offered me the freedom to explore programming concepts at my speed. I also had the opportunity to learn the fundamentals of 2D and 3D art.</p>
 
-					<p>I became familiar with 3DS Max which became my tool of choice. This benefited my understanding of 3D graphics greatly. The 3D artistry later inspired my exploration of Substance Designer and other tech art tools.</p>
+                    <p>I became familiar with 3DS Max which became my tool of choice. This benefited my understanding of 3D graphics greatly. The 3D artistry later inspired my exploration of Substance Designer and other tech art tools.</p>
 
-					<p>I was offered the freedom to make anything I felt like making and the tutors would guide me on how I can meet the marking criteria of the diploma. This was a incredible experience as I gave me the space and freedom I needed to explore games development at my own pace.</p>
+                    <p>I was offered the freedom to make anything I felt like making and the tutors would guide me on how I can meet the marking criteria of the diploma. This was a incredible experience as I gave me the space and freedom I needed to explore games development at my own pace.</p>
 
-					<p>I am personally very interested in RPG games, and so many of the projects I done where themselves RPGs.</p>
+                    <p>I am personally very interested in RPG games, and so many of the projects I done where themselves RPGs.</p>
 
-					<p>It was during this course where I got my first job working on EITR. It worked out wonderfully as, with permission from the team, I was able to use parts of my work on EITR towards my diploma.</p>
+                    <p>It was during this course where I got my first job working on EITR. It worked out wonderfully as, with permission from the team, I was able to use parts of my work on EITR towards my diploma.</p>
 
-					<Block_CoverGrid>
-						<Cover_Eitr />
-					</Block_CoverGrid>
-				</OutlineSection>
+                    <Block_CoverGrid>
+                        <Cover_Eitr />
+                    </Block_CoverGrid>
+                </OutlineSection>
 
-				<OutlineSection LinkName="Extended Diploma" Id="extended-diploma">
+                <OutlineSection LinkName="Extended Diploma" Id="extended-diploma">
                     <Block_ArticleHeading>
                         <hgroup>
                             <p data-nosnippet>2017-2018</p>
                             <h2>Extended Diploma in Games Development</h2>
                         </hgroup>
-					</Block_ArticleHeading>
+                    </Block_ArticleHeading>
 
-					<Block_CardGrid>
-						<Card>
-							<a class="card__link" href="/portfolio/thedwellers">The Dwellers</a>
-							<picture>
-								<img class="card__image" decoding="async" loading="lazy" width="640" height="480" src="@Assets["media/thedwellers/card.webp"]" alt="Preview of the game 'The Dwellers'" />
-							</picture>
-							<div class="container">
-								<header>
-									<SvgSprite class="card-keyicon" Link="/icons.svg?v=1#icon-thedwellers" />
-									<h3>The Dwellers</h3>
-								</header>
-								<Block_PillCloud>
-									<div class="pill palette-tools"><SvgSprite Link="/icons.svg?v=1#tabler--tools" Alt="Tools" />Tools</div>
-								</Block_PillCloud>
-								<Block_PillCloud>
-									<div class="pill palette-gameplay"><SvgSprite Link="/icons.svg?v=1#tabler--pacman" Alt="Unity" />Unity</div>
-									<div class="pill palette-systems"><SvgSprite Link="/icons.svg?v=1#tabler--settings" Alt="C#" />C#</div>
-								</Block_PillCloud>
-								<p>A 3D dungeon crawler game demo with a full RPG item system, featuring a wide range of weapons and other equipment.</p>
-							</div>
-						</Card>
-						<Card>
-							<a class="card__link" href="/portfolio/voxelmultiplayer">Voxel Multiplayer</a>
-							<picture>
-								<img class="card__image" decoding="async" loading="lazy" width="640" height="480" src="@Assets["media/voxelmultiplayer/card.webp"]" alt="Preview of the Voxel Multiplayer, showing the player character atop of a mountain." />
-							</picture>
-							<div class="container">
-								<header>
-									<SvgSprite class="card-keyicon" Link="/icons.svg?v=1#icon-voxelmultiplayer" />
-									<h3>Voxel Multiplayer</h3>
-								</header>
-								<Block_PillCloud>
-									<div class="pill palette-multiplayer"><SvgSprite Link="/icons.svg?v=1#tabler--users-group" Alt="Multiplayer" />Multiplayer</div>
-								</Block_PillCloud>
-								<Block_PillCloud>
-									<div class="pill palette-gameplay"><SvgSprite Link="/icons.svg?v=1#tabler--pacman" Alt="Unity" />Unity</div>
-									<div class="pill palette-systems"><SvgSprite Link="/icons.svg?v=1#tabler--settings" Alt="C#" />C#</div>
-								</Block_PillCloud>
-								<p>A voxel-art multiplayer PvP game with a custom voxel-art terrain generator for rendering large worlds.</p>
-							</div>
-						</Card>
-					</Block_CardGrid>
-				</OutlineSection>
+                    <Block_CardGrid>
+                        <Card>
+                            <a class="card__link" href="/portfolio/thedwellers">The Dwellers</a>
+                            <picture>
+                                <img class="card__image" decoding="async" loading="lazy" width="640" height="480" src="@Assets["media/thedwellers/card.webp"]" alt="Preview of the game 'The Dwellers'" />
+                            </picture>
+                            <div class="container">
+                                <header>
+                                    <SvgSprite class="card-keyicon" Link="/icons.svg?v=1#icon-thedwellers" />
+                                    <h3>The Dwellers</h3>
+                                </header>
+                                <Block_PillCloud>
+                                    <div class="pill palette-tools"><SvgSprite Link="/icons.svg?v=1#tabler--tools" Alt="Tools" />Tools</div>
+                                </Block_PillCloud>
+                                <Block_PillCloud>
+                                    <div class="pill palette-gameplay"><SvgSprite Link="/icons.svg?v=1#tabler--pacman" Alt="Unity" />Unity</div>
+                                    <div class="pill palette-systems"><SvgSprite Link="/icons.svg?v=1#tabler--settings" Alt="C#" />C#</div>
+                                </Block_PillCloud>
+                                <p>A 3D dungeon crawler game demo with a full RPG item system, featuring a wide range of weapons and other equipment.</p>
+                            </div>
+                        </Card>
+                        <Card>
+                            <a class="card__link" href="/portfolio/voxelmultiplayer">Voxel Multiplayer</a>
+                            <picture>
+                                <img class="card__image" decoding="async" loading="lazy" width="640" height="480" src="@Assets["media/voxelmultiplayer/card.webp"]" alt="Preview of the Voxel Multiplayer, showing the player character atop of a mountain." />
+                            </picture>
+                            <div class="container">
+                                <header>
+                                    <SvgSprite class="card-keyicon" Link="/icons.svg?v=1#icon-voxelmultiplayer" />
+                                    <h3>Voxel Multiplayer</h3>
+                                </header>
+                                <Block_PillCloud>
+                                    <div class="pill palette-multiplayer"><SvgSprite Link="/icons.svg?v=1#tabler--users-group" Alt="Multiplayer" />Multiplayer</div>
+                                </Block_PillCloud>
+                                <Block_PillCloud>
+                                    <div class="pill palette-gameplay"><SvgSprite Link="/icons.svg?v=1#tabler--pacman" Alt="Unity" />Unity</div>
+                                    <div class="pill palette-systems"><SvgSprite Link="/icons.svg?v=1#tabler--settings" Alt="C#" />C#</div>
+                                </Block_PillCloud>
+                                <p>A voxel-art multiplayer PvP game with a custom voxel-art terrain generator for rendering large worlds.</p>
+                            </div>
+                        </Card>
+                    </Block_CardGrid>
+                </OutlineSection>
 
-				<OutlineSection LinkName="Summer Break" Id="summer">
+                <OutlineSection LinkName="Summer Break" Id="summer">
                     <Block_ArticleHeading>
                         <hgroup>
                             <p data-nosnippet>2017</p>
-						    <h2>Summer Break</h2>
+                            <h2>Summer Break</h2>
                         </hgroup>
-					</Block_ArticleHeading>
+                    </Block_ArticleHeading>
 
-					<p>It was over the summer break that I joined up with the team from 'Out of the Blue Studios' to work on some collaborative projects.</p>
+                    <p>It was over the summer break that I joined up with the team from 'Out of the Blue Studios' to work on some collaborative projects.</p>
 
-					<Block_CardGrid>
-						<Card>
-							<a class="card__link" href="/portfolio/lilypadleap">Lilypad Leap</a>
-							<picture>
-								<img class="card__image" decoding="async" loading="lazy" width="400" height="300" src="@Assets["media/lilypadleap/card.webp"]" alt="Preview of the game 'Lilypad Leap'." style="image-rendering: pixelated;" />
-							</picture>
-							<div class="container">
-								<header>
-									<SvgSprite class="card-keyicon" Link="/icons.svg?v=1#icon-lilypadleap" />
-									<h3>Lilypad Leap</h3>
-								</header>
-								<Block_PillCloud>
-									<div class="pill palette-gameplay"><SvgSprite Link="/icons.svg?v=1#tabler--pacman" Alt="Unity" />Unity</div>
-									<div class="pill palette-systems"><SvgSprite Link="/icons.svg?v=1#tabler--settings" Alt="C#" />C#</div>
-								</Block_PillCloud>
-								<p>The clicker-style where you farm kelp and release fish.</p>
-							</div>
-						</Card>
-						<Card>
-							<a class="card__link" href="/portfolio/astralswarm">Astral Swarm</a>
-							<picture>
-								<img class="card__image" decoding="async" loading="lazy" width="400" height="300" src="@Assets["media/astralswarm/card.webp"]" alt="Preview of the game 'Astral Swarm'." style="image-rendering: pixelated;" />
-							</picture>
-							<div class="container">
-								<header>
-									<SvgSprite class="card-keyicon" Link="/icons.svg?v=1#icon-astralswarm" />
-									<h3>Astral Swarm</h3>
-								</header>
-								<Block_PillCloud>
-									<div class="pill palette-gameplay"><SvgSprite Link="/icons.svg?v=1#tabler--pacman" Alt="Unity" />Unity</div>
-									<div class="pill palette-systems"><SvgSprite Link="/icons.svg?v=1#tabler--settings" Alt="C#" />C#</div>
-								</Block_PillCloud>
-								<p>The clicker-style where you farm kelp and release fish.</p>
-							</div>
-						</Card>
-					</Block_CardGrid>
-				</OutlineSection>
+                    <Block_CardGrid>
+                        <Card>
+                            <a class="card__link" href="/portfolio/lilypadleap">Lilypad Leap</a>
+                            <picture>
+                                <img class="card__image" decoding="async" loading="lazy" width="400" height="300" src="@Assets["media/lilypadleap/card.webp"]" alt="Preview of the game 'Lilypad Leap'." style="image-rendering: pixelated;" />
+                            </picture>
+                            <div class="container">
+                                <header>
+                                    <SvgSprite class="card-keyicon" Link="/icons.svg?v=1#icon-lilypadleap" />
+                                    <h3>Lilypad Leap</h3>
+                                </header>
+                                <Block_PillCloud>
+                                    <div class="pill palette-gameplay"><SvgSprite Link="/icons.svg?v=1#tabler--pacman" Alt="Unity" />Unity</div>
+                                    <div class="pill palette-systems"><SvgSprite Link="/icons.svg?v=1#tabler--settings" Alt="C#" />C#</div>
+                                </Block_PillCloud>
+                                <p>The clicker-style where you farm kelp and release fish.</p>
+                            </div>
+                        </Card>
+                        <Card>
+                            <a class="card__link" href="/portfolio/astralswarm">Astral Swarm</a>
+                            <picture>
+                                <img class="card__image" decoding="async" loading="lazy" width="400" height="300" src="@Assets["media/astralswarm/card.webp"]" alt="Preview of the game 'Astral Swarm'." style="image-rendering: pixelated;" />
+                            </picture>
+                            <div class="container">
+                                <header>
+                                    <SvgSprite class="card-keyicon" Link="/icons.svg?v=1#icon-astralswarm" />
+                                    <h3>Astral Swarm</h3>
+                                </header>
+                                <Block_PillCloud>
+                                    <div class="pill palette-gameplay"><SvgSprite Link="/icons.svg?v=1#tabler--pacman" Alt="Unity" />Unity</div>
+                                    <div class="pill palette-systems"><SvgSprite Link="/icons.svg?v=1#tabler--settings" Alt="C#" />C#</div>
+                                </Block_PillCloud>
+                                <p>The clicker-style where you farm kelp and release fish.</p>
+                            </div>
+                        </Card>
+                    </Block_CardGrid>
+                </OutlineSection>
 
-				<OutlineSection LinkName="Diploma" Id="diploma">
+                <OutlineSection LinkName="Diploma" Id="diploma">
                     <Block_ArticleHeading>
                         <hgroup>
                             <p data-nosnippet>2016-2017</p>
                             <h2>Diploma in Games Development</h2>
                         </hgroup>
-					</Block_ArticleHeading>
+                    </Block_ArticleHeading>
 
-					<Block_CardGrid>
-						<Card>
-							<a class="card__link" href="/portfolio/thenewearthconflict">The New Earth Conflict</a>
-							<picture>
-								<img class="card__image" decoding="async" loading="lazy" width="640" height="480" src="@Assets["media/thenewearthconflict/card.webp"]" alt="A preview of the game 'The New Earth Conflict' featuring the player ship engaging in combat." />
-							</picture>
-							<div class="container">
-								<header>
-									<SvgSprite class="card-keyicon" Link="/icons.svg?v=1#icon-thenewearthconflict" />
-									<h3>The New Earth Conflict</h3>
-								</header>
-								<Block_PillCloud>
-									<div class="pill palette-gameplay"><SvgSprite Link="/icons.svg?v=1#tabler--pacman" Alt="Unity" />Unity</div>
-									<div class="pill palette-systems"><SvgSprite Link="/icons.svg?v=1#tabler--settings" Alt="C#" />C#</div>
-								</Block_PillCloud>
-								<p>A realtime space battle where you take control over a battleship and pilot it into battle against an AI team.</p>
-							</div>
-						</Card>
+                    <Block_CardGrid>
+                        <Card>
+                            <a class="card__link" href="/portfolio/thenewearthconflict">The New Earth Conflict</a>
+                            <picture>
+                                <img class="card__image" decoding="async" loading="lazy" width="640" height="480" src="@Assets["media/thenewearthconflict/card.webp"]" alt="A preview of the game 'The New Earth Conflict' featuring the player ship engaging in combat." />
+                            </picture>
+                            <div class="container">
+                                <header>
+                                    <SvgSprite class="card-keyicon" Link="/icons.svg?v=1#icon-thenewearthconflict" />
+                                    <h3>The New Earth Conflict</h3>
+                                </header>
+                                <Block_PillCloud>
+                                    <div class="pill palette-gameplay"><SvgSprite Link="/icons.svg?v=1#tabler--pacman" Alt="Unity" />Unity</div>
+                                    <div class="pill palette-systems"><SvgSprite Link="/icons.svg?v=1#tabler--settings" Alt="C#" />C#</div>
+                                </Block_PillCloud>
+                                <p>A realtime space battle where you take control over a battleship and pilot it into battle against an AI team.</p>
+                            </div>
+                        </Card>
                         <Card>
                             <a class="card__link" href="/portfolio/cryptcrawl">Crypt Crawl</a>
-							<picture>
-								<img class="card__image" decoding="async" loading="lazy" width="640" height="480" src="@Assets["media/cryptcrawl/keyart-4x3.png"]" alt="A preview of the game 'Crypt Crawl' featuring the protagonist wizard in a brown dungeon." style="image-rendering: pixelated;" />
-							</picture>
-							<div class="container">
-								<header>
-									<SvgSprite class="card-keyicon" Link="/icons.svg?v=1#icon-cryptcrawl" />
-									<h3>Crypt Crawl</h3>
-								</header>
-								<Block_PillCloud>
-									<div class="pill palette-gameplay"><SvgSprite Link="/icons.svg?v=1#tabler--pacman" Alt="Unity" />Unity</div>
-									<div class="pill palette-systems"><SvgSprite Link="/icons.svg?v=1#tabler--settings" Alt="C#" />C#</div>
-								</Block_PillCloud>
-								<p>A pixel-art dungeon crawler with a custom tile rendering and rule-based tiles made before Unity created their own.</p>
-							</div>
-						</Card>
-					</Block_CardGrid>
-				</OutlineSection>
-			</Content>
-		</Block_ArticleOutlined>
-	</div>
+                            <picture>
+                                <img class="card__image" decoding="async" loading="lazy" width="640" height="480" src="@Assets["media/cryptcrawl/keyart-4x3.png"]" alt="A preview of the game 'Crypt Crawl' featuring the protagonist wizard in a brown dungeon." style="image-rendering: pixelated;" />
+                            </picture>
+                            <div class="container">
+                                <header>
+                                    <SvgSprite class="card-keyicon" Link="/icons.svg?v=1#icon-cryptcrawl" />
+                                    <h3>Crypt Crawl</h3>
+                                </header>
+                                <Block_PillCloud>
+                                    <div class="pill palette-gameplay"><SvgSprite Link="/icons.svg?v=1#tabler--pacman" Alt="Unity" />Unity</div>
+                                    <div class="pill palette-systems"><SvgSprite Link="/icons.svg?v=1#tabler--settings" Alt="C#" />C#</div>
+                                </Block_PillCloud>
+                                <p>A pixel-art dungeon crawler with a custom tile rendering and rule-based tiles made before Unity created their own.</p>
+                            </div>
+                        </Card>
+                    </Block_CardGrid>
+                </OutlineSection>
+            </Content>
+        </Block_ArticleOutlined>
+    </div>
 </article>

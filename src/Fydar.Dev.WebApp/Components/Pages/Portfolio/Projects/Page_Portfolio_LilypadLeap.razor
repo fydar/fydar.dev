@@ -2,28 +2,28 @@
 @page "/portfolio/lilypadleap"
 
 @{
-	var canonicalUrl = "https://fydar.dev/portfolio/lilypadleap";
-	void PageMetadata(IMetadataFactory factory)
-	{
-		factory.UseTitle("Lilypad Leap - Fydar");
-		factory.UseDescription("A meditative and addictive game where you jump a frog across lily pads.");
-		factory.UseCanonicalUrl(canonicalUrl);
-		factory.UseImage(image =>
-		{
-			image.Url = "https://fydar.dev/media/lilypadleap/social.png";
-			image.Alt = "Promotional material for the game 'Lilypad Leap'.";
-		});
-	}
-	var breadcrumbs = new BreadcrumbList()
-	{
-		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
-		new BreadcrumbListItem("Lilypad Leap", "https://fydar.dev/portfolio/lilypadleap"),
-	};
+    var canonicalUrl = "https://fydar.dev/portfolio/lilypadleap";
+    void PageMetadata(IMetadataFactory factory)
+    {
+        factory.UseTitle("Lilypad Leap - Fydar");
+        factory.UseDescription("A meditative and addictive game where you jump a frog across lily pads.");
+        factory.UseCanonicalUrl(canonicalUrl);
+        factory.UseImage(image =>
+        {
+            image.Url = "https://fydar.dev/media/lilypadleap/social.png";
+            image.Alt = "Promotional material for the game 'Lilypad Leap'.";
+        });
+    }
+    var breadcrumbs = new BreadcrumbList()
+    {
+        new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+        new BreadcrumbListItem("Lilypad Leap", "https://fydar.dev/portfolio/lilypadleap"),
+    };
 }
 
 <HeadFragment>
-	<MetadataComponent Metadata="@PageMetadata" />
-	<BreadcrumbListComponent Model="@breadcrumbs" />
+    <MetadataComponent Metadata="@PageMetadata" />
+    <BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadFragment>
 
 <article class="page-lilypadleap">

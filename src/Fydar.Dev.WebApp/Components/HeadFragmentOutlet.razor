@@ -3,16 +3,16 @@
 
 @foreach (var fragment in Registry.Fragments)
 {
-	@fragment
+    @fragment
 }
 
 @code {
-	protected override void OnInitialized()
-	{
-		Registry.Subscribe(this);
-	}
+    protected override void OnInitialized()
+    {
+        Registry.Subscribe(this);
+    }
 
-	internal void Notify() => StateHasChanged();
+    internal void Notify() => StateHasChanged();
 
-	public void Dispose() { }
+    public void Dispose() { }
 }

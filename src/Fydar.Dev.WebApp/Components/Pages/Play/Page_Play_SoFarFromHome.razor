@@ -2,30 +2,30 @@
 @page "/play/sofarfromhome"
 
 @{
-	void PageMetadata(IMetadataFactory factory)
-	{
-		factory.UseTitle("Play So Far From Home - Fydar");
-		factory.UseDescription("Searching between the sofa cushions for a missing key, but what else is down there?");
-		factory.UseCanonicalUrl("https://fydar.dev/play/sofarfromhome");
-		factory.UseImage(image =>
-		{
-			image.Url = "https://fydar.dev/media/sofarfromhome/social.webp";
-			image.Alt = "Promotional material for the game 'So Far From Home'.";
-		});
-	}
-	var breadcrumbs = new BreadcrumbList()
-	{
-		new BreadcrumbListItem("Play", "https://fydar.dev/play/"),
-		new BreadcrumbListItem("So Far From Home", "https://fydar.dev/play/sofarfromhome"),
-	};
+    void PageMetadata(IMetadataFactory factory)
+    {
+        factory.UseTitle("Play So Far From Home - Fydar");
+        factory.UseDescription("Searching between the sofa cushions for a missing key, but what else is down there?");
+        factory.UseCanonicalUrl("https://fydar.dev/play/sofarfromhome");
+        factory.UseImage(image =>
+        {
+            image.Url = "https://fydar.dev/media/sofarfromhome/social.webp";
+            image.Alt = "Promotional material for the game 'So Far From Home'.";
+        });
+    }
+    var breadcrumbs = new BreadcrumbList()
+    {
+        new BreadcrumbListItem("Play", "https://fydar.dev/play/"),
+        new BreadcrumbListItem("So Far From Home", "https://fydar.dev/play/sofarfromhome"),
+    };
 }
 
 <HeadFragment>
-	<MetadataComponent Metadata="@PageMetadata" />
-	<BreadcrumbListComponent Model="@breadcrumbs" />
-	<meta name="theme-color" content="#161618">
-	<link rel="shortcut icon" href="@Assets["/play/sofarfromhome/favicon.ico"]">
-	<link rel="preload" href="@Assets["/play/sofarfromhome/build/sofarfromhome.loader.js"]" as="script" fetchpriority="high" />
+    <MetadataComponent Metadata="@PageMetadata" />
+    <BreadcrumbListComponent Model="@breadcrumbs" />
+    <meta name="theme-color" content="#161618">
+    <link rel="shortcut icon" href="@Assets["/play/sofarfromhome/favicon.ico"]">
+    <link rel="preload" href="@Assets["/play/sofarfromhome/build/sofarfromhome.loader.js"]" as="script" fetchpriority="high" />
 </HeadFragment>
 
 @{

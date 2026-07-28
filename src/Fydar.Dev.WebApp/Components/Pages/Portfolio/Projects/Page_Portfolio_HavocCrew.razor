@@ -2,28 +2,28 @@
 @page "/portfolio/havoccrew"
 
 @{
-	var canonicalUrl = "https://fydar.dev/portfolio/havoccrew";
-	void PageMetadata(IMetadataFactory factory)
-	{
-		factory.UseTitle("Havoc Crew - Fydar");
-		factory.UseDescription("Co-op realtime multiplayer dungeon crawler for the mobile market.");
-		factory.UseCanonicalUrl(canonicalUrl);
-		factory.UseImage(image =>
-		{
-			image.Url = "https://fydar.dev/media/havoccrew/social.webp";
-			image.Alt = "Promotional material for the game 'Havoc Crew'.";
-		});
-	}
-	var breadcrumbs = new BreadcrumbList()
-	{
-		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
-		new BreadcrumbListItem("Havoc Crew", "https://fydar.dev/portfolio/havoccrew"),
-	};
+    var canonicalUrl = "https://fydar.dev/portfolio/havoccrew";
+    void PageMetadata(IMetadataFactory factory)
+    {
+        factory.UseTitle("Havoc Crew - Fydar");
+        factory.UseDescription("Co-op realtime multiplayer dungeon crawler for the mobile market.");
+        factory.UseCanonicalUrl(canonicalUrl);
+        factory.UseImage(image =>
+        {
+            image.Url = "https://fydar.dev/media/havoccrew/social.webp";
+            image.Alt = "Promotional material for the game 'Havoc Crew'.";
+        });
+    }
+    var breadcrumbs = new BreadcrumbList()
+    {
+        new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+        new BreadcrumbListItem("Havoc Crew", "https://fydar.dev/portfolio/havoccrew"),
+    };
 }
 
 <HeadFragment>
-	<MetadataComponent Metadata="@PageMetadata" />
-	<BreadcrumbListComponent Model="@breadcrumbs" />
+    <MetadataComponent Metadata="@PageMetadata" />
+    <BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadFragment>
 
 <article class="page-systems">

@@ -5,6 +5,6 @@ namespace Fydar.Dev.Lambda.EmailToTicket.Services;
 
 public interface IEmailSinkService
 {
-	public Task<bool> ForwardEmailAsync(
-		EmailModel email);
+    public Task<bool> ForwardEmailAsync(
+        EmailModel email);
 }

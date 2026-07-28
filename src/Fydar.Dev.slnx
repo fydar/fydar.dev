@@ -1,0 +1,22 @@
+<Solution>
+  <Folder Name="/EmailReceive/">
+    <Project Path="Fydar.Dev.Lambda.EmailToTicket.Tests/Fydar.Dev.Lambda.EmailToTicket.Tests.csproj" />
+    <Project Path="Fydar.Dev.Lambda.EmailToTicket/Fydar.Dev.Lambda.EmailToTicket.csproj" />
+  </Folder>
+  <Folder Name="/Pipeline/">
+    <Project Path="GradientTest/GradientTest.csproj" />
+  </Folder>
+  <Folder Name="/Services/">
+    <Project Path="Fydar.Dev.Services.EmailTickets/Fydar.Dev.Services.EmailTickets.csproj" />
+  </Folder>
+  <Folder Name="/Solution Items/" />
+  <Folder Name="/Solution Items/cf-resources/" />
+  <Folder Name="/WebApp/">
+    <Project Path="Fydar.AspNetCore.CSP/Fydar.AspNetCore.CSP.csproj" />
+    <Project Path="Fydar.AspNetCore.OpenGraph/Fydar.AspNetCore.OpenGraph.csproj" />
+    <Project Path="Fydar.AspNetCore.Socials/Fydar.AspNetCore.Socials.csproj" />
+    <Project Path="Fydar.Dev.WebApp.Client/Fydar.Dev.WebApp.Client.csproj" />
+    <Project Path="Fydar.Dev.WebApp.Toolkit.Icons/Fydar.Dev.WebApp.Toolkit.Icons.csproj" />
+    <Project Path="Fydar.Dev.WebApp/Fydar.Dev.WebApp.csproj" />
+  </Folder>
+</Solution>

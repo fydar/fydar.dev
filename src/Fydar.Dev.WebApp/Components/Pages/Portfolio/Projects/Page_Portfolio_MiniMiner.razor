@@ -2,28 +2,28 @@
 @page "/portfolio/miniminer"
 
 @{
-	var canonicalUrl = "https://fydar.dev/portfolio/miniminer";
-	void PageMetadata(IMetadataFactory factory)
-	{
-		factory.UseTitle("Mini Miner - Fydar");
-		factory.UseDescription("The Game Boy demake of the Nintendo DS Pokémon Diamond and Pearl underground mining minigame.");
-		factory.UseCanonicalUrl(canonicalUrl);
-		factory.UseImage(image =>
-		{
-			image.Url = "https://fydar.dev/media/miniminer/social.webp";
-			image.Alt = "Promotional material for the game 'Mini Miner'.";
-		});
-	}
-	var breadcrumbs = new BreadcrumbList()
-	{
-		new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
-		new BreadcrumbListItem("Mini Miner", "https://fydar.dev/portfolio/miniminer"),
-	};
+    var canonicalUrl = "https://fydar.dev/portfolio/miniminer";
+    void PageMetadata(IMetadataFactory factory)
+    {
+        factory.UseTitle("Mini Miner - Fydar");
+        factory.UseDescription("The Game Boy demake of the Nintendo DS Pokémon Diamond and Pearl underground mining minigame.");
+        factory.UseCanonicalUrl(canonicalUrl);
+        factory.UseImage(image =>
+        {
+            image.Url = "https://fydar.dev/media/miniminer/social.webp";
+            image.Alt = "Promotional material for the game 'Mini Miner'.";
+        });
+    }
+    var breadcrumbs = new BreadcrumbList()
+    {
+        new BreadcrumbListItem("Portfolio", "https://fydar.dev/portfolio"),
+        new BreadcrumbListItem("Mini Miner", "https://fydar.dev/portfolio/miniminer"),
+    };
 }
 
 <HeadFragment>
-	<MetadataComponent Metadata="@PageMetadata" />
-	<BreadcrumbListComponent Model="@breadcrumbs" />
+    <MetadataComponent Metadata="@PageMetadata" />
+    <BreadcrumbListComponent Model="@breadcrumbs" />
 </HeadFragment>
 
 <article class="page-miniminer">

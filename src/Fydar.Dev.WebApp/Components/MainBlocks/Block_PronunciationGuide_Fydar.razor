@@ -1,33 +1,33 @@
 @inject Noncer noncer;
 
 <div class="pronunciation-guide pronunciation-guide--fydar">
-	<audio preload="none">
-		<source src="@Assets["media/pronunciation-fydar.mp3"]" type="audio/mpeg">
-		<source src="@Assets["media/pronunciation-fydar.ogg"]" type="audio/ogg">
-	</audio>
+    <audio preload="none">
+        <source src="@Assets["media/pronunciation-fydar.mp3"]" type="audio/mpeg">
+        <source src="@Assets["media/pronunciation-fydar.ogg"]" type="audio/ogg">
+    </audio>
 
-	<button class="pronunciation-guide__button" data-nosnippet>/<span class="syllable1">@foreach (var cluster in syllable1.Clusters){<span title="@cluster.Hint">@cluster.Symbol</span>}<span title="@space.Hint">@space.Symbol</span></span><span class="syllable2">@foreach (var cluster in syllable2.Clusters){<span title="@cluster.Hint">@cluster.Symbol</span>}</span>/</button>
+    <button class="pronunciation-guide__button" data-nosnippet>/<span class="syllable1">@foreach (var cluster in syllable1.Clusters){<span title="@cluster.Hint">@cluster.Symbol</span>}<span title="@space.Hint">@space.Symbol</span></span><span class="syllable2">@foreach (var cluster in syllable2.Clusters){<span title="@cluster.Hint">@cluster.Symbol</span>}</span>/</button>
 
-	<script nonce="@noncer.Nonce">
-		const pronunciationGuide = document.querySelector('.pronunciation-guide--fydar');
-		const audio = pronunciationGuide.querySelector('audio');
-		const button = pronunciationGuide.querySelector('button');
+    <script nonce="@noncer.Nonce">
+        const pronunciationGuide = document.querySelector('.pronunciation-guide--fydar');
+        const audio = pronunciationGuide.querySelector('audio');
+        const button = pronunciationGuide.querySelector('button');
 
-		button.onclick = () => {
-			audio.play();
-		};
-		audio.onplaying = () => {
-			pronunciationGuide.classList.remove('readanimation');
-			pronunciationGuide.classList.add('readanimation');
-		};
-		audio.onended = function() {
-			pronunciationGuide.classList.remove('readanimation');
-		};
-	</script>
+        button.onclick = () => {
+            audio.play();
+        };
+        audio.onplaying = () => {
+            pronunciationGuide.classList.remove('readanimation');
+            pronunciationGuide.classList.add('readanimation');
+        };
+        audio.onended = function() {
+            pronunciationGuide.classList.remove('readanimation');
+        };
+    </script>
 </div>
 
 @code {
-	private IPAString syllable1 = new IPAString(IPACluster.PrimaryStress, IPACluster.F, IPACluster.Y);
-	private IPACluster space = IPACluster.Syllabification;
-	private IPAString syllable2 = new IPAString(IPACluster.D, IPACluster.AR);
+    private IPAString syllable1 = new IPAString(IPACluster.PrimaryStress, IPACluster.F, IPACluster.Y);
+    private IPACluster space = IPACluster.Syllabification;
+    private IPAString syllable2 = new IPAString(IPACluster.D, IPACluster.AR);
 }
