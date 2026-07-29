@@ -1,5 +1,7 @@
 * text=auto eol=lf
 
+[attr]lfs               filter=lfs diff=lfs merge=lfs -text
+
 *.html linguist-detectable=false
 *.razor linguist-detectable=false
 *.css linguist-detectable=false
