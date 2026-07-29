@@ -1,3 +1,5 @@
+using Microsoft.Net.Http.Headers;
+
 namespace Fydar.Dev.WebApp.Internal.UnityFiles;
 
 internal static class WebApplicationExtensions
@@ -8,11 +10,13 @@ internal static class WebApplicationExtensions
         {
             if (context.Request.Path.Value?.EndsWith(".br", StringComparison.OrdinalIgnoreCase) == true)
             {
+                context.Response.Headers.ContentEncoding = "br";
+
                 context.Response.OnStarting(() =>
                 {
-                    if (context.Response.StatusCode == StatusCodes.Status200OK)
+                    if (context.Response.StatusCode != StatusCodes.Status200OK)
                     {
-                        context.Response.Headers.ContentEncoding = "br";
+                        context.Response.Headers.Remove(HeaderNames.ContentEncoding);
                     }
                     return Task.CompletedTask;
                 });
