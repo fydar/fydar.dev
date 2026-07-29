@@ -44,12 +44,8 @@
     <div class="embed--warning"></div>
 
     <script nonce="@noncer.Nonce">
-        let scriptLoaderPolicy;
-
-        // Check if the browser supports Trusted Types
-        if (window.trustedTypes && window.trustedTypes.createPolicy) {
-            // Create a policy specifically for loading your scripts
-            scriptLoaderPolicy = window.trustedTypes.createPolicy('script-loader-policy', {
+        if (window.trustedTypes && window.trustedTypes.createPolicy && !window.trustedTypes.defaultPolicy) {
+            window.trustedTypes.createPolicy('default', {
                 createScriptURL: (url) => {
                     // SECURITY CHECK: Validate the URL before trusting it.
                     // Example: Only allow scripts from your own origin.
@@ -69,7 +65,7 @@
         var frameworkUrl = "@Config.FrameworkUrl";
 
         var script = document.createElement("script");
-        script.src = scriptLoaderPolicy ? scriptLoaderPolicy.createScriptURL(loaderUrl) : loaderUrl;
+        script.src = loaderUrl;
         script.setAttribute("async", "");
         script.onload = () => {
             setTimeout(function () {
@@ -77,7 +73,7 @@
                     companyName: "@Config.CompanyName",
                     productName: "@Config.ProductName",
                     productVersion: "@Config.ProductVersion",
-                    frameworkUrl: scriptLoaderPolicy ? scriptLoaderPolicy.createScriptURL(frameworkUrl) : frameworkUrl,
+                    frameworkUrl: frameworkUrl,
                     codeUrl: "@Config.CodeUrl",
                     dataUrl: "@Config.DataUrl",
                     @if (!string.IsNullOrEmpty(Config.SymbolsUrl))
