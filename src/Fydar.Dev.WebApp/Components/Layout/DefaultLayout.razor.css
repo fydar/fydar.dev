@@ -628,7 +628,6 @@ header:has(+ main > article:first-child > div.fullscreen:first-child) {
     height: 100vh;
     height: 100svh;
     position: relative;
-    max-height: 150vw;
 }
 
     ::deep div.fullscreen .parallax-frame {
