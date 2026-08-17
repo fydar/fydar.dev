@@ -45,10 +45,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AWSSDK.CertificateManager" Version="4.0.101.7" />
-    <PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="4.0.100.7" />
-    <PackageReference Include="AWSSDK.SimpleEmail" Version="4.0.100.7" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="10.0.10" />
+    <PackageReference Include="AWSSDK.CertificateManager" Version="4.0.102" />
+    <PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="4.0.100.8" />
+    <PackageReference Include="AWSSDK.SimpleEmail" Version="4.0.100.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="10.0.11" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.23.0" />
     <PackageReference Include="Serilog" Version="4.4.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
