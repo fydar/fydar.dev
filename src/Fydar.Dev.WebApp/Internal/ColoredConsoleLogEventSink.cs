@@ -18,7 +18,8 @@ internal class ColoredConsoleLogEventSink : ILogEventSink
         "RequestPath",
         "RequestMethod",
         "RequestId",
-        "SourceContext"
+        "SourceContext",
+        "ExceptionDetail"
     ];
 
     private readonly JsonValueFormatter valueFormatter;

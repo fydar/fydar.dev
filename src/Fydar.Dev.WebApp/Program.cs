@@ -7,7 +7,6 @@ using Fydar.Dev.Services.EmailTickets;
 using Fydar.Dev.WebApp.Client.Components.Pages;
 using Fydar.Dev.WebApp.Components;
 using Fydar.Dev.WebApp.Components.Iconography;
-using Fydar.Dev.WebApp.Internal;
 using Fydar.Dev.WebApp.Internal.AntiforgeryNoStoreWorkaround;
 using Fydar.Dev.WebApp.Internal.UnityFiles;
 using Fydar.Dev.WebApp.Toolkit.Icons;
@@ -20,7 +19,6 @@ using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Net.Http.Headers;
 using Serilog;
-using Serilog.Events;
 using System.Net;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
@@ -32,15 +30,9 @@ public class Program
 {
     public static async Task<int> Main(string[] args)
     {
-        var loggerConfiguration = new LoggerConfiguration()
-            .MinimumLevel.Debug()
-            .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
-            .MinimumLevel.Override("Microsoft.AspNetCore.Server.Kestrel", LogEventLevel.Error)
-            .Enrich.FromLogContext()
-            .WriteTo.Sink(new ColoredConsoleLogEventSink());
-
-        var logger = loggerConfiguration.CreateLogger();
-        Log.Logger = logger;
+        Log.Logger = new LoggerConfiguration()
+            .WriteTo.ColoredConsole()
+            .CreateBootstrapLogger();
 
         try
         {
@@ -71,7 +63,9 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        builder.Host.UseSerilog();
+        builder.Host.UseSerilog((context, services, loggerConfiguration) => loggerConfiguration
+            .ReadFrom.Configuration(context.Configuration)
+            .ReadFrom.Services(services));
 
         builder.WebHost.UseSetting(WebHostDefaults.SuppressStatusMessagesKey, "True");
 
