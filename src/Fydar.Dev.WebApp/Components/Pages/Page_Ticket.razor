@@ -2,6 +2,7 @@
 @using Fydar.Dev.WebApp.Internal;
 @using Fydar.Dev.WebApp.Internal.Authentication;
 @using Microsoft.AspNetCore.Authorization;
+@using Microsoft.AspNetCore.WebUtilities;
 @using MimeKit
 
 @layout DefaultLayout
@@ -55,7 +56,7 @@
                         Images and other content this email loads from elsewhere are blocked.
                         Fetching them tells the sender their message was opened.
                     </span>
-                    <a class="ticket-blocked-trust" href="?trust=true">Load remote content</a>
+                    <a class="ticket-blocked-trust" href="@TrustUrl">Load remote content</a>
                 </p>
             }
 
@@ -79,6 +80,9 @@
 
     [SupplyParameterFromQuery(Name = "trust")]
     public bool TrustRemoteContent { get; set; }
+
+    private string TrustUrl =>
+        QueryHelpers.AddQueryString($"/ticket/{Uri.EscapeDataString(TicketId)}", "trust", "true");
 
     private MimeMessage? mimeMessage;
 

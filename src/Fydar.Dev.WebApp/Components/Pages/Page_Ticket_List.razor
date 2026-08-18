@@ -1,0 +1,146 @@
+@using Fydar.Dev.Services.EmailTickets;
+@using Fydar.Dev.Services.EmailTickets.Models;
+@using Fydar.Dev.WebApp.Internal.Authentication;
+@using Microsoft.AspNetCore.Authorization;
+
+@layout DefaultLayout
+@page "/ticket"
+
+@attribute [Authorize(Policy = GitHubAuthenticationDefaults.AuthorizationPolicy)]
+
+@inject IEmailReaderService emailReaderService;
+@inject ILogger<Page_Ticket_List> logger;
+
+<PageTitle>Tickets - Fydar</PageTitle>
+
+<article class="page-ticket-list">
+    <div class="container" style="max-width: 900px;">
+
+        <AuthorizeView>
+            <div class="ticket-identity">
+                <span>Signed in as @context.User.Identity?.Name</span>
+                <form method="post" action="@GitHubAuthenticationDefaults.SignOutPath">
+                    <AntiforgeryToken />
+                    <button class="ticket-identity-signout" type="submit">Sign out</button>
+                </form>
+            </div>
+        </AuthorizeView>
+
+        <h2>Tickets</h2>
+
+        @if (tickets == null)
+        {
+            <p><em>Loading...</em></p>
+        }
+        else if (tickets.TotalCount == 0)
+        {
+            <p><em>There are no tickets.</em></p>
+        }
+        else
+        {
+            <ol class="ticket-list">
+                @foreach (var entry in entries)
+                {
+                    <li class="ticket-list-item">
+                        <a class="ticket-list-link" href="/ticket/@Uri.EscapeDataString(entry.TicketId)">
+                            <span class="ticket-list-subject">@entry.Subject</span>
+                            <span class="ticket-list-from">@entry.From</span>
+                            <time class="ticket-list-received" datetime="@entry.Received.ToString("o")">
+                                @entry.Received.ToString("yyyy-MM-dd HH:mm") UTC
+                            </time>
+                        </a>
+                    </li>
+                }
+            </ol>
+
+            <nav class="ticket-pagination" aria-label="Ticket pages">
+                @if (tickets.PageNumber > 1)
+                {
+                    <a class="ticket-pagination-link" rel="prev" href="@HrefForPage(tickets.PageNumber - 1)">Newer</a>
+                }
+                else
+                {
+                    <span class="ticket-pagination-link ticket-pagination-disabled">Newer</span>
+                }
+
+                <span class="ticket-pagination-position">
+                    Page @tickets.PageNumber of @tickets.TotalPages
+                </span>
+
+                @if (tickets.PageNumber < tickets.TotalPages)
+                {
+                    <a class="ticket-pagination-link" rel="next" href="@HrefForPage(tickets.PageNumber + 1)">Older</a>
+                }
+                else
+                {
+                    <span class="ticket-pagination-link ticket-pagination-disabled">Older</span>
+                }
+            </nav>
+        }
+    </div>
+</article>
+
+@code {
+    private const int PageSize = 20;
+
+    /// <summary>
+    /// <para>Bound as text so that a hand-edited '?page=' lands on the first page instead of
+    /// failing the request.</para>
+    /// </summary>
+    [SupplyParameterFromQuery(Name = "page")]
+    public string? Page { get; set; }
+
+    private TicketPageModel? tickets;
+    private TicketListEntry[] entries = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        int pageNumber = int.TryParse(Page, out int requestedPage)
+            ? requestedPage
+            : 1;
+
+        tickets = await emailReaderService.ListEmailsAsync(pageNumber, PageSize);
+
+        // The listing carries only keys, so the sender and subject of each ticket on this page
+        // come from the emails themselves.
+        entries = await Task.WhenAll(tickets.Tickets.Select(ReadEntryAsync));
+    }
+
+    private async Task<TicketListEntry> ReadEntryAsync(TicketSummaryModel ticket)
+    {
+        try
+        {
+            var message = await emailReaderService.ReadEmailAsync(ticket.TicketId);
+
+            return new TicketListEntry(
+                ticket.TicketId,
+                ticket.LastModified,
+                string.IsNullOrWhiteSpace(message.Subject) ? "(no subject)" : message.Subject,
+                message.From.ToString());
+        }
+        catch (Exception exception)
+        {
+            // A single unreadable ticket shouldn't take the whole listing down with it.
+            logger.LogWarning(exception, "Failed to read the ticket {TicketId} whilst listing tickets.", ticket.TicketId);
+
+            return new TicketListEntry(
+                ticket.TicketId,
+                ticket.LastModified,
+                "(couldn't be read)",
+                string.Empty);
+        }
+    }
+
+    private static string HrefForPage(int pageNumber)
+    {
+        return pageNumber <= 1
+            ? "/ticket"
+            : $"/ticket?page={pageNumber}";
+    }
+
+    private sealed record TicketListEntry(
+        string TicketId,
+        DateTime Received,
+        string Subject,
+        string From);
+}

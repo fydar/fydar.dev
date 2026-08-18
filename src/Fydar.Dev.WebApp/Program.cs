@@ -146,7 +146,8 @@ public class Program
         });
         builder.Services.AddSingleton(new CachedEmailReaderServiceConfiguration()
         {
-            Expiration = TimeSpan.FromHours(1)
+            Expiration = TimeSpan.FromHours(1),
+            ListingExpiration = TimeSpan.FromSeconds(30)
         });
 
         builder.Services.AddHybridCache(options =>

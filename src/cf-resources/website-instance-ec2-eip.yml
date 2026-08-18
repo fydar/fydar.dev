@@ -177,7 +177,9 @@ Resources:
                   - ses:SendEmail
                 Resource: '*'
               - Effect: Allow
-                Action: s3:GetObject
+                Action:
+                  - s3:GetObject
+                  - s3:ListBucket
                 Resource: '*'
               - Effect: Allow
                 Action: acm:ExportCertificate

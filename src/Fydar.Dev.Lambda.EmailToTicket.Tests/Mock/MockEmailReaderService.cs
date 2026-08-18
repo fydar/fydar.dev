@@ -1,4 +1,5 @@
 using Fydar.Dev.Services.EmailTickets;
+using Fydar.Dev.Services.EmailTickets.Models;
 using MimeKit;
 
 namespace Fydar.Dev.Lambda.EmailToTicket.Tests.Mock;
@@ -16,5 +17,19 @@ public class MockEmailReaderService : IEmailReaderService
         await Task.Delay(10, cancellationToken);
 
         return new MimeMessage();
+    }
+
+    public async Task<TicketPageModel> ListEmailsAsync(
+        int pageNumber,
+        int pageSize,
+        CancellationToken cancellationToken = default)
+    {
+        await Task.Delay(10, cancellationToken);
+
+        return new TicketPageModel()
+        {
+            PageNumber = pageNumber,
+            PageSize = pageSize
+        };
     }
 }
