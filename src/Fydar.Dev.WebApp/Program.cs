@@ -11,6 +11,7 @@ using Fydar.Dev.WebApp.Internal.AntiforgeryNoStoreWorkaround;
 using Fydar.Dev.WebApp.Internal.UnityFiles;
 using Fydar.Dev.WebApp.Toolkit.Icons;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.HostFiltering;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.AspNetCore.Http.Features;
@@ -112,6 +113,22 @@ public class Program
             options.MaxAge = TimeSpan.FromDays(365);
             options.IncludeSubDomains = true;
             options.Preload = true;
+        });
+
+        // Rendering a component builds its base URI from the request's host, so a request without
+        // one (port scanners send HTTP/1.0 with no Host header) produces 'http:///' and throws.
+        // Reject it up front, as a request with no host is malformed regardless.
+        builder.Services.Configure<HostFilteringOptions>(options =>
+        {
+            options.AllowEmptyHosts = false;
+        });
+
+        // The error pages are components, and rendering one re-enters the components pipeline in
+        // the same request. Without a fresh scope the second render finds the scoped
+        // NavigationManager already initialized by the first and throws.
+        builder.Services.Configure<StatusCodePagesOptions>(options =>
+        {
+            options.CreateScopeForStatusCodePages = true;
         });
 
         builder.Services.AddRazorComponents()
@@ -226,7 +243,11 @@ public class Program
             }
 
             app.UseHsts();
-            app.UseExceptionHandler("/error");
+            app.UseExceptionHandler(new ExceptionHandlerOptions()
+            {
+                ExceptionHandlingPath = "/error",
+                CreateScopeForErrors = true
+            });
         }
 
         app.UseStatusCodePagesWithReExecute("/error/{0}");
