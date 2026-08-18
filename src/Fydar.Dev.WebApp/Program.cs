@@ -7,6 +7,7 @@ using Fydar.Dev.Services.EmailTickets;
 using Fydar.Dev.WebApp.Client.Components.Pages;
 using Fydar.Dev.WebApp.Components;
 using Fydar.Dev.WebApp.Components.Iconography;
+using Fydar.Dev.WebApp.Internal;
 using Fydar.Dev.WebApp.Internal.AntiforgeryNoStoreWorkaround;
 using Fydar.Dev.WebApp.Internal.UnityFiles;
 using Fydar.Dev.WebApp.Toolkit.Icons;
@@ -139,6 +140,7 @@ public class Program
             Bucket = "fydar.dev-inbound-email"
         });
         builder.Services.AddSingleton<IEmailReaderService, S3EmailReaderService>();
+        builder.Services.AddSingleton<TicketHtmlSanitizer>();
         builder.Services.AddScoped<HtmlRenderer>();
 
         builder.Services.AddScoped<IContactSubmitSink, SaveTicketSubmitSink>();

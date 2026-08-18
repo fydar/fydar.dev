@@ -9,6 +9,11 @@
     font-weight: 400;
 }
 
+.ticket-body-text {
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+}
+
 .ticket-from {
     margin-top: 6rem;
 }
