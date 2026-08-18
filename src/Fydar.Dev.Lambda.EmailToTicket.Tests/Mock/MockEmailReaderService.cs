@@ -32,4 +32,18 @@ public class MockEmailReaderService : IEmailReaderService
             PageSize = pageSize
         };
     }
+
+    public async Task DeleteEmailAsync(
+        string ticketId,
+        CancellationToken cancellationToken = default)
+    {
+        await Task.Delay(10, cancellationToken);
+    }
+
+    public async Task RestoreEmailAsync(
+        string ticketId,
+        CancellationToken cancellationToken = default)
+    {
+        await Task.Delay(10, cancellationToken);
+    }
 }

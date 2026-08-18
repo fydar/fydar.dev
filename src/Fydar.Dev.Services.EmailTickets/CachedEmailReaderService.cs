@@ -66,4 +66,25 @@ public class CachedEmailReaderService : IEmailReaderService
             listingEntryOptions,
             cancellationToken: cancellationToken);
     }
+
+    /// <inheritdoc/>
+    public async Task DeleteEmailAsync(
+        string ticketId,
+        CancellationToken cancellationToken = default)
+    {
+        await inner.DeleteEmailAsync(ticketId, cancellationToken);
+
+        // A cached read of the now-deleted ticket would otherwise keep serving it until expiry.
+        await cache.RemoveAsync(CacheKeyPrefix + ticketId, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task RestoreEmailAsync(
+        string ticketId,
+        CancellationToken cancellationToken = default)
+    {
+        await inner.RestoreEmailAsync(ticketId, cancellationToken);
+
+        await cache.RemoveAsync(CacheKeyPrefix + ticketId, cancellationToken);
+    }
 }

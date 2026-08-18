@@ -11,6 +11,9 @@ namespace Fydar.Dev.Services.EmailTickets;
 
 public class S3EmailReaderService : IEmailReaderService
 {
+    // A deleted ticket is moved under this prefix rather than erased, so it can be restored.
+    private const string TrashPrefix = "deleted/";
+
     private readonly IAmazonS3 amazonS3;
     private readonly S3EmailReaderServiceConfiguration configuration;
 
@@ -66,8 +69,9 @@ public class S3EmailReaderService : IEmailReaderService
             {
                 foreach (var s3Object in response.S3Objects)
                 {
-                    // A key ending in a slash is a folder marker rather than an email.
-                    if (s3Object.Key.EndsWith("/"))
+                    // A key ending in a slash is a folder marker rather than an email, and a key
+                    // under the trash prefix is a deleted ticket, awaiting a possible restore.
+                    if (s3Object.Key.EndsWith("/") || s3Object.Key.StartsWith(TrashPrefix, StringComparison.Ordinal))
                     {
                         continue;
                     }
@@ -123,5 +127,41 @@ public class S3EmailReaderService : IEmailReaderService
             PageSize = pageSize,
             TotalCount = totalCount
         };
+    }
+
+    /// <inheritdoc/>
+    public async Task DeleteEmailAsync(
+        string ticketId,
+        CancellationToken cancellationToken = default)
+    {
+        await MoveAsync(ticketId, TrashPrefix + ticketId, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task RestoreEmailAsync(
+        string ticketId,
+        CancellationToken cancellationToken = default)
+    {
+        await MoveAsync(TrashPrefix + ticketId, ticketId, cancellationToken);
+    }
+
+    private async Task MoveAsync(
+        string sourceKey,
+        string destinationKey,
+        CancellationToken cancellationToken)
+    {
+        await amazonS3.CopyObjectAsync(new CopyObjectRequest()
+        {
+            SourceBucket = configuration.Bucket,
+            SourceKey = sourceKey,
+            DestinationBucket = configuration.Bucket,
+            DestinationKey = destinationKey
+        }, cancellationToken);
+
+        await amazonS3.DeleteObjectAsync(new DeleteObjectRequest()
+        {
+            BucketName = configuration.Bucket,
+            Key = sourceKey
+        }, cancellationToken);
     }
 }

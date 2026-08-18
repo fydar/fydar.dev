@@ -21,4 +21,19 @@ public interface IEmailReaderService
         int pageNumber,
         int pageSize,
         CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// <para>Moves a ticket out of the listing. The ticket is kept, not erased, so
+    /// <see cref="RestoreEmailAsync"/> can bring it back.</para>
+    /// </summary>
+    public Task DeleteEmailAsync(
+        string ticketId,
+        CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// <para>Reverses a <see cref="DeleteEmailAsync"/> for a ticket that hasn't been purged yet.</para>
+    /// </summary>
+    public Task RestoreEmailAsync(
+        string ticketId,
+        CancellationToken cancellationToken = default);
 }

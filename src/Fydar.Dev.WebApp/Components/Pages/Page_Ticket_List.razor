@@ -28,6 +28,19 @@
 
         <h2>Tickets</h2>
 
+        @if (deletedTicketId is { } undoTicketId)
+        {
+            <p class="ticket-list-notice">
+                <span>
+                    Ticket deleted@(string.IsNullOrEmpty(deletedTicketSubject) ? "." : $": “{deletedTicketSubject}”.")
+                </span>
+                <EditForm Model="this" FormName="undo-ticket" OnSubmit="HandleUndo">
+                    <input type="hidden" name="undoTicketId" value="@undoTicketId" />
+                    <button class="ticket-list-notice-undo" type="submit">Undo</button>
+                </EditForm>
+            </p>
+        }
+
         @if (tickets == null)
         {
             <p><em>Loading...</em></p>
@@ -49,6 +62,10 @@
                                 @entry.Received.ToString("yyyy-MM-dd HH:mm") UTC
                             </time>
                         </a>
+                        <EditForm Model="entry" FormName="@($"delete-{entry.TicketId}")" OnSubmit="HandleDelete" class="ticket-list-delete-form">
+                            <input type="hidden" name="ticketId" value="@entry.TicketId" />
+                            <button class="ticket-list-delete" type="submit" title="Delete this ticket">Delete</button>
+                        </EditForm>
                     </li>
                 }
             </ol>
@@ -90,15 +107,77 @@
     [SupplyParameterFromQuery(Name = "page")]
     public string? Page { get; set; }
 
+    [SupplyParameterFromForm(Name = "ticketId")]
+    public string? SubmittedTicketId { get; set; }
+
+    [SupplyParameterFromForm(Name = "undoTicketId")]
+    public string? SubmittedUndoTicketId { get; set; }
+
     private TicketPageModel? tickets;
     private TicketListEntry[] entries = [];
+    private int pageNumber;
+
+    private string? deletedTicketId;
+    private string? deletedTicketSubject;
 
     protected override async Task OnInitializedAsync()
     {
-        int pageNumber = int.TryParse(Page, out int requestedPage)
+        pageNumber = int.TryParse(Page, out int requestedPage)
             ? requestedPage
             : 1;
 
+        await LoadAsync();
+    }
+
+    private async Task HandleDelete()
+    {
+        string? ticketId = SubmittedTicketId;
+        if (string.IsNullOrEmpty(ticketId))
+        {
+            return;
+        }
+
+        // Captured before the reload below drops this ticket out of 'entries'.
+        string? subject = entries.FirstOrDefault(entry => entry.TicketId == ticketId)?.Subject;
+
+        try
+        {
+            await emailReaderService.DeleteEmailAsync(ticketId);
+
+            deletedTicketId = ticketId;
+            deletedTicketSubject = subject;
+        }
+        catch (Exception exception)
+        {
+            logger.LogWarning(exception, "Failed to delete the ticket {TicketId}.", ticketId);
+        }
+
+        await LoadAsync();
+    }
+
+    private async Task HandleUndo()
+    {
+        string? ticketId = SubmittedUndoTicketId;
+        if (!string.IsNullOrEmpty(ticketId))
+        {
+            try
+            {
+                await emailReaderService.RestoreEmailAsync(ticketId);
+            }
+            catch (Exception exception)
+            {
+                logger.LogWarning(exception, "Failed to restore the ticket {TicketId}.", ticketId);
+            }
+        }
+
+        deletedTicketId = null;
+        deletedTicketSubject = null;
+
+        await LoadAsync();
+    }
+
+    private async Task LoadAsync()
+    {
         tickets = await emailReaderService.ListEmailsAsync(pageNumber, PageSize);
 
         // The listing carries only keys, so the sender and subject of each ticket on this page
