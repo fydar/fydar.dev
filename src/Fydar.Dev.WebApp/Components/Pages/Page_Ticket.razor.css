@@ -76,8 +76,35 @@
     overflow-wrap: break-word;
 }
 
-.ticket-from {
+.ticket-identity {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    align-items: center;
+    justify-content: space-between;
     margin-top: 6rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+    .ticket-identity-signout {
+        flex-shrink: 0;
+        padding: 0.35rem 0.8rem;
+        border: 1px solid #ffffff30;
+        border-radius: 4px;
+        background-color: transparent;
+        color: inherit;
+        font: inherit;
+        cursor: pointer;
+    }
+
+        .ticket-identity-signout:hover,
+        .ticket-identity-signout:focus-visible {
+            background-color: #ffffff12;
+        }
+
+.ticket-from {
+    margin-top: 1.5rem;
 }
 
 .ticket-blocked {

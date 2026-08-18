@@ -1,6 +1,10 @@
 <Router AppAssembly="@typeof(Program).Assembly" AdditionalAssemblies="new[] { typeof(Client.Components.Pages.Counter).Assembly }">
     <Found Context="routeData">
-        <RouteView RouteData="@routeData" DefaultLayout="@typeof(Layout.BlankLayout)" />
+        <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(Layout.BlankLayout)">
+            <NotAuthorized>
+                <Page_AccessDenied />
+            </NotAuthorized>
+        </AuthorizeRouteView>
         <FocusOnNavigate RouteData="@routeData" Selector="body" />
     </Found>
 </Router>

@@ -9,6 +9,7 @@ using Fydar.Dev.WebApp.Components;
 using Fydar.Dev.WebApp.Components.Iconography;
 using Fydar.Dev.WebApp.Internal;
 using Fydar.Dev.WebApp.Internal.AntiforgeryNoStoreWorkaround;
+using Fydar.Dev.WebApp.Internal.Authentication;
 using Fydar.Dev.WebApp.Internal.UnityFiles;
 using Fydar.Dev.WebApp.Toolkit.Icons;
 using Microsoft.AspNetCore.Components.Web;
@@ -98,6 +99,8 @@ public class Program
 
         builder.Services.AddAntiforgery();
         builder.Services.RemoveAntiforgeryNoStore();
+
+        builder.Services.AddGitHubAuthentication(builder.Configuration, builder.Environment);
 
         builder.Services.AddResponseCompression(options =>
         {
@@ -274,7 +277,12 @@ public class Program
 
         app.MapStaticAssets();
 
+        app.UseAuthentication();
+        app.UseAuthorization();
+
         app.UseAntiforgery();
+
+        app.MapGitHubAuthenticationEndpoints();
 
         app.MapRazorComponents<App>()
             .WithStaticAssets()

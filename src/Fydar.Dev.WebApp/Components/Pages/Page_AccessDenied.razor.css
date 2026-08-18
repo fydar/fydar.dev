@@ -1,0 +1,21 @@
+/* Access denied */
+.page-access-denied h2 {
+    margin-top: 6rem;
+}
+
+.signin-button {
+    display: inline-block;
+    padding: 0.35rem 0.8rem;
+    border: 1px solid #ffffff30;
+    border-radius: 4px;
+    background-color: transparent;
+    color: inherit;
+    font: inherit;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+    .signin-button:hover,
+    .signin-button:focus-visible {
+        background-color: #ffffff12;
+    }

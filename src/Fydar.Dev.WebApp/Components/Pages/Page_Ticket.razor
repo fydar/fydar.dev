@@ -1,9 +1,13 @@
 @using Fydar.Dev.Services.EmailTickets;
 @using Fydar.Dev.WebApp.Internal;
+@using Fydar.Dev.WebApp.Internal.Authentication;
+@using Microsoft.AspNetCore.Authorization;
 @using MimeKit
 
 @layout DefaultLayout
 @page "/ticket/{ticketId}"
+
+@attribute [Authorize(Policy = GitHubAuthenticationDefaults.AuthorizationPolicy)]
 
 <!-- Disabled whilst framework.js is also disabled @@attribute [StreamRendering(true)] -->
 
@@ -21,7 +25,17 @@
 
 <article class="page-ticket">
     <div class="container" style="max-width: 900px;">
-        
+
+        <AuthorizeView>
+            <div class="ticket-identity">
+                <span>Signed in as @context.User.Identity?.Name</span>
+                <form method="post" action="@GitHubAuthenticationDefaults.SignOutPath">
+                    <AntiforgeryToken />
+                    <button class="ticket-identity-signout" type="submit">Sign out</button>
+                </form>
+            </div>
+        </AuthorizeView>
+
         @if (mimeMessage == null)
         {
             <p><em>Loading...</em></p>

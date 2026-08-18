@@ -1,0 +1,33 @@
+@using Fydar.Dev.WebApp.Internal.Authentication;
+
+@layout DefaultLayout
+@page "/signin/denied"
+
+<PageTitle>Not authorized - Fydar</PageTitle>
+
+<article class="page-access-denied">
+    <div class="container">
+
+        <h2>Not authorized</h2>
+
+        <AuthorizeView>
+            <Authorized>
+                <p>
+                    You are signed in as <strong>@context.User.Identity?.Name</strong>, which
+                    isn't the account this page is for.
+                </p>
+
+                <form method="post" action="@GitHubAuthenticationDefaults.SignOutPath">
+                    <AntiforgeryToken />
+                    <button class="signin-button" type="submit">Sign out</button>
+                </form>
+            </Authorized>
+            <NotAuthorized>
+                <p>Signing in with GitHub didn't finish.</p>
+
+                <a class="signin-button" href="@GitHubAuthenticationDefaults.SignInPath">Try again</a>
+            </NotAuthorized>
+        </AuthorizeView>
+
+    </div>
+</article>

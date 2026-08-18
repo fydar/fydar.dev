@@ -37,6 +37,18 @@ Parameters:
     Default: '10.10.0.0/24'
     AllowedPattern: '^((1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])\.){3}(1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])\/(8|16|24|32)$'
 
+  GitHubOAuthClientId:
+    Type: String
+    Description: Client ID of the GitHub OAuth application backing owner sign-in. Not a secret.
+    Default: ''
+
+  GitHubOAuthClientSecret:
+    Type: String
+    Description: >-
+      The GitHub OAuth application's client secret, supplied at deploy time.
+    Default: ''
+    NoEcho: true
+
   SubnetAz1:
     Type: String
     Description: Availability zone for subnet 1.
@@ -207,6 +219,10 @@ Resources:
               Value: '80'
             - Name: CONFIG_HTTPSPORT
               Value: '443'
+            - Name: CONFIG_Authentication__GitHub__ClientId
+              Value: !Ref GitHubOAuthClientId
+            - Name: CONFIG_Authentication__GitHub__ClientSecret
+              Value: !Ref GitHubOAuthClientSecret
           LogConfiguration:
             LogDriver: awslogs
             Options:
