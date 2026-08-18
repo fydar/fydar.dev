@@ -12,6 +12,13 @@
 
 <PageTitle>Ticket - Fydar</PageTitle>
 
+@if (TrustRemoteContent)
+{
+    @* The site's policy only allows images from itself, which would block a trusted email's
+       images just as firmly as the sanitizer does. *@
+    <ContentSecurityPolicy_Allow Directive="img-src" Sources="https:" />
+}
+
 <article class="page-ticket">
     <div class="container" style="max-width: 900px;">
         
@@ -21,14 +28,27 @@
         }
         else
         {
+            var body = ticketHtmlSanitizer.Sanitize(mimeMessage.HtmlBody, TrustRemoteContent);
+
             <p class="ticket-from">@mimeMessage.From.ToString()</p>
 
             <p class="ticket-to">@mimeMessage.To.ToString()</p>
 
+            @if (body.BlockedRemoteContent)
+            {
+                <p class="ticket-blocked">
+                    <span>
+                        Images and other content this email loads from elsewhere are blocked.
+                        Fetching them tells the sender their message was opened.
+                    </span>
+                    <a class="ticket-blocked-trust" href="?trust=true">Load remote content</a>
+                </p>
+            }
+
             <div class="ticket-body">
-                @if (mimeMessage.HtmlBody is string htmlBody)
+                @if (mimeMessage.HtmlBody is not null)
                 {
-                    @ticketHtmlSanitizer.Sanitize(htmlBody)
+                    @body.Html
                 }
                 else
                 {
@@ -42,6 +62,9 @@
 @code {
     [Parameter]
     public string TicketId { get; set; } = string.Empty;
+
+    [SupplyParameterFromQuery(Name = "trust")]
+    public bool TrustRemoteContent { get; set; }
 
     private MimeMessage? mimeMessage;
 

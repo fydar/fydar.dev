@@ -1,3 +1,4 @@
+using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using Ganss.Xss;
 using Microsoft.AspNetCore.Components;
@@ -53,11 +54,52 @@ internal sealed class TicketHtmlSanitizer
         "mailto",
         "tel"];
 
-    private readonly HtmlSanitizer sanitizer;
+    public const string BlockedAttribute = "data-blocked-remote";
+
+    private readonly HtmlSanitizer trustingSanitizer;
+    private readonly HtmlSanitizer blockingSanitizer;
 
     public TicketHtmlSanitizer()
     {
-        sanitizer = new HtmlSanitizer();
+        trustingSanitizer = CreateSanitizer();
+
+        blockingSanitizer = CreateSanitizer();
+        blockingSanitizer.PostProcessNode += BlockRemoteContent;
+    }
+
+    /// <summary>
+    /// Sanitizes an email's HTML body into markup that is safe to render on the ticket page.
+    /// </summary>
+    /// <param name="html">The HTML body of the email.</param>
+    /// <param name="trustRemoteContent">
+    /// Whether the email may reference content hosted elsewhere. Fetching it tells the sender
+    /// the ticket was opened, which is how tracking pixels report back, so it is only done once
+    /// the reader has decided the sender is worth trusting.
+    /// </param>
+    /// <returns>The sanitized markup, and whether any remote content was withheld from it.</returns>
+    public SanitizedTicketHtml Sanitize(
+        string? html,
+        bool trustRemoteContent)
+    {
+        if (string.IsNullOrEmpty(html))
+        {
+            return default;
+        }
+
+        // Configuring a sanitizer is what isn't thread safe; sanitizing from several requests at
+        // once is fine.
+        string sanitized = trustRemoteContent
+            ? trustingSanitizer.Sanitize(html)
+            : blockingSanitizer.Sanitize(html);
+
+        return new SanitizedTicketHtml(
+            (MarkupString)sanitized,
+            sanitized.Contains(BlockedAttribute, StringComparison.Ordinal));
+    }
+
+    private static HtmlSanitizer CreateSanitizer()
+    {
+        var sanitizer = new HtmlSanitizer();
 
         foreach (string disallowedTag in disallowedTags)
         {
@@ -78,24 +120,51 @@ internal sealed class TicketHtmlSanitizer
 
         sanitizer.FilterUrl += RequireAbsoluteUrl;
         sanitizer.PostProcessNode += IsolateLink;
+
+        return sanitizer;
     }
 
-    /// <summary>
-    /// Sanitizes an email's HTML body into markup that is safe to render on the ticket page.
-    /// </summary>
-    /// <param name="html">The HTML body of the email.</param>
-    /// <returns>The sanitized markup.</returns>
-    public MarkupString Sanitize(
-        string? html)
+    private static void BlockRemoteContent(
+        object? sender,
+        PostProcessNodeEventArgs eventArgs)
     {
-        if (string.IsNullOrEmpty(html))
+        if (eventArgs.Node is not IElement element)
         {
-            return default;
+            return;
         }
 
-        // Configuring the sanitizer is what isn't thread safe; sanitizing from several requests
-        // at once is fine.
-        return (MarkupString)sanitizer.Sanitize(html);
+        // An image's source is the usual tracking pixel, but a style can fetch just as quietly
+        // through background-image, list-style-image, cursor or border-image. Everything else
+        // that reaches out - the background attribute, srcset, iframes, objects - was already
+        // dropped by the allowlist, and data: URIs never make a request.
+        if (element is IHtmlImageElement
+            && element.HasAttribute("src"))
+        {
+            element.RemoveAttribute("src");
+            element.SetAttribute(BlockedAttribute, "");
+        }
+
+        string? style = element.GetAttribute("style");
+        if (style != null
+            && style.Contains("url(", StringComparison.OrdinalIgnoreCase))
+        {
+            string remaining = string.Join(
+                ';',
+                style
+                    .Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                    .Where(declaration => !declaration.Contains("url(", StringComparison.OrdinalIgnoreCase)));
+
+            if (string.IsNullOrEmpty(remaining))
+            {
+                element.RemoveAttribute("style");
+            }
+            else
+            {
+                element.SetAttribute("style", remaining);
+            }
+
+            element.SetAttribute(BlockedAttribute, "");
+        }
     }
 
     private static void RequireAbsoluteUrl(
@@ -125,3 +194,14 @@ internal sealed class TicketHtmlSanitizer
         }
     }
 }
+
+/// <summary>
+/// An email's HTML body, sanitized for rendering on the ticket page.
+/// </summary>
+/// <param name="Html">The markup that is safe to render.</param>
+/// <param name="BlockedRemoteContent">
+/// Whether anything the email would have fetched from elsewhere was withheld.
+/// </param>
+internal readonly record struct SanitizedTicketHtml(
+    MarkupString Html,
+    bool BlockedRemoteContent);
