@@ -42,7 +42,7 @@
         }
         else
         {
-            var body = ticketHtmlSanitizer.Sanitize(mimeMessage.HtmlBody, TrustRemoteContent);
+            var body = ticketHtmlSanitizer.Sanitize(mimeMessage, TrustRemoteContent);
 
             <p class="ticket-from">@mimeMessage.From.ToString()</p>
 
