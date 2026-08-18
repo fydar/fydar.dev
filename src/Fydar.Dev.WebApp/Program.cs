@@ -1,4 +1,4 @@
-using Amazon.CertificateManager;
+﻿using Amazon.CertificateManager;
 using Amazon.CertificateManager.Model;
 using Amazon.S3;
 using Amazon.SimpleEmail;
@@ -20,7 +20,9 @@ using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.Extensions.Caching.Hybrid;
 using Microsoft.Net.Http.Headers;
+using MimeKit;
 using Serilog;
 using System.Net;
 using System.Security.Cryptography;
@@ -142,7 +144,22 @@ public class Program
         {
             Bucket = "fydar.dev-inbound-email"
         });
-        builder.Services.AddSingleton<IEmailReaderService, S3EmailReaderService>();
+        builder.Services.AddSingleton(new CachedEmailReaderServiceConfiguration()
+        {
+            Expiration = TimeSpan.FromHours(1)
+        });
+
+        builder.Services.AddHybridCache(options =>
+        {
+            options.MaximumPayloadBytes = 8 * 1024 * 1024;
+        });
+        builder.Services.AddSingleton<IHybridCacheSerializer<MimeMessage>, MimeMessageHybridCacheSerializer>();
+
+        builder.Services.AddSingleton<S3EmailReaderService>();
+        builder.Services.AddSingleton<IEmailReaderService>(services => new CachedEmailReaderService(
+            services.GetRequiredService<S3EmailReaderService>(),
+            services.GetRequiredService<HybridCache>(),
+            services.GetRequiredService<CachedEmailReaderServiceConfiguration>()));
         builder.Services.AddSingleton<TicketHtmlSanitizer>();
         builder.Services.AddScoped<HtmlRenderer>();
 
