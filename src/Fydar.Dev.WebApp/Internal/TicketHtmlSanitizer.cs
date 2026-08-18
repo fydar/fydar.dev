@@ -4,6 +4,7 @@ using AngleSharp.Html.Parser;
 using Ganss.Xss;
 using Microsoft.AspNetCore.Components;
 using MimeKit;
+using System.Globalization;
 
 namespace Fydar.Dev.WebApp.Internal;
 
@@ -51,7 +52,8 @@ internal sealed class TicketHtmlSanitizer
         "position",
         "z-index"];
 
-    // On top of the http and https allowed by default; both are inert until clicked.
+    // On top of the http and https allowed by default. Mailto and tel are inert until clicked;
+    // cid points at a part of this very email and data carries its content inline, so neither
     // reaches the network. Both are held to images by RestrictInlineData.
     private static readonly string[] allowedSchemes = [
         "mailto",
@@ -215,10 +217,97 @@ internal sealed class TicketHtmlSanitizer
         }
 
         sanitizer.FilterUrl += RequireAbsoluteUrl;
+        sanitizer.PostProcessNode += StripTrackingImages;
         sanitizer.PostProcessNode += RestrictInlineData;
         sanitizer.PostProcessNode += IsolateLink;
 
         return sanitizer;
+    }
+
+    /// <summary>
+    /// Drops an image that has been hidden or shrunk to nothing, on both the trusting and the
+    /// blocking sanitizer. A reader can never see such an image, so nothing legitimate renders
+    /// one - its only purpose is to be fetched quietly, which trusting the sender should not
+    /// grant it either.
+    /// </summary>
+    private static void StripTrackingImages(
+        object? sender,
+        PostProcessNodeEventArgs eventArgs)
+    {
+        if (eventArgs.Node is IHtmlImageElement image
+            && IsHiddenOrTiny(image))
+        {
+            // 'ReplacementNodes' has no way to say "remove"; leaving it empty means "unchanged",
+            // so an outright removal has to go through the DOM directly.
+            image.Remove();
+        }
+    }
+
+    private static bool IsHiddenOrTiny(
+        IHtmlImageElement image)
+    {
+        var style = ParseStyle(image.GetAttribute("style"));
+
+        if (style.TryGetValue("display", out string? display)
+            && display.Equals("none", StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+
+        // The style attribute overrides the width/height attributes in a browser, so it is
+        // checked first; either source is enough to establish a dimension.
+        string? width = style.GetValueOrDefault("width") ?? image.GetAttribute("width");
+        string? height = style.GetValueOrDefault("height") ?? image.GetAttribute("height");
+
+        return IsTrackingSize(width) && IsTrackingSize(height);
+    }
+
+    private static bool IsTrackingSize(
+        string? value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return false;
+        }
+
+        string trimmed = value.Trim();
+        string numeric = trimmed.EndsWith("px", StringComparison.OrdinalIgnoreCase)
+            ? trimmed[..^2]
+            : trimmed;
+
+        return double.TryParse(numeric, NumberStyles.Float, CultureInfo.InvariantCulture, out double pixels)
+            && pixels is >= 0 and <= 1;
+    }
+
+    private static Dictionary<string, string> ParseStyle(
+        string? style)
+    {
+        var declarations = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        if (string.IsNullOrEmpty(style))
+        {
+            return declarations;
+        }
+
+        foreach (string declaration in style.Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+        {
+            int separator = declaration.IndexOf(':');
+            if (separator <= 0)
+            {
+                continue;
+            }
+
+            string property = declaration[..separator].Trim();
+            string value = declaration[(separator + 1)..].Trim();
+
+            if (value.EndsWith("!important", StringComparison.OrdinalIgnoreCase))
+            {
+                value = value[..^"!important".Length].TrimEnd();
+            }
+
+            declarations[property] = value;
+        }
+
+        return declarations;
     }
 
     private static void BlockRemoteContent(
