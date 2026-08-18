@@ -2,12 +2,68 @@
 .ticket-body {
     padding: 1rem;
     box-sizing: border-box;
+    overflow-x: auto;
+    color-scheme: light;
     background-color: #ffffff;
-    color: #404040;
+    color: #000000;
     font-family: Calibri, sans-serif;
     font-size: 11pt;
-    font-weight: 400;
+    font-style: normal;
+    font-weight: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: start;
 }
+
+    .ticket-body ::deep :is(h1, h2, h3) {
+        font-size: revert;
+        font-weight: revert;
+        letter-spacing: revert;
+        margin: revert;
+    }
+
+    .ticket-body ::deep p {
+        margin-block-start: revert;
+        margin-block-end: revert;
+        text-align: revert;
+    }
+
+    /* An align attribute only outranks the browser's own styling, never an author rule, so the
+       layout's justified paragraphs would swallow it. Restate it where it can win. */
+    .ticket-body ::deep :is(p, h1, h2, h3)[align="left" i] {
+        text-align: left;
+    }
+
+    .ticket-body ::deep :is(p, h1, h2, h3)[align="center" i] {
+        text-align: center;
+    }
+
+    .ticket-body ::deep :is(p, h1, h2, h3)[align="right" i] {
+        text-align: right;
+    }
+
+    .ticket-body ::deep :is(p, h1, h2, h3)[align="justify" i] {
+        text-align: justify;
+    }
+
+    .ticket-body ::deep b {
+        font-weight: revert;
+    }
+
+    .ticket-body ::deep a,
+    .ticket-body ::deep a:visited {
+        color: revert;
+        text-decoration-color: revert;
+    }
+
+    .ticket-body ::deep code {
+        all: revert;
+    }
+
+    .ticket-body ::deep ::selection {
+        background: revert;
+        color: revert;
+    }
 
 .ticket-body-text {
     white-space: pre-wrap;
