@@ -289,18 +289,6 @@ Resources:
           ToPort: 443
           CidrIpv6: '::/0'
 
-  WebsiteInstanceNetworkInterface:
-    Type: AWS::EC2::NetworkInterface
-    Properties:
-      SubnetId: !Ref PubSubnetAz1
-      Description: Website instance primary network interface
-      GroupSet:
-        - !Ref WebsiteInstanceSecurityGroup
-      SourceDestCheck: true
-      Tags:
-        - Key: Name
-          Value: !Sub '${DomainName} eni'
-
   WebPortAddress:
     Type: AWS::EC2::EIP
     Properties:
@@ -313,7 +301,7 @@ Resources:
     Type: AWS::EC2::EIPAssociation
     Properties:
       AllocationId: !GetAtt WebPortAddress.AllocationId
-      NetworkInterfaceId: !Ref WebsiteInstanceNetworkInterface
+      InstanceId: !Ref Ec2Instance
 
   Ec2Instance:
     Type: AWS::EC2::Instance
@@ -332,7 +320,10 @@ Resources:
       PropagateTagsToVolumeOnCreation: true
       NetworkInterfaces:
         - DeviceIndex: 0
-          NetworkInterfaceId: !Ref WebsiteInstanceNetworkInterface
+          SubnetId: !Ref PubSubnetAz1
+          GroupSet:
+            - !Ref WebsiteInstanceSecurityGroup
+          AssociatePublicIpAddress: false
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash -xe
