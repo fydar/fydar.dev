@@ -33,17 +33,21 @@ public class MockEmailReaderService : IEmailReaderService
         };
     }
 
-    public async Task DeleteEmailAsync(
-        string ticketId,
+    public async Task<IReadOnlyList<string>> DeleteEmailsAsync(
+        IReadOnlyCollection<string> ticketIds,
         CancellationToken cancellationToken = default)
     {
         await Task.Delay(10, cancellationToken);
+
+        return ticketIds.ToArray();
     }
 
-    public async Task RestoreEmailAsync(
-        string ticketId,
+    public async Task<IReadOnlyList<string>> RestoreEmailsAsync(
+        IReadOnlyCollection<string> ticketIds,
         CancellationToken cancellationToken = default)
     {
         await Task.Delay(10, cancellationToken);
+
+        return ticketIds.ToArray();
     }
 }

@@ -1,6 +1,8 @@
 using Fydar.Dev.Services.EmailTickets.Models;
 using Microsoft.Extensions.Caching.Hybrid;
 using MimeKit;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -12,6 +14,10 @@ public class CachedEmailReaderService : IEmailReaderService
     // the same cache.
     private const string CacheKeyPrefix = "email-ticket:";
     private const string ListingCacheKeyPrefix = "email-ticket-listing:";
+
+    // Every cached listing page carries this tag, since a page number alone doesn't identify
+    // which cached pages need dropping when a ticket is deleted or restored.
+    private const string ListingCacheTag = "email-ticket-listing";
 
     private readonly IEmailReaderService inner;
     private readonly HybridCache cache;
@@ -64,27 +70,46 @@ public class CachedEmailReaderService : IEmailReaderService
             static (state, cancellationToken) => new ValueTask<TicketPageModel>(
                 state.inner.ListEmailsAsync(state.pageNumber, state.pageSize, cancellationToken)),
             listingEntryOptions,
+            tags: [ListingCacheTag],
             cancellationToken: cancellationToken);
     }
 
     /// <inheritdoc/>
-    public async Task DeleteEmailAsync(
-        string ticketId,
+    public async Task<IReadOnlyList<string>> DeleteEmailsAsync(
+        IReadOnlyCollection<string> ticketIds,
         CancellationToken cancellationToken = default)
     {
-        await inner.DeleteEmailAsync(ticketId, cancellationToken);
+        var moved = await inner.DeleteEmailsAsync(ticketIds, cancellationToken);
 
-        // A cached read of the now-deleted ticket would otherwise keep serving it until expiry.
-        await cache.RemoveAsync(CacheKeyPrefix + ticketId, cancellationToken);
+        await InvalidateAsync(moved, cancellationToken);
+
+        return moved;
     }
 
     /// <inheritdoc/>
-    public async Task RestoreEmailAsync(
-        string ticketId,
+    public async Task<IReadOnlyList<string>> RestoreEmailsAsync(
+        IReadOnlyCollection<string> ticketIds,
         CancellationToken cancellationToken = default)
     {
-        await inner.RestoreEmailAsync(ticketId, cancellationToken);
+        var moved = await inner.RestoreEmailsAsync(ticketIds, cancellationToken);
 
-        await cache.RemoveAsync(CacheKeyPrefix + ticketId, cancellationToken);
+        await InvalidateAsync(moved, cancellationToken);
+
+        return moved;
+    }
+
+    // A cached read of a moved ticket would otherwise keep serving its old location until
+    // expiry, and a cached listing page would otherwise still reflect the pre-move set.
+    private async Task InvalidateAsync(
+        IReadOnlyCollection<string> movedTicketIds,
+        CancellationToken cancellationToken)
+    {
+        if (movedTicketIds.Count == 0)
+        {
+            return;
+        }
+
+        await cache.RemoveAsync(movedTicketIds.Select(id => CacheKeyPrefix + id), cancellationToken);
+        await cache.RemoveByTagAsync(ListingCacheTag, cancellationToken);
     }
 }

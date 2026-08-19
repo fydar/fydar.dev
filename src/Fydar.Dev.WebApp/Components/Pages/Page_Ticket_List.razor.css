@@ -26,8 +26,33 @@
             background-color: #ffffff12;
         }
 
-.ticket-list {
+.ticket-list-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     margin: 1.5rem 0 0 0;
+}
+
+.ticket-list-toolbar-button {
+    padding: 0.35rem 0.8rem;
+    border: 1px solid #ffffff30;
+    border-radius: 4px;
+    background-color: transparent;
+    color: inherit;
+    font: inherit;
+    font-size: 0.85rem;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+    .ticket-list-toolbar-button:hover,
+    .ticket-list-toolbar-button:focus-visible {
+        border-color: #ff6b6b80;
+        background-color: #ff6b6b1a;
+    }
+
+.ticket-list {
+    margin: 0.75rem 0 0 0;
     padding: 0;
     border: 1px solid #ffffff20;
     border-radius: 4px;
@@ -36,12 +61,34 @@
 
 .ticket-list-item {
     display: flex;
-    align-items: stretch;
+    align-items: center;
 }
 
 .ticket-list-item + .ticket-list-item {
     border-top: 1px solid #ffffff20;
 }
+
+.ticket-list-checkbox {
+    flex-shrink: 0;
+    width: 1.15rem;
+    height: 1.15rem;
+    margin: 0 0 0 1rem;
+    border: none;
+    border-radius: 6px;
+    background-color: #ffffff14;
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+    transition: background-color .15s ease-in-out;
+}
+
+    .ticket-list-checkbox:hover {
+        background-color: #ffffff22;
+    }
+
+    .ticket-list-checkbox:checked {
+        background-color: #ffffffdd;
+    }
 
 .ticket-list-link {
     display: grid;
@@ -85,31 +132,6 @@
     opacity: 0.7;
     white-space: nowrap;
 }
-
-.ticket-list-delete-form {
-    display: flex;
-    flex-shrink: 0;
-    align-items: center;
-    padding: 0 0.75rem;
-}
-
-.ticket-list-delete {
-    padding: 0.35rem 0.7rem;
-    border: 1px solid #ffffff30;
-    border-radius: 4px;
-    background-color: transparent;
-    color: inherit;
-    font: inherit;
-    font-size: 0.85rem;
-    cursor: pointer;
-    white-space: nowrap;
-}
-
-    .ticket-list-delete:hover,
-    .ticket-list-delete:focus-visible {
-        border-color: #ff6b6b80;
-        background-color: #ff6b6b1a;
-    }
 
 .ticket-list-notice {
     display: flex;

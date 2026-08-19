@@ -1,5 +1,6 @@
 using Fydar.Dev.Services.EmailTickets.Models;
 using MimeKit;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -23,17 +24,20 @@ public interface IEmailReaderService
         CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// <para>Moves a ticket out of the listing. The ticket is kept, not erased, so
-    /// <see cref="RestoreEmailAsync"/> can bring it back.</para>
+    /// <para>Moves the given tickets out of the listing. Tickets are kept, not erased, so
+    /// <see cref="RestoreEmailsAsync"/> can bring them back.</para>
     /// </summary>
-    public Task DeleteEmailAsync(
-        string ticketId,
+    /// <returns>The ids that were actually moved. A ticket can be missing from this list if it
+    /// had already been removed, or if the underlying storage rejected that one entry.</returns>
+    public Task<IReadOnlyList<string>> DeleteEmailsAsync(
+        IReadOnlyCollection<string> ticketIds,
         CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// <para>Reverses a <see cref="DeleteEmailAsync"/> for a ticket that hasn't been purged yet.</para>
+    /// <para>Reverses a <see cref="DeleteEmailsAsync"/> for tickets that haven't been purged yet.</para>
     /// </summary>
-    public Task RestoreEmailAsync(
-        string ticketId,
+    /// <returns>The ids that were actually restored.</returns>
+    public Task<IReadOnlyList<string>> RestoreEmailsAsync(
+        IReadOnlyCollection<string> ticketIds,
         CancellationToken cancellationToken = default);
 }

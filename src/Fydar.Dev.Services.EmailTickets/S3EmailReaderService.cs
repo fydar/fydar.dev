@@ -4,6 +4,7 @@ using Fydar.Dev.Services.EmailTickets.Models;
 using MimeKit;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -12,7 +13,7 @@ namespace Fydar.Dev.Services.EmailTickets;
 public class S3EmailReaderService : IEmailReaderService
 {
     // A deleted ticket is moved under this prefix rather than erased, so it can be restored.
-    private const string TrashPrefix = "deleted/";
+    private const string trashPrefix = "deleted/";
 
     private readonly IAmazonS3 amazonS3;
     private readonly S3EmailReaderServiceConfiguration configuration;
@@ -71,7 +72,7 @@ public class S3EmailReaderService : IEmailReaderService
                 {
                     // A key ending in a slash is a folder marker rather than an email, and a key
                     // under the trash prefix is a deleted ticket, awaiting a possible restore.
-                    if (s3Object.Key.EndsWith("/") || s3Object.Key.StartsWith(TrashPrefix, StringComparison.Ordinal))
+                    if (s3Object.Key.EndsWith("/") || s3Object.Key.StartsWith(trashPrefix, StringComparison.Ordinal))
                     {
                         continue;
                     }
@@ -130,38 +131,125 @@ public class S3EmailReaderService : IEmailReaderService
     }
 
     /// <inheritdoc/>
-    public async Task DeleteEmailAsync(
-        string ticketId,
+    public async Task<IReadOnlyList<string>> DeleteEmailsAsync(
+        IReadOnlyCollection<string> ticketIds,
         CancellationToken cancellationToken = default)
     {
-        await MoveAsync(ticketId, TrashPrefix + ticketId, cancellationToken);
+        return await MoveManyAsync(ticketIds, toTrash: true, cancellationToken);
     }
 
     /// <inheritdoc/>
-    public async Task RestoreEmailAsync(
-        string ticketId,
+    public async Task<IReadOnlyList<string>> RestoreEmailsAsync(
+        IReadOnlyCollection<string> ticketIds,
         CancellationToken cancellationToken = default)
     {
-        await MoveAsync(TrashPrefix + ticketId, ticketId, cancellationToken);
+        return await MoveManyAsync(ticketIds, toTrash: false, cancellationToken);
     }
 
-    private async Task MoveAsync(
-        string sourceKey,
-        string destinationKey,
+    private async Task<IReadOnlyList<string>> MoveManyAsync(
+        IReadOnlyCollection<string> ticketIds,
+        bool toTrash,
         CancellationToken cancellationToken)
     {
-        await amazonS3.CopyObjectAsync(new CopyObjectRequest()
+        if (ticketIds.Count == 0)
         {
-            SourceBucket = configuration.Bucket,
-            SourceKey = sourceKey,
-            DestinationBucket = configuration.Bucket,
-            DestinationKey = destinationKey
-        }, cancellationToken);
+            return Array.Empty<string>();
+        }
 
-        await amazonS3.DeleteObjectAsync(new DeleteObjectRequest()
+        var copyResults = await Task.WhenAll(ticketIds.Select(async ticketId =>
         {
-            BucketName = configuration.Bucket,
-            Key = sourceKey
-        }, cancellationToken);
+            string sourceKey = toTrash ? ticketId : trashPrefix + ticketId;
+            string destinationKey = toTrash ? trashPrefix + ticketId : ticketId;
+
+            try
+            {
+                await amazonS3.CopyObjectAsync(new CopyObjectRequest()
+                {
+                    SourceBucket = configuration.Bucket,
+                    SourceKey = sourceKey,
+                    DestinationBucket = configuration.Bucket,
+                    DestinationKey = destinationKey
+                }, cancellationToken);
+
+                return (ticketId, sourceKey, copied: true);
+            }
+            catch (AmazonS3Exception)
+            {
+                // Most likely this ticket was already moved by a previous request; leave it out
+                // of the batch delete below rather than letting one bad id fail the whole batch.
+                return (ticketId, sourceKey, copied: false);
+            }
+        }));
+
+        var ticketIdBySourceKey = new Dictionary<string, string>(StringComparer.Ordinal);
+        foreach (var result in copyResults)
+        {
+            if (result.copied)
+            {
+                ticketIdBySourceKey[result.sourceKey] = result.ticketId;
+            }
+        }
+
+        if (ticketIdBySourceKey.Count == 0)
+        {
+            return Array.Empty<string>();
+        }
+
+        var movedTicketIds = new List<string>();
+
+        // S3 accepts at most 1000 keys per DeleteObjects call.
+        foreach (var chunk in Chunk(ticketIdBySourceKey.Keys, 1000))
+        {
+            var request = new DeleteObjectsRequest()
+            {
+                BucketName = configuration.Bucket,
+                Objects = chunk.Select(key => new KeyVersion() { Key = key }).ToList(),
+                Quiet = false
+            };
+
+            List<DeletedObject> deletedObjects;
+            try
+            {
+                var response = await amazonS3.DeleteObjectsAsync(request, cancellationToken);
+                deletedObjects = response.DeletedObjects;
+            }
+            catch (DeleteObjectsException exception)
+            {
+                // Some keys in the batch failed; the exception still carries the response, which
+                // lists which ones succeeded.
+                deletedObjects = exception.Response.DeletedObjects;
+            }
+
+            foreach (var deletedObject in deletedObjects)
+            {
+                if (ticketIdBySourceKey.TryGetValue(deletedObject.Key, out string? ticketId))
+                {
+                    movedTicketIds.Add(ticketId);
+                }
+            }
+        }
+
+        return movedTicketIds;
+    }
+
+    private static IEnumerable<IReadOnlyList<T>> Chunk<T>(IEnumerable<T> source, int size)
+    {
+        var buffer = new List<T>(size);
+
+        foreach (var item in source)
+        {
+            buffer.Add(item);
+
+            if (buffer.Count == size)
+            {
+                yield return buffer;
+                buffer = new List<T>(size);
+            }
+        }
+
+        if (buffer.Count > 0)
+        {
+            yield return buffer;
+        }
     }
 }

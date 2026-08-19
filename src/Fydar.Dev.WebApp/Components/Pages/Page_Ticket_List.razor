@@ -28,14 +28,15 @@
 
         <h2>Tickets</h2>
 
-        @if (deletedTicketId is { } undoTicketId)
+        @if (deletedTicketIds.Length > 0)
         {
             <p class="ticket-list-notice">
-                <span>
-                    Ticket deleted@(string.IsNullOrEmpty(deletedTicketSubject) ? "." : $": “{deletedTicketSubject}”.")
-                </span>
-                <EditForm Model="this" FormName="undo-ticket" OnSubmit="HandleUndo">
-                    <input type="hidden" name="undoTicketId" value="@undoTicketId" />
+                <span>@(deletedTicketIds.Length == 1 ? "1 ticket deleted." : $"{deletedTicketIds.Length} tickets deleted.")</span>
+                <EditForm Model="this" FormName="undo-tickets" OnSubmit="HandleUndo" Enhance>
+                    @foreach (var ticketId in deletedTicketIds)
+                    {
+                        <input type="hidden" name="undoTicketIds" value="@ticketId" />
+                    }
                     <button class="ticket-list-notice-undo" type="submit">Undo</button>
                 </EditForm>
             </p>
@@ -51,24 +52,27 @@
         }
         else
         {
-            <ol class="ticket-list">
-                @foreach (var entry in entries)
-                {
-                    <li class="ticket-list-item">
-                        <a class="ticket-list-link" href="/ticket/@Uri.EscapeDataString(entry.TicketId)">
-                            <span class="ticket-list-subject">@entry.Subject</span>
-                            <span class="ticket-list-from">@entry.From</span>
-                            <time class="ticket-list-received" datetime="@entry.Received.ToString("o")">
-                                @entry.Received.ToString("yyyy-MM-dd HH:mm") UTC
-                            </time>
-                        </a>
-                        <EditForm Model="entry" FormName="@($"delete-{entry.TicketId}")" OnSubmit="HandleDelete" class="ticket-list-delete-form">
-                            <input type="hidden" name="ticketId" value="@entry.TicketId" />
-                            <button class="ticket-list-delete" type="submit" title="Delete this ticket">Delete</button>
-                        </EditForm>
-                    </li>
-                }
-            </ol>
+            <EditForm Model="this" FormName="ticket-list" OnSubmit="HandleBulkDelete" Enhance>
+                <div class="ticket-list-toolbar">
+                    <button type="submit" class="ticket-list-toolbar-button" title="Delete the checked tickets">Delete</button>
+                </div>
+
+                <ol class="ticket-list">
+                    @foreach (var entry in entries)
+                    {
+                        <li class="ticket-list-item">
+                            <input type="checkbox" class="ticket-list-checkbox" name="selectedTicketIds" value="@entry.TicketId" aria-label="Select this ticket" />
+                            <a class="ticket-list-link" href="/ticket/@Uri.EscapeDataString(entry.TicketId)">
+                                <span class="ticket-list-subject">@entry.Subject</span>
+                                <span class="ticket-list-from">@entry.From</span>
+                                <time class="ticket-list-received" datetime="@entry.Received.ToString("o")">
+                                    @entry.Received.ToString("yyyy-MM-dd HH:mm") UTC
+                                </time>
+                            </a>
+                        </li>
+                    }
+                </ol>
+            </EditForm>
 
             <nav class="ticket-pagination" aria-label="Ticket pages">
                 @if (tickets.PageNumber > 1)
@@ -107,18 +111,16 @@
     [SupplyParameterFromQuery(Name = "page")]
     public string? Page { get; set; }
 
-    [SupplyParameterFromForm(Name = "ticketId")]
-    public string? SubmittedTicketId { get; set; }
-
-    [SupplyParameterFromForm(Name = "undoTicketId")]
-    public string? SubmittedUndoTicketId { get; set; }
+    // Read directly from the request rather than via [SupplyParameterFromForm], since the number
+    // of checked boxes is unknown ahead of time and this reads however many the browser posted.
+    [CascadingParameter]
+    private HttpContext? HttpContext { get; set; }
 
     private TicketPageModel? tickets;
     private TicketListEntry[] entries = [];
     private int pageNumber;
 
-    private string? deletedTicketId;
-    private string? deletedTicketSubject;
+    private string[] deletedTicketIds = [];
 
     protected override async Task OnInitializedAsync()
     {
@@ -129,51 +131,81 @@
         await LoadAsync();
     }
 
-    private async Task HandleDelete()
+    private async Task HandleBulkDelete()
     {
-        string? ticketId = SubmittedTicketId;
-        if (string.IsNullOrEmpty(ticketId))
+        string[] ticketIds = FormValues("selectedTicketIds");
+        if (ticketIds.Length == 0)
         {
             return;
         }
 
-        // Captured before the reload below drops this ticket out of 'entries'.
-        string? subject = entries.FirstOrDefault(entry => entry.TicketId == ticketId)?.Subject;
-
+        IReadOnlyList<string> deleted;
         try
         {
-            await emailReaderService.DeleteEmailAsync(ticketId);
-
-            deletedTicketId = ticketId;
-            deletedTicketSubject = subject;
+            deleted = await emailReaderService.DeleteEmailsAsync(ticketIds);
         }
         catch (Exception exception)
         {
-            logger.LogWarning(exception, "Failed to delete the ticket {TicketId}.", ticketId);
+            logger.LogWarning(exception, "Failed to delete {Count} ticket(s).", ticketIds.Length);
+            deleted = [];
         }
+
+        LogSkipped(ticketIds, deleted, "delete");
+
+        deletedTicketIds = [.. deleted];
 
         await LoadAsync();
     }
 
     private async Task HandleUndo()
     {
-        string? ticketId = SubmittedUndoTicketId;
-        if (!string.IsNullOrEmpty(ticketId))
+        string[] ticketIds = FormValues("undoTicketIds");
+        if (ticketIds.Length == 0)
         {
-            try
-            {
-                await emailReaderService.RestoreEmailAsync(ticketId);
-            }
-            catch (Exception exception)
-            {
-                logger.LogWarning(exception, "Failed to restore the ticket {TicketId}.", ticketId);
-            }
+            return;
         }
 
-        deletedTicketId = null;
-        deletedTicketSubject = null;
+        IReadOnlyList<string> restored;
+        try
+        {
+            restored = await emailReaderService.RestoreEmailsAsync(ticketIds);
+        }
+        catch (Exception exception)
+        {
+            logger.LogWarning(exception, "Failed to restore {Count} ticket(s).", ticketIds.Length);
+            restored = [];
+        }
+
+        LogSkipped(ticketIds, restored, "restore");
+
+        deletedTicketIds = [];
 
         await LoadAsync();
+    }
+
+    // The batch APIs report which ids actually moved rather than throwing per item, so a request
+    // that came back short is logged here instead of in a per-item catch block.
+    private void LogSkipped(IReadOnlyCollection<string> requested, IReadOnlyCollection<string> succeeded, string action)
+    {
+        foreach (string ticketId in requested)
+        {
+            if (!succeeded.Contains(ticketId))
+            {
+                logger.LogWarning("Failed to {Action} the ticket {TicketId}.", action, ticketId);
+            }
+        }
+    }
+
+    private string[] FormValues(string name)
+    {
+        if (HttpContext is null)
+        {
+            return [];
+        }
+
+        return [.. HttpContext.Request.Form[name]
+            .Where(value => !string.IsNullOrEmpty(value))
+            .Distinct()!];
     }
 
     private async Task LoadAsync()
