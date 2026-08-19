@@ -118,7 +118,16 @@ internal class ColoredConsoleLogEventSink : ILogEventSink
                 Console.ForegroundColor = ConsoleColor.DarkGray;
                 output.Write(": ");
 
-                if (property.Value is ScalarValue scalarValue)
+                if (name == "EventId" && property.Value is StructureValue eventIdValue
+                    && TryGetEventIdParts(eventIdValue, out string? eventName, out var eventIdId))
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    output.Write('"');
+                    output.Write(eventName);
+                    output.Write("\" #");
+                    output.Write(eventIdId);
+                }
+                else if (property.Value is ScalarValue scalarValue)
                 {
                     if (scalarValue.Value is int
                         or uint
@@ -162,6 +171,29 @@ internal class ColoredConsoleLogEventSink : ILogEventSink
             output.WriteLine();
             output.WriteLine();
         }
+    }
+
+    private static bool TryGetEventIdParts(
+        StructureValue eventIdValue,
+        out string? name,
+        out string? id)
+    {
+        name = null;
+        id = null;
+
+        foreach (var property in eventIdValue.Properties)
+        {
+            if (property.Name == "Name" && property.Value is ScalarValue { Value: string nameValue })
+            {
+                name = nameValue;
+            }
+            else if (property.Name == "Id" && property.Value is ScalarValue { Value: int idValue })
+            {
+                id = idValue.ToString();
+            }
+        }
+
+        return name != null && id != null;
     }
 
     private static void WriteFormattedException(
