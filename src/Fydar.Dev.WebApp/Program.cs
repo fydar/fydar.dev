@@ -1,5 +1,6 @@
-﻿using Amazon.CertificateManager;
+using Amazon.CertificateManager;
 using Amazon.CertificateManager.Model;
+using Amazon.Extensions.NETCore.Setup;
 using Amazon.S3;
 using Amazon.SimpleEmail;
 using Fydar.AspNetCore.CSP;
@@ -10,6 +11,8 @@ using Fydar.Dev.WebApp.Components.Iconography;
 using Fydar.Dev.WebApp.Internal;
 using Fydar.Dev.WebApp.Internal.AntiforgeryNoStoreWorkaround;
 using Fydar.Dev.WebApp.Internal.Authentication;
+using Fydar.Dev.WebApp.Internal.ServiceWorkers;
+using Fydar.Dev.WebApp.Internal.SvgFavicon;
 using Fydar.Dev.WebApp.Internal.UnityFiles;
 using Fydar.Dev.WebApp.Toolkit.Icons;
 using Microsoft.AspNetCore.Components.Web;
@@ -19,7 +22,6 @@ using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.ResponseCompression;
-using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Caching.Hybrid;
 using Microsoft.Net.Http.Headers;
 using MimeKit;
@@ -33,6 +35,11 @@ namespace Fydar.Dev.WebApp;
 
 public class Program
 {
+    /// <summary>
+    /// Runs the web host until the process is asked to stop.
+    /// </summary>
+    /// <param name="args">The command line the process was started with.</param>
+    /// <returns>The exit code for the process.</returns>
     public static async Task<int> Main(string[] args)
     {
         Log.Logger = new LoggerConfiguration()
@@ -41,8 +48,9 @@ public class Program
 
         try
         {
-            var host = CreateHost(args);
-            host.Start();
+            var host = await CreateHostAsync(args);
+
+            await host.StartAsync();
 
             var server = host.Services.GetRequiredService<IServer>();
             var addresses = server.Features.GetRequiredFeature<IServerAddressesFeature>().Addresses;
@@ -64,9 +72,16 @@ public class Program
         }
     }
 
-    public static IHost CreateHost(string[] args)
+    /// <summary>
+    /// Builds the host, its services, and the pipeline that requests travel through.
+    /// </summary>
+    /// <param name="args">The command line the process was started with.</param>
+    /// <returns>The host, ready to be started.</returns>
+    public static async Task<IHost> CreateHostAsync(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+
+        builder.Configuration.AddEnvironmentVariables("CONFIG_");
 
         builder.Host.UseSerilog((context, services, loggerConfiguration) => loggerConfiguration
             .ReadFrom.Configuration(context.Configuration)
@@ -74,7 +89,24 @@ public class Program
 
         builder.WebHost.UseSetting(WebHostDefaults.SuppressStatusMessagesKey, "True");
 
-        builder.Configuration.AddEnvironmentVariables("CONFIG_");
+        // A deployment names the ACM certificate its HTTPS endpoints serve. Without one Kestrel
+        // keeps its own default, which is the ASP.NET Core development certificate.
+        string? certificateArn = builder.Configuration["CertificateArn"];
+        if (!string.IsNullOrEmpty(certificateArn))
+        {
+            var certificate = await ExportAcmCertificateAsync(builder.Configuration, certificateArn);
+
+            builder.WebHost.ConfigureKestrel(kestrel =>
+            {
+                kestrel.ConfigureHttpsDefaults(https =>
+                {
+                    https.ServerCertificate = certificate;
+                });
+            });
+        }
+
+        builder.Services.AddRazorComponents()
+            .AddInteractiveWebAssemblyComponents();
 
         // Add services to the container.
         builder.Services.AddHealthChecks();
@@ -121,6 +153,11 @@ public class Program
             options.Preload = true;
         });
 
+        builder.Services.Configure<HttpsRedirectionOptions>(opts =>
+        {
+            opts.RedirectStatusCode = (int)HttpStatusCode.PermanentRedirect;
+        });
+
         // Rendering a component builds its base URI from the request's host, so a request without
         // one (port scanners send HTTP/1.0 with no Host header) produces 'http:///' and throws.
         // Reject it up front, as a request with no host is malformed regardless.
@@ -137,48 +174,23 @@ public class Program
             options.CreateScopeForStatusCodePages = true;
         });
 
-        builder.Services.AddRazorComponents()
-            .AddInteractiveWebAssemblyComponents();
-
-        builder.Services.AddSingleton(new S3EmailReaderServiceConfiguration()
+        builder.Services.Configure<CachedEmailReaderServiceConfiguration>(options =>
         {
-            Bucket = "fydar.dev-inbound-email"
+            options.Expiration = TimeSpan.FromHours(1);
+            options.ListingExpiration = TimeSpan.FromSeconds(30);
         });
-        builder.Services.AddSingleton(new CachedEmailReaderServiceConfiguration()
+
+        builder.Services.Configure<S3EmailReaderServiceConfiguration>(options =>
         {
-            Expiration = TimeSpan.FromHours(1),
-            ListingExpiration = TimeSpan.FromSeconds(30)
+            options.Bucket = "fydar.dev-inbound-email";
         });
 
         builder.Services.AddHybridCache(options =>
         {
-            options.MaximumPayloadBytes = 8 * 1024 * 1024;
+            options.MaximumPayloadBytes = 32 * 1024 * 1024;
         });
-        builder.Services.AddSingleton<IHybridCacheSerializer<MimeMessage>, MimeMessageHybridCacheSerializer>();
 
-        builder.Services.AddSingleton<S3EmailReaderService>();
-        builder.Services.AddSingleton<IEmailReaderService>(services => new CachedEmailReaderService(
-            services.GetRequiredService<S3EmailReaderService>(),
-            services.GetRequiredService<HybridCache>(),
-            services.GetRequiredService<CachedEmailReaderServiceConfiguration>()));
-        builder.Services.AddSingleton<TicketHtmlSanitizer>();
-        builder.Services.AddScoped<HtmlRenderer>();
-
-        builder.Services.AddScoped<IContactSubmitSink, SaveTicketSubmitSink>();
-        builder.Services.AddScoped<IContactSubmitSink, ContactNotificationSubmitSink>();
-
-        builder.Services.AddAWSService<IAmazonSimpleEmailService>();
-        builder.Services.AddAWSService<IAmazonS3>();
-
-        string certificateArn = builder.Configuration.GetValue<string>("CERTIFICATEARN") ?? string.Empty;
-        bool useDevelopmentCertificate = string.IsNullOrEmpty(certificateArn);
-
-        if (!useDevelopmentCertificate)
-        {
-            builder.Services.AddAWSService<IAmazonCertificateManager>();
-        }
-
-        if (builder.WebHost.GetSetting("Environment") != "Development")
+        if (!builder.Environment.IsDevelopment())
         {
             builder.Services.Configure<StaticFileOptions>(opts =>
             {
@@ -187,37 +199,20 @@ public class Program
                     ctx.Context.Response.Headers[HeaderNames.CacheControl] = $"public,max-age=31536000";
                 };
             });
-            builder.Services.Configure<HttpsRedirectionOptions>(opts =>
-            {
-                opts.RedirectStatusCode = (int)HttpStatusCode.PermanentRedirect;
-            });
         }
 
-        int httpPort = builder.Configuration.GetValue("HTTPPORT", 80);
-        int httpsPort = builder.Configuration.GetValue("HTTPSPORT", 443);
+        builder.Services.AddSingleton<IHybridCacheSerializer<MimeMessage>, MimeMessageHybridCacheSerializer>();
 
-        builder.WebHost.UseKestrel(kestrel =>
-        {
-            kestrel.ListenAnyIP(httpPort);
+        builder.Services.AddSingleton<S3EmailReaderService>();
+        builder.Services.AddSingleton<IEmailReaderService, CachedEmailReaderService>();
+        builder.Services.AddSingleton<TicketHtmlSanitizer>();
+        builder.Services.AddScoped<HtmlRenderer>();
 
-            kestrel.ListenAnyIP(
-                httpsPort,
-                listen =>
-                {
-                    listen.Protocols = HttpProtocols.Http1 | HttpProtocols.Http2 | HttpProtocols.Http3;
+        builder.Services.AddScoped<IContactSubmitSink, SaveTicketSubmitSink>();
+        builder.Services.AddScoped<IContactSubmitSink, ContactNotificationSubmitSink>();
 
-                    if (useDevelopmentCertificate)
-                    {
-                        listen.UseHttps();
-                    }
-                    else
-                    {
-                        var acmClient = kestrel.ApplicationServices.GetRequiredService<IAmazonCertificateManager>();
-                        var cert = ExportAcmCertificateAsync(acmClient, certificateArn).GetAwaiter().GetResult();
-                        listen.UseHttps(cert);
-                    }
-                });
-        });
+        builder.Services.AddAWSService<IAmazonSimpleEmailService>();
+        builder.Services.AddAWSService<IAmazonS3>();
 
         var app = builder.Build();
 
@@ -233,20 +228,7 @@ public class Program
             await next.Invoke();
         });
 
-        app.Use(async (context, next) =>
-        {
-            if (context.Request.Path.Equals("/favicon.ico")
-                && context.Request.Headers.Accept.Any(a => a?.Contains("image/svg+xml", StringComparison.OrdinalIgnoreCase) ?? false))
-            {
-                context.Response.Headers.CacheControl = $"nocache";
-                context.Response.ContentType = "image/svg+xml; charset=utf-8";
-                context.Request.Headers.Vary = "Accept Accept-Encoding";
-
-                await context.Response.WriteAsync("<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"384\" height=\"384\"><path d=\"M233.428 14.412C265.304 14.62 311.987 9.74 363.951 0c1.041 22.757-14.503 60.983-32.854 71.518-18.498 10.618-36.849 13.411-58.89 16.265-22.041 2.853-55.803 2.43-73.355.857l-16.642 85.035c70.296-1.05 79.615-8.081 126.71-22.621-7.71 21.682-20.155 62.374-36.094 78.089-15.938 15.716-49.7 17.965-77.149 17.965l-27.199-.294c-9.792 39.887-21.149 89.511-9.615 114.707-98.535 47.355-99.76 7.98-102.933-10.153-2.344-13.394 17.383-90.831 18.67-100.7-16.323 3.159-33.583 9.04-53.348 16.699 7.663-20.297 20.422-57.416 31.612-72.934 11.19-15.517 25.155-18.997 35.524-20.171l17.855-83.469c-30.21 2.35-63.165 33.548-86.243 50.922 7.507-27.936 10.638-84.046 45.11-112.792C81.662 15.12 120.865 14.02 173.204 14.02l60.224.391z\"/><style>@media (prefers-color-scheme:dark){path{fill:#fff}}</style></svg>", Encoding.UTF8, context.RequestAborted);
-                return;
-            }
-            await next.Invoke();
-        });
+        app.UseSvgFavicon();
 
         if (Environment.GetEnvironmentVariable("__ASPNETCORE_BROWSER_TOOLS") is null)
         {
@@ -260,11 +242,7 @@ public class Program
         }
         else
         {
-            if (!useDevelopmentCertificate)
-            {
-                app.UseHttpsRedirection();
-            }
-
+            app.UseHttpsRedirection();
             app.UseHsts();
             app.UseExceptionHandler(new ExceptionHandlerOptions()
             {
@@ -278,20 +256,7 @@ public class Program
         app.MapSocialRedirects();
         app.MapIconLibrary<SiteIcons>("/icons.svg");
         app.UseStaticUnityFiles();
-
-        app.Use(async (context, next) =>
-        {
-            if (context.Request.Path.Value?.EndsWith("/ServiceWorker.js", StringComparison.OrdinalIgnoreCase) == true
-                || context.Request.Path.Value?.EndsWith(".serviceworker.js", StringComparison.OrdinalIgnoreCase) == true)
-            {
-                context.Response.OnStarting(() =>
-                {
-                    context.Response.Headers["Service-Worker-Allowed"] = "/play/";
-                    return Task.CompletedTask;
-                });
-            }
-            await next.Invoke();
-        });
+        app.UseServiceWorkerScope();
 
         app.MapStaticAssets();
 
@@ -312,8 +277,19 @@ public class Program
         return app;
     }
 
-    private static async Task<X509Certificate2> ExportAcmCertificateAsync(IAmazonCertificateManager acmClient, string certificateArn)
+    /// <summary>
+    /// Exports a certificate and its private key from AWS Certificate Manager, in the form
+    /// Kestrel serves it from.
+    /// </summary>
+    /// <param name="configuration">Configuration describing the AWS account to read from.</param>
+    /// <param name="certificateArn">The ARN of the exportable certificate.</param>
+    /// <returns>The exported certificate.</returns>
+    private static async Task<X509Certificate2> ExportAcmCertificateAsync(
+        IConfiguration configuration,
+        string certificateArn)
     {
+        using var acmClient = configuration.GetAWSOptions().CreateServiceClient<IAmazonCertificateManager>();
+
         byte[] passphraseBytes = RandomNumberGenerator.GetBytes(32);
         string passphrase = Convert.ToBase64String(passphraseBytes);
 

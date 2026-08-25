@@ -1,5 +1,6 @@
 using Fydar.Dev.Services.EmailTickets.Models;
 using Microsoft.Extensions.Caching.Hybrid;
+using Microsoft.Extensions.Options;
 using MimeKit;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,14 +11,9 @@ namespace Fydar.Dev.Services.EmailTickets;
 
 public class CachedEmailReaderService : IEmailReaderService
 {
-    // Namespaced so the keys stay unambiguous if a distributed second level is ever added behind
-    // the same cache.
-    private const string CacheKeyPrefix = "email-ticket:";
-    private const string ListingCacheKeyPrefix = "email-ticket-listing:";
-
-    // Every cached listing page carries this tag, since a page number alone doesn't identify
-    // which cached pages need dropping when a ticket is deleted or restored.
-    private const string ListingCacheTag = "email-ticket-listing";
+    private const string cacheKeyPrefix = "email-ticket:";
+    private const string listingCacheKeyPrefix = "email-ticket-listing:";
+    private const string listingCacheTag = "email-ticket-listing";
 
     private readonly IEmailReaderService inner;
     private readonly HybridCache cache;
@@ -25,32 +21,33 @@ public class CachedEmailReaderService : IEmailReaderService
     private readonly HybridCacheEntryOptions listingEntryOptions;
 
     public CachedEmailReaderService(
-        IEmailReaderService inner,
+        S3EmailReaderService inner,
         HybridCache cache,
-        CachedEmailReaderServiceConfiguration configuration)
+        IOptions<CachedEmailReaderServiceConfiguration> configuration)
     {
         this.inner = inner;
         this.cache = cache;
 
         entryOptions = new HybridCacheEntryOptions()
         {
-            Expiration = configuration.Expiration,
-            LocalCacheExpiration = configuration.Expiration
+            Expiration = configuration.Value.Expiration,
+            LocalCacheExpiration = configuration.Value.Expiration
         };
 
         listingEntryOptions = new HybridCacheEntryOptions()
         {
-            Expiration = configuration.ListingExpiration,
-            LocalCacheExpiration = configuration.ListingExpiration
+            Expiration = configuration.Value.ListingExpiration,
+            LocalCacheExpiration = configuration.Value.ListingExpiration
         };
     }
 
+    /// <inheritdoc/>
     public async Task<MimeMessage> ReadEmailAsync(
         string ticketId,
         CancellationToken cancellationToken = default)
     {
         return await cache.GetOrCreateAsync(
-            CacheKeyPrefix + ticketId,
+            cacheKeyPrefix + ticketId,
             (inner, ticketId),
             static (state, cancellationToken) => new ValueTask<MimeMessage>(
                 state.inner.ReadEmailAsync(state.ticketId, cancellationToken)),
@@ -65,12 +62,12 @@ public class CachedEmailReaderService : IEmailReaderService
         CancellationToken cancellationToken = default)
     {
         return await cache.GetOrCreateAsync(
-            $"{ListingCacheKeyPrefix}{pageNumber}:{pageSize}",
+            $"{listingCacheKeyPrefix}{pageNumber}:{pageSize}",
             (inner, pageNumber, pageSize),
             static (state, cancellationToken) => new ValueTask<TicketPageModel>(
                 state.inner.ListEmailsAsync(state.pageNumber, state.pageSize, cancellationToken)),
             listingEntryOptions,
-            tags: [ListingCacheTag],
+            tags: [listingCacheTag],
             cancellationToken: cancellationToken);
     }
 
@@ -98,8 +95,6 @@ public class CachedEmailReaderService : IEmailReaderService
         return moved;
     }
 
-    // A cached read of a moved ticket would otherwise keep serving its old location until
-    // expiry, and a cached listing page would otherwise still reflect the pre-move set.
     private async Task InvalidateAsync(
         IReadOnlyCollection<string> movedTicketIds,
         CancellationToken cancellationToken)
@@ -109,7 +104,7 @@ public class CachedEmailReaderService : IEmailReaderService
             return;
         }
 
-        await cache.RemoveAsync(movedTicketIds.Select(id => CacheKeyPrefix + id), cancellationToken);
-        await cache.RemoveByTagAsync(ListingCacheTag, cancellationToken);
+        await cache.RemoveAsync(movedTicketIds.Select(id => cacheKeyPrefix + id), cancellationToken);
+        await cache.RemoveByTagAsync(listingCacheTag, cancellationToken);
     }
 }

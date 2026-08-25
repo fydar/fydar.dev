@@ -144,9 +144,15 @@ internal sealed class TicketHtmlSanitizer
 
             string contentId = Uri.UnescapeDataString(source["cid:".Length..]).Trim('<', '>');
 
-            if (parts.TryGetValue(contentId, out var part))
+            if (parts.TryGetValue(contentId, out var part)
+                && part.Content != null)
             {
-                image.SetAttribute("src", ToDataUrl(part));
+                using var content = new MemoryStream();
+                part.Content.DecodeTo(content);
+
+                var dataUrl = $"data:{part.ContentType.MimeType};base64,{Convert.ToBase64String(content.ToArray())}";
+
+                image.SetAttribute("src", dataUrl);
             }
             else
             {
@@ -177,15 +183,6 @@ internal sealed class TicketHtmlSanitizer
         }
 
         return parts;
-    }
-
-    private static string ToDataUrl(
-        MimePart part)
-    {
-        using var content = new MemoryStream();
-        part.Content.DecodeTo(content);
-
-        return $"data:{part.ContentType.MimeType};base64,{Convert.ToBase64String(content.ToArray())}";
     }
 
     private static bool IsInlineImageMediaType(

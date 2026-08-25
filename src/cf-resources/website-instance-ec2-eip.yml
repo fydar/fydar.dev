@@ -215,14 +215,8 @@ Resources:
             - ContainerPort: 443
               Protocol: udp
           Environment:
-            - Name: CONFIG_DOMAINNAME
-              Value: !Ref DomainName
             - Name: CONFIG_CERTIFICATEARN
               Value: !Ref CertificateArn
-            - Name: CONFIG_HTTPPORT
-              Value: '80'
-            - Name: CONFIG_HTTPSPORT
-              Value: '443'
             - Name: CONFIG_Authentication__GitHub__ClientId
               Value: !Ref GitHubOAuthClientId
             - Name: CONFIG_Authentication__GitHub__ClientSecret

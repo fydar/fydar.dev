@@ -12,6 +12,10 @@ RUN apt-get update \
 USER app
 WORKDIR /app
 
+# The endpoints themselves are declared by 'Kestrel:Endpoints' in appsettings.Production.json;
+# clearing the base image's default keeps it from announcing a port nothing binds.
+ENV ASPNETCORE_HTTP_PORTS=
+
 EXPOSE 80
 EXPOSE 443/tcp
 EXPOSE 443/udp

@@ -6,6 +6,7 @@ using Amazon.SimpleEmail;
 using Fydar.Dev.Lambda.EmailToTicket.Services;
 using Fydar.Dev.Services.EmailTickets;
 using Fydar.Dev.Services.EmailTickets.Models;
+using Microsoft.Extensions.Options;
 using System;
 using System.Threading.Tasks;
 
@@ -33,10 +34,12 @@ public class FunctionService
         var amazonS3 = new AmazonS3Client();
         var amazonSimpleEmail = new AmazonSimpleEmailServiceClient();
 
-        emailReaderService = new S3EmailReaderService(amazonS3, new S3EmailReaderServiceConfiguration()
+        var emailReaderServiceOptions = Options.Create(new S3EmailReaderServiceConfiguration()
         {
             Bucket = emailBuckt
         });
+
+        emailReaderService = new S3EmailReaderService(amazonS3, emailReaderServiceOptions);
 
         emailSinkService = new SESNotifyingService(amazonSimpleEmail, forwardTo);
     }

@@ -8,6 +8,12 @@ namespace Fydar.Dev.Services.EmailTickets;
 
 public interface IEmailReaderService
 {
+    /// <summary>
+    /// <para>Reads a ticket with a given ticket id.</para>
+    /// </summary>
+    /// <param name="ticketId">The identifier of the ticket to read.</param>
+    /// <param name="cancellationToken">A token used to cancel the operation.</param>
+    /// <returns>The ticket with the given ticket id.</returns>
     public Task<MimeMessage> ReadEmailAsync(
         string ticketId,
         CancellationToken cancellationToken = default);

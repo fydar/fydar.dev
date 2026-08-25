@@ -1,6 +1,7 @@
 using Amazon.S3;
 using Amazon.S3.Model;
 using Fydar.Dev.Services.EmailTickets.Models;
+using Microsoft.Extensions.Options;
 using MimeKit;
 using System;
 using System.Collections.Generic;
@@ -20,10 +21,10 @@ public class S3EmailReaderService : IEmailReaderService
 
     public S3EmailReaderService(
         IAmazonS3 amazonS3,
-        S3EmailReaderServiceConfiguration configuration)
+        IOptions<S3EmailReaderServiceConfiguration> configuration)
     {
         this.amazonS3 = amazonS3;
-        this.configuration = configuration;
+        this.configuration = configuration.Value;
     }
 
     public async Task<MimeMessage> ReadEmailAsync(

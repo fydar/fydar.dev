@@ -64,7 +64,6 @@ internal class ColoredConsoleLogEventSink : ILogEventSink
             {
                 Console.ForegroundColor = ConsoleColor.DarkRed;
                 output.WriteLine();
-                //output.Write(logEvent.Exception.Format());
                 WriteFormattedException(output, logEvent.Exception.Format());
             }
 
