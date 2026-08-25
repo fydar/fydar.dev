@@ -1,5 +1,7 @@
 using Fydar.Dev.Lambda.EmailToTicket.Services;
 using Fydar.Dev.Services.EmailTickets.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Fydar.Dev.Lambda.EmailToTicket.Tests.Mock;
 

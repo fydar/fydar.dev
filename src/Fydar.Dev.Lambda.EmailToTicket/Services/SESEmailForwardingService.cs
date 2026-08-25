@@ -25,8 +25,8 @@ public class SESEmailForwardingService : IEmailSinkService
     {
         var forwardedMessage = new MimeMessage
         (
-            from: new[] { new MailboxAddress("Anthony Marmont", "contact@fydar.dev") },
-            to: new[] { new MailboxAddress("Anthony Marmont", destination) },
+            from: [new MailboxAddress("Fydar Avery", "contact@fydar.dev")],
+            to: [new MailboxAddress("Fydar Avery", destination)],
             subject: email.Message.Subject,
             body: email.Message.Body
         );

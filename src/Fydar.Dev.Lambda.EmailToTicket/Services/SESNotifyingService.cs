@@ -32,8 +32,8 @@ public class SESNotifyingService : IEmailSinkService
 
         var notificationMessage = new MimeMessage
         (
-            from: new[] { new MailboxAddress("Fydar", "contact@fydar.dev") },
-            to: new[] { new MailboxAddress("Fydar", destination) },
+            from: [new MailboxAddress("Fydar Avery", "contact@fydar.dev")],
+            to: [new MailboxAddress("Fydar Avery", destination)],
             subject: "You have new unread messages",
             body: body.ToMessageBody()
         );

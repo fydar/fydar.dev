@@ -1,12 +1,9 @@
 using Amazon.Lambda.Core;
 using Amazon.Lambda.SimpleEmailEvents;
 using Amazon.Lambda.SimpleEmailEvents.Actions;
-using Amazon.S3;
-using Amazon.SimpleEmail;
 using Fydar.Dev.Lambda.EmailToTicket.Services;
 using Fydar.Dev.Services.EmailTickets;
 using Fydar.Dev.Services.EmailTickets.Models;
-using Microsoft.Extensions.Options;
 using System;
 using System.Threading.Tasks;
 
@@ -16,33 +13,6 @@ public class FunctionService
 {
     private readonly IEmailReaderService emailReaderService;
     private readonly IEmailSinkService emailSinkService;
-
-    public FunctionService()
-    {
-        string? emailBuckt = Environment.GetEnvironmentVariable("CONFIG_EMAILBUCKET");
-        string? forwardTo = Environment.GetEnvironmentVariable("CONFIG_FORWARDTO");
-
-        if (emailBuckt == null)
-        {
-            throw new InvalidOperationException("Failed to create function as email bucket was not defined.");
-        }
-        if (forwardTo == null)
-        {
-            throw new InvalidOperationException("Failed to create function as forward to email was not defined.");
-        }
-
-        var amazonS3 = new AmazonS3Client();
-        var amazonSimpleEmail = new AmazonSimpleEmailServiceClient();
-
-        var emailReaderServiceOptions = Options.Create(new S3EmailReaderServiceConfiguration()
-        {
-            Bucket = emailBuckt
-        });
-
-        emailReaderService = new S3EmailReaderService(amazonS3, emailReaderServiceOptions);
-
-        emailSinkService = new SESNotifyingService(amazonSimpleEmail, forwardTo);
-    }
 
     /// <summary>
     /// Default constructor. This constructor is used by Lambda to construct the instance. When invoked in a Lambda environment

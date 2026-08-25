@@ -2,6 +2,7 @@ using Amazon.Lambda.SimpleEmailEvents;
 using Amazon.Lambda.SimpleEmailEvents.Actions;
 using Amazon.Lambda.TestUtilities;
 using Fydar.Dev.Lambda.EmailToTicket.Tests.Mock;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Fydar.Dev.Lambda.EmailToTicket.Tests;
@@ -9,8 +10,9 @@ namespace Fydar.Dev.Lambda.EmailToTicket.Tests;
 public class FunctionServiceTest
 {
     [Fact]
-    public void TestSQSEventLambdaFunction()
+    public async Task TestSQSEventLambdaFunction()
     {
+        // Arrange
         var logger = new TestLambdaLogger();
         var context = new TestLambdaContext
         {
@@ -24,12 +26,12 @@ public class FunctionServiceTest
         var mockEmailReaderService = new MockEmailReaderService();
         var mockNotifyingService = new MockNotifyingService();
 
-        // var functionService = new FunctionService(mockEmailReaderService, mockNotifyingService);
-        // 
-        // // Act
-        // string result = await functionService.FunctionHandler(sesEvent, context);
-        // 
-        // // Assert
-        // Assert.Contains("CONTINUE", result);
+        var functionService = new FunctionService(mockEmailReaderService, mockNotifyingService);
+        
+        // Act
+        string result = await functionService.FunctionHandler(sesEvent, context);
+        
+        // Assert
+        Assert.Contains("CONTINUE", result);
     }
 }

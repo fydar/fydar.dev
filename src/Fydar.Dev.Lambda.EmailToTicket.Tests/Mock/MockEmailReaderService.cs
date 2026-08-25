@@ -1,6 +1,9 @@
 using Fydar.Dev.Services.EmailTickets;
 using Fydar.Dev.Services.EmailTickets.Models;
 using MimeKit;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Fydar.Dev.Lambda.EmailToTicket.Tests.Mock;
 
@@ -39,7 +42,7 @@ public class MockEmailReaderService : IEmailReaderService
     {
         await Task.Delay(10, cancellationToken);
 
-        return ticketIds.ToArray();
+        return [.. ticketIds];
     }
 
     public async Task<IReadOnlyList<string>> RestoreEmailsAsync(
@@ -48,6 +51,6 @@ public class MockEmailReaderService : IEmailReaderService
     {
         await Task.Delay(10, cancellationToken);
 
-        return ticketIds.ToArray();
+        return [.. ticketIds];
     }
 }

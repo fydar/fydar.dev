@@ -11,7 +11,7 @@
     "configuration" : "Release",
     "msbuild-parameters" : "--self-contained true",
     "function-architecture" : "x86_64",
-    "function-runtime"      : "dotnet8",
+    "function-runtime"      : "dotnet10",
     "function-memory-size"  : 256,
     "function-timeout"      : 30,
     "function-handler"      : "Fydar.Dev.Lambda.EmailToTicket::Fydar.Dev.Lambda.EmailToTicket.FunctionService::FunctionHandler",

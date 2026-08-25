@@ -46,7 +46,7 @@ Resources:
       Handler: Fydar.Dev.Lambda.EmailToTicket::Fydar.Dev.Lambda.EmailToTicket.FunctionService::FunctionHandler
       MemorySize: 256
       Role: !GetAtt LambdaFunctionTaskRole.Arn
-      Runtime: dotnet8
+      Runtime: dotnet10
       Timeout: 600
       Tags:
         - Key: Name
