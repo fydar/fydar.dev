@@ -27,14 +27,14 @@
 </HeadFragment>
 
 <article class="page-systems">
-    
+
     <div class="fullscreen" data-nosnippet>
         <div class="parallax-frame">
             <div class="parallax-layer" style="--parallax-multiplier: 0.5;">
                 <div class="blur" data-thumbhash="5PgFHILGtYaldnaviIooCliI9g==" style="background: #96af4d">
                 </div>
             </div>
-            
+
             <video class="parallax-layer" style="--parallax-multiplier: 0.5" autoplay muted loop playsinline>
                 <source src="@Assets["media/twilighttowers/background@1080p.h265.mp4"]" type='video/mp4; codecs="hvc1.1.6.L120.90"'>
                 <source src="@Assets["media/twilighttowers/background@1080p.h264.mp4"]" type='video/mp4; codecs="avc1.640028"'>
@@ -70,9 +70,10 @@
                 <img decoding="async" class="article-featuredimage" src="@Assets["media/twilighttowers/social.webp"]" alt="Promotional material for the game 'Twilight Towers'." />
 
                 <Block_PillCloud>
+                    <Pill_Backend />
+                    <Pill_Tools />
                     <Pill_Unity />
                     <Pill_CSharp />
-                    <Pill_Tools />
                 </Block_PillCloud>
 
                 <p>Tower defence meets merge and puzzle games.</p>
@@ -98,18 +99,197 @@
             </Sidebar>
             <Content>
 
-                <OutlineSection Id="summary" LinkName="Summary">
+                <OutlineSection Id="the-legacy-system" LinkName="The Legacy System">
                     <Block_ArticleHeading>
                         <hgroup>
-                            <p>Project</p>
-                            <h2>Summary</h2>
+                            <p>Rewriting a Legacy System</p>
+                            <h2>The Legacy System</h2>
                         </hgroup>
                     </Block_ArticleHeading>
 
-                    <Block_Callout Type="construction">
-                        <Icon><SvgSprite Link="/icons.svg?v=1#fluent-emoji-high-contrast--construction" Alt="Check" /></Icon>
-                        <ChildContent>This section of my website is currently <b>under construction</b>.</ChildContent>
+                    <p>My work on <b>Twilight Towers</b> is best described as the story of rewriting one major legacy system whilst the live-service game actively depended on it. The system in question: the <b>player profile migration pipeline</b>, a server-side system that carried every returning player onto a new version of the game's map.</p>
+
+                    <p>Twilight Towers was built on a legacy codebase in which every player profile stored <b>the entire map</b>, including every tile, tower, chest, explored area, and patch of fog. Whenever the team released a new map, each player had to be migrated at login from their old map onto the new one. That meant carrying their progress forward, finding room for anything that no longer fitted, replacing content that had been removed, compensating them for lost progress and past purchases, and leaving the game in a state that could still be completed.</p>
+
+                    <figure class="figure-image">
+                        <picture class="media-wide">
+                            <img decoding="async" loading="lazy" src="@Assets["media/twilighttowers/map.webp"]" alt="A player's map in Twilight Towers, with winding paths, towers, chests, rivers and fog." />
+                        </picture>
+                        <figcaption>Every tile, tower, chest and patch of fog on a map like this one was saved into the player's profile.</figcaption>
+                    </figure>
+
+                    <p>The pipeline I inherited did all of this in static, procedural code with <b>no tests</b>. Reproducing a single migration bug meant putting an account into the right state with support tools, switching between editors, and sometimes playing through <b>hundreds of waves</b>. Every map release also left a bunch of unwanted items, or "junk", in players' game worlds, which limited how often the map could be updated at all.</p>
+
+                    <p>I was originally assigned a handful of migration bugs to fix, but it soon became apparent that something bigger was afoot. After weighing up the pros and cons of a rewrite, with due consideration for the live-service nature of the game, we decided that the system was beyond repair. It was time to replace the system rather than just fix the bugs.</p>
+
+                    <figure class="figure-image">
+                        <picture class="media-wide">
+                            <img decoding="async" loading="lazy" src="@Assets["media/twilighttowers/release-2-0-0.webp"]" alt="Release notes banner for Twilight Towers v2.0.0, 'Towers &amp; Tremors', dated 15 June 2026." />
+                        </picture>
+                        <figcaption><b>Towers &amp; Tremors</b> (v2.0.0), the map release whose migration bugs started it all.</figcaption>
+                    </figure>
+                </OutlineSection>
+
+                <OutlineSection Id="making-it-testable" LinkName="Making It Testable">
+                    <Block_ArticleHeading>
+                        <hgroup>
+                            <p>Rewriting a Legacy System</p>
+                            <h2>Making It Testable</h2>
+                        </hgroup>
+                    </Block_ArticleHeading>
+
+                    <p>You can't safely rewrite a system that you can't observe, so the first step wasn't any new migration code. I refactored the game simulation so that a player's map could run <b>headless</b> outside of Unity, and built a unit testing suite on top of it. For the first time, the migration pipeline was unit testable.</p>
+
+                    <p>Alongside this testing framework came a series of <b>level data tests</b> that ran against the maps designers were authoring, so bad data was caught before it was merged into mainline and shipped.</p>
+
+                    <p>Of course, not throwing an exception isn't the same as working, so alongside the tests I built the <b>Validation Suite</b>. It was a standalone library of composable validators that checked <b>44 counter-indicators</b> of a healthy map. A healthy map should be in a valid state, but it should also be playable, so I added a series of <b>soft-lock detectors</b> that kept playing the game without any player input to make sure every future objective was still reachable.</p>
+
+                    <p>I grew the tests to include <b>thousands of real player profiles</b> across many versions of the live game. The tests also rendered each map as an <b>SVG before and after migration</b>, so anyone could see at a glance what a migration did to a player.</p>
+
+                    <figure class="figure-image">
+                        <picture class="media-wide">
+                            <img decoding="async" loading="lazy" src="@Assets["media/twilighttowers/waves.webp"]" alt="Dragons and towers fighting a rock golem on a Twilight Towers map, shown on a phone." />
+                        </picture>
+                        <figcaption>Before the tests, reproducing some bugs meant playing through hundreds of waves like this one.</figcaption>
+                    </figure>
+
+                    <Block_Callout>
+                        <Icon><SvgSprite Link="/icons.svg?v=1#icon-seal-check-fill" Alt="Check" /></Icon>
+                        <ChildContent>I reduced reproduction of migration bugs from an extensive manual process to simply running a unit test under the debugger.</ChildContent>
                     </Block_Callout>
+
+                    <p>Other engineers quickly adopted the testing harness for their own features, since many parts of the core simulation were now testable and they could iterate inside an IDE without ever waiting for the whole game to compile and launch. The game simulation turned out to be a great candidate for unit testing well beyond migration.</p>
+                </OutlineSection>
+
+                <OutlineSection Id="learning-from-the-original" LinkName="Learning from the Original">
+                    <Block_ArticleHeading>
+                        <hgroup>
+                            <p>Rewriting a Legacy System</p>
+                            <h2>Learning from the Original</h2>
+                        </hgroup>
+                    </Block_ArticleHeading>
+
+                    <p>With the tests in place, I began running them against thousands of live player profiles, and the flaws in the system quickly became apparent.</p>
+
+                    <ul>
+                        <li><b>It didn't chain versions.</b> Players jumped straight from their old version to the newest, so every new migrator had to repeat the logic of every migrator before it. Each release made the next migrator bigger, and even a small hotfix migrator was risky.</li>
+                        <li><b>Its data repeated itself.</b> Rules were defined separately for every pair of versions, so the same rows of data were copied over and over, and forgetting one was easy.</li>
+                        <li><b>It depended on absolute positions.</b> Items were placed by map coordinates, so changing the size of the map moved them around.</li>
+                        <li><b>It had too many code paths.</b> The same job was often done in several different ways, where one shared code path would have kept all the relevant logic in one place, regularly used and tested.</li>
+                    </ul>
+
+                    <p>Because Twilight Towers was a live-service game, I knew the rewrite would have to come in chunks, so that each one could deliver value on its own and our confidence in the system could slowly be re-earnt over time.</p>
+
+                    <p>Using the test suite, I shipped a variety of fixes to the legacy system in the next update, but it wouldn't be long until the system was replaced in its entirety. Each problem I tackled drove me to make sure the mistakes that led to it wouldn't be repeated, and slowly I built up the requirements for the system that would replace it.</p>
+
+                    <figure class="figure-image">
+                        <picture class="media-wide">
+                            <img decoding="async" loading="lazy" src="@Assets["media/twilighttowers/release-3-0-0.webp"]" alt="Release notes banner for Twilight Towers v3.0.0, 'Fury of the Styrm', dated 8 July 2026." />
+                        </picture>
+                        <figcaption><b>Fury of the Styrm</b> (v3.0.0), the last major map release on the legacy pipeline, shipped with the fixes the new tests had found.</figcaption>
+                    </figure>
+
+                    <Block_Callout>
+                        <Icon><SvgSprite Link="/icons.svg?v=1#icon-seal-check-fill" Alt="Check" /></Icon>
+                        <ChildContent>I successfully delivered incremental improvements to a legacy system and ensured that any system that would come to replace it would be fully unit testable.</ChildContent>
+                    </Block_Callout>
+                </OutlineSection>
+
+                <OutlineSection Id="designing-the-replacement" LinkName="Designing the Replacement">
+                    <Block_ArticleHeading>
+                        <hgroup>
+                            <p>Rewriting a Legacy System</p>
+                            <h2>Designing the Replacement</h2>
+                        </hgroup>
+                    </Block_ArticleHeading>
+
+                    <p>I designed the whole of the public API for the new migration pipeline before writing any of the implementation. I felt it was important to separate out the data-driven parts of the system, even knowing that I would likely only ever define that data statically in another C# script file. This separation had advantages beyond making it easy to refactor into serialised data later, as it created a logical boundary to organise the code around. I then fleshed out the implementation using the test suite as the safety net. The result was a stateless, dependency-injected service built around a fluent <b>rulebook</b> API.</p>
+
+                    <p>The rulebook API allowed rules and steps to be scoped to a specific map version or to a <b>version range</b>. Instead of every migrator repeating the logic of all of those that came before it, a rule could be declared once to say "for every player from before this version, playing on any version after it, replace this element with another". These rules were then combined into a final ruleset that the migration pipeline used as its source of truth.</p>
+
+                    <p>I noticed that various operations in the migration pipeline could be categorised as one of the following types of step:</p>
+
+                    <ul>
+                        <li><b>Load</b> the player's old map and the new destination map.</li>
+                        <li><b>Pre-process</b> the old map, for example substituting removed content.</li>
+                        <li><b>Transfer</b> the player's progress from the old map onto the new one.</li>
+                        <li><b>Post-process</b> the result, for example clearing up junk and granting compensation.</li>
+                    </ul>
+
+                    <p>With these steps in place, the entire pipeline could be read and understood at a glance. The step types added little functionality from an API perspective, but splitting one generic kind of step into distinct types made the pipeline far more readable.</p>
+                </OutlineSection>
+
+                <OutlineSection Id="replacing-it-live" LinkName="Replacing It Live">
+                    <Block_ArticleHeading>
+                        <hgroup>
+                            <p>Rewriting a Legacy System</p>
+                            <h2>Replacing It Live</h2>
+                        </hgroup>
+                    </Block_ArticleHeading>
+
+                    <p>Migration ran every time a player logged in, so the rewrite couldn't be a big-bang switch. The first release on the new pipeline was a <b>like-for-like port</b> of the existing migrator. It was meant to change nothing for players, and I validated it against the live-profile test corpus while keeping the existing migration analytics working. Only once that held did the next map release ship on the new pipeline.</p>
+
+                    <figure class="figure-image">
+                        <picture class="media-wide">
+                            <img decoding="async" loading="lazy" src="@Assets["media/twilighttowers/release-4-0-0.webp"]" alt="Release notes banner for Twilight Towers v4.0.0, 'Steel and Stone', dated 17 August 2026." />
+                        </picture>
+                        <figcaption><b>Steel and Stone</b> (v4.0.0), the first map release on the new pipeline.</figcaption>
+                    </figure>
+
+                    <p>From there, I made deliberate improvements one at a time:</p>
+
+                    <ul>
+                        <li>Items that no longer fitted were placed relative to the player's <b>castle</b> instead of fixed coordinates, so resizing the map no longer scattered them.</li>
+                        <li>Items that landed on unexplored or out-of-bounds tiles <b>retried other placements</b> before being stored away.</li>
+                        <li>New <b>structured logging</b> exposed cases where items were being silently dropped, and I fixed them. I also split the overloaded "Allowlist" so that each list meant one thing.</li>
+                        <li>A <b>version range syntax</b> in the migration data removed <b>tens of thousands of rows</b> of duplicated data.</li>
+                        <li>When a release needed rules too specific for the spreadsheet-driven stats, I defined them as plain C# data objects. They stayed data-driven and readable, without the overhead of the stats tooling.</li>
+                    </ul>
+
+                    <figure class="figure-image">
+                        <picture class="media-wide">
+                            <img decoding="async" loading="lazy" src="@Assets["media/twilighttowers/castle.webp"]" alt="Marketing art captioned 'Level up your castle', showing a small castle growing into a large one." />
+                        </picture>
+                        <figcaption>The castle sat at the heart of every player's map, which made it a stable anchor when the map around it changed shape.</figcaption>
+                    </figure>
+
+                    <Block_Callout>
+                        <Icon><SvgSprite Link="/icons.svg?v=1#icon-seal-check-fill" Alt="Check" /></Icon>
+                        <ChildContent>I swapped out a live system that runs at every login without disrupting players, then shipped migrators for four major map releases on the new pipeline.</ChildContent>
+                    </Block_Callout>
+                </OutlineSection>
+
+                <OutlineSection Id="nothing-left-of-the-original" LinkName="Nothing Left of the Original">
+                    <Block_ArticleHeading>
+                        <hgroup>
+                            <p>Rewriting a Legacy System</p>
+                            <h2>Nothing Left of the Original</h2>
+                        </hgroup>
+                    </Block_ArticleHeading>
+
+                    <p>Soon enough, <b>not a single line of the original migration code remained</b>. The whole migration pipeline had been rewritten from scratch as a self-contained library, and it could do things the legacy system never could.</p>
+
+                    <figure class="figure-image">
+                        <picture class="media-wide">
+                            <img decoding="async" loading="lazy" src="@Assets["media/twilighttowers/release-5-0-0.webp"]" alt="Release notes banner for Twilight Towers v5.0.0, 'Thunder and Lightning'." />
+                        </picture>
+                        <figcaption><b>Thunder and Lightning</b> (v5.0.0), another map release built on the new pipeline.</figcaption>
+                    </figure>
+
+                    <ul>
+                        <li><b>Hotfix migrators</b> were safe to release, because they no longer had to repeat every migration before them and didn't have negative side effects.</li>
+                        <li><b>Lightweight migrations</b> handled small content changes, such as substituting an item or giving players new items, as standalone post-processing steps without a full map transfer. That lowered both the risk and the amount of testing they needed.</li>
+                        <li><b>Map selection</b> became part of the pipeline, so whole maps could be A/B tested.</li>
+                        <li><b>Map merging</b> could be used for smaller-scale map changes.</li>
+                        <li>A <b>web app</b> could be used to preview the migration data and its results in the browser.</li>
+                    </ul>
+
+                    <Block_Callout>
+                        <Icon><SvgSprite Link="/icons.svg?v=1#icon-seal-check-fill" Alt="Check" /></Icon>
+                        <ChildContent>I rewrote a fragile, untestable legacy system from scratch into a self-contained, testable library that does more than the original ever could.</ChildContent>
+                    </Block_Callout>
+
+                    <p>A rewrite isn't finished while only one person understands it, so it was important to me that every engineer felt able to write a migration step for their own feature with confidence, and for QA to know exactly what to expect from every release. So, I ran handover sessions and prepared <b>example pull requests</b> as templates that engineers could follow to ship a new migrator.</p>
 
                 </OutlineSection>
 
