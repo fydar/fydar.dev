@@ -31,7 +31,7 @@
     <div class="fullscreen" data-nosnippet>
         <div class="parallax-frame">
             <picture class="parallax-layer" style="--parallax-multiplier: 0.5">
-                <img decoding="async" src="@Assets["media/havoccrew/background.webp"]" data-thumbhash="nPgJHIYKeYVDmYaHeXgWUDswwA==" />
+                <img decoding="async" src="@Assets["media/havoccrew/background.webp"]" data-thumbhash="1IgKJIZoh3iviIeViHhor4b7eg==" />
             </picture>
         </div>
 
@@ -49,7 +49,7 @@
         </div>
 
         <div class="cascade-container">
-            <div class="cascade" style="background: linear-gradient(to right, #555d3700 0%, #555d3730 75%, #555d3714 100%), url('media/noise.svg');">
+            <div class="cascade" style="background: linear-gradient(to right, #4b1c3700 0%, #4b1c3730 75%, #4b1c3714 100%), url('media/noise.svg');">
             </div>
         </div>
     </div>
@@ -78,9 +78,12 @@
                 <ShareLink Url="@canonicalUrl" />
             </Sidebar>
             <Container>
-                <p>At Fortis Games I was the dedicated <b>Tools Programmer</b> on <b>Havoc Crew</b>. I built and maintained tooling for the whole team, from on-device debugging utilities for QA to content authoring tools used daily by designers and engineers.</p>
-
-                <p>The role meant working across every discipline, learning what was slowing each team down and building tools to address it.</p>
+                <figure class="figure-image">
+                    <picture class="media-wide">
+                        <img decoding="async" loading="lazy" src="@Assets["media/havoccrew/gameplay-1.webp"]" alt="Gameplay for Havoc Crew" />
+                    </picture>
+                    <figcaption>Key art for <cite>Havoc Crew</cite>.</figcaption>
+                </figure>
             </Container>
         </Block_ArticleIntroduction>
 
@@ -92,24 +95,78 @@
             </Sidebar>
             <Content>
 
-                <OutlineSection Id="profile-templates" LinkName="Profile Templates">
+                <p>At Fortis Games I was the dedicated <b>Tools Programmer</b> on <b>Havoc Crew</b>. I built and maintained tooling for the whole team, from on-device debugging utilities for QA to content authoring tools used daily by designers and engineers.</p>
+
+                <p>The role meant working across every discipline, learning what was slowing each team down and building tools to address it.</p>
+
+                <OutlineSection Id="hero-creator" LinkName="Hero Creator">
                     <Block_ArticleHeading>
                         <hgroup>
                             <p>Developer Testing</p>
-                            <h2>Profile Templates</h2>
+                            <h2>Hero Creator</h2>
                         </hgroup>
                     </Block_ArticleHeading>
 
-                    <p>The <b>Profile Templates</b> system captures the complete state of a user's profile as a plain JSON file which can be shared, committed to source control, and re-applied to any developer's account. The team built up a library of reproducible account states for testing specific scenarios.</p>
+                    <p>The <b>Hero Creator</b> lets developers and testers instantly generate a fully-configured hero and inject it into their profile, bypassing progression entirely. Testing any specific combination of ascension tier, level, element, and traits requires no grinding through the game to get there.</p>
 
-                    <p>The most useful integration was with the <b>in-game bug reporter</b>. When a QA tester submits a bug report, a profile snapshot is <b>automatically attached</b> alongside the screenshot and logs. A developer can apply that snapshot to their own account and be in the exact state the tester was in. Reproducing account-state-dependent bugs went from a manual, error-prone process to a single click.</p>
+                    <figure class="figure-image">
+                        <video loading="lazy" autoplay muted loop playsinline controls>
+                            <source src="@Assets["media/havoccrew/hero-creator.h265.mp4"]" type='video/mp4; codecs="hvc1.1.6.L120.90"'>
+                            <source src="@Assets["media/havoccrew/hero-creator.h264.mp4"]" type='video/mp4; codecs="avc1.640028"'>
+                        </video>
+                        <figcaption>Configuring a Teleporter and an Artillerist in the Hero Creator, each waiting in the hero roster moments later (2× speed).</figcaption>
+                    </figure>
+
+                    <figure class="figure-image">
+                        <picture>
+                            <img decoding="async" loading="lazy" src="@Assets["media/havoccrew/heroes.webp"]" alt="The 'A Hero for Every Battle' screenshot from the Google Play page." />
+                        </picture>
+                        <figcaption>Featured image 3 titled "A HERO FOR EVERY BATTLE" from the <a href="https://play.google.com/store/apps/details?id=com.fortisgames.teamraidrpg&hl=en_GB" target="_blank">the Google Play page for Havoc Crew<SvgSprite Link="/icons.svg?v=1#icon-external-link" class="external-link-icon" /></a>.</figcaption>
+                    </figure>
 
                     <Block_Callout>
                         <Icon><SvgSprite Link="/icons.svg?v=1#icon-seal-check-fill" Alt="Check" /></Icon>
-                        <ChildContent>Integrated automatic profile capture into the bug reporter, enabling developers to reproduce account-state-dependent bugs instantly from the attached snapshot.</ChildContent>
+                        <ChildContent>Reduced test setup time by enabling instant injection of precisely-configured hero builds without needing to play through progression.</ChildContent>
                     </Block_Callout>
+                </OutlineSection>
+                
+                <OutlineSection Id="rooms-tool" LinkName="Rooms Tool">
+                    <Block_ArticleHeading>
+                        <hgroup>
+                            <p>Content Authoring</p>
+                            <h2>Rooms Tool</h2>
+                        </hgroup>
+                    </Block_ArticleHeading>
 
-                    <p>Because templates are plain JSON they can also be <b>manually edited</b> to construct precise edge-case states that would be difficult to reach through normal gameplay.</p>
+                    <p>The <b>Rooms Tool</b> lets designers assemble dungeon levels in the Unity Scene View by snapping pre-fabricated room assets together. Each room exposes a set of <b>junctions</b> that must match between neighbours in rotation and size, so connection errors are impossible by construction.</p>
+
+                    <figure class="figure-image">
+                        <picture class="media-wide">
+                            <img decoding="async" loading="lazy" src="@Assets["media/havoccrew/dungeons.webp"]" alt="The 'Survive Ever-Changing Dungeons' screenshot from the Google Play page, showing heroes fighting through several dungeon rooms." />
+                        </picture>
+                        <figcaption>Featured image 2 titled "SURVIVE EVER-CHANGING DUNGEONS" from <a href="https://play.google.com/store/apps/details?id=com.fortisgames.teamraidrpg&hl=en_GB" target="_blank">the Google Play page for Havoc Crew<SvgSprite Link="/icons.svg?v=1#icon-external-link" class="external-link-icon" /></a>.</figcaption>
+                    </figure>
+
+                    <p>Designers work from a palette of rooms in the Project window. When dragging a room into the scene it <b>automatically snaps</b> to the nearest compatible open junction.</p>
+
+                    <figure class="figure-image">
+                        <picture class="media-wide">
+                            <img decoding="async" loading="lazy" src="@Assets["media/havoccrew/rooms-palette.webp"]" alt="The Unity Project window showing a grid of room assets, each with a floorplan icon in the shape of its room." />
+                        </picture>
+                        <figcaption>A palette of room assets. Each icon shows the room's shape, so designers can pick rooms at a glance.</figcaption>
+                    </figure>
+
+                    <figure class="figure-image">
+                        <picture>
+                            <img decoding="async" loading="lazy" src="@Assets["media/havoccrew/rooms-floorplan.webp"]" alt="A room floorplan drawn in purple, with coloured markers on its edges where it can connect to other rooms." />
+                        </picture>
+                        <figcaption>A single room's floorplan. The coloured markers on its edges are its junctions.</figcaption>
+                    </figure>
+
+                    <Block_Callout>
+                        <Icon><SvgSprite Link="/icons.svg?v=1#icon-seal-check-fill" Alt="Check" /></Icon>
+                        <ChildContent>Built a constraint-based Scene View level assembly tool where invalid room connections are impossible by construction.</ChildContent>
+                    </Block_Callout>
                 </OutlineSection>
 
                 <OutlineSection Id="data-editing" LinkName="Data Editing">
@@ -126,6 +183,13 @@
 
                     <p>The new tool has a <b>persistent tabbed interface</b> with browser-style navigation history. The currently open tabs, their order, and the focused tab all persisted across window closures and Unity restarts, and developers can scrub backwards and forwards through navigation history using the UI controls or mouse thumb buttons.</p>
 
+                    <figure class="figure-image">
+                        <picture>
+                            <img decoding="async" loading="lazy" src="@Assets["media/havoccrew/definitions-window.webp"]" alt="The Definitions Window open on its Welcome tab, with back and forward navigation arrows and a link to the naming conventions." />
+                        </picture>
+                        <figcaption>The Definitions Window's welcome page, which can be reopened at any time with <kbd>F1</kbd>.</figcaption>
+                    </figure>
+
                     <Block_Callout>
                         <Icon><SvgSprite Link="/icons.svg?v=1#icon-seal-check-fill" Alt="Check" /></Icon>
                         <ChildContent>Introduced persistent tabbed workspaces with navigation history, reducing context-switching overhead when working across complex data hierarchies.</ChildContent>
@@ -137,29 +201,18 @@
 
                     <p>I split them into two separate concerns. A <b>Control</b> is a standalone <code>VisualElement</code> inheriting from <code>BaseField&lt;T&gt;</code> that owns all visual and interaction logic. A <b>Binder</b> is a minimal <code>PropertyDrawer</code> that just finds the relevant <code>SerializedProperty</code> and calls <code>BindProperty()</code> to wire it up, with no logic of its own.</p>
 
+                    <figure class="figure-image">
+                        <picture>
+                            <img decoding="async" loading="lazy" src="@Assets["media/havoccrew/proxy-field.webp"]" alt="A Proxy field in the Unity Inspector referencing an AbilityPrimary gameplay tag, with an object picker and a browse button." />
+                        </picture>
+                        <figcaption>A <code>Proxy&lt;T&gt;</code> field, built as a standalone Control and bound to its data by a lightweight Binder.</figcaption>
+                    </figure>
+
                     <p>Because the controls are standalone <code>VisualElement</code>s they can be used anywhere in the editor, including custom Editor Windows, Node Graph editors, and inspector drawers.</p>
                     
                     <Block_Callout>
                         <Icon><SvgSprite Link="/icons.svg?v=1#icon-seal-check-fill" Alt="Check" /></Icon>
                         <ChildContent>Established a reusable property drawer architecture separating visual controls from data binding, enabling the same UI controls to be shared across inspector drawers, editor windows, and node graph editors.</ChildContent>
-                    </Block_Callout>
-                </OutlineSection>
-
-                <OutlineSection Id="rooms-tool" LinkName="Rooms Tool">
-                    <Block_ArticleHeading>
-                        <hgroup>
-                            <p>Content Authoring</p>
-                            <h2>Rooms Tool</h2>
-                        </hgroup>
-                    </Block_ArticleHeading>
-
-                    <p>The <b>Rooms Tool</b> lets designers assemble dungeon levels in the Unity Scene View by snapping pre-fabricated room assets together. Each room exposes a set of <b>junctions</b> that must match between neighbours in rotation and size, so connection errors are impossible by construction.</p>
-
-                    <p>When dragging a room into the scene it <b>automatically snaps</b> to the nearest compatible open junction.</p>
-
-                    <Block_Callout>
-                        <Icon><SvgSprite Link="/icons.svg?v=1#icon-seal-check-fill" Alt="Check" /></Icon>
-                        <ChildContent>Built a constraint-based Scene View level assembly tool where invalid room connections are impossible by construction.</ChildContent>
                     </Block_Callout>
                 </OutlineSection>
 
@@ -175,35 +228,20 @@
 
                     <p>It is <b>context-aware</b>, meaning that the available options change based on what state the game is in. Different controls appear when the player is inside a dungeon versus in the lobby, and account-specific options are hidden when no user is authenticated. The interface never surfaces controls that can't apply to the current state.</p>
 
+                    <figure class="figure-image">
+                        <video loading="lazy" autoplay muted loop playsinline controls>
+                            <source src="@Assets["media/havoccrew/debug-dialog.h265.mp4"]" type='video/mp4; codecs="hvc1.1.6.L120.90"'>
+                            <source src="@Assets["media/havoccrew/debug-dialog.h264.mp4"]" type='video/mp4; codecs="avc1.640028"'>
+                        </video>
+                        <figcaption>Opening the Debug Dialog inside a dungeon, where cheats for the current node and the hero's boons sit alongside the profile cheats.</figcaption>
+                    </figure>
+
                     <Block_Callout>
                         <Icon><SvgSprite Link="/icons.svg?v=1#icon-seal-check-fill" Alt="Check" /></Icon>
                         <ChildContent>Designed a context-aware runtime debug framework that surfaces only the controls relevant to the player's current game state.</ChildContent>
                     </Block_Callout>
 
                     <p>The dialog is organised into tabs, where each tab integrated a different subsystem. The <a href="/portfolio/havoccrew#hero-creator">Hero Creator</a> and <a href="/portfolio/havoccrew#profile-templates">Profile Templates</a> tools are both accessible through it, making it the single runtime surface for developer and QA workflows.</p>
-                </OutlineSection>
-
-                <OutlineSection Id="hero-creator" LinkName="Hero Creator">
-                    <Block_ArticleHeading>
-                        <hgroup>
-                            <p>Developer Testing</p>
-                            <h2>Hero Creator</h2>
-                        </hgroup>
-                    </Block_ArticleHeading>
-
-                    <p>The <b>Hero Creator</b> lets developers and testers instantly generate a fully-configured hero and inject it into their profile, bypassing progression entirely. Testing any specific combination of ascension tier, level, element, and traits requires no grinding through the game to get there.</p>
-
-                    <figure class="figure-image">
-                        <picture>
-                            <img decoding="async" loading="lazy" src="@Assets["media/havoccrew/heroes.webp"]" alt="The 'A Hero for Every Battle' screenshot from the Google Play page." />
-                        </picture>
-                        <figcaption>Featured image 3 titled "A HERO FOR EVERY BATTLE" from the <a href="https://play.google.com/store/apps/details?id=com.fortisgames.teamraidrpg&hl=en_GB" target="_blank">the Google Play page for Havoc Crew<SvgSprite Link="/icons.svg?v=1#icon-external-link" class="external-link-icon" /></a>.</figcaption>
-                    </figure>
-
-                    <Block_Callout>
-                        <Icon><SvgSprite Link="/icons.svg?v=1#icon-seal-check-fill" Alt="Check" /></Icon>
-                        <ChildContent>Reduced test setup time by enabling instant injection of precisely-configured hero builds without needing to play through progression.</ChildContent>
-                    </Block_Callout>
                 </OutlineSection>
 
                 <OutlineSection Id="debug-hud" LinkName="Debug HUD">
@@ -216,10 +254,52 @@
 
                     <p>The <b>Debug HUD</b> was the first tool I built at Fortis Games. It renders numeric overlays onto game entities in both the Unity <b>Scene View</b> and at runtime in editor and non-retail builds using the same uGUI canvas prefab as the Scene View. This tool enables developers and QA can see live game state without adding breakpoints or print statements.</p>
 
+                    <figure class="figure-image">
+                        <video loading="lazy" autoplay muted loop playsinline controls>
+                            <source src="@Assets["media/havoccrew/debug-hud.h265.mp4"]" type='video/mp4; codecs="hvc1.1.6.L120.90"'>
+                            <source src="@Assets["media/havoccrew/debug-hud.h264.mp4"]" type='video/mp4; codecs="avc1.640028"'>
+                        </video>
+                        <figcaption>The Debug HUD in the Scene View (left) and the Game View (right), with markers following each entity through a fight.</figcaption>
+                    </figure>
+
+                    <figure class="figure-image">
+                        <picture class="media-wide">
+                            <img decoding="async" loading="lazy" src="@Assets["media/havoccrew/combat.webp"]" alt="The 'Epic Real Time Action Combat' screenshot from the Google Play page, showing a hero surrounded by enemies and floating damage numbers." />
+                        </picture>
+                        <figcaption>Featured image 1 titled "EPIC REAL TIME ACTION COMBAT" from <a href="https://play.google.com/store/apps/details?id=com.fortisgames.teamraidrpg&hl=en_GB" target="_blank">the Google Play page for Havoc Crew<SvgSprite Link="/icons.svg?v=1#icon-external-link" class="external-link-icon" /></a>. Fights this busy are where the exact numbers matter most.</figcaption>
+                    </figure>
+
                     <Block_Callout>
                         <Icon><SvgSprite Link="/icons.svg?v=1#icon-seal-check-fill" Alt="Check" /></Icon>
                         <ChildContent>Built a runtime and Scene View overlay system giving developers and QA direct visibility into entity health and AI targeting state.</ChildContent>
                     </Block_Callout>
+                </OutlineSection>
+                
+                <OutlineSection Id="profile-templates" LinkName="Profile Templates">
+                    <Block_ArticleHeading>
+                        <hgroup>
+                            <p>Developer Testing</p>
+                            <h2>Profile Templates</h2>
+                        </hgroup>
+                    </Block_ArticleHeading>
+
+                    <p>The <b>Profile Templates</b> system captures the complete state of a user's profile as a plain JSON file which can be shared, committed to source control, and re-applied to any developer's account. The team built up a library of reproducible account states for testing specific scenarios.</p>
+
+                    <p>The most useful integration was with the <b>in-game bug reporter</b>. When a QA tester submits a bug report, a profile snapshot is <b>automatically attached</b> alongside the screenshot and logs. A developer can apply that snapshot to their own account and be in the exact state the tester was in. Reproducing account-state-dependent bugs went from a manual, error-prone process to a single click.</p>
+
+                    <figure class="figure-image">
+                        <picture class="media-wide">
+                            <img decoding="async" loading="lazy" src="@Assets["media/havoccrew/load-profile.webp"]" alt="The Load Profile tab of the Debug Dialog, listing the EarlyGame, LateGame, MidGame and EndGame templates, each with a green apply arrow." />
+                        </picture>
+                        <figcaption>The Load Profile tab of the <a href="/portfolio/havoccrew#debug-dialog">Debug Dialog</a>. Each green arrow applies a template to the current account.</figcaption>
+                    </figure>
+
+                    <Block_Callout>
+                        <Icon><SvgSprite Link="/icons.svg?v=1#icon-seal-check-fill" Alt="Check" /></Icon>
+                        <ChildContent>Integrated automatic profile capture into the bug reporter, enabling developers to reproduce account-state-dependent bugs instantly from the attached snapshot.</ChildContent>
+                    </Block_Callout>
+
+                    <p>Because templates are plain JSON they can also be <b>manually edited</b> to construct precise edge-case states that would be difficult to reach through normal gameplay.</p>
                 </OutlineSection>
 
             </Content>
