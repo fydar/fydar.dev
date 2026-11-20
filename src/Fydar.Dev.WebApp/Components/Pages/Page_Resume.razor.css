@@ -490,7 +490,6 @@ article.page-resume ::deep div.page {
             article.page-resume ::deep div.page .timeline:last-child .timeline-body .timeline-body-years .timeline-year:last-child::after {
                 content: unset;
             }
-
         article.page-resume ::deep div.page .timeline .timeline-body .timeline-body-content {
             flex-grow: 1;
         }
@@ -584,6 +583,63 @@ article.page-resume ::deep div.page {
             margin-block-start: 0;
         }
 
+
+    /* Short roles: subtle single-line rows listed under "Other Experience". */
+    article.page-resume ::deep div.page .timeline-minor-list {
+        display: flex;
+        flex-direction: column;
+        gap: 6pt;
+    }
+
+    article.page-resume ::deep div.page .timeline-minor {
+        display: grid;
+        grid-template-columns: 32pt minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 8pt;
+        font-size: 9.5pt;
+        line-height: 16pt;
+        color: #8a8a8a;
+    }
+
+        article.page-resume ::deep div.page .timeline-minor > * {
+            margin: 0;
+            white-space: nowrap;
+        }
+
+        article.page-resume ::deep div.page .timeline-minor .timeline-minor-icon {
+            display: flex;
+            justify-content: center;
+        }
+
+            article.page-resume ::deep div.page .timeline-minor .timeline-minor-icon img {
+                width: 20pt;
+                height: 20pt;
+                border-radius: 4pt;
+                object-fit: cover;
+                background-color: white;
+                box-shadow: 0 0 0 2pt white;
+            }
+
+        article.page-resume ::deep div.page .timeline-minor .timeline-minor-employer {
+            display: flex;
+            align-items: baseline;
+            gap: 5pt;
+        }
+
+            article.page-resume ::deep div.page .timeline-minor .timeline-minor-employer b {
+                font-weight: 600;
+                color: #6a6a6a;
+            }
+
+            article.page-resume ::deep div.page .timeline-minor .timeline-minor-employer svg.external-link-icon {
+                margin-left: -3pt;
+                align-self: start;
+            }
+
+        article.page-resume ::deep div.page .timeline-minor .textual-tags {
+            justify-content: flex-end;
+            font-variant-numeric: tabular-nums;
+        }
 
     article.page-resume ::deep div.page .cover-grid {
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
