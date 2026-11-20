@@ -1,8 +1,12 @@
+@using System.Diagnostics
 @using Microsoft.AspNetCore.WebUtilities
 
 <figure data-nosnippet class="figure-youtube" style="padding-top: @aspectRatioPercent">
 
-    <iframe src="@fullUrl" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" credentialless allowfullscreen></iframe>
+    @if (!Debugger.IsAttached)
+    {
+        <iframe src="@fullUrl" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" credentialless allowfullscreen></iframe>
+    }
 
     @if (ChildContent != null)
     {
