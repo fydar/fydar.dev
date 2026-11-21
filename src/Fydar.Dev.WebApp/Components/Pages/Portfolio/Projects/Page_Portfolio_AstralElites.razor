@@ -86,57 +86,60 @@
                 </aside>
             </Sidebar>
             <Content>
-                <OutlineSection Id="procedural-meshes" LinkName="Procedural Meshes">
+
+                <OutlineSection Id="build-size" LinkName="Web Build Size">
                     <Block_ArticleHeading>
                         <hgroup>
-                            <p>Implementing</p>
-                            <h2>Procedural Meshes</h2>
+                            <p>Optimising the</p>
+                            <h2>Web Build Size</h2>
                         </hgroup>
                     </Block_ArticleHeading>
 
-                    <p>The first system I built was runtime procedural asteroid mesh generation, giving every asteroid a unique, irregular silhouette. I then used Unity's 2D physics engine to hurl those asteroids toward the centre of the arena, keeping the physics simulation lively and each run feeling distinct.</p>
+                    <p>Every megabyte the browser downloads delays the moment the game appears, so I spent a lot of time cutting down the size of the web build. I used the <b>Unity Project Auditor</b> to find problems, then worked through Unity's build pipeline removing anything the game didn't need.</p>
+
+                    <h3>Stripping shaders with a capture of the game</h3>
+                    <p>Unity compiles many variants of every shader in case they are needed, and in a game this small most of them never are. I first stripped variants against a Shader Variant Collection, which cut around 0.5&nbsp;MB from the build. I later replaced that list with a capture of the game actually running.</p>
+
+                    <p>To make the capture, I wrote a <b>Graphics State Capturer</b>: a debug-only component that records every shader variant and graphics state the game renders into a Graphics State Collection while I play. Pressing 1 starts a capture and 2 ends it. In the web build, a small JavaScript plugin downloads the capture straight from the browser, and a base64 copy is written to the console in case the download fails.</p>
+
+                    <p>A build-time shader preprocessor then checks every variant Unity tries to compile against the capture and removes any variant the game never rendered. Compute shaders are removed entirely. The same capture is used to prewarm shaders progressively while the game boots, so they are compiled before they are first needed rather than in the middle of a run.</p>
+
+                    <h3>Removing what Unity adds by itself</h3>
+                    <p>Unity includes some assets in a build whether a game uses them or not. Before each build, a build processor empties the Universal Render Pipeline's blue-noise, film-grain and SMAA textures and removes the Unity logo used by the splash screen. I also replaced Unity's hidden references to shaders I wasn't using with the Unlit shader, and overrode Unity's default debug UI prefabs so they drop out of the build.</p>
+
+                    <h3>Smaller code and assets</h3>
+                    <ul>
+                        <li><b>Code:</b> I configured Unity's WebAssembly Stripping Tool, which saved around 0.7&nbsp;MB, targeted WebAssembly 2023, and removed System.Linq, the PhysX SDK and every unused package.</li>
+                        <li><b>Rendering:</b> I replaced URP's post-processing with a single custom Bloom render feature, and cut the render pipeline down to reduce its shader and cubemap dependencies.</li>
+                        <li><b>Assets:</b> fonts use pre-rendered atlases, UI sprites use the Alpha8 format, audio clips have their silence trimmed, and the music is encoded at a lower quality.</li>
+                    </ul>
+
+                    <p>Rendering costs came down too. Disabling the post-processing volume when it wasn't in use halved the best-case draw calls, and making the asteroid meshes compatible with the SRP Batcher reduced the CPU cost of drawing them.</p>
+
+                    <h3>Making it load even faster</h3>
+                    <p>Since the self-playing game is now part of the project's landing page, it needs to load as quickly as possible.</p>
+
+                    <p>Using Unity's Asset Bundles, I moved the game's music and sound effects out of the main download, so they are only downloaded when audio is needed. The background version of the game is silent, so the audio isn't downloaded until the player presses "Play in Browser".</p>
 
                 </OutlineSection>
 
-                <OutlineSection Id="autoplay" LinkName="Autoplay in the Background">
+                <OutlineSection Id="touch-and-controllers" LinkName="Touch and Controllers">
                     <Block_ArticleHeading>
-                        <SvgSprite class="media" Link="/icons.svg?v=1#icon-astralelites" />
                         <hgroup>
-                            <p>Optimizations for</p>
-                            <h2>Autoplay in the Background</h2>
+                            <p>Supporting</p>
+                            <h2>Touch and Controllers</h2>
                         </hgroup>
                     </Block_ArticleHeading>
 
-                    <p>This page of my website features the game playing by itself in the background.</p>
+                    <p>Moving the game to Unity's new Input System let me support touchscreens, controllers and pens alongside the mouse.</p>
 
-                    <h3>Configuring the game</h3>
-                    <p>To allow the game to be played in the background, I needed to create an alternate game controller that would manage the auto-playing of the game. This alternate game controller should only be active when the project is launched in background mode.</p>
+                    <ul>
+                        <li><b>Mouse:</b> the ship turns to face the cursor and thrusts while the left button is held.</li>
+                        <li><b>Touch and pen:</b> holding a finger on the screen turns the ship towards it and thrusts. With several fingers down, the ship aims at the average of their positions.</li>
+                        <li><b>Controller:</b> the left stick thrusts and the right stick aims. Without aim input, the ship faces the way it is moving. Pressing Submit or Cancel starts the game.</li>
+                    </ul>
 
-                    <p>Allowing the project to launch in two different modes instead of creating alternate versions of the game means the website doesn't have to download two different games; which means users of my website can load the game faster.</p>
-
-                    <p>In order to tell the game that it should be a background and not a playable game, I pass a command-line argument into the game in the JavaScript that launches the game. The game then checks for this, and launches in the alternate mode.</p>
-
-                    <p>Finally, I added a basic AI player controller to play the game (albeit poorly) and the background is done!</p>
-
-                    <h3>Making it load faster</h3>
-                    <p>Since the game auto-playing is now apart of the project landing page, it's important that it loads as quickly as possible.</p>
-
-                    <p>Using Unity's Asset Bundles, I moved the background music for the game into a separate bundle which is only downloaded is music is required. Since the background version of the game doesn't need music, it's not download until the player pressed the button to "Play in Browser".</p>
-
-                </OutlineSection>
-
-                <OutlineSection Id="discord-sdk" LinkName="Discord SDK">
-                    <Block_ArticleHeading>
-                        <SvgSprite class="media" Link="/icons.svg?v=1#icon-discord" />
-                        <hgroup>
-                            <p>Working with the</p>
-                            <h2>Discord SDK</h2>
-                        </hgroup>
-                    </Block_ArticleHeading>
-
-                    <p>One of the first things that I decided to implement to further the development of this project was to implement the Discord SDK. The Discord SDK provides "rich-presence" integration that allows me to render the players current game state with their friends.</p>
-
-                    <p>I also explored the multiplayer APIs that Discord exposes, but I didn't implement them on this project due to it being a single-player game (though I was tempted to make it multiplayer purely to explore these multiplayer APIs more).</p>
+                    <p>The game switches to whichever input was used last, which took some care to get right. On mobile, a tap would turn the ship towards the finger and then straight back to the last mouse position, which could be left over from a mouse connected earlier. Now the game keeps using touch until another input is used. Devices with a touchscreen default to touch, so any activity on a connected controller takes priority.</p>
 
                 </OutlineSection>
             </Content>
