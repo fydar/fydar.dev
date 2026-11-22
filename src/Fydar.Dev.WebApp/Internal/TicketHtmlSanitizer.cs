@@ -150,7 +150,7 @@ internal sealed class TicketHtmlSanitizer
                 using var content = new MemoryStream();
                 part.Content.DecodeTo(content);
 
-                var dataUrl = $"data:{part.ContentType.MimeType};base64,{Convert.ToBase64String(content.ToArray())}";
+                string dataUrl = $"data:{part.ContentType.MimeType};base64,{Convert.ToBase64String(content.ToArray())}";
 
                 image.SetAttribute("src", dataUrl);
             }

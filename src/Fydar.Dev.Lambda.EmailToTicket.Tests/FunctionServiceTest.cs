@@ -28,10 +28,10 @@ public sealed class FunctionServiceTest
         var mockNotifyingService = new MockNotifyingService();
 
         var functionService = new FunctionService(mockEmailReaderService, mockNotifyingService);
-        
+
         // Act
         string result = await functionService.FunctionHandler(sesEvent, context);
-        
+
         // Assert
         Assert.Contains("CONTINUE", result);
     }

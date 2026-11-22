@@ -1,6 +1,5 @@
 using Amazon.CertificateManager;
 using Amazon.CertificateManager.Model;
-using Amazon.Extensions.NETCore.Setup;
 using Amazon.S3;
 using Amazon.SimpleEmail;
 using Fydar.AspNetCore.CSP;

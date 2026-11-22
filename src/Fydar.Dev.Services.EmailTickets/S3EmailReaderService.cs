@@ -78,7 +78,7 @@ public class S3EmailReaderService : IEmailReaderService
                         continue;
                     }
 
-                    DateTime? lastModified = s3Object.LastModified;
+                    var lastModified = s3Object.LastModified;
                     long? size = s3Object.Size;
 
                     summaries.Add(new TicketSummaryModel()
@@ -183,11 +183,11 @@ public class S3EmailReaderService : IEmailReaderService
         }));
 
         Dictionary<string, string> ticketIdBySourceKey = [with(StringComparer.Ordinal)];
-        foreach (var result in copyResults)
+        foreach (var (ticketId, sourceKey, copied) in copyResults)
         {
-            if (result.copied)
+            if (copied)
             {
-                ticketIdBySourceKey[result.sourceKey] = result.ticketId;
+                ticketIdBySourceKey[sourceKey] = ticketId;
             }
         }
 
@@ -244,7 +244,7 @@ public class S3EmailReaderService : IEmailReaderService
             if (buffer.Count == size)
             {
                 yield return buffer;
-                buffer = new List<T>(size);
+                buffer = [with(size)];
             }
         }
 

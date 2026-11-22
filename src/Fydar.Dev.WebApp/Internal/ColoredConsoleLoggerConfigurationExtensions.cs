@@ -1,7 +1,7 @@
-using Fydar.Dev.WebApp.Internal;
+using Serilog;
 using Serilog.Configuration;
 
-namespace Serilog;
+namespace Fydar.Dev.WebApp.Internal;
 
 /// <summary>
 /// Adds the <c>WriteTo.ColoredConsole()</c> extension method to <see cref="LoggerConfiguration"/>.

@@ -120,7 +120,7 @@ internal class ColoredConsoleLogEventSink : ILogEventSink
                 output.Write(": ");
 
                 if (name == "EventId" && property.Value is StructureValue eventIdValue
-                    && TryGetEventIdParts(eventIdValue, out string? eventName, out var eventIdId))
+                    && TryGetEventIdParts(eventIdValue, out string? eventName, out string? eventIdId))
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     output.Write('"');
