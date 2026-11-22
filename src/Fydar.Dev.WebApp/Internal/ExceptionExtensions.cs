@@ -6,7 +6,6 @@ namespace Fydar.Dev.WebApp.Internal;
 
 internal static partial class ExceptionExtensions
 {
-    private static readonly Regex lineInterpreter = GeneratedRegex();
     private static readonly char[] lineSeperators = ['\r', '\n'];
 
     public static void Format(
@@ -116,7 +115,7 @@ internal static partial class ExceptionExtensions
         }
 
         // Normalise calls in callstack
-        var match = lineInterpreter.Match(line);
+        var match = LineInterpreter.Match(line);
         if (match.Success)
         {
             string method = match.Groups[1].Value;
@@ -143,5 +142,5 @@ internal static partial class ExceptionExtensions
     }
 
     [GeneratedRegex("^(at .*?) in (.*):line (\\d+)$")]
-    private static partial Regex GeneratedRegex();
+    private static partial Regex LineInterpreter { get; }
 }

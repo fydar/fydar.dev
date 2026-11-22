@@ -47,7 +47,7 @@
             <EditForm method="post" Model="ContactMessage" OnValidSubmit="HandleValidSubmit" FormName="contact-form">
                 <DataAnnotationsValidator />
                 <ValidationSummary></ValidationSummary>
-                <input type="hidden" name="ContactMessage.RequestId" value="@Guid.NewGuid().ToString()" />
+                <InputHidden @bind-Value="ContactMessage.RequestId" />
 
                 <div class="form-group">
                     <label for="email">Email</label>
@@ -106,7 +106,12 @@
     private bool isSubmitted = false;
 
     [SupplyParameterFromForm]
-    public ContactSubmitRequestModel ContactMessage { get; set; } = new();
+    public ContactSubmitRequestModel ContactMessage { get; set; } = default!;
+
+    protected override void OnInitialized()
+    {
+        ContactMessage ??= new() { RequestId = Guid.NewGuid().ToString() };
+    }
 
     private async Task HandleValidSubmit(EditContext editContext)
     {

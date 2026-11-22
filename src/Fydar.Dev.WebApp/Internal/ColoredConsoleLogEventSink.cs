@@ -22,6 +22,8 @@ internal class ColoredConsoleLogEventSink : ILogEventSink
         "ExceptionDetail"
     ];
 
+    private static readonly Lock consoleLock = new();
+
     private readonly JsonValueFormatter valueFormatter;
 
     /// <summary>
@@ -43,7 +45,7 @@ internal class ColoredConsoleLogEventSink : ILogEventSink
 
         var output = Console.Out;
 
-        lock (output)
+        lock (consoleLock)
         {
             Console.ForegroundColor = ConsoleColor.DarkGray;
             output.Write("[");

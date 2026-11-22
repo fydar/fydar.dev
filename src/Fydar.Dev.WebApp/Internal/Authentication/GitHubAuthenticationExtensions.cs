@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OAuth;
+using Microsoft.AspNetCore.Http.HttpResults;
 using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text.Json;
@@ -81,6 +82,8 @@ internal static class GitHubAuthenticationExtensions
                 oauth.SaveTokens = false;
 
                 oauth.UsePkce = false;
+
+                oauth.AdditionalAuthorizationParameters.Add("allow_signup", "false");
 
                 oauth.CorrelationCookie.SameSite = SameSiteMode.Lax;
                 oauth.CorrelationCookie.SecurePolicy = requireSecureCookie
@@ -213,14 +216,8 @@ internal static class GitHubAuthenticationExtensions
     /// </remarks>
     private static string LocalReturnUrl(string? returnUrl)
     {
-        if (string.IsNullOrEmpty(returnUrl)
-            || !returnUrl.StartsWith('/')
-            || returnUrl.StartsWith("//", StringComparison.Ordinal)
-            || returnUrl.StartsWith("/\\", StringComparison.Ordinal))
-        {
-            return "/";
-        }
-
-        return returnUrl;
+        return returnUrl is ['/', ..] && RedirectHttpResult.IsLocalUrl(returnUrl)
+            ? returnUrl
+            : "/";
     }
 }

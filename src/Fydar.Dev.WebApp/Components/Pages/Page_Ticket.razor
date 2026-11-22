@@ -1,9 +1,11 @@
+@using Amazon.S3;
 @using Fydar.Dev.Services.EmailTickets;
 @using Fydar.Dev.WebApp.Internal;
 @using Fydar.Dev.WebApp.Internal.Authentication;
 @using Microsoft.AspNetCore.Authorization;
 @using Microsoft.AspNetCore.WebUtilities;
 @using MimeKit
+@using System.Net
 
 @layout DefaultLayout
 @page "/ticket/{ticketId}"
@@ -14,6 +16,7 @@
 
 @inject IEmailReaderService emailReaderService;
 @inject TicketHtmlSanitizer ticketHtmlSanitizer;
+@inject NavigationManager NavigationManager
 
 <PageTitle>Ticket - Fydar</PageTitle>
 
@@ -88,6 +91,13 @@
 
     protected override async Task OnInitializedAsync()
     {
-        mimeMessage = await emailReaderService.ReadEmailAsync(TicketId);
+        try
+        {
+            mimeMessage = await emailReaderService.ReadEmailAsync(TicketId);
+        }
+        catch (AmazonS3Exception exception) when (exception.StatusCode == HttpStatusCode.NotFound)
+        {
+            NavigationManager.NotFound();
+        }
     }
 }

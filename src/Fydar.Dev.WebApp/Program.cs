@@ -23,7 +23,6 @@ using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Caching.Hybrid;
-using Microsoft.Net.Http.Headers;
 using MimeKit;
 using Serilog;
 using System.Net;
@@ -167,14 +166,6 @@ public class Program
             options.AllowEmptyHosts = false;
         });
 
-        // The error pages are components, and rendering one re-enters the components pipeline in
-        // the same request. Without a fresh scope the second render finds the scoped
-        // NavigationManager already initialized by the first and throws.
-        builder.Services.Configure<StatusCodePagesOptions>(options =>
-        {
-            options.CreateScopeForStatusCodePages = true;
-        });
-
         builder.Services.Configure<CachedEmailReaderServiceConfiguration>(options =>
         {
             options.Expiration = TimeSpan.FromHours(1);
@@ -190,17 +181,6 @@ public class Program
         {
             options.MaximumPayloadBytes = 32 * 1024 * 1024;
         });
-
-        if (!builder.Environment.IsDevelopment())
-        {
-            builder.Services.Configure<StaticFileOptions>(opts =>
-            {
-                opts.OnPrepareResponse = ctx =>
-                {
-                    ctx.Context.Response.Headers[HeaderNames.CacheControl] = $"public,max-age=31536000";
-                };
-            });
-        }
 
         builder.Services.AddSingleton<IHybridCacheSerializer<MimeMessage>, MimeMessageHybridCacheSerializer>();
 
@@ -247,7 +227,7 @@ public class Program
             });
         }
 
-        app.UseStatusCodePagesWithReExecute("/error/{0}");
+        app.UseStatusCodePagesWithReExecute("/error/{0}", createScopeForStatusCodePages: true);
 
         app.MapSocialRedirects();
         app.MapIconLibrary<SiteIcons>("/icons.svg");
