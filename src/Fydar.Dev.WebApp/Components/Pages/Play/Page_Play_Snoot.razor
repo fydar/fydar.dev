@@ -24,8 +24,7 @@
     <MetadataComponent Metadata="@PageMetadata" />
     <BreadcrumbListComponent Model="@breadcrumbs" />
     <meta name="theme-color" content="#161618">
-    <link rel="shortcut icon" href="@Assets["/play/snoot/favicon.ico"]">
-    <link rel="preload" href="@Assets["/play/snoot/build/snoot.loader.js"]" as="script" fetchpriority="high" />
+    <link rel="shortcut icon" href="@Assets["play/snoot/favicon.ico"]">
 </HeadFragment>
 
 @{
@@ -34,10 +33,10 @@
         ProductName = "Snoot",
         ProductVersion = new Version(0, 0, 4),
         CompanyName = "Fydar, Emma, and Tim",
-        LoaderUrl = Assets["/play/snoot/build/snoot.loader.js"],
-        FrameworkUrl = Assets["/play/snoot/build/snoot.framework.js.br"],
-        CodeUrl = Assets["/play/snoot/build/snoot.wasm.br"],
-        DataUrl = Assets["/play/snoot/build/snoot.data.br"],
+        LoaderUrl = Assets["play/snoot/build/snoot.loader.js"],
+        FrameworkUrl = Assets["play/snoot/build/snoot.framework.js.br"],
+        CodeUrl = Assets["play/snoot/build/snoot.wasm.br"],
+        DataUrl = Assets["play/snoot/build/snoot.data.br"],
         StreamingAssetsUrl = "/play/snoot/StreamingAssets",
         Arguments = [],
     };
@@ -51,5 +50,4 @@
 
 <PwaInstall AppId="snoot"
             Scope="/play/snoot"
-            ServiceWorkerUrl="@Assets["play/snoot.serviceworker.js"]"
-            ManifestUrl="@Assets["/play/snoot/manifest.webmanifest"]" />
+            ManifestUrl="@Assets["play/snoot/manifest.webmanifest"]" />

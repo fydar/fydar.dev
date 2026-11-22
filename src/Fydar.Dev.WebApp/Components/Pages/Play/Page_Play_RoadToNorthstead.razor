@@ -24,8 +24,7 @@
     <MetadataComponent Metadata="@PageMetadata" />
     <BreadcrumbListComponent Model="@breadcrumbs" />
     <meta name="theme-color" content="#161618">
-    <link rel="shortcut icon" href="@Assets["/play/roadtonorthstead/favicon.ico"]">
-    <link rel="preload" href="@Assets["/play/roadtonorthstead/build/roadtonorthstead.loader.js"]" as="script" fetchpriority="high" />
+    <link rel="shortcut icon" href="@Assets["play/roadtonorthstead/favicon.ico"]">
 </HeadFragment>
 
 @{
@@ -34,10 +33,10 @@
         ProductName = "Road to Northstead",
         ProductVersion = new Version(0, 1, 0),
         CompanyName = "Fydar",
-        LoaderUrl = Assets["/play/roadtonorthstead/build/roadtonorthstead.loader.js"],
-        FrameworkUrl = Assets["/play/roadtonorthstead/build/roadtonorthstead.framework.js.br"],
-        CodeUrl = Assets["/play/roadtonorthstead/build/roadtonorthstead.wasm.br"],
-        DataUrl = Assets["/play/roadtonorthstead/build/roadtonorthstead.data.br"],
+        LoaderUrl = Assets["play/roadtonorthstead/build/roadtonorthstead.loader.js"],
+        FrameworkUrl = Assets["play/roadtonorthstead/build/roadtonorthstead.framework.js.br"],
+        CodeUrl = Assets["play/roadtonorthstead/build/roadtonorthstead.wasm.br"],
+        DataUrl = Assets["play/roadtonorthstead/build/roadtonorthstead.data.br"],
         StreamingAssetsUrl = "/play/roadtonorthstead/StreamingAssets",
         Arguments = [],
     };
@@ -51,5 +50,4 @@
 
 <PwaInstall AppId="roadtonorthstead"
             Scope="/play/roadtonorthstead"
-            ServiceWorkerUrl="@Assets["play/roadtonorthstead.serviceworker.js"]"
-            ManifestUrl="@Assets["/play/roadtonorthstead/manifest.webmanifest"]" />
+            ManifestUrl="@Assets["play/roadtonorthstead/manifest.webmanifest"]" />

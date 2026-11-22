@@ -24,8 +24,7 @@
     <MetadataComponent Metadata="@PageMetadata" />
     <BreadcrumbListComponent Model="@breadcrumbs" />
     <meta name="theme-color" content="#161618">
-    <link rel="shortcut icon" href="@Assets["/play/thenewearthconflict/favicon.ico"]">
-    <link rel="preload" href="@Assets["/play/thenewearthconflict/build/thenewearthconflict.loader.js"]" as="script" fetchpriority="high" />
+    <link rel="shortcut icon" href="@Assets["play/thenewearthconflict/favicon.ico"]">
 </HeadFragment>
 
 @{
@@ -34,10 +33,10 @@
         ProductName = "The New Earth Conflict",
         ProductVersion = new Version(0, 1, 0),
         CompanyName = "Fydar",
-        LoaderUrl = Assets["/play/thenewearthconflict/build/thenewearthconflict.loader.js"],
-        FrameworkUrl = Assets["/play/thenewearthconflict/build/thenewearthconflict.framework.js.br"],
-        CodeUrl = Assets["/play/thenewearthconflict/build/thenewearthconflict.wasm.br"],
-        DataUrl = Assets["/play/thenewearthconflict/build/thenewearthconflict.data.br"],
+        LoaderUrl = Assets["play/thenewearthconflict/build/thenewearthconflict.loader.js"],
+        FrameworkUrl = Assets["play/thenewearthconflict/build/thenewearthconflict.framework.js.br"],
+        CodeUrl = Assets["play/thenewearthconflict/build/thenewearthconflict.wasm.br"],
+        DataUrl = Assets["play/thenewearthconflict/build/thenewearthconflict.data.br"],
         StreamingAssetsUrl = "/play/thenewearthconflict/StreamingAssets",
         Arguments = [],
     };
@@ -51,5 +50,4 @@
 
 <PwaInstall AppId="thenewearthconflict"
             Scope="/play/thenewearthconflict"
-            ServiceWorkerUrl="@Assets["play/thenewearthconflict.serviceworker.js"]"
-            ManifestUrl="@Assets["/play/thenewearthconflict/manifest.webmanifest"]" />
+            ManifestUrl="@Assets["play/thenewearthconflict/manifest.webmanifest"]" />

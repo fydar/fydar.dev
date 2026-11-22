@@ -24,8 +24,7 @@
     <MetadataComponent Metadata="@PageMetadata" />
     <BreadcrumbListComponent Model="@breadcrumbs" />
     <meta name="theme-color" content="#161618">
-    <link rel="shortcut icon" href="@Assets["/play/void/favicon.ico"]">
-    <link rel="preload" href="@Assets["/play/void/build/void.loader.js"]" as="script" fetchpriority="high" />
+    <link rel="shortcut icon" href="@Assets["play/void/favicon.ico"]">
 </HeadFragment>
 
 @{
@@ -34,10 +33,10 @@
         ProductName = "Void",
         ProductVersion = new Version(0, 1, 0),
         CompanyName = "Fydar",
-        LoaderUrl = Assets["/play/void/build/void.loader.js"],
-        FrameworkUrl = Assets["/play/void/build/void.framework.js.br"],
-        CodeUrl = Assets["/play/void/build/void.wasm.br"],
-        DataUrl = Assets["/play/void/build/void.data.br"],
+        LoaderUrl = Assets["play/void/build/void.loader.js"],
+        FrameworkUrl = Assets["play/void/build/void.framework.js.br"],
+        CodeUrl = Assets["play/void/build/void.wasm.br"],
+        DataUrl = Assets["play/void/build/void.data.br"],
         StreamingAssetsUrl = "/play/void/StreamingAssets",
         Arguments = [],
     };
@@ -51,5 +50,4 @@
 
 <PwaInstall AppId="void"
             Scope="/play/void"
-            ServiceWorkerUrl="@Assets["play/void.serviceworker.js"]"
-            ManifestUrl="@Assets["/play/void/manifest.webmanifest"]" />
+            ManifestUrl="@Assets["play/void/manifest.webmanifest"]" />

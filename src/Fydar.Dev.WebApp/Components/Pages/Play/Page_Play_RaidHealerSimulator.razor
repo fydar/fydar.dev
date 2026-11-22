@@ -24,8 +24,7 @@
     <MetadataComponent Metadata="@PageMetadata" />
     <BreadcrumbListComponent Model="@breadcrumbs" />
     <meta name="theme-color" content="#161618">
-    <link rel="shortcut icon" href="@Assets["/play/raidhealersimulator/favicon.ico"]">
-    <link rel="preload" href="@Assets["/play/raidhealersimulator/build/0.1.2.1.loader.js"]" as="script" fetchpriority="high" />
+    <link rel="shortcut icon" href="@Assets["play/raidhealersimulator/favicon.ico"]">
 </HeadFragment>
 
 @{
@@ -34,10 +33,10 @@
         ProductName = "Raid Healer Simulator",
         ProductVersion = new Version(0, 1, 2, 1),
         CompanyName = "Fydar",
-        LoaderUrl = Assets["/play/raidhealersimulator/build/0.1.2.1.loader.js"],
-        FrameworkUrl = Assets["/play/raidhealersimulator/build/0.1.2.1.framework.js.br"],
-        CodeUrl = Assets["/play/raidhealersimulator/build/0.1.2.1.wasm.br"],
-        DataUrl = Assets["/play/raidhealersimulator/build/0.1.2.1.data.br"],
+        LoaderUrl = Assets["play/raidhealersimulator/build/0.1.2.1.loader.js"],
+        FrameworkUrl = Assets["play/raidhealersimulator/build/0.1.2.1.framework.js.br"],
+        CodeUrl = Assets["play/raidhealersimulator/build/0.1.2.1.wasm.br"],
+        DataUrl = Assets["play/raidhealersimulator/build/0.1.2.1.data.br"],
         StreamingAssetsUrl = "/play/raidhealersimulator/StreamingAssets",
         Arguments = [],
     };
@@ -51,5 +50,4 @@
 
 <PwaInstall AppId="raidhealersimulator"
             Scope="/play/raidhealersimulator"
-            ServiceWorkerUrl="@Assets["play/raidhealersimulator.serviceworker.js"]"
-            ManifestUrl="@Assets["/play/raidhealersimulator/manifest.webmanifest"]" />
+            ManifestUrl="@Assets["play/raidhealersimulator/manifest.webmanifest"]" />

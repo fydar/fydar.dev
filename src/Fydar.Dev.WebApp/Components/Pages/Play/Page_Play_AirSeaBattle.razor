@@ -24,8 +24,7 @@
     <MetadataComponent Metadata="@PageMetadata" />
     <BreadcrumbListComponent Model="@breadcrumbs" />
     <meta name="theme-color" content="#161618">
-    <link rel="shortcut icon" href="@Assets["/play/airseabattle/favicon.ico"]">
-    <link rel="preload" href="@Assets["/play/airseabattle/build/airseabattle.loader.js"]" as="script" fetchpriority="high" />
+    <link rel="shortcut icon" href="@Assets["play/airseabattle/favicon.ico"]">
 </HeadFragment>
 
 @{
@@ -34,10 +33,10 @@
         ProductName = "Air-Sea Battle",
         ProductVersion = new Version(0, 1, 0),
         CompanyName = "Fydar",
-        LoaderUrl = Assets["/play/airseabattle/build/airseabattle.loader.js"],
-        FrameworkUrl = Assets["/play/airseabattle/build/airseabattle.framework.js.br"],
-        CodeUrl = Assets["/play/airseabattle/build/airseabattle.wasm.br"],
-        DataUrl = Assets["/play/airseabattle/build/airseabattle.data.br"],
+        LoaderUrl = Assets["play/airseabattle/build/airseabattle.loader.js"],
+        FrameworkUrl = Assets["play/airseabattle/build/airseabattle.framework.js.br"],
+        CodeUrl = Assets["play/airseabattle/build/airseabattle.wasm.br"],
+        DataUrl = Assets["play/airseabattle/build/airseabattle.data.br"],
         StreamingAssetsUrl = "/play/airseabattle/StreamingAssets",
         Arguments = [],
     };
@@ -51,5 +50,4 @@
 
 <PwaInstall AppId="airseabattle"
             Scope="/play/airseabattle"
-            ServiceWorkerUrl="@Assets["play/airseabattle.serviceworker.js"]"
-            ManifestUrl="@Assets["/play/airseabattle/manifest.webmanifest"]" />
+            ManifestUrl="@Assets["play/airseabattle/manifest.webmanifest"]" />

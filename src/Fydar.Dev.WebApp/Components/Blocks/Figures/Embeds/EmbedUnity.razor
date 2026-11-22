@@ -6,6 +6,8 @@
 }
 
 <ContentSecurityPolicy_Allow Directive="media-src" Sources="'self' data: blob:" />
+@* The loader and framework scripts run from blob: URLs of their cached copies. *@
+<ContentSecurityPolicy_Allow Directive="script-src" Sources="blob:" />
 
 <div id="@instanceId" class="embed loading" style="--loading-percentage: 0%;" @attributes="AdditionalAttributes">
     <canvas class="embed--canvas" id="@canvasId" width=960 height=600 tabindex="-1"></canvas>
@@ -47,42 +49,192 @@
         if (window.trustedTypes && window.trustedTypes.createPolicy && !window.trustedTypes.defaultPolicy) {
             window.trustedTypes.createPolicy('default', {
                 createScriptURL: (url) => {
-                    // SECURITY CHECK: Validate the URL before trusting it.
-                    // Example: Only allow scripts from your own origin.
                     const parsedUrl = new URL(url, window.location.origin);
                     if (parsedUrl.origin !== window.location.origin) {
                         throw new TypeError('Rejected script URL: Only same-origin scripts are allowed.');
                     }
 
-                    // If the validation passes, return the string.
-                    // The browser will automatically wrap it in a TrustedScriptURL object.
                     return parsedUrl.href;
                 }
             });
         }
 
-        var loaderUrl = "@Config.LoaderUrl";
-        var frameworkUrl = "@Config.FrameworkUrl";
+        window.fydarUnityCache = window.fydarUnityCache || (function () {
+            const nativeFetch = window.fetch.bind(window);
+            const games = new Map();
+            const inflight = new Map();
+            const prefetched = new Map();
 
-        var script = document.createElement("script");
-        script.src = loaderUrl;
-        script.setAttribute("async", "");
-        script.onload = () => {
-            setTimeout(function () {
+            function gameFolderOf(url) {
+                for (const folder of games.keys()) {
+                    if (url.pathname.startsWith(folder + "/")) {
+                        return folder;
+                    }
+                }
+                return null;
+            }
+
+            function isControlledBy(folder) {
+                return !!navigator.serviceWorker?.controller
+                    && (location.pathname === folder || location.pathname.startsWith(folder + "/"));
+            }
+
+            function viaCache(cacheName, key, request) {
+                const previous = inflight.get(key) ?? Promise.resolve();
+                const result = previous.then(async () => {
+                    let cache = null;
+                    try {
+                        cache = await caches.open(cacheName);
+                        const cached = await cache.match(key);
+                        if (cached) {
+                            return { response: cached, stored: null };
+                        }
+                    } catch (error) {
+                        console.warn(`Unable to read the cache for ${key}:`, error);
+                        cache = null;
+                    }
+
+                    const response = await nativeFetch(request);
+                    const stored = cache && response.status === 200 && response.type === "basic"
+                        ? cache.put(key, response.clone()).catch((error) => console.warn(`Unable to cache ${key}:`, error))
+                        : null;
+                    return { response, stored };
+                });
+
+                const settled = result.then((entry) => entry.stored, () => { });
+                inflight.set(key, settled);
+                settled.then(() => {
+                    if (inflight.get(key) === settled) {
+                        inflight.delete(key);
+                    }
+                });
+                return result.then((entry) => entry.response);
+            }
+
+            window.fetch = function (input, init) {
+                const method = init?.method ?? (input instanceof Request ? input.method : "GET");
+                if (method.toUpperCase() !== "GET") {
+                    return nativeFetch(input, init);
+                }
+
+                const url = new URL(input instanceof Request ? input.url : String(input), document.baseURI);
+                url.hash = "";
+
+                const early = prefetched.get(url.href);
+                if (early) {
+                    prefetched.delete(url.href);
+                    return early;
+                }
+
+                const folder = window.caches && url.origin === location.origin ? gameFolderOf(url) : null;
+                if (!folder || isControlledBy(folder)) {
+                    return nativeFetch(input, init);
+                }
+
+                return viaCache(games.get(folder), url.href, new Request(input, init));
+            };
+
+            return {
+                async use(folder, buildUrls) {
+                    const cacheName = "fydar-" + folder.substring(folder.lastIndexOf("/") + 1);
+                    games.set(folder, cacheName);
+                    if (!window.caches) {
+                        return;
+                    }
+
+                    try {
+                        const current = new Set(buildUrls.filter(Boolean).map((url) => new URL(url, document.baseURI).href));
+                        const cache = await caches.open(cacheName);
+                        const keys = await cache.keys();
+                        const isStale = (key) => !current.has(key.url) && new URL(key.url).pathname !== folder;
+                        if (keys.some((key) => isStale(key) && new URL(key.url).pathname.startsWith(folder + "/build/"))) {
+                            await Promise.all(keys.filter(isStale).map((key) => cache.delete(key)));
+                        }
+                    } catch (error) {
+                        console.warn(`Unable to tidy the cache for ${folder}:`, error);
+                    }
+                },
+
+                prefetch(url) {
+                    const key = new URL(url, document.baseURI);
+                    key.hash = "";
+                    if (prefetched.has(key.href)) {
+                        return prefetched.get(key.href).arrived;
+                    }
+                    const response = window.fetch(url);
+                    
+                    response.arrived = response.then(async (r) => {
+                        const reader = r.clone().body?.getReader();
+                        while (reader && !(await reader.read()).done) { }
+                    }).catch(() => { });
+                    prefetched.set(key.href, response);
+
+                    response.catch(() => {
+                        if (prefetched.get(key.href) === response) {
+                            prefetched.delete(key.href);
+                        }
+                    });
+                    return response.arrived;
+                },
+
+                async scriptUrl(url) {
+                    const response = await window.fetch(url);
+                    if (!response.ok) {
+                        throw new Error(`Failed to load ${url}: ${response.status}`);
+                    }
+                    const blob = await response.blob();
+                    return URL.createObjectURL(new Blob([blob], { type: "text/javascript" }));
+                }
+            };
+        })();
+
+        (async function () {
+            var cache = window.fydarUnityCache;
+            var buildUrls = {
+                loaderUrl: "@Config.LoaderUrl",
+                frameworkUrl: "@Config.FrameworkUrl",
+                codeUrl: "@Config.CodeUrl",
+                dataUrl: "@Config.DataUrl",
+                symbolsUrl: "@Config.SymbolsUrl",
+                memoryUrl: "@Config.MemoryUrl"
+            };
+
+            await cache.use("@GameFolder", Object.values(buildUrls));
+
+            var buildArrived = Promise.all([
+                cache.prefetch(buildUrls.codeUrl),
+                cache.prefetch(buildUrls.dataUrl)
+            ]);
+
+            var prefetchUrls = @((MarkupString)System.Text.Json.JsonSerializer.Serialize(Config.PrefetchUrls));
+            if (prefetchUrls.length > 0) {
+                buildArrived.then(() => prefetchUrls.forEach((url) => cache.prefetch(url)));
+            }
+
+            var [loaderSrc, frameworkSrc] = await Promise.all([
+                cache.scriptUrl(buildUrls.loaderUrl),
+                cache.scriptUrl(buildUrls.frameworkUrl)
+            ]);
+
+            var script = document.createElement("script");
+            script.src = loaderSrc;
+            script.setAttribute("async", "");
+            script.onload = () => {
+                URL.revokeObjectURL(loaderSrc);
                 var config = {
                     companyName: "@Config.CompanyName",
                     productName: "@Config.ProductName",
                     productVersion: "@Config.ProductVersion",
-                    frameworkUrl: frameworkUrl,
-                    codeUrl: "@Config.CodeUrl",
-                    dataUrl: "@Config.DataUrl",
+                    frameworkUrl: frameworkSrc,
+                    codeUrl: buildUrls.codeUrl,
+                    dataUrl: buildUrls.dataUrl,
                     @if (!string.IsNullOrEmpty(Config.SymbolsUrl))
                     {
-                        <text>symbolsUrl: "@Config.SymbolsUrl",</text>
+                        <text>symbolsUrl: buildUrls.symbolsUrl,</text>
                     }
                     @if (!string.IsNullOrEmpty(Config.MemoryUrl))
                     {
-                        <text>memoryUrl: "@Config.MemoryUrl",</text>
+                        <text>memoryUrl: buildUrls.memoryUrl,</text>
                     }
                     streamingAssetsUrl: "@Config.StreamingAssetsUrl",
                     arguments: [@((MarkupString)(Config.Arguments.Length > 0 ? $"\"{string.Join("\", \"", Config.Arguments)}\"" : ""))]
@@ -117,6 +269,7 @@
                 createUnityInstance(canvas, config, (progress) => {
                     container.style.setProperty('--loading-percentage', (100 * progress) + "%");
                 }).then((unityInstance) => {
+                    URL.revokeObjectURL(frameworkSrc);
                     container.style.setProperty('--loading-percentage', "100%");
 
                     requestAnimationFrame(() => {
@@ -129,9 +282,11 @@
                 }).catch((message) => {
                     alert(message);
                 });
-            }, 1);
-        };
-        document.body.appendChild(script);
+            };
+            document.body.appendChild(script);
+        })().catch((error) => {
+            console.error("Unable to start the game:", error);
+        });
     </script>
 
     <style>
@@ -280,4 +435,13 @@
 
     [Parameter(CaptureUnmatchedValues = true)]
     public IDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string GameFolder
+    {
+        get
+        {
+            var streamingAssets = Config.StreamingAssetsUrl.TrimEnd('/');
+            return streamingAssets[..streamingAssets.LastIndexOf('/')];
+        }
+    }
 }

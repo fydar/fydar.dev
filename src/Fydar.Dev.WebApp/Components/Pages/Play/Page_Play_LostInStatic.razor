@@ -24,8 +24,7 @@
     <MetadataComponent Metadata="@PageMetadata" />
     <BreadcrumbListComponent Model="@breadcrumbs" />
     <meta name="theme-color" content="#161618">
-    <link rel="shortcut icon" href="@Assets["/play/lostinstatic/favicon.ico"]">
-    <link rel="preload" href="@Assets["/play/lostinstatic/build/lostinstatic.loader.js"]" as="script" fetchpriority="high" />
+    <link rel="shortcut icon" href="@Assets["play/lostinstatic/favicon.ico"]">
 </HeadFragment>
 
 @{
@@ -34,10 +33,10 @@
         ProductName = "Lost in Static",
         ProductVersion = new Version(0, 1, 0),
         CompanyName = "Fydar, Lewis, Kris, Laurence, and Samirah",
-        LoaderUrl = Assets["/play/lostinstatic/build/lostinstatic.loader.js"],
-        FrameworkUrl = Assets["/play/lostinstatic/build/lostinstatic.framework.js.br"],
-        CodeUrl = Assets["/play/lostinstatic/build/lostinstatic.wasm.br"],
-        DataUrl = Assets["/play/lostinstatic/build/lostinstatic.data.br"],
+        LoaderUrl = Assets["play/lostinstatic/build/lostinstatic.loader.js"],
+        FrameworkUrl = Assets["play/lostinstatic/build/lostinstatic.framework.js.br"],
+        CodeUrl = Assets["play/lostinstatic/build/lostinstatic.wasm.br"],
+        DataUrl = Assets["play/lostinstatic/build/lostinstatic.data.br"],
         StreamingAssetsUrl = "/play/lostinstatic/StreamingAssets",
         Arguments = [],
     };
@@ -51,5 +50,4 @@
 
 <PwaInstall AppId="lostinstatic"
             Scope="/play/lostinstatic"
-            ServiceWorkerUrl="@Assets["play/lostinstatic.serviceworker.js"]"
-            ManifestUrl="@Assets["/play/lostinstatic/manifest.webmanifest"]" />
+            ManifestUrl="@Assets["play/lostinstatic/manifest.webmanifest"]" />

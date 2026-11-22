@@ -24,8 +24,7 @@
     <MetadataComponent Metadata="@PageMetadata" />
     <BreadcrumbListComponent Model="@breadcrumbs" />
     <meta name="theme-color" content="#161618">
-    <link rel="shortcut icon" href="@Assets["/play/cakedodge/favicon.ico"]">
-    <link rel="preload" href="@Assets["/play/cakedodge/build/cakedodge.loader.js"]" as="script" fetchpriority="high" />
+    <link rel="shortcut icon" href="@Assets["play/cakedodge/favicon.ico"]">
 </HeadFragment>
 
 @{
@@ -34,10 +33,10 @@
         ProductName = "Cake Dodge",
         ProductVersion = new Version(0, 1, 0),
         CompanyName = "Fydar",
-        LoaderUrl = Assets["/play/cakedodge/build/cakedodge.loader.js"],
-        FrameworkUrl = Assets["/play/cakedodge/build/cakedodge.framework.js.br"],
-        CodeUrl = Assets["/play/cakedodge/build/cakedodge.wasm.br"],
-        DataUrl = Assets["/play/cakedodge/build/cakedodge.data.br"],
+        LoaderUrl = Assets["play/cakedodge/build/cakedodge.loader.js"],
+        FrameworkUrl = Assets["play/cakedodge/build/cakedodge.framework.js.br"],
+        CodeUrl = Assets["play/cakedodge/build/cakedodge.wasm.br"],
+        DataUrl = Assets["play/cakedodge/build/cakedodge.data.br"],
         StreamingAssetsUrl = "/play/cakedodge/StreamingAssets",
         Arguments = [],
     };
@@ -51,5 +50,4 @@
 
 <PwaInstall AppId="cakedodge"
             Scope="/play/cakedodge"
-            ServiceWorkerUrl="@Assets["play/cakedodge.serviceworker.js"]"
-            ManifestUrl="@Assets["/play/cakedodge/manifest.webmanifest"]" />
+            ManifestUrl="@Assets["play/cakedodge/manifest.webmanifest"]" />

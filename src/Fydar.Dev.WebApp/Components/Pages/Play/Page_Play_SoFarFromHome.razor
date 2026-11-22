@@ -24,8 +24,7 @@
     <MetadataComponent Metadata="@PageMetadata" />
     <BreadcrumbListComponent Model="@breadcrumbs" />
     <meta name="theme-color" content="#161618">
-    <link rel="shortcut icon" href="@Assets["/play/sofarfromhome/favicon.ico"]">
-    <link rel="preload" href="@Assets["/play/sofarfromhome/build/sofarfromhome.loader.js"]" as="script" fetchpriority="high" />
+    <link rel="shortcut icon" href="@Assets["play/sofarfromhome/favicon.ico"]">
 </HeadFragment>
 
 @{
@@ -34,10 +33,10 @@
         ProductName = "Lost in Static",
         ProductVersion = new Version(0, 1, 0),
         CompanyName = "Fydar, Paul, Amy, Evan, Denis, and Gabrielle",
-        LoaderUrl = Assets["/play/sofarfromhome/build/sofarfromhome.loader.js"],
-        FrameworkUrl = Assets["/play/sofarfromhome/build/sofarfromhome.framework.js.br"],
-        CodeUrl = Assets["/play/sofarfromhome/build/sofarfromhome.wasm.br"],
-        DataUrl = Assets["/play/sofarfromhome/build/sofarfromhome.data.br"],
+        LoaderUrl = Assets["play/sofarfromhome/build/sofarfromhome.loader.js"],
+        FrameworkUrl = Assets["play/sofarfromhome/build/sofarfromhome.framework.js.br"],
+        CodeUrl = Assets["play/sofarfromhome/build/sofarfromhome.wasm.br"],
+        DataUrl = Assets["play/sofarfromhome/build/sofarfromhome.data.br"],
         StreamingAssetsUrl = "/play/sofarfromhome/StreamingAssets",
         Arguments = [],
     };
@@ -51,5 +50,4 @@
 
 <PwaInstall AppId="sofarfromhome"
             Scope="/play/sofarfromhome"
-            ServiceWorkerUrl="@Assets["play/sofarfromhome.serviceworker.js"]"
-            ManifestUrl="@Assets["/play/sofarfromhome/manifest.webmanifest"]" />
+            ManifestUrl="@Assets["play/sofarfromhome/manifest.webmanifest"]" />

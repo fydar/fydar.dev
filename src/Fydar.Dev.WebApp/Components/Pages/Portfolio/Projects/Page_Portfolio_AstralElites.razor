@@ -24,7 +24,6 @@
 <HeadFragment>
     <MetadataComponent Metadata="@PageMetadata" />
     <BreadcrumbListComponent Model="@breadcrumbs" />
-    <link rel="preload" href="@Assets["/play/astralelites/build/0.1.2.12.loader.js"]" as="script" fetchpriority="high" />
 </HeadFragment>
 
 <article class="page-astralelites">
@@ -149,5 +148,4 @@
 
 <PwaInstall AppId="astralelites"
             Scope="/play/astralelites"
-            ServiceWorkerUrl="@Assets["play/astralelites.serviceworker.js"]"
-            ManifestUrl="@Assets["/play/astralelites/manifest.webmanifest"]" />
+            ManifestUrl="@Assets["play/astralelites/manifest.webmanifest"]" />

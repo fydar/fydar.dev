@@ -24,8 +24,7 @@
     <MetadataComponent Metadata="@PageMetadata" />
     <BreadcrumbListComponent Model="@breadcrumbs" />
     <meta name="theme-color" content="#161618">
-    <link rel="shortcut icon" href="@Assets["/play/lilypadleap/favicon.ico"]">
-    <link rel="preload" href="@Assets["/play/lilypadleap/build/lilypadleap.loader.js"]" as="script" fetchpriority="high" />
+    <link rel="shortcut icon" href="@Assets["play/lilypadleap/favicon.ico"]">
 </HeadFragment>
 
 @{
@@ -34,10 +33,10 @@
         ProductName = "Lilypad Leap",
         ProductVersion = new Version(0, 1, 0),
         CompanyName = "Out of the Blue Studios",
-        LoaderUrl = Assets["/play/lilypadleap/build/lilypadleap.loader.js"],
-        FrameworkUrl = Assets["/play/lilypadleap/build/lilypadleap.framework.js.br"],
-        CodeUrl = Assets["/play/lilypadleap/build/lilypadleap.wasm.br"],
-        DataUrl = Assets["/play/lilypadleap/build/lilypadleap.data.br"],
+        LoaderUrl = Assets["play/lilypadleap/build/lilypadleap.loader.js"],
+        FrameworkUrl = Assets["play/lilypadleap/build/lilypadleap.framework.js.br"],
+        CodeUrl = Assets["play/lilypadleap/build/lilypadleap.wasm.br"],
+        DataUrl = Assets["play/lilypadleap/build/lilypadleap.data.br"],
         StreamingAssetsUrl = "/play/lilypadleap/StreamingAssets",
         Arguments = [],
     };
@@ -51,5 +50,4 @@
 
 <PwaInstall AppId="lilypadleap"
             Scope="/play/lilypadleap"
-            ServiceWorkerUrl="@Assets["play/lilypadleap.serviceworker.js"]"
-            ManifestUrl="@Assets["/play/lilypadleap/manifest.webmanifest"]" />
+            ManifestUrl="@Assets["play/lilypadleap/manifest.webmanifest"]" />

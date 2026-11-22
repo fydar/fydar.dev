@@ -24,8 +24,7 @@
     <MetadataComponent Metadata="@PageMetadata" />
     <BreadcrumbListComponent Model="@breadcrumbs" />
     <meta name="theme-color" content="#161618">
-    <link rel="shortcut icon" href="@Assets["/play/astralswarm/favicon.ico"]">
-    <link rel="preload" href="@Assets["/play/astralswarm/build/0.1.1.0.loader.js"]" as="script" fetchpriority="high" />
+    <link rel="shortcut icon" href="@Assets["play/astralswarm/favicon.ico"]">
 </HeadFragment>
 
 @{
@@ -34,10 +33,10 @@
         ProductName = "Astral Swarm",
         ProductVersion = new Version(0, 1, 0),
         CompanyName = "Out of the Blue Studios",
-        LoaderUrl = Assets["/play/astralswarm/build/0.1.1.0.loader.js"],
-        FrameworkUrl = Assets["/play/astralswarm/build/0.1.1.0.framework.js.br"],
-        CodeUrl = Assets["/play/astralswarm/build/0.1.1.0.wasm.br"],
-        DataUrl = Assets["/play/astralswarm/build/0.1.1.0.data.br"],
+        LoaderUrl = Assets["play/astralswarm/build/0.1.1.0.loader.js"],
+        FrameworkUrl = Assets["play/astralswarm/build/0.1.1.0.framework.js.br"],
+        CodeUrl = Assets["play/astralswarm/build/0.1.1.0.wasm.br"],
+        DataUrl = Assets["play/astralswarm/build/0.1.1.0.data.br"],
         StreamingAssetsUrl = "/play/astralswarm/StreamingAssets",
         Arguments = [],
     };
@@ -51,5 +50,4 @@
 
 <PwaInstall AppId="astralswarm"
             Scope="/play/astralswarm"
-            ServiceWorkerUrl="@Assets["play/astralswarm.serviceworker.js"]"
-            ManifestUrl="@Assets["/play/astralswarm/manifest.webmanifest"]" />
+            ManifestUrl="@Assets["play/astralswarm/manifest.webmanifest"]" />

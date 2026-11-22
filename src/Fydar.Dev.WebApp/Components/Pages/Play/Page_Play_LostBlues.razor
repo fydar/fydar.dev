@@ -24,8 +24,7 @@
     <MetadataComponent Metadata="@PageMetadata" />
     <BreadcrumbListComponent Model="@breadcrumbs" />
     <meta name="theme-color" content="#161618">
-    <link rel="shortcut icon" href="@Assets["/play/lostblues/favicon.ico"]">
-    <link rel="preload" href="@Assets["/play/lostblues/build/lostblues.loader.js"]" as="script" fetchpriority="high" />
+    <link rel="shortcut icon" href="@Assets["play/lostblues/favicon.ico"]">
 </HeadFragment>
 
 @{
@@ -34,10 +33,10 @@
         ProductName = "Lost Blues",
         ProductVersion = new Version(0, 1, 1),
         CompanyName = "Fydar",
-        LoaderUrl = Assets["/play/lostblues/build/lostblues.loader.js"],
-        FrameworkUrl = Assets["/play/lostblues/build/lostblues.framework.js.br"],
-        CodeUrl = Assets["/play/lostblues/build/lostblues.wasm.br"],
-        DataUrl = Assets["/play/lostblues/build/lostblues.data.br"],
+        LoaderUrl = Assets["play/lostblues/build/lostblues.loader.js"],
+        FrameworkUrl = Assets["play/lostblues/build/lostblues.framework.js.br"],
+        CodeUrl = Assets["play/lostblues/build/lostblues.wasm.br"],
+        DataUrl = Assets["play/lostblues/build/lostblues.data.br"],
         StreamingAssetsUrl = "/play/lostblues/StreamingAssets",
         Arguments = [],
     };
@@ -51,5 +50,4 @@
 
 <PwaInstall AppId="lostblues"
             Scope="/play/lostblues"
-            ServiceWorkerUrl="@Assets["play/lostblues.serviceworker.js"]"
-            ManifestUrl="@Assets["/play/lostblues/manifest.webmanifest"]" />
+            ManifestUrl="@Assets["play/lostblues/manifest.webmanifest"]" />

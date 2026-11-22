@@ -4,14 +4,20 @@
     var embedUnityConfig = new EmbedUnityConfig()
     {
         ProductName = "Astral Elites",
-        ProductVersion = new Version(0, 1, 2, 11),
+        ProductVersion = new Version(0, 1, 2, 12),
         CompanyName = "Fydar",
-        LoaderUrl = Assets["/play/astralelites/build/0.1.2.12.loader.js"],
-        FrameworkUrl = Assets["/play/astralelites/build/0.1.2.12.framework.js.br"],
-        CodeUrl = Assets["/play/astralelites/build/0.1.2.12.wasm.br"],
-        DataUrl = Assets["/play/astralelites/build/0.1.2.12.data.br"],
+        LoaderUrl = Assets["play/astralelites/build/0.1.2.12.loader.js"],
+        FrameworkUrl = Assets["play/astralelites/build/0.1.2.12.framework.js.br"],
+        CodeUrl = Assets["play/astralelites/build/0.1.2.12.wasm.br"],
+        DataUrl = Assets["play/astralelites/build/0.1.2.12.data.br"],
         StreamingAssetsUrl = "/play/astralelites/StreamingAssets",
         Arguments = IsBackground ? ["background"] : [],
+        // The game loads its audio bundles once it starts, except when running as a background.
+        PrefetchUrls = IsBackground ? [] :
+        [
+            "/play/astralelites/StreamingAssets/AssetBundles/music.data",
+            "/play/astralelites/StreamingAssets/AssetBundles/sfx.data",
+        ],
     };
 }
 

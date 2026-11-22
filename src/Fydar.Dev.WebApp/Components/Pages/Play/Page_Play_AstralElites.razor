@@ -24,16 +24,14 @@
     <MetadataComponent Metadata="@PageMetadata" />
     <BreadcrumbListComponent Model="@breadcrumbs" />
     <meta name="theme-color" content="#161618">
-    <link rel="shortcut icon" href="@Assets["/play/astralelites/favicon.svg"]">
-    <link rel="preload" href="@Assets["/play/astralelites/build/0.1.2.12.loader.js"]" as="script" fetchpriority="high" />
+    <link rel="shortcut icon" href="@Assets["play/astralelites/favicon.svg"]">
 </HeadFragment>
 
 <EmbedUnity__AstralElites IsBackground="@Background" />
 
 <PwaInstall AppId="astralelites"
             Scope="/play/astralelites"
-            ServiceWorkerUrl="@Assets["play/astralelites.serviceworker.js"]"
-            ManifestUrl="@Assets["/play/astralelites/manifest.webmanifest"]" />
+            ManifestUrl="@Assets["play/astralelites/manifest.webmanifest"]" />
 
 @code {
     [Parameter][SupplyParameterFromQuery(Name = "background")] public bool Background { get; set; } = false;

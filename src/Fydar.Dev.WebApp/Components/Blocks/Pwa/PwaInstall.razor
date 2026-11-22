@@ -9,25 +9,28 @@
 
 <script defer nonce="@noncer.Nonce">
 (function () {
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function () {
-            var swUrl = '@ServiceWorkerUrl';
-            if (window.trustedTypes && window.trustedTypes.createPolicy) {
-                var policy = window.trustedTypes.createPolicy('sw-@AppId', {
-                    createScriptURL: function (url) { return url; }
-                });
-                swUrl = policy.createScriptURL(swUrl);
-            }
-            navigator.serviceWorker.register(swUrl, { scope: '@Scope' })
-                .catch(function (err) { console.warn('ServiceWorker registration failed:', err); });
-        });
+    if (!('serviceWorker' in navigator)) {
+        return;
     }
+    window.addEventListener('load', function () {
+        // Every game shares one worker script, registered once per game folder. Its URL is
+        // fingerprinted and immutable, so with updateViaCache 'all' the browser's update checks
+        // are answered from its HTTP cache.
+        var swUrl = '@Assets["play/unity.serviceworker.js"]';
+        if (window.trustedTypes && window.trustedTypes.createPolicy) {
+            var policy = window.trustedTypes.createPolicy('sw-@AppId', {
+                createScriptURL: function (url) { return url; }
+            });
+            swUrl = policy.createScriptURL(swUrl);
+        }
+        navigator.serviceWorker.register(swUrl, { scope: '@Scope', updateViaCache: 'all' })
+            .catch(function (err) { console.warn('ServiceWorker registration failed:', err); });
+    });
 })();
 </script>
 
 @code {
     [Parameter, EditorRequired] public string AppId { get; set; } = "";
-    [Parameter, EditorRequired] public string ServiceWorkerUrl { get; set; } = "";
     [Parameter, EditorRequired] public string Scope { get; set; } = "";
     [Parameter] public string? ManifestUrl { get; set; }
 }

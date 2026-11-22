@@ -65,4 +65,9 @@ public class EmbedUnityConfig
     /// These arguments can be retrieved in C# scripts using <c>Environment.GetCommandLineArgs()</c>.
     /// </remarks>
     public string[] Arguments { get; set; } = [];
+
+    /// <summary>
+    /// URLs of additional files to be downloaded as soon as the code and data files have arrived.
+    /// </summary>
+    public string[] PrefetchUrls { get; set; } = [];
 }

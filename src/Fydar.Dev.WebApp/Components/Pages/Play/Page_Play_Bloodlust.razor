@@ -24,8 +24,7 @@
     <MetadataComponent Metadata="@PageMetadata" />
     <BreadcrumbListComponent Model="@breadcrumbs" />
     <meta name="theme-color" content="#161618">
-    <link rel="shortcut icon" href="@Assets["/play/bloodlust/favicon.ico"]">
-    <link rel="preload" href="@Assets["/play/bloodlust/build/bloodlust.loader.js"]" as="script" fetchpriority="high" />
+    <link rel="shortcut icon" href="@Assets["play/bloodlust/favicon.ico"]">
 </HeadFragment>
 
 @{
@@ -34,10 +33,10 @@
         ProductName = "Bloodlust",
         ProductVersion = new Version(0, 1, 0),
         CompanyName = "Fydar",
-        LoaderUrl = Assets["/play/bloodlust/build/bloodlust.loader.js"],
-        FrameworkUrl = Assets["/play/bloodlust/build/bloodlust.framework.js.br"],
-        CodeUrl = Assets["/play/bloodlust/build/bloodlust.wasm.br"],
-        DataUrl = Assets["/play/bloodlust/build/bloodlust.data.br"],
+        LoaderUrl = Assets["play/bloodlust/build/bloodlust.loader.js"],
+        FrameworkUrl = Assets["play/bloodlust/build/bloodlust.framework.js.br"],
+        CodeUrl = Assets["play/bloodlust/build/bloodlust.wasm.br"],
+        DataUrl = Assets["play/bloodlust/build/bloodlust.data.br"],
         StreamingAssetsUrl = "/play/bloodlust/StreamingAssets",
         Arguments = [],
     };
@@ -51,5 +50,4 @@
 
 <PwaInstall AppId="bloodlust"
             Scope="/play/bloodlust"
-            ServiceWorkerUrl="@Assets["play/bloodlust.serviceworker.js"]"
-            ManifestUrl="@Assets["/play/bloodlust/manifest.webmanifest"]" />
+            ManifestUrl="@Assets["play/bloodlust/manifest.webmanifest"]" />
