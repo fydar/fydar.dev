@@ -2,6 +2,14 @@
 
 !Fydar.*/**
 
+Fydar.Dev.Lambda.*
+*.Tests
+*.UnitTests
+
+# Local certificate stores
+**/*.pfx
+**/*.pem
+
 **/.classpath
 **/.dockerignore
 **/.env
