@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.7-labs
 
-FROM mcr.microsoft.com/dotnet/aspnet:10.0-noble AS base
+FROM mcr.microsoft.com/dotnet/aspnet:11.0-noble AS base
 USER root
 RUN apt-get update \
     && apt-get install -y --no-install-recommends curl ca-certificates \
@@ -21,7 +21,7 @@ EXPOSE 443/tcp
 EXPOSE 443/udp
 
 # Use the native build platform for faster compilation
-FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:10.0-noble AS build
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:11.0-noble AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
