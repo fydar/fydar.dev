@@ -2,14 +2,15 @@ using Amazon.Lambda.SimpleEmailEvents;
 using Amazon.Lambda.SimpleEmailEvents.Actions;
 using Amazon.Lambda.TestUtilities;
 using Fydar.Dev.Lambda.EmailToTicket.Tests.Mock;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
-using Xunit;
 
 namespace Fydar.Dev.Lambda.EmailToTicket.Tests;
 
-public class FunctionServiceTest
+[TestClass]
+public sealed class FunctionServiceTest
 {
-    [Fact]
+    [TestMethod]
     public async Task TestSQSEventLambdaFunction()
     {
         // Arrange
