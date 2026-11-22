@@ -237,9 +237,13 @@ Resources:
       TaskDefinition: !Ref WebsiteInstanceTask
       LaunchType: EC2
       DesiredCount: 1
+      AvailabilityZoneRebalancing: DISABLED
       DeploymentConfiguration:
-        MaximumPercent: 200
-        MinimumHealthyPercent: 50
+        MaximumPercent: 100
+        MinimumHealthyPercent: 0
+        DeploymentCircuitBreaker:
+          Enable: true
+          Rollback: true
 
   # ── EC2 ───────────────────────────────────────────────────────────────────────
 
