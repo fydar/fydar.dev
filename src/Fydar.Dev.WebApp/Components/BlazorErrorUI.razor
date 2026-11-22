@@ -1,14 +1,10 @@
-@inject IHostEnvironment HostEnvironment
-
 <dialog id="blazor-error-ui" data-nosnippet>
-    @if (HostEnvironment.IsProduction())
-    {
+    <EnvironmentView Include="Production">
         <span>An error has occurred.</span>
-    }
-    else
-    {
+    </EnvironmentView>
+    <EnvironmentView Exclude="Production">
         <span>An unhandled exception occurred.</span>
-    }
+    </EnvironmentView>
     <a href="" class="reload">Reload</a>
     <button class="dismiss">🗙</button>
 

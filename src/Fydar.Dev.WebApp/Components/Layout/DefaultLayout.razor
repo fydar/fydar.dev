@@ -1,7 +1,6 @@
 @using Fydar.AspNetCore.CSP;
 @inherits LayoutComponentBase
 
-@inject IWebHostEnvironment environment;
 @inject NavigationManager NavigationManager
 @inject Noncer noncer;
 
@@ -18,16 +17,15 @@
 <ContentSecurityPolicy_Allow Directive="form-action" Sources="'self'" />
 <ContentSecurityPolicy_Allow Directive="frame-ancestors" Sources="'self'" />
 
-@if (!environment.IsDevelopment())
-{
-    // Enforce Trusted Types in Production/Staging
+@* Enforce Trusted Types in Production/Staging *@
+<EnvironmentView Exclude="Development">
     <ContentSecurityPolicy_Allow Directive="require-trusted-types-for" Sources="'script'" />
-}
-else
-{
-    // Allow Browser Link and Hot Reload connections in Development
+</EnvironmentView>
+
+@* Allow Browser Link and Hot Reload connections in Development *@
+<EnvironmentView Include="Development">
     <ContentSecurityPolicy_Allow Directive="connect-src" Sources="ws: http: ws://localhost:* wss://localhost:*" />
-}
+</EnvironmentView>
 
 <SectionContent SectionName="layoutheadcontent">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
