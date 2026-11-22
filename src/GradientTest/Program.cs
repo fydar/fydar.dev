@@ -1,4 +1,5 @@
 using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.ColorProfiles;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 
@@ -24,8 +25,8 @@ public class GeneLinearGradient
 {
     public float Angle { get; set; }
 
-    public GeneLinearGradientKeyframe Start { get; set; }
-    public GeneLinearGradientKeyframe End { get; set; }
+    public GeneLinearGradientKeyframe Start { get; set; } = new();
+    public GeneLinearGradientKeyframe End { get; set; } = new();
 
     public GeneLinearGradient()
     {
@@ -329,7 +330,7 @@ public class RadialGradientGenerator
             for (int x = 0; x < dimensions.Width; x++)
             {
                 var generatedColor = render[x, y];
-                Rgb targetColor = targetImage[x, y];
+                Rgb targetColor = Rgb.FromScaledVector4(targetImage[x, y].ToScaledVector4());
 
                 float diffR = generatedColor.R - targetColor.R;
                 float diffG = generatedColor.G - targetColor.G;
@@ -426,7 +427,7 @@ public class RadialGradientGenerator
                 var row = accessor.GetRowSpan(y);
                 for (int x = 0; x < row.Length; x++)
                 {
-                    allPixels[pixelIndex++] = row[x];
+                    allPixels[pixelIndex++] = Rgb.FromScaledVector4(row[x].ToScaledVector4());
                 }
             }
         });

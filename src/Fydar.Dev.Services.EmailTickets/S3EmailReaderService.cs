@@ -182,7 +182,7 @@ public class S3EmailReaderService : IEmailReaderService
             }
         }));
 
-        var ticketIdBySourceKey = new Dictionary<string, string>(StringComparer.Ordinal);
+        Dictionary<string, string> ticketIdBySourceKey = [with(StringComparer.Ordinal)];
         foreach (var result in copyResults)
         {
             if (result.copied)

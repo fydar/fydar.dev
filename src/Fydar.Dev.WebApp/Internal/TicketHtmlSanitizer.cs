@@ -168,7 +168,7 @@ internal sealed class TicketHtmlSanitizer
     private static Dictionary<string, MimePart> CollectInlineImages(
         MimeMessage message)
     {
-        var parts = new Dictionary<string, MimePart>(StringComparer.Ordinal);
+        Dictionary<string, MimePart> parts = [with(StringComparer.Ordinal)];
 
         foreach (var entity in message.BodyParts)
         {
@@ -279,7 +279,7 @@ internal sealed class TicketHtmlSanitizer
     private static Dictionary<string, string> ParseStyle(
         string? style)
     {
-        var declarations = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        Dictionary<string, string> declarations = [with(StringComparer.OrdinalIgnoreCase)];
         if (string.IsNullOrEmpty(style))
         {
             return declarations;

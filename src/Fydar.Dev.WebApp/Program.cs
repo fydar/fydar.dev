@@ -236,12 +236,7 @@ public class Program
             app.UseResponseCompression();
         }
 
-        // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment())
-        {
-            app.UseWebAssemblyDebugging();
-        }
-        else
+        if (!app.Environment.IsDevelopment())
         {
             app.UseHttpsRedirection();
             app.UseHsts();
