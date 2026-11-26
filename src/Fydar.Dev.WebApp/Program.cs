@@ -241,6 +241,7 @@ public class Program
         app.UseAntiforgery();
 
         app.MapGitHubAuthenticationEndpoints();
+        app.MapTicketAttachmentEndpoints();
 
         app.MapRazorComponents<App>()
             .WithStaticAssets()

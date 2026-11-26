@@ -73,6 +73,31 @@
                     <div class="ticket-body-text">@mimeMessage.TextBody</div>
                 }
             </div>
+
+            @if (attachments.Count > 0)
+            {
+                <section class="ticket-attachments" aria-labelledby="ticket-attachments-heading">
+                    <h3 id="ticket-attachments-heading" class="ticket-attachments-heading">
+                        @(attachments.Count == 1 ? "1 attachment" : $"{attachments.Count} attachments")
+                    </h3>
+                    <ul class="ticket-attachment-list">
+                        @foreach (var attachment in attachments)
+                        {
+                            <li>
+                                @* A download is a file to save, not a page for enhanced navigation to fetch. *@
+                                <a class="ticket-attachment"
+                                   href="@TicketAttachments.DownloadUrl(TicketId, attachment.Index)"
+                                   download="@attachment.FileName"
+                                   data-enhance-nav="false">
+                                    <SvgSprite class="ticket-attachment-icon" Link="/icons.svg?v=1#icon-download" />
+                                    <span class="ticket-attachment-name">@attachment.FileName</span>
+                                    <span class="ticket-attachment-meta">@attachment.MediaType · @FormatSize(attachment.Size)</span>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </section>
+            }
         }
     </div>
 </article>
@@ -88,16 +113,28 @@
         QueryHelpers.AddQueryString($"/ticket/{Uri.EscapeDataString(TicketId)}", "trust", "true");
 
     private MimeMessage? mimeMessage;
+    private IReadOnlyList<TicketAttachment> attachments = [];
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
             mimeMessage = await emailReaderService.ReadEmailAsync(TicketId);
+            attachments = TicketAttachments.Collect(mimeMessage);
         }
         catch (AmazonS3Exception exception) when (exception.StatusCode == HttpStatusCode.NotFound)
         {
             NavigationManager.NotFound();
         }
+    }
+
+    private static string FormatSize(long bytes)
+    {
+        return bytes switch
+        {
+            < 1024 => $"{bytes} B",
+            < 1024 * 1024 => $"{bytes / 1024.0:0.#} KB",
+            _ => $"{bytes / (1024.0 * 1024.0):0.#} MB"
+        };
     }
 }

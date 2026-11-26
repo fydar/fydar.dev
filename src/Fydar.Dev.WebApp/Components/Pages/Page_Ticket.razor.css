@@ -136,3 +136,63 @@
         .ticket-blocked-trust:focus-visible {
             background-color: #ffffff12;
         }
+
+.ticket-attachments {
+    margin-top: 1.5rem;
+}
+
+.ticket-attachments-heading {
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+}
+
+.ticket-attachment-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.ticket-attachment {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    column-gap: 0.75rem;
+    align-items: center;
+    max-width: 20rem;
+    padding: 0.6rem 0.9rem;
+    border: 1px solid #ffffff30;
+    border-radius: 4px;
+    color: inherit;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    text-align: left;
+    text-decoration: none;
+}
+
+    .ticket-attachment:hover,
+    .ticket-attachment:focus-visible {
+        background-color: #ffffff12;
+    }
+
+    .ticket-attachment ::deep .ticket-attachment-icon {
+        grid-row: 1 / span 2;
+        width: 1.25rem;
+        height: 1.25rem;
+    }
+
+.ticket-attachment-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ticket-attachment-meta {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    opacity: 0.7;
+    font-size: 0.8rem;
+}
