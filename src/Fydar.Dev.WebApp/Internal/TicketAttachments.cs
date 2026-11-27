@@ -27,12 +27,52 @@ public static partial class TicketAttachments
 
     public static IReadOnlyList<TicketAttachment> Collect(MimeMessage message)
     {
+        var parts = FindAttachmentParts(message);
+        var attachments = new List<TicketAttachment>(parts.Count);
+
+        foreach (var entity in parts)
+        {
+            int index = attachments.Count;
+
+            attachments.Add(entity switch
+            {
+                MessagePart messagePart => new TicketAttachment(
+                    index,
+                    SafeFileName(messagePart.ContentDisposition?.FileName)
+                        ?? (SafeFileName(messagePart.Message.Subject) ?? $"attachment-{index + 1}") + ".eml",
+                    messagePart.ContentType.MimeType,
+                    Measure(messagePart.Message.WriteTo),
+                    messagePart),
+
+                MimePart part => new TicketAttachment(
+                    index,
+                    SafeFileName(part.FileName) ?? DefaultFileName(part, index),
+                    part.ContentType.MimeType,
+                    part.Content == null ? 0 : Measure(part.Content.DecodeTo),
+                    part),
+
+                _ => throw new InvalidOperationException($"Unexpected attachment entity '{entity.GetType()}'.")
+            });
+        }
+
+        return attachments;
+    }
+
+    // Counting skips the decoding Collect does to measure each file, which a listing of many
+    // tickets doesn't need.
+    public static int Count(MimeMessage message)
+    {
+        return FindAttachmentParts(message).Count;
+    }
+
+    private static List<MimeEntity> FindAttachmentParts(MimeMessage message)
+    {
         var referencedContentIds = ReferencedContentIds(message.HtmlBody);
-        var attachments = new List<TicketAttachment>();
+        var parts = new List<MimeEntity>();
 
         Visit(message.Body);
 
-        return attachments;
+        return parts;
 
         void Visit(MimeEntity? entity)
         {
@@ -46,22 +86,11 @@ public static partial class TicketAttachments
                     break;
 
                 case MessagePart messagePart when messagePart.Message != null:
-                    attachments.Add(new TicketAttachment(
-                        attachments.Count,
-                        SafeFileName(messagePart.ContentDisposition?.FileName)
-                            ?? (SafeFileName(messagePart.Message.Subject) ?? $"attachment-{attachments.Count + 1}") + ".eml",
-                        messagePart.ContentType.MimeType,
-                        Measure(messagePart.Message.WriteTo),
-                        messagePart));
+                    parts.Add(messagePart);
                     break;
 
                 case MimePart part when IsAttachment(part, referencedContentIds):
-                    attachments.Add(new TicketAttachment(
-                        attachments.Count,
-                        SafeFileName(part.FileName) ?? DefaultFileName(part, attachments.Count),
-                        part.ContentType.MimeType,
-                        part.Content == null ? 0 : Measure(part.Content.DecodeTo),
-                        part));
+                    parts.Add(part);
                     break;
             }
         }

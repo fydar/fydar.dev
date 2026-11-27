@@ -1,5 +1,6 @@
 @using Fydar.Dev.Services.EmailTickets;
 @using Fydar.Dev.Services.EmailTickets.Models;
+@using Fydar.Dev.WebApp.Internal;
 @using Fydar.Dev.WebApp.Internal.Authentication;
 @using Microsoft.AspNetCore.Authorization;
 
@@ -65,9 +66,17 @@
                             <a class="ticket-list-link" href="/ticket/@Uri.EscapeDataString(entry.TicketId)">
                                 <span class="ticket-list-subject">@entry.Subject</span>
                                 <span class="ticket-list-from">@entry.From</span>
-                                <time class="ticket-list-received" datetime="@entry.Received.ToString("o")">
-                                    @entry.Received.ToString("yyyy-MM-dd HH:mm") UTC
-                                </time>
+                                <span class="ticket-list-meta">
+                                    @if (entry.AttachmentCount > 0)
+                                    {
+                                        <SvgSprite class="ticket-list-attachments"
+                                                   Link="/icons.svg?v=1#icon-download"
+                                                   Alt="@(entry.AttachmentCount == 1 ? "1 attachment" : $"{entry.AttachmentCount} attachments")" />
+                                    }
+                                    <time class="ticket-list-received" datetime="@entry.Received.ToString("o")">
+                                        @entry.Received.ToString("yyyy-MM-dd HH:mm") UTC
+                                    </time>
+                                </span>
                             </a>
                         </li>
                     }
@@ -227,7 +236,8 @@
                 ticket.TicketId,
                 ticket.LastModified,
                 string.IsNullOrWhiteSpace(message.Subject) ? "(no subject)" : message.Subject,
-                message.From.ToString());
+                message.From.ToString(),
+                TicketAttachments.Count(message));
         }
         catch (Exception exception)
         {
@@ -238,7 +248,8 @@
                 ticket.TicketId,
                 ticket.LastModified,
                 "(couldn't be read)",
-                string.Empty);
+                string.Empty,
+                0);
         }
     }
 
@@ -253,5 +264,6 @@
         string TicketId,
         DateTime Received,
         string Subject,
-        string From);
+        string From,
+        int AttachmentCount);
 }
